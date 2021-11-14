@@ -2,17 +2,25 @@ import * as React from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const auth_index = ({ navigation }) => {
+const SelectAuthPage = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safearea}>
+      <View style={{ flex: 1, padding: 16 }}>
         <View style={styles.container}>
           <TouchableOpacity
-            style={styles.loginBtn}
-            // onPress={() => navigation.navigate("ClientDrawer")}
+            style={styles.userBtn}
+            onPress={() => navigation.navigate("UserLoginPage")}
           >
-            <Text style={styles.text}>로그인</Text>
+            <Text style={styles.text}>사용자 로그인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.adminBtn}
+            onPress={() => navigation.navigate("AdminLoginPage")}
+          >
+            <Text style={styles.text}>관리자 로그인</Text>
           </TouchableOpacity>
         </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -24,11 +32,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  loginBtn: {
+  userBtn: {
     backgroundColor: "#FFC279",
     borderRadius: 20,
     marginBottom: 20,
-    paddingHorizontal: 43,
+    paddingHorizontal: 30,
+    padding: 15,
+  },
+  adminBtn: {
+    backgroundColor: "#8DC1FF",
+    borderRadius: 20,
+    marginBottom: 20,
+    paddingHorizontal: 30,
     padding: 15,
   },
   text: {
@@ -38,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default auth_index;
+export default SelectAuthPage;
