@@ -73,13 +73,6 @@ export const secondScreenStack = ({ navigation }) => {
           title: '', //Set Header Title
         }}
       />
-      <Stack.Screen
-        name="ExternalPage"
-        component={ExternalPage}
-        options={{
-          title: '', //Set Header Title
-        }}
-      />
     </Stack.Navigator>
   );
 }
@@ -101,6 +94,14 @@ export const thirdScreenStack = ({ navigation }) => {
           title: '', //Set Header Title
         }}
       />
+      
+      {/* <Stack.Screen
+        name="ExternalPage"
+        component={ExternalPage}
+        options={{
+          title: '', //Set Header Title
+        }}
+      /> */}
     </Stack.Navigator>
   );
 }

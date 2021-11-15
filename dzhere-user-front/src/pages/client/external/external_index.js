@@ -1,42 +1,56 @@
-// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
-// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
+import * as React from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-import * as React from 'react';
-import { Button, View, Text, SafeAreaView } from 'react-native';
-
-const external_page = ({ navigation }) => {
+const external_index = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1,  backgroundColor: 'white' }}>
-      <View style={{ flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              marginBottom: 16,
-            }}>
-            외부 장소
-          </Text>
-          {/* <Button
-            onPress={() => navigation.navigate('CheckPage')}
-            title="오늘의 출석"
-          />
-          <Button
-            onPress={() => navigation.navigate('SecondPage')}
-            title="Go to Second Page"
-          /> */}
+    <SafeAreaView style={styles.safearea}>
+      <View style={{ flex: 1, padding: 16 }}>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.userBtn}
+            // onPress={() => navigation.navigate("UserLoginPage")}
+          >
+            <Text style={styles.text}>수집시작</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.adminBtn}
+            // onPress={() => navigation.navigate("AdminLoginPage")}
+          >
+            <Text style={styles.text}>등록</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
-          Custom React Navigate Drawer
-        </Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default external_page;
+const styles = StyleSheet.create({
+  safearea: { flex: 1, backgroundColor: "white" },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  userBtn: {
+    backgroundColor: "#FFC279",
+    borderRadius: 20,
+    marginBottom: 20,
+    paddingHorizontal: 30,
+    padding: 15,
+  },
+  adminBtn: {
+    backgroundColor: "#8DC1FF",
+    borderRadius: 20,
+    marginBottom: 20,
+    paddingHorizontal: 30,
+    padding: 15,
+  },
+  text: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+});
+
+export default external_index;
