@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Header, Footer, Contents} from '../../../components/client/myinfo/index2'
+import {Header, Footer, Contents} from '../../../components/client/myinfo/index'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const index = () => {
