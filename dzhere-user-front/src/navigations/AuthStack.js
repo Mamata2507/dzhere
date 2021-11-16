@@ -2,14 +2,17 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserLoginPage from "../pages/client/auth/auth_index";
-import UserSignUpPage from "../pages/client/auth/auth_index";
+// import UserSignUpPage from "../pages/client/auth/auth_index";
+import UserFindPassword from "../pages/client/auth/auth_findPassword";
+import UserRegister from "../pages/client/auth/auth_register";
 import ClientDrawer from "./ClientDrawer";
 
 const Stack = createStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="UserLoginPage"
+      // initialRouteName="UserLoginPage"
+      initialRouteName="UserRegister"
       screenOptions={{
         headerTransparent: true,
       }}
@@ -29,19 +32,18 @@ const AuthStack = () => {
         }}
       />
       <Stack.Screen
-        name="UserSignUpPage"
-        component={UserSignUpPage}
+        name="UserFindPassword"
+        component={UserFindPassword}
         options={{
           title: "", //Set Header Title
         }}
       />
       <Stack.Screen
-        name="ClientDrawer"
-        component={ClientDrawer}
+        name="UserRegister"
+        component={UserRegister}
         options={{
           title: "", //Set Header Title
         }}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
