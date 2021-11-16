@@ -1,6 +1,7 @@
 package com.ezo.dzhereback.service;
 
 import com.ezo.dzhereback.domain.Attend;
+import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,4 +16,8 @@ public class TestService {
     }
 
     public Attend getAttend(int id) { return testMapper.getAttend(id); }
+
+    public Member findKre(){
+        return testMapper.findKre();
+    }
 }

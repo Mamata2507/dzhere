@@ -5,7 +5,7 @@ import lombok.*;
 @Data
 @Getter @Setter
 @NoArgsConstructor
-public class User {
+public class Member {
     private int u_id;
     private String u_phone;
     private String u_pw;
@@ -18,7 +18,7 @@ public class User {
     private int ag_idx;
 
     @Builder
-    public User(int u_id, String u_phone, String u_pw, String u_email, int u_alarm, String u_name, int u_accept, int u_auth, int c_idx, int ag_idx) {
+    public Member(int u_id, String u_phone, String u_pw, String u_email, int u_alarm, String u_name, int u_accept, int u_auth, int c_idx, int ag_idx) {
         this.u_id = u_id;
         this.u_phone = u_phone;
         this.u_pw = u_pw;

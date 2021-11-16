@@ -1,6 +1,6 @@
 package com.ezo.dzhereback.dto;
 
-import com.ezo.dzhereback.domain.User;
+import com.ezo.dzhereback.domain.Member;
 import lombok.*;
 
 @Data
@@ -9,8 +9,8 @@ import lombok.*;
 public class UserTestDto {
     private String u_name;
 
-    public User toEntity(){
-        return User.builder()
+    public Member toEntity(){
+        return Member.builder()
                 .u_name(u_name)
                 .build();
     }
