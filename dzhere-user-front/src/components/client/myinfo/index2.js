@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import logo from '../../../../assets/logo.png'
 import { images } from './Images';
 import IconButton from './IconButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const Header = () => {
@@ -18,22 +17,8 @@ export const Header = () => {
   );
 };
 
-export const Contents = () => {
-
-  AsyncStorage.setItem('u_phone', '01023454710');
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-        //console.log(LocalData);
-        setData(LocalData);
-      }
-    }
-    getStorage();
-  }, []);
-
+export const Contents = ({data}) => {
+  console.log(data);
   return (
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
