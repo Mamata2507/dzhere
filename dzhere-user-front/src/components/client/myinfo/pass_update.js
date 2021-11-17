@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'react-native';
 import { images } from './Images';
 import IconButton from './IconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,19 +26,31 @@ export const Contents = () => {
     function onPress(){
       Alert.alert('변경');
     }
+
+    const [text, onChangeText] = React.useState(null);
+    const [number, onChangeNumber] = React.useState(null);
   
     return (
-      <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+      <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
-          <IconButton type={images.phone}/>
-          <Text style={{flex:1, fontSize: 22}}>{data}</Text>
+          <IconButton type={images.email}/>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder={data}
+            keyboardType="numeric"
+          />
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={styles.myInfoText}>이메일 변경</Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('MyPageEmailUpdate')}>
-            <Image style={[{width: 20, heigth: 20}]} source={require('../../../../assets/myinfo/right.png')} />
-          </TouchableOpacity>
+          <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="이메일 변경"
+          keyboardType="numeric"
+          />
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -91,5 +103,13 @@ export const Contents = () => {
       color: "white",
       fontWeight: "bold",
       margin: 10,
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+      flex:1, 
+      fontSize: 18
     },
   });

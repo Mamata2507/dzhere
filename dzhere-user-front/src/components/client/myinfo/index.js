@@ -57,7 +57,6 @@ export const Contents = () => {
       <View style={styles.myInfo}>
         <IconButton type={images.lock}/>
         <Text style={styles.myInfoText}>비밀번호 변경</Text>
-        
         <TouchableOpacity onPress={()=>navigation.navigate('MyPagePassUpdate')}>
           <Image style={[{width: 20, height: 20}]} source={require('../../../../assets/myinfo/right.png')} />
         </TouchableOpacity>

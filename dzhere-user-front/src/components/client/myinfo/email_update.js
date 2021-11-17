@@ -39,6 +39,7 @@ export const Contents = () => {
             onChangeText={onChangeText}
             value={text}
             placeholder={data}
+            keyboardType="numeric"
           />
         </View>
         <View style={styles.myInfo}>
@@ -47,7 +48,7 @@ export const Contents = () => {
           style={styles.input}
           onChangeText={onChangeNumber}
           value={number}
-          placeholder="비밀번호 변경"
+          placeholder="이메일 변경"
           keyboardType="numeric"
           />
         </View>
