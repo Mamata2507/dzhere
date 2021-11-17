@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import {Header, Footer, Contents} from '../../../components/client/myinfo/index'
+import React, { createContext,useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const index = () => {
-
-    AsyncStorage.setItem('u_phone', '01023454710');
-    const [data, setData] = useState([]);
   
-    useEffect(() => {
-      async function getStorage() {
-        if (await AsyncStorage.getItem("u_phone")) {
-          let LocalData = await AsyncStorage.getItem("u_phone");
-          //console.log(LocalData);
-          setData(LocalData);
-        }
+const UserContext = createContext({
+  user: { data: '' },
+  dispatch: () => {},
+});
+
+AsyncStorage.setItem('u_phone', '01023454710');
+
+
+const UserProvider = ({ children }) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function getStorage() {
+      if (await AsyncStorage.getItem("u_phone")) {
+        let LocalData = await AsyncStorage.getItem("u_phone");
+        //console.log(LocalData);
+        setData(LocalData);
       }
-      getStorage();
-    }, []);
-    console.log(data);
-    return (
-        // MyInfo -> 컨테이너의 자식 컴포넌트
-        <Contents
-            data={data}
-        />
-    );
+    }
+    getStorage();
+  }, []);
+  const value = {user: { data }, dispatch: setData};
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
 
-export default index;
+
+const UserConsumer = UserContext.Consumer;
+
+export { UserProvider, UserConsumer };
+export default UserContext;
+

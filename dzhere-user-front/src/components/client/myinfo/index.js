@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import logo from '../../../../assets/logo.png'
 import { images } from './Images';
 import IconButton from './IconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import UserContext, { UserConsumer } from '../../../containers/client/myinfo';
 
 export const Header = () => {
   return (
@@ -17,29 +17,16 @@ export const Header = () => {
     </View>
   );
 };
-
 export const Contents = () => {
-
-  AsyncStorage.setItem('u_phone', '01023454710');
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-        //console.log(LocalData);
-        setData(LocalData);
-      }
-    }
-    getStorage();
-  }, []);
+  const { user } = useContext(UserContext);
 
   return (
+    <UserContext.Provider>
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
-        <Text style={{fontSize: 22}}>{data}</Text>
+        <Text style={{fontSize: 22}}>{user.data}</Text>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.email}/>
@@ -63,6 +50,7 @@ export const Contents = () => {
         <Text style={styles.myInfoText}>개인정보 처리방침</Text>
       </View>
     </View>
+    </UserContext.Provider>
   );
 };
 
