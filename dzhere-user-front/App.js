@@ -21,13 +21,16 @@ import rootReducer from './src/modules/index'
 import Apps from "./src/App";
 import React from 'react';
 
-const store = createStore(rootReducer);
+// const store = createStore(rootReducer);
   
-const App = () => {
-    return (
-        <Provider store={store}>
-            <Apps />
-        </Provider>
-    );
-};
+// const App = () => {
+//     return (
+//         <Provider store={store}>
+//             <Apps />
+//         </Provider>
+//     );
+// };
+// export default App;
+
+import App from './src/App';
 export default App;

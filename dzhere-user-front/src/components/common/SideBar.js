@@ -11,6 +11,8 @@ import CheckPage from '../../pages/client/check/check_index';
 import ListPage from '../../pages/client/list/list_index';
 import ExternalPage from '../../pages/client/external/external_index';
 import MyPage from '../../pages/client/myinfo/myinfo_index';
+import MyPageEmailUpdate from '../../pages/client/myinfo/email_update';
+import MyPagePassUpdate from '../../pages/client/myinfo/pass_update';
 // Import Custom Sidebar
 // import CustomSidebarMenu from './CustomSidebarMenu';
 
@@ -119,6 +121,20 @@ export const fourthScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="MyPage"
         component={MyPage}
+        options={{
+          title: '', //Set Header Title
+        }}
+      />
+       <Stack.Screen
+        name="MyPageEmailUpdate"
+        component={MyPageEmailUpdate}
+        options={{
+          title: '', //Set Header Title
+        }}
+      />
+       <Stack.Screen
+        name="MyPagePassUpdate"
+        component={MyPagePassUpdate}
         options={{
           title: '', //Set Header Title
         }}
