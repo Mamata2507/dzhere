@@ -10,13 +10,12 @@ const auth_findPassword = ({ navigation }) => {
     <SafeAreaView style={styles.safearea}>
       <View style={{ flex: 1, padding: 16 }}>
         <View style={styles.container}>
-        <TouchableOpacity>
-          {/*Donute Button Image */}
+        {/* <TouchableOpacity>
           <Image
             source={goBack}
             style={{ width: 47, height: 47, margin: 15 }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Text style={styles.title}>비밀번호 찾기</Text>
         <TextInput
           value={email}
@@ -32,7 +31,7 @@ const auth_findPassword = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.submitBtn}
-          onPress={() => navigation.navigate("ClientDrawer")}
+          onPress={() => navigation.navigate("UserLoginPage")}
         >
         <Text style={styles.text}>전송</Text>
         </TouchableOpacity>

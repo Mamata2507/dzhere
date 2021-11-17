@@ -5,14 +5,18 @@ import UserLoginPage from "../pages/client/auth/auth_index";
 // import UserSignUpPage from "../pages/client/auth/auth_index";
 import UserFindPassword from "../pages/client/auth/auth_findPassword";
 import UserRegister from "../pages/client/auth/auth_register";
+import UserAttendPage from "../pages/client/check/check_index";
 import ClientDrawer from "./ClientDrawer";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
-const AuthStack = () => {
+
+const AuthStack = (props) => {
+  console.log('props', props);
   return (
     <Stack.Navigator
       // initialRouteName="UserLoginPage"
-      initialRouteName="UserRegister"
+      initialRouteName="UserLoginPage"
       screenOptions={{
         headerTransparent: true,
       }}
@@ -45,6 +49,15 @@ const AuthStack = () => {
           title: "", //Set Header Title
         }}
       />
+      <Stack.Screen
+        name="UserAttendPage"
+        component={UserAttendPage}
+        options={{
+          title: "", //Set Header Title
+          // headerShown: false
+        }}
+      />
+      
     </Stack.Navigator>
   );
 };
