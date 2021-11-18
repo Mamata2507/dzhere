@@ -3,6 +3,7 @@ package com.ezo.dzhereback.service;
 import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.domain.Role;
 import com.ezo.dzhereback.mapper.AuthMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Service @Slf4j
 public class AuthService implements UserDetailsService {
     private final AuthMapper authMapper;
 

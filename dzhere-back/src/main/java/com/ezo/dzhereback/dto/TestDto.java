@@ -2,11 +2,12 @@ package com.ezo.dzhereback.dto;
 
 import com.ezo.dzhereback.domain.Attend;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Time;
 import java.sql.Timestamp;
 
-@Data
+@Data @Slf4j
 @NoArgsConstructor
 @Getter
 @Setter

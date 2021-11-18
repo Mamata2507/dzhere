@@ -2,6 +2,7 @@ package com.ezo.dzhereback.mapper;
 
 import com.ezo.dzhereback.domain.Attend;
 import com.ezo.dzhereback.domain.Member;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

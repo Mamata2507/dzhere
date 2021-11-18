@@ -3,10 +3,11 @@ package com.ezo.dzhereback.service;
 import com.ezo.dzhereback.domain.Attend;
 import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.mapper.TestMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service @Slf4j
 public class TestService {
     private final TestMapper testMapper;
 

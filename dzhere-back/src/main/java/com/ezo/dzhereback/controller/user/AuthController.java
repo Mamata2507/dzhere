@@ -7,6 +7,7 @@ import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.service.AuthService;
 import com.ezo.dzhereback.jwt.TokenProvider;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 // @Controller가 아닌 @RestController 어노테이션을 사용한다.
 @RestController
 @CrossOrigin
+@Slf4j
 public class AuthController {
     private final AuthService authService;
     private final TokenProvider tokenProvider;
@@ -33,6 +35,8 @@ public class AuthController {
 
     @PostMapping("/api/user/register")
     public ResponseEntity<?> registerMember(@RequestBody AuthDto authDto){
+        // 관리자는 사전에 사용자 정보로 전화번호, 이름, auth_role, 강의, 소속 등록
+        // 사용자는 회원 가입 시 전화번호, 패스워드, 이메일 입력
         try{
             System.out.println("post : register");
             System.out.println(authDto.toString());
