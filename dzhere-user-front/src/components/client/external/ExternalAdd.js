@@ -1,156 +1,132 @@
-// import * as React from "react";
-// import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-// import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-// import NetInfo from "@react-native-community/netinfo";
-// import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { View, Text, StyleSheet, Platform } from "react-native";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { Header, Footer } from "../../common/layout";
+import { useNavigation } from "@react-navigation/core";
+// // ExternalContainer 에서 받아온다.
+const ExternalAdd = ({
+  onPressWifi,
+  onChangeLoc,
+  onSubmit,
+  wifi,
+  location,
+  LocInput
+}) => {
+  const navigation = useNavigation();
+  return (
+    <>
+      {/* // 헤더 */}
+      <Header />
+      {/* // 본문 */}
+      <View style={styles.container}>
+        <View style={styles.contents}>
+          <Text style={[{ fontSize: 20 }, styles.title]}>
+            현재 연결된 WIFI 정보 수집
+          </Text>
+          <TouchableOpacity style={styles.smallbtn} onPress={onPressWifi}>
+            <Text style={[{ fontSize: 20 }, styles.text]}>수집</Text>
+          </TouchableOpacity>
+          {wifi.ssid && wifi.bssid ? (
+            <Text style={styles.hintText}>
+              {wifi.ssid + "(" + wifi.bssid + ")"}
+            </Text>
+          ) : (
+            <Text style={styles.hintText}>WIFI 정보를 수집해주세요.</Text>
+          )}
 
-// const wifiConnect = () => {
-//   const { name, ssid, bssid } = useSelector({name, ssid, bssid});
-//   // Location.requestPermissionsAsync();
-//   NetInfo.fetch().then((state) => {
-//     console.log("SSID", state.details.ssid);
-//     console.log("ipAddress", state.details.ipAddress);
-//     console.log("BSSID", state.details.bssid);
-//     console.log("frequency", state.details.frequency);
-//     console.log("Is connected?", state.isConnected);
-//     setWifiInfo(state.details.ssidme, state.details.bssid);
-//   });
-// };
+          <Text style={[{ marginTop: 20, fontSize: 20 }, styles.title]}>
+            외부 장소의 명칭을 입력하세요.
+          </Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeLoc}
+            ref={LocInput}
+            value={location}
+            placeholder="Enter Location"
+          />
+        </View>
+        {/* // 푸터 */}
+        {wifi.ssid && wifi.bssid ? (
+          <View style={styles.flexStyle}>
+            <TouchableOpacity style={styles.btn} onPress={onSubmit}>
+              <Text style={[{ fontSize: 22 }, styles.text]}>등록</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={[{ fontSize: 22 }, styles.text]}>나가기</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={[{ fontSize: 22 }, styles.text]}>나가기</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </>
+  );
+};
 
-// const ExternalAdd = ({ props }) => {
-//   const navigation = useNavigation();
-//   return (
-//         <View style={styles.container}>
-//           <TouchableOpacity style={styles.button} onPress={wifiConnect}>
-//             <Text style={styles.text}>수집시작</Text>
-//           </TouchableOpacity>
-//           {/* <TextInput/> */}
-//           <TouchableOpacity
-//             style={styles.button}
-//             // onPress={() => navigation.navigate("AdminLoginPage")}
-//           >
-//             <Text style={styles.text}>등록</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity
-//             style={styles.button}
-//             onPress={() => props.navigation.goBack()}
-//           >
-//             <Text style={styles.text}>취소</Text>
-//           </TouchableOpacity>
-//         </View>
-//   );
-// };
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  contents: {
+    margin: Platform.OS === "android" ? 20 : 50,
+    width: Platform.OS === "android" ? "90%" : "80%",
+    height: Platform.OS === "android" ? 400 : 500,
+    backgroundColor: "#CEEDFF",
+    marginTop: 50,
+  },
+  btn: {
+    backgroundColor: "#5AA0C8",
+    borderRadius: 10,
+    width: Platform.OS === "android" ? 155 : "50%",
+    margin: 10,
+    alignItems: "center",
+    paddingVertical: 8,
+  },
+  smallbtn: {
+    backgroundColor: "#5AA0C8",
+    borderRadius: 10,
+    width: Platform.OS === "android" ? 80 : "50%",
+    margin: 10,
+    alignItems: "center",
+  },
+  flexStyle: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+    margin: 10,
+  },
+  hintText: {
+    color: "#5AA0C8",
+    margin: 10,
+    fontSize: 18,
+    fontWeight: "400",
+  },
+  title: {
+    color: "black",
+    margin: 10,
+  },
+  input: {
+    fontSize: 22,
+    borderColor: "#5AA0C8",
+    borderWidth: 1.5,
+    flexDirection: "row",
+    borderRadius: 5,
+    margin: 5,
+    padding: 5,
+  },
+});
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   button: {
-//     backgroundColor: "#8DC1FF",
-//     borderRadius: 20,
-//     marginBottom: 20,
-//     paddingHorizontal: 30,
-//     padding: 15,
-//   },
-//   text: {
-//     color: "white",
-//     fontSize: 25,
-//     fontWeight: "bold",
-//   },
-// });
-
-// export default ExternalAdd;
-
-
-// // const btnevent = async () => {
-// //   const permission = await Expo.Permissions.getAsync(Expo.Permissions.CONTACTS);
-// //   if (permission.status !== "granted") {
-// //     return;
-// //   }
-// //   const { data } = await Contacts.getContactsAsync({
-// //     fields: [Contacts.Fields.PhoneNumbers],
-// //   });
-// //   this.setState({ contacs: data });
-// // };
-// // const wifiManage = async () => {
-// //   WifiManager.connectToProtectedSSID(ssid, password, isWep).then(
-
-// //     () => {
-// //       console.log("Connected successfully!");
-// //     },
-// //     () => {
-// //       console.log("Connection failed!");
-// //     }
-// //   );
-
-// //   WifiManager.getCurrentWifiSSID().then(
-// //     (ssid) => {
-// //       console.log("Your current connected wifi SSID is " + ssid);
-// //     },
-// //     () => {
-// //       console.log("Cannot get current SSID!");
-// //     }
-// //   );
-// // };
-
-// // const ConnectToNetwork = async() => {
-// // WifiManager.setEnabled(true);
-// // WifiManager.disconnect();
-// //WifiManager.forceWifiUsage(true);
-
-// //   PermissionsAndroid.request(
-// //     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-// //     {
-// //       title: "",
-// //       message: "",
-// //       buttonNegative: "",
-// //       buttonPositive: "",
-// //     }
-// //   ).then((granted) => {
-// //     //console.log(granted);
-// //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-// //       //console.log("granted");
-// //       RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-// //         interval: 10000,
-// //         fastInterval: 5000,
-// //       })
-// //         .then((data) => {
-// //           // WifiManager.connectToProtectedSSID(
-// //           //   "YourSSIDName",
-// //           //   "YourPassword",
-// //           //   false
-// //           // ).then(
-// //           //   () => {
-// //           //     console.log("connectToProtectedSSID successfully!");
-// //           //   },
-// //           //   (reason) => {
-// //           //     console.log("connectToProtectedSSID failed!");
-// //           //     console.log(reason);
-// //           //   }
-// //           // );
-// //           // console.log("location enabled");
-// //           WifiManager.connectToProtectedSSID("", "", false)
-// //           WifiManager.getCurrentWifiSSID().then(
-// //             (ssid) => {
-// //               if (ssid == "YourSSIDName") {
-// //               } else {
-// //               }
-// //               console.log("Your current connected wifi SSID is " + ssid);
-// //             },
-// //             () => {
-// //               console.log("Cannot get current SSID!");
-// //             }
-// //           );
-// //         })
-// //         .catch((err) => {
-// //           console.log("not permitted to enable location");
-// //         });
-// //     } else {
-// //       console.log("not granted");
-// //       // Permission denied
-// //     }
-// //     // expected output: "Success!"
-// //   });
-// // };
+export default ExternalAdd;

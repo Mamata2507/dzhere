@@ -1,50 +1,55 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 // import styled from "styled-components/native";
-// import PropTypes from "prop-types";
-// import IconButton from "../../common/IconButton";
-// import { images } from "../../common/images";
+import { View, Text, StyleSheet, Platform } from "react-native";
+import PropTypes from "prop-types";
+import IconButton from "../../common/IconButton";
+import { images } from "../../common/images";
 
 // const Container = styled.View`
+//   margin-left: 10px;
 //   flex-direction: row;
-//   align-items: center;
-//   border-radius: 10px;
-//   padding: 5px;
-//   margin: 3px 0px;
+//   display: flex;
 // `;
-
 // const Contents = styled.Text`
+//   margin: 6px;
+//   font-size: 17px;
 //   flex: 1;
-//   font-size: 24px;
-//   color: ${({ theme, completed }) => (completed ? theme.done : theme.text)};
-//   text-decoration-line: ${({ completed }) =>
-//     completed ? "line-through" : "none"};
 // `;
 
-// const ExternalItem = ({ item, deleteTask, toggleTask }) => {
-//   return (
-//     <Container>
-//       <IconButton
-//         type={item.completed ? images.completed : images.uncompleted}
-//         id={item.id}
-//         onPressOut={toggleTask}
-//         completed={item.completed}
-//       />
-//       <Contents completed={item.completed}>{item.text}</Contents>
-//       {item.completed}
-//       <IconButton
-//         type={images.delete}
-//         id={item.id}
-//         onPressOut={deleteTask}
-//         completed={item.completed}
-//       />
-//     </Container>
-//   );
-// };
+const ExternalItem = ({ item }) => {
+  return (
+    <View style={styles.container}>
+      {/* <IconButton
+        type={item.accept == 1 ? images.completed : images.uncompleted}
+        id={item.id}
+      /> */}
+      <Text style={styles.contents}>{item.id}</Text>
+      <Text style={styles.contents}>{item.name}</Text>
+      <Text style={styles.contents}>{item.ssid}</Text>
+      <Text style={styles.contents}>
+        {item.accept == 1 ? "승인완료" : "승인대기"}
+      </Text>
+      <Text style={styles.contents}>
+      <IconButton type={images.delete} id={item.id} /></Text>
+    </View>
+  );
+};
 
-// ExternalItem.propTypes = {
-//   item: PropTypes.object.isRequired,
-//   deleteTask: PropTypes.func.isRequired,
-//   toggleTask: PropTypes.func.isRequired,
-// };
+const styles = StyleSheet.create({
+  container: {
+    marginLeft: Platform.OS === 'android' ? 10 : "5%",
+    flexDirection: "row",
+    display: "flex",
+  },
+  contents: {
+    margin: Platform.OS === 'android' ? 6 : "2%",
+    fontSize: 17,
+    flex: 1,
+  },
+});
+ExternalItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  //   deleteTask: PropTypes.func.isRequired,
+};
 
-// export default ExternalItem;
+export default ExternalItem;

@@ -3,7 +3,6 @@
 
 import * as React from "react";
 import { Button, View, Text, SafeAreaView } from "react-native";
-import { firstScreenStack, Sidebar } from '../../../components/common/SideBar';
 const check_index = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>

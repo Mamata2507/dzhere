@@ -10,8 +10,8 @@ import ListPage from "../../pages/client/list/ListPage";
 import ExternalPage from "../../pages/client/external/ExternalPage";
 import MyPage from "../../pages/client/myinfo/myinfo_index";
 import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
-// import ExternalForm from "../../pages/client/external/ExternalForm";
-
+import ExternalForm from "../../pages/client/external/ExternalForm";
+import ExternalAdd from "../client/external/ExternalAdd";
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
 
@@ -94,8 +94,8 @@ export const thirdScreenStack = ({ navigation }) => {
         }}
       />
       <Stack.Screen
-        name="ExternalAddContainer"
-        component={ExternalAddContainer}
+        name="ExternalForm"
+        component={ExternalForm}
         options={{
           title: "", //Set Header Title
           headerShown: true,

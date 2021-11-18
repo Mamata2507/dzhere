@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef } from "react";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import NetInfo from "@react-native-community/netinfo";
-import ExternalForm from "../../../pages/client/external/ExternalForm";
+import ExternalForm from "../../../components/client/external/ExternalAdd";
 import { setExternal } from "../../../modules/client/external/external";
 
 // ExternalContainer 에서 받아온다.
@@ -12,12 +12,10 @@ const ExternalAddContainer = () => {
   // 외부 장소명 정보를 받을 state 변수 생성
   const [locInfo, setLocInfo] = useState("");
   const [externalInfo, setExternalInfo] = useState({});
-  const [externalList, setExternalList] = useState({});
-  // const [externalInfo, setExternaInfo] = useState({});
+  // const [externalList, setExternalList] = useState({});
+  
   const dispatch = useDispatch();
-
   const LocInput = useRef();
-
   const InsertAlert = () => {
     Alert.alert(
       "해당 WIFI 를 외부 장소로 추가하시겠습니까?",
@@ -48,7 +46,7 @@ const ExternalAddContainer = () => {
     },
     [locInfo]
   );
-  console.log("setLocInfo: " + locInfo);
+  console.log(locInfo);
 
   // 등록 버튼 이벤트
   const onSubmit = () => {
@@ -57,17 +55,18 @@ const ExternalAddContainer = () => {
     const newExternalObject = {
       [ID]: { id: ID, text: externalInfo, completed: false },
     };
-    setExternalInfo(wifiInfo, locInfo);
-    console.log("setExternalInfo: " + externalInfo);
-    dispatch(setExternal(externalInfo));
+    // setExternalInfo(wifiInfo, locInfo);
+    // console.log("setExternalInfo: " + externalInfo);
+    console.log(wifiInfo.ssid, locInfo);
+    dispatch(setExternal(wifiInfo, locInfo));
     // dispatch(getLoc(locInfo));
     // dispatch(getWifi(wifiInfo));
     console.log("등록 완료");
     Alert.alert("등록이 완료되었습니다.");
-    setExternalList({ ...externalInfo, ...newExternalObject });
-    console.log("externalInfo:" + externalInfo);
+    // setExternalList({ ...externalInfo, ...newExternalObject });
+    // console.log("externalInfo:" + externalInfo);
     // dispatch(setList(externalList));
-    console.log("externalList: " + externalList);
+    // console.log("externalList: " + externalList);
     setLocInfo("");
     setwifiInfo("");
   };
@@ -94,7 +93,6 @@ const ExternalAddContainer = () => {
         ssid: state.details.ssid,
         bssid: state.details.bssid,
       });
-      console.log("setwifiInfo: " + wifiInfo);
     });
   };
 
