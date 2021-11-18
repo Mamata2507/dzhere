@@ -46,7 +46,10 @@ const AuthStack = (props) => {
         name="UserRegister"
         component={UserRegister}
         options={{
-          title: "", //Set Header Title
+          title: "회원가입", //Set Header Title
+          headerTitleAlign: "center",
+          headerTransparent: false
+          
         }}
       />
       <Stack.Screen

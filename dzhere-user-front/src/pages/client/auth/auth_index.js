@@ -8,8 +8,6 @@ import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../App";
 
-
-
 const auth_index = ({ navigation, route }) => {
   const [phone, setPhone] = React.useState('');
   const [password, setPassword] = React.useState('');

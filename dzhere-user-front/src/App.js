@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { createStackNavigator } from '@react-navigation/stack'
 import Splash from "./components/common/splash";
 import axios from "axios";
+import { Alert } from "react-native";
 
 export const AuthContext = React.createContext();
 
@@ -75,7 +76,7 @@ const App = () => {
           // userToken = await "dummy-auth-token";
           userToken = await axios({
             method: "POST",
-            url: "http://172.30.1.40:8080/api/user/login",
+            url: "http://172.22.192.1:8080/api/user/login",
             headers: {
               "X-Requested-With": "XMLHttpRequest",
             },
@@ -94,7 +95,7 @@ const App = () => {
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
-          // 토큰 저장 오류 처리
+          alert('로그인 실패!');
         }
 
         dispatch({ type: "SIGN_IN", token: userToken });
@@ -104,21 +105,23 @@ const App = () => {
         dispatch({ type: "SIGN_OUT", token: null });
       },
       signUp: async (data) => {
-        let userToken = "temp";
-        // 서버에 회원가입 데이터 보내고 토큰 받아오기
         try {
-          userToken = await "dummy-auth-token";
-        } catch (e) {
-          // 실패 시 에러 처리
+          await axios({
+            method: "POST",
+            url: "http://172.22.192.1:8080/api/user/register",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+            },
+            data: {
+              u_phone: data.phone,
+              u_pw: data.pwd,
+            },
+          }).then((res) => {
+            console.log('회원가입 성공 : ', res.data);
+          });
+        } catch (error) {
+          console.log('가입 실패 : ', error);
         }
-        // 받아온 토큰 저장
-        try {
-          await AsyncStorage.setItem("userToken", userToken);
-        } catch (e) {
-          // 토큰 저장 오류 처리
-        }
-
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
       getToken: () => {
         return AsyncStorage.getItem("userToken");
