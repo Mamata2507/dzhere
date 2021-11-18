@@ -2,7 +2,6 @@ import React from "react";
 import AuthStack from "./navigations/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
-import { Sidebar } from "./components/common/SideBar";
 import {enableScreens} from 'react-native-screens';
 const prefix = Linking.createURL('/');
 

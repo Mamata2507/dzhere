@@ -1,17 +1,16 @@
 import "react-native-gesture-handler";
-
 import * as React from "react";
 import { View, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import menubar from "../../../assets/menubar.png";
 import CheckPage from "../../pages/client/check/check_index";
-import ListPage from "../../pages/client/list/ListPage";
+import ListPage from "../../pages/client/list/list_index";
 import ExternalPage from "../../pages/client/external/ExternalPage";
 import MyPage from "../../pages/client/myinfo/myinfo_index";
-import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
 import ExternalForm from "../../pages/client/external/ExternalForm";
-import ExternalAdd from "../client/external/ExternalAdd";
+// import ExternalAdd from "../client/external/ExternalAdd";
+// import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
 
