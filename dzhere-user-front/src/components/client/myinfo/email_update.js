@@ -10,7 +10,8 @@ export const Contents = () => {
     const navigation = useNavigation();
     AsyncStorage.setItem('u_phone', '01023454710');
     const [data, setData] = useState([])
-    //const email = useSelector((state) => state.email);;
+    const [email, setEmail] = useState([])
+    //const email = useSelector((state) =>ate.email);;
     //const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,43 +23,12 @@ export const Contents = () => {
 
         axios({
           method: "GET",
-          url: "http://172.29.240.1:8080/api/getEmail",
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-          },
-          data: {
-            u_phone: LocalData,
-          },
+          url: "http://172.29.240.1:8080/api/getEmail/"+LocalData,
         }).then((res) => {
-          return res.data;
+          let LocalEmail = res.data.data.u_email;
+          setEmail(LocalEmail);
+          //return res.data.data.u_email;
         });
-
-        // //스프링 부트 -> 맵핑하기
-        // axios.get('http://172.29.240.1:8080/api/getEmail',{
-        //   // 서버로 값 전달
-        //   u_phone: LocalData
-        // },
-        // ).then(res => {
-        //   console.log(res.data.data);
-        //   //const strStatus = response.data
-        //   //console.log(strStatus, typeof(strStatus));
-        //   //this.setState(data);
-        //   //dispatch(action_ok());
-        // }).catch((error)=>{
-        //   console.log('Api call error');
-        //   alert(error.message);
-        // })
-
-        // axios({
-        //   method:"GET",
-        //   url:'http://localhost:8080/api/getEmail',
-        //   params: {u_phone: LocalData},
-        //   headers:{
-        //     "X-Requested-With": "XMLHttpRequest"
-        //   }
-        // }).then(res => {
-        //   console.log(res.data.data);
-        // })
       }
     }
       getStorage();
@@ -74,7 +44,7 @@ export const Contents = () => {
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{data}</Text>
+          <Text style={{fontSize: 18, marginLeft: 21}}>{email}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
