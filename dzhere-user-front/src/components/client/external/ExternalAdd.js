@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { Header, Footer } from "../../common/layout";
+import { Header } from "../../common/layout";
 import { useNavigation } from "@react-navigation/core";
 // // ExternalContainer 에서 받아온다.
 const ExternalAdd = ({
@@ -10,7 +10,7 @@ const ExternalAdd = ({
   onSubmit,
   wifi,
   location,
-  LocInput
+  LocInput,
 }) => {
   const navigation = useNavigation();
   return (
@@ -27,23 +27,39 @@ const ExternalAdd = ({
             <Text style={[{ fontSize: 20 }, styles.text]}>수집</Text>
           </TouchableOpacity>
           {wifi.ssid && wifi.bssid ? (
-            <Text style={styles.hintText}>
-              {wifi.ssid + "(" + wifi.bssid + ")"}
-            </Text>
+            <>
+              <Text style={styles.hintText}>
+                {wifi.ssid + "(" + wifi.bssid + ")"}
+              </Text>
+              <Text style={[{ marginTop: 20, fontSize: 20 }, styles.title]}>
+                외부 장소의 명칭을 입력하세요.
+              </Text>
+              <TextInput
+                style={[{ borderColor: "#5AA0C8" }, styles.input]}
+                onChangeText={onChangeLoc}
+                ref={LocInput}
+                value={location}
+                maxLength={10}
+                multiline={true}
+                placeholder="Enter Location"
+              />
+            </>
           ) : (
-            <Text style={styles.hintText}>WIFI 정보를 수집해주세요.</Text>
+            <>
+              <Text style={styles.hintText}>WIFI 정보를 수집해주세요.</Text>
+              <Text style={[{ marginTop: 20, fontSize: 20 }, styles.title]}>
+                외부 장소의 명칭을 입력하세요.
+              </Text>
+              <TextInput
+                style={[
+                  { borderColor: "#AEAEAE", backgroundColor: "#AEAEAE" },
+                  styles.input,
+                ]}
+                editable={false}
+                placeholder="Enter Location"
+              />
+            </>
           )}
-
-          <Text style={[{ marginTop: 20, fontSize: 20 }, styles.title]}>
-            외부 장소의 명칭을 입력하세요.
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeLoc}
-            ref={LocInput}
-            value={location}
-            placeholder="Enter Location"
-          />
         </View>
         {/* // 푸터 */}
         {wifi.ssid && wifi.bssid ? (
@@ -120,12 +136,12 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 22,
-    borderColor: "#5AA0C8",
     borderWidth: 1.5,
     flexDirection: "row",
     borderRadius: 5,
     margin: 5,
     padding: 5,
+    textAlignVertical: "top",
   },
 });
 

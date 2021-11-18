@@ -1,72 +1,91 @@
 import React, { useState, useCallback, useRef } from "react";
 import { Alert } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NetInfo from "@react-native-community/netinfo";
 import ExternalForm from "../../../components/client/external/ExternalAdd";
-import { setExternal } from "../../../modules/client/external/external";
+import {
+  getLoc,
+  getWifi,
+  setExternal,
+} from "../../../modules/client/external/external";
 
 // ExternalContainer 에서 받아온다.
 const ExternalAddContainer = () => {
   // wifi 정보를 받을 state 변수 생성
-  const [wifiInfo, setwifiInfo] = useState({ ssid: "", bssid: "" });
+  const [wifiInfo, setwifiInfo] = useState({});
   // 외부 장소명 정보를 받을 state 변수 생성
-  const [locInfo, setLocInfo] = useState("");
-  const [externalInfo, setExternalInfo] = useState({});
-  // const [externalList, setExternalList] = useState({});
-  
+  const [locInfo, setLocInfo] = useState({});
+  const { ssid, bssid, location } = useSelector(({ external }) => ({
+    ssid: external.wifi.ssid,
+    bssid: external.wifi.bssid,
+    location: external.wifi.location,
+  }));
+
+  console.log("Test: ", ssid, bssid, location);
   const dispatch = useDispatch();
   const LocInput = useRef();
+
+  const lastAlert = () => {
+    alert("등록이 완료되었습니다.");
+    return true;
+  };
+
+  const checkTextInput = () => {
+    console.log("알람전 테스트:", locInfo.location);
+    if (locInfo.location === undefined || locInfo.location.trim().length < 1) {
+      alert("외부 장소의 명칭은 필수 입력입니다!");
+      return;
+    } else {
+      InsertAlert();
+    }
+  };
   const InsertAlert = () => {
     Alert.alert(
       "해당 WIFI 를 외부 장소로 추가하시겠습니까?",
-      locInfo + " : " + wifiInfo.ssid + "(" + wifiInfo.bssid + ")",
+      locInfo.location + " : " + wifiInfo.ssid + "(" + wifiInfo.bssid + ")",
       [
         {
           text: "취소",
           onPress: () => {
-            Alert.alert("등록이 취소되었습니다.");
-            console.log("등록 취소");
+            alert("등록이 취소되었습니다.");
           },
         },
         {
           text: "완료",
           onPress: () => {
-            onSubmit();
+            if (lastAlert() == true) {
+              onSubmit();
+            }
           },
         },
       ]
     );
   };
-
   // TextInput 값이 변경되는 이벤트
   const onChangeLoc = useCallback(
     (loc) => {
       LocInput.current;
-      setLocInfo(loc);
+      setLocInfo({ location: loc });
+      console.log("onChange:", locInfo);
     },
     [locInfo]
   );
-  console.log(locInfo);
 
   // 등록 버튼 이벤트
   const onSubmit = () => {
-    // dispatch(setExternal(wifiInfo, locInfo));
     const ID = Date.now().toString();
-    const newExternalObject = {
-      [ID]: { id: ID, text: externalInfo, completed: false },
-    };
-    // setExternalInfo(wifiInfo, locInfo);
-    // console.log("setExternalInfo: " + externalInfo);
-    console.log(wifiInfo.ssid, locInfo);
-    dispatch(setExternal(wifiInfo, locInfo));
+    // const newExternalObject = {
+    //   [ID]: { id: ID, text: externalInfo, completed: false },
+    // };
+    // const newLoc = locInfo.location === undefined ? { location: "추가" } : locInfo;
+    // setLocInfo(newLoc);
+    const newExternal = Object.assign({}, wifiInfo, locInfo);
     // dispatch(getLoc(locInfo));
     // dispatch(getWifi(wifiInfo));
     console.log("등록 완료");
-    Alert.alert("등록이 완료되었습니다.");
+    dispatch(setExternal(newExternal));
+    console.log("Test: ", ssid, bssid, location);
     // setExternalList({ ...externalInfo, ...newExternalObject });
-    // console.log("externalInfo:" + externalInfo);
-    // dispatch(setList(externalList));
-    // console.log("externalList: " + externalList);
     setLocInfo("");
     setwifiInfo("");
   };
@@ -81,26 +100,29 @@ const ExternalAddContainer = () => {
   // };
 
   // WIFI 수집 버튼 이벤트
-  const onPressWifi = () => {
+  const onPressWifi = useCallback(() => {
     console.log("WIFI 수집");
     // Location.requestPermissionsAsync();
-    NetInfo.fetch().then((state) => {
-      console.log("SSID", state.details.ssid);
-      console.log("ipAddress", state.details.ipAddress);
-      console.log("BSSID", state.details.bssid);
-      console.log("Is connected?", state.isConnected);
-      setwifiInfo({
-        ssid: state.details.ssid,
-        bssid: state.details.bssid,
-      });
-    });
-  };
+    NetInfo.fetch().then(
+      (state) => {
+        console.log("SSID", state.details.ssid);
+        console.log("ipAddress", state.details.ipAddress);
+        console.log("BSSID", state.details.bssid);
+        console.log("Is connected?", state.isConnected);
+        setwifiInfo({
+          ssid: state.details.ssid,
+          bssid: state.details.bssid,
+        });
+      },
+      [wifiInfo]
+    );
+  });
 
   return (
     <ExternalForm
       onPressWifi={onPressWifi}
       onChangeLoc={onChangeLoc}
-      onSubmit={InsertAlert}
+      onSubmit={checkTextInput}
       LocInput={LocInput}
       wifi={wifiInfo}
       location={locInfo}

@@ -6,39 +6,25 @@ import { createAction, handleActions } from "redux-actions";
 // } from "../lib/createRequestSaga";
 // import * as authAPI from "../lib/api/auth";
 
-// const CHANGE_FIELD = "external/CHANGE_FIELD";
 // const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
-// const GET_WIFI = "external/GET_WIFI";
-// const GET_LOC = "external/GET_LOC";
+const GET_WIFI = "external/GET_WIFI";
+const GET_LOC = "external/GET_LOC";
 const SET_EXTERNAL = "external/SET_EXTERNAL";
-// const SET_LIST = "external/SET_LIST"
 const initialState = {
   wifi: {
-    ssid: '',
-    bssid: '',
+    ssid: "",
+    bssid: "",
+    location: "",
   },
-  location: '',
 };
 
-// const EXTERNAL = createRequestActionTypes("external/EXTERNAL");
-
 // export const initializeForm = createAction(INITIALIZE_FORM, form => form); // register / login
-// export const getWifi = createAction(GET_WIFI, ({ wifi }) => ({
-//   wifi,
-// }));
 
-// export const getLoc = createAction(GET_LOC, ({ location }) => ({
-//   location,
-// }));
+export const getWifi = createAction(GET_WIFI, (data) => data);
 
-export const setExternal = createAction(SET_EXTERNAL,({wifi, location}) => ({
-  wifi,
-  location,
-}))
+export const getLoc = createAction(GET_LOC, (data) => data);
 
-// export const setList = createAction(SET_LIST, ({externalInfo})=>({
-//   externalInfo
-// }))
+export const setExternal = createAction(SET_EXTERNAL, (wifi) => wifi);
 
 // // saga 생성
 // const externalSaga = createRequestSaga(EXTERNAL, authAPI.login);
@@ -48,27 +34,22 @@ export const setExternal = createAction(SET_EXTERNAL,({wifi, location}) => ({
 
 export const external = handleActions(
   {
-
-    // [GET_WIFI]: (state, { payload: wifi }) => ({
+    // [GET_WIFI]: (state, { payload: data }) => ({
     //   ...state,
-    //   wifi,
+    //   ssid: data.ssid,
+    //   bssid: data.bssid,
     // }),
-    // [GET_LOC]: (state, { payload: location }) => ({
+    // [GET_LOC]: (state, { payload: data }) => ({
     //   ...state,
-    //   location
+    //   location: data.location,
     // }),
-    [SET_EXTERNAL]: (state, { payload: {wifi, location}}) => ({
-      ...state,
+    [SET_EXTERNAL]: (state, { payload: wifi }) => ({
       wifi,
-      location,
     }),
-    // [SET_LIST]: (state, { payload: {externalInfo}}) => ({
-    //   ...state,
-    //   externalInfo,
-    // })
   },
   initialState
 );
+
 
 // 로그인 성공
 //     [LOGIN_SUCCESS]: (state, { payload: external }) => ({
