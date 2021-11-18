@@ -3,25 +3,25 @@ import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'reac
 import { images } from './Images';
 import IconButton from './IconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native'
 
-export const Contents = () => {
-
-    const navigation = useNavigation();
+export const Contents = ({route}) => {
+  const u_phone = route.params;
+    // AsyncStorage.setItem('u_phone', '01023454710');
+    // const [data, setData] = useState([]);
   
-    AsyncStorage.setItem('u_phone', '01023454710');
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-      async function getStorage() {
-        if (await AsyncStorage.getItem("u_phone")) {
-          let LocalData = await AsyncStorage.getItem("u_phone");
-          //console.log(LocalData);
-          setData(LocalData);
-        }
-      }
-      getStorage();
-    }, []);
+    // useEffect(() => {
+    //   async function getStorage() {
+    //     if (await AsyncStorage.getItem("u_phone")) {
+    //       let LocalData = await AsyncStorage.getItem("u_phone");
+    //       //console.log(LocalData);
+    //       setData(LocalData);
+    //     }
+    //   }
+    //   getStorage();
+    // }, []);
   
     function onPress(){
       Alert.alert('변경');
@@ -33,7 +33,7 @@ export const Contents = () => {
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{data}</Text>
+          <Text style={{fontSize: 18, marginLeft: 21}}>{u_phone}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
@@ -50,9 +50,16 @@ export const Contents = () => {
             style={styles.btn}
             onPress={onPress}
             >
-            <Text style={[{ fontSize: 22 }, styles.text]}>변경</Text>
+            <Text style={[{ fontSize: 18 }, styles.text]}>변경</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          >
+          <Text>뒤로가기</Text>
+          </TouchableOpacity>
+          </View>
       </View>
     );
   };

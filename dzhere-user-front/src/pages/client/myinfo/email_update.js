@@ -6,6 +6,7 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import { Header, Footer } from '../../../components/client/myinfo/index';
 import { Contents } from '../../../components/client/myinfo/email_update';
 
+
 const email_update = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>

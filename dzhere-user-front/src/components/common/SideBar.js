@@ -108,7 +108,7 @@ export const thirdScreenStack = ({ navigation }) => {
   );
 }
 
-export const fourthScreenStack = ({ navigation }) => {
+export const fourthScreenStack = ({ props: params, navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="MyPage"
@@ -129,14 +129,17 @@ export const fourthScreenStack = ({ navigation }) => {
         name="MyPageEmailUpdate"
         component={MyPageEmailUpdate}
         options={{
-          title: '', //Set Header Title
+          title: '',
+          headerShown: true,
         }}
+        initialParams={params}
       />
        <Stack.Screen
         name="MyPagePassUpdate"
         component={MyPagePassUpdate}
         options={{
-          title: '', //Set Header Title
+          title: '', 
+          headerShown: true,
         }}
       />
     </Stack.Navigator>

@@ -18,6 +18,7 @@ export const Header = () => {
   );
 };
 
+
 export const Contents = () => {
 
   const navigation = useNavigation();
@@ -39,6 +40,7 @@ export const Contents = () => {
   function onPress(){
     Alert.alert('asyncStorage & 704p 참고');
   }
+
 
   return (
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>

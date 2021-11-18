@@ -3,44 +3,78 @@ import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'reac
 import { images } from './Images';
 import IconButton from './IconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
 
 export const Contents = () => {
-
     const navigation = useNavigation();
-  
     AsyncStorage.setItem('u_phone', '01023454710');
-    const [data, setData] = useState([]);
-  
+    const [data, setData] = useState([])
+    //const email = useSelector((state) => state.email);;
+    //const dispatch = useDispatch();
+
     useEffect(() => {
-      async function getStorage() {
-        if (await AsyncStorage.getItem("u_phone")) {
-          let LocalData = await AsyncStorage.getItem("u_phone");
-          //console.log(LocalData);
-          setData(LocalData);
-        }
+    async function getStorage() {
+      if (await AsyncStorage.getItem("u_phone")) {
+        let LocalData = await AsyncStorage.getItem("u_phone");
+        //console.log(LocalData);
+        setData(LocalData);
+
+        axios({
+          method: "GET",
+          url: "http://172.29.240.1:8080/api/getEmail",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          data: {
+            u_phone: LocalData,
+          },
+        }).then((res) => {
+          return res.data;
+        });
+
+        // //스프링 부트 -> 맵핑하기
+        // axios.get('http://172.29.240.1:8080/api/getEmail',{
+        //   // 서버로 값 전달
+        //   u_phone: LocalData
+        // },
+        // ).then(res => {
+        //   console.log(res.data.data);
+        //   //const strStatus = response.data
+        //   //console.log(strStatus, typeof(strStatus));
+        //   //this.setState(data);
+        //   //dispatch(action_ok());
+        // }).catch((error)=>{
+        //   console.log('Api call error');
+        //   alert(error.message);
+        // })
+
+        // axios({
+        //   method:"GET",
+        //   url:'http://localhost:8080/api/getEmail',
+        //   params: {u_phone: LocalData},
+        //   headers:{
+        //     "X-Requested-With": "XMLHttpRequest"
+        //   }
+        // }).then(res => {
+        //   console.log(res.data.data);
+        // })
       }
+    }
       getStorage();
-    }, []);
+        }, []);
   
     function onPress(){
       Alert.alert('변경');
     }
 
-    const [text, onChangeText] = React.useState(null);
     const [number, onChangeNumber] = React.useState(null);
   
     return (
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder={data}
-            keyboardType="numeric"
-          />
+          <Text style={{fontSize: 18, marginLeft: 21}}>{data}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
@@ -57,9 +91,16 @@ export const Contents = () => {
             style={styles.btn}
             onPress={onPress}
             >
-            <Text style={[{ fontSize: 22 }, styles.text]}>변경</Text>
+            <Text style={[{ fontSize: 18 }, styles.text]}>변경</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          >
+          <Text>뒤로가기</Text>
+          </TouchableOpacity>
+          </View>
       </View>
     );
   };
@@ -108,6 +149,7 @@ export const Contents = () => {
       height: 40,
       margin: 12,
       borderWidth: 1,
+      borderColor: '#CEEDFF',
       padding: 10,
       flex:1, 
       fontSize: 18
