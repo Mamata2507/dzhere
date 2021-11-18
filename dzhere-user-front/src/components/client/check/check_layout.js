@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, Image, Button, FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView } from 'react-native';
 import { ButtonView, Picker, StyledButtons, StyledSelect, StyledText } from './check_styled_layout';
+import moment from 'moment';
+import 'moment/locale/ko';  // 자동으로 한국시간을 가져온다. 하지만 명확히 하기 위해 import
 
 import logo from '../../../../assets/logo.png'
 import check_icon from '../../../../assets/check/check_black_36pt_1x.png';
 import exit_icon from '../../../../assets/check/exit.png';
+import watch_icon from '../../../../assets/check/watch.png';
 
 const items = [
-  { value: 'chocolate', label: 'Java Fullstack 과정' },
-  { value: 'strawberry', label: 'C# 스마트 팩토리' },
-  { value: 'vanilla', label: 'Javascript' },
+  { value: '1', label: 'Java Fullstack 과정' },
+  { value: '2', label: 'C# 스마트 팩토리' },
+  { value: '3', label: 'Javascript' },
 ];
 
 export const Header = () => {
@@ -23,46 +26,52 @@ export const Header = () => {
   );
 };
 
-export const Contents = () => {
-  const [checkTime, setCheckTime] = useState('');
-  const [test, setTests] = useState({});
+const Item = ( {label} ) => (
+  <View style={styles.footer}>
+    <View style={[{flexDirection:'row',} ,styles.centerAlign]}>
+      <Image source={check_icon}/>
+      <Text style={styles.footerText}>{label}</Text>
+      <Image source={watch_icon}/>    
+    </View>
+    <View style={[{flexDirection:'row'}]}>
+      <Text>출석</Text>
+    </View>
+  </View>
+);
 
-  const onCheckPressed = () => {    
-    const ID = Date.now().toString();
-    const nowTime = Date();
-    const newTestObject = {
-      [ID]: {id: ID, time: nowTime},
-    };
-    setTests({...test,...newTestObject});
-    console.log('id :',ID);
-  //  alert(newTestObject[ID].time);    
+export const Contents = ({onPressStartTime}) => {
+  
+  const renderItem = ({item}) => (
+    <Item label={item.label}/>
+  );
+  
+  const test = () => {
+    alert('test');
+    console.log(1111);
   }
 
   return (
     <View style={styles.contents}>
-      <StyledText length={checkTime.length}>출석 체크</StyledText>
+      <StyledText >출석 체크</StyledText>
       <StyledSelect items={items}/>
-      <Text style={{fontSize:20}}>{Date()}</Text>
+      <Text style={{fontSize:30}}>{moment().format('YYYY-MM-DD')}</Text>
       <Text style={{fontSize:20}}>강의 시간: </Text>
       <Text style={{fontSize:20}}>점심 시간: </Text>
       <Text style={{fontSize:20}}>출석 인정 시간: </Text>
       <Text style={{fontSize:20}}>퇴실 인정 시간: </Text>
 
       <ButtonView>
-        <StyledButtons title={'출석'} source={check_icon} onPress={onCheckPressed}/>
+        <StyledButtons title={'출석'} source={check_icon} onPress={onPressStartTime}/>
         <StyledButtons title={'조퇴'} source={check_icon}/>
         <StyledButtons title={'퇴실'} source={check_icon}/>
       </ButtonView>
-      <FlatList>        
-        { Object.values(test)
-          .map((v)=>{      
-            <StyledText>{v.time}</StyledText>
-          })
-        }
-      </FlatList>
+      <ScrollView style={{backgroundColor:'pink',width:'100%'}}>          
+        <FlatList data={items} keyExtractor={v=>v.value} renderItem={renderItem}/>
+      </ScrollView>
     </View>
   );
 };
+
 
 export const Footer = () => {
   return (
@@ -73,6 +82,10 @@ export const Footer = () => {
 };
 
 const styles = StyleSheet.create({
+  centerAlign:{
+    justifyContent: 'space-between',
+
+  },
   container: {
     width: '100%',
     alignItems: 'center',
@@ -89,9 +102,18 @@ const styles = StyleSheet.create({
     alignItems:'center',
     height: 530,
   },
-  footer: {
+  footer: {    
+    flex:1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
     backgroundColor: '#CEEDFF',
-    
+    marginBottom: 2,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  footerText:{
+    fontSize: 10,
   },
   text: {
     fontSize: 26,

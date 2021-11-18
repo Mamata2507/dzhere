@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Picker, View, Text, Image, Button, ScrollView} from "react-native";
+import { StyleSheet, Picker, View, Text, Image, Button, ScrollView, Platform } from "react-native";
 import { StyledSelect } from "./list_styled_layout";
 import { Table, Row, Rows, Cols, Cell, TableWrapper } from 'react-native-table-component';
 
@@ -40,7 +40,7 @@ export const Content = () => {
         '1', '2', '3', '4', '5', '6', '7'
     ]]);
 
-    return (
+    return (Platform.OS === "android") ? (
         <View style={styles.contents}>
             <View style={styles.contentContainer}>
                 <StyledSelect items={days} />
@@ -60,6 +60,10 @@ export const Content = () => {
                 <Text style={{fontSize:15}}>출석일 : 실시일수 - 결석일 - 미퇴실(지각, 조퇴에 따른 결석일 포함)</Text>
                 <Text style={{fontSize:15}}>결석률 : 출석일 / 총 훈련일수</Text>
             </View>
+        </View>
+    ): (
+        <View>
+            hi
         </View>
     );
 }
