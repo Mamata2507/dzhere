@@ -12,8 +12,11 @@ import com.ezo.dzhereback.dto.MyInfoDto;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.service.MyInfoService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @CrossOrigin
+@Slf4j
 public class MyInfoController {
 	private final MyInfoService myInfoService;
 	

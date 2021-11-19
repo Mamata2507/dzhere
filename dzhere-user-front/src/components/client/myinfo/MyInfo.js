@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
 import logo from '../../../../assets/logo.png'
-import { images } from './Images';
-import IconButton from './IconButton';
+import { images } from './MyInfoImages';
+import IconButton from './MyInfoIconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import UserContext, { UserConsumer } from '../../../containers/client/myinfo';
+import { useNavigation } from '@react-navigation/native'
 
 export const Header = () => {
   return (
@@ -17,26 +17,51 @@ export const Header = () => {
     </View>
   );
 };
+
+
 export const Contents = () => {
-  const { user } = useContext(UserContext);
+
+  const navigation = useNavigation();
+
+  AsyncStorage.setItem('u_phone', '01023454710');
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function getStorage() {
+      if (await AsyncStorage.getItem("u_phone")) {
+        let LocalData = await AsyncStorage.getItem("u_phone");
+        //console.log(LocalData);
+        setData(LocalData);
+      }
+    }
+    getStorage();
+  }, []);
+
+  function onPress(){
+    Alert.alert('asyncStorage & 704p 참고');
+  }
+
 
   return (
-    <UserContext.Provider>
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
-        <Text style={{fontSize: 22}}>{user.data}</Text>
+        <Text style={{fontSize: 22}}>{data}</Text>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.email}/>
         <Text style={styles.myInfoText}>이메일 변경</Text>
-        <IconButton type={images.right}/>
+        <TouchableOpacity onPress={()=>navigation.navigate('MyPageEmailUpdate')}>
+          <Image style={[{width: 20, height: 20}]} source={require('../../../../assets/myinfo/right.png')} />
+        </TouchableOpacity>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.lock}/>
         <Text style={styles.myInfoText}>비밀번호 변경</Text>
-        <IconButton type={images.right}/>
+        <TouchableOpacity onPress={()=>navigation.navigate('MyPagePassUpdate')}>
+          <Image style={[{width: 20, height: 20}]} source={require('../../../../assets/myinfo/right.png')} />
+        </TouchableOpacity>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.ring}/>
@@ -52,13 +77,12 @@ export const Contents = () => {
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.goBack()}
+          onPress={onPress}
           >
           <Text style={[{ fontSize: 22 }, styles.text]}>로그아웃</Text>
         </TouchableOpacity>
       </View>
     </View>
-    </UserContext.Provider>
   );
 };
 

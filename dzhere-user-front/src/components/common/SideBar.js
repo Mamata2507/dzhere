@@ -10,9 +10,10 @@ import menubar from '../../../assets/menubar.png'
 import CheckPage from '../../pages/client/check/check_index';
 import ListPage from '../../pages/client/list/list_index';
 import ExternalPage from '../../pages/client/external/external_index';
-import MyPage from '../../pages/client/myinfo/myinfo_index';
-import MyPageEmailUpdate from '../../pages/client/myinfo/email_update';
-import MyPagePassUpdate from '../../pages/client/myinfo/pass_update';
+
+import MyPage from '../../pages/client/myinfo/MyInfo';
+import MyPageEmailUpdate from '../../pages/client/myinfo/MyInfoEmailUpdate';
+import MyPagePassUpdate from '../../pages/client/myinfo/MyInfoPassUpdate';
 // Import Custom Sidebar
 // import CustomSidebarMenu from './CustomSidebarMenu';
 

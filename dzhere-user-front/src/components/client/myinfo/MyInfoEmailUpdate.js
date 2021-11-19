@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'react-native';
-import { images } from './Images';
-import IconButton from './IconButton';
+import { images } from './MyInfoImages';
+import IconButton from './MyInfoIconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
+import { read_myInfo } from '../../../modules/client/myinfo/myInfo'
+import { useSelector, useDispatch } from 'react-redux';
 
-export const Contents = ({route}) => {
-  const u_phone = route.params;
-    // AsyncStorage.setItem('u_phone', '01023454710');
-    // const [data, setData] = useState([]);
-  
-    // useEffect(() => {
-    //   async function getStorage() {
-    //     if (await AsyncStorage.getItem("u_phone")) {
-    //       let LocalData = await AsyncStorage.getItem("u_phone");
-    //       //console.log(LocalData);
-    //       setData(LocalData);
-    //     }
-    //   }
-    //   getStorage();
-    // }, []);
+export const Contents = () => {
+    const navigation = useNavigation();
+    AsyncStorage.setItem('u_phone', '01023454710');
+    //const [data, setData] = useState([])
+
+    const { userEmail } = useSelector(({ myinfo }) => ({
+      userEmail: myinfo.userInfo.userEmail,
+    }));
+
+    // dispatch : 리듀서로 값 전달
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+    async function getStorage() {
+      if (await AsyncStorage.getItem("u_phone")) {
+        let LocalData = await AsyncStorage.getItem("u_phone");
+
+        axios({
+          method: "GET",
+          url: "http://172.29.240.1:8080/api/getEmail/"+LocalData,
+        }).then((res) => {
+          let LocalEmail = res.data.data.u_email;
+          console.log('로컬-->'+LocalEmail);
+          //setEmail(LocalEmail)
+          dispatch(read_myInfo({userEmail: LocalEmail}));
+        });
+      }
+    }
+      getStorage();
+        }, []);
   
     function onPress(){
-      Alert.alert('변경');
+      Alert.alert('변경!');
     }
 
     const [number, onChangeNumber] = React.useState(null);
@@ -33,7 +49,7 @@ export const Contents = ({route}) => {
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{u_phone}</Text>
+          <Text style={{fontSize: 18, marginLeft: 21}}>{userEmail}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>

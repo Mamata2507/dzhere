@@ -3,9 +3,9 @@
 
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Header, Contents, Footer } from '../../../components/client/myinfo';
+import { Header, Contents, Footer } from '../../../components/client/myinfo/MyInfo';
 
-const myinfo_index = ({ navigation }) => {
+const MyInfo = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
                 <Header />
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default myinfo_index;
+export default MyInfo;

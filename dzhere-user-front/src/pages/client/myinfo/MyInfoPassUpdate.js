@@ -1,13 +1,9 @@
-// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
-// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
-
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Header, Footer } from '../../../components/client/myinfo/index';
-import { Contents } from '../../../components/client/myinfo/email_update';
+import { Header, Footer } from '../../../components/client/myinfo/MyInfo';
+import { Contents } from '../../../components/client/myinfo/MyInfoPassUpdate';
 
-
-const email_update = ({ navigation }) => {
+const MyInfoPassUpdate = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
                 <Header />
@@ -26,4 +22,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default email_update;
+export default MyInfoPassUpdate;

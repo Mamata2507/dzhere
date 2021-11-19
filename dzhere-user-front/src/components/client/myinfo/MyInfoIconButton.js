@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
-import { images } from '../myinfo/Images';
+import { images } from './MyInfoImages';
 
 const Icon = styled.Image`
   width: 30px;
@@ -10,7 +10,7 @@ const Icon = styled.Image`
   margin: 10px;
 `;
 
-const IconButton = ({ type, onPressOut, id, completed }) => {
+const IconButton = ({ type, onPressOut, id }) => {
   const _onPressOut = () => {
     onPressOut(id);
   };

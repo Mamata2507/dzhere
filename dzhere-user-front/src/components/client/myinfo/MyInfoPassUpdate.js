@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'react-native';
-import { images } from './Images';
-import IconButton from './IconButton';
+import { images } from './MyInfoImages';
+import IconButton from './MyInfoIconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
+import { read_myInfo } from '../../../modules/client/myinfo/myInfo'
+import { useSelector, useDispatch } from 'react-redux';
 
 export const Contents = () => {
     const navigation = useNavigation();
     AsyncStorage.setItem('u_phone', '01023454710');
-    const [data, setData] = useState([])
-    const [email, setEmail] = useState([])
-    //const email = useSelector((state) =>ate.email);;
-    //const dispatch = useDispatch();
+    //const [data, setData] = useState([])
+
+    const { userEmail } = useSelector(({ myinfo }) => ({
+      userEmail: myinfo.uesrInfo.userEmail,
+    }));
+
+    // dispatch : 리듀서로 값 전달
+    const dispatch = useDispatch();
 
     useEffect(() => {
     async function getStorage() {
       if (await AsyncStorage.getItem("u_phone")) {
         let LocalData = await AsyncStorage.getItem("u_phone");
-        //console.log(LocalData);
-        setData(LocalData);
 
         axios({
           method: "GET",
           url: "http://172.29.240.1:8080/api/getEmail/"+LocalData,
         }).then((res) => {
           let LocalEmail = res.data.data.u_email;
-          setEmail(LocalEmail);
-          //return res.data.data.u_email;
+          console.log('로컬-->'+LocalEmail);
+          //setEmail(LocalEmail)
+          dispatch(read_myInfo({userEmail: LocalEmail}));
         });
       }
     }
@@ -35,7 +40,7 @@ export const Contents = () => {
         }, []);
   
     function onPress(){
-      Alert.alert('변경');
+      Alert.alert('변경!');
     }
 
     const [number, onChangeNumber] = React.useState(null);
@@ -44,7 +49,7 @@ export const Contents = () => {
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{email}</Text>
+          <Text style={{fontSize: 18, marginLeft: 21}}>{userEmail}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
@@ -52,7 +57,7 @@ export const Contents = () => {
           style={styles.input}
           onChangeText={onChangeNumber}
           value={number}
-          placeholder="이메일 변경"
+          placeholder="비밀번호 변경"
           keyboardType="numeric"
           />
         </View>
