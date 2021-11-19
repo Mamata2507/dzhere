@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import * as React from "react";
 import {
   View,
@@ -12,26 +11,12 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
 
-const ExternalTemplate = () => {
+const ExternalTemplate = ({
+  wifiList,
+  navigation,
+}) => {
   const width = Dimensions.get("window").width;
-  const navigation = useNavigation();
-  const newTaskObject = {
-    // [idx]: { id: idx, name: name, ssid: ssid, bssid: bssid, accept: accept },
-    [1]: {
-      id: 1,
-      name: "wifi",
-      ssid: "IPTIME30",
-      bssid: "70:5d:cc:a9:b7:25",
-      accept: 0,
-    },
-    [2]: {
-      id: 2,
-      name: "wifi23",
-      ssid: "IPTIME31",
-      bssid: "30:4d:cc:a2:b6:22",
-      accept: 0,
-    },
-  };
+  // console.log("컴포넌트:", wifiList);
   return (
     <>
       {/* // 헤더 */}
@@ -41,8 +26,8 @@ const ExternalTemplate = () => {
         <View style={styles.contents}>
           <Text style={[{ fontSize: 20 }, styles.title]}>추가된 외부 장소</Text>
           <ScrollView width={width}>
-            {Object.values(newTaskObject).map((item) => (
-              <External key={item.id} item={item} />
+            {Object.values(wifiList).map((item) => (
+              <External key={item.e_idx} item={item} />
             ))}
           </ScrollView>
 

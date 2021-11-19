@@ -1,15 +1,14 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import NetInfo from "@react-native-community/netinfo";
-// import {NetInfo} from 'react-native';
 import ExternalForm from "../../../components/client/external/ExternalAdd";
+import { addWifi } from "../../../lib/api/external/external";
 import * as Location from "expo-location";
 import {
-  getLoc,
-  getWifi,
-  setExternal,
+  setWifi
 } from "../../../modules/client/external/external";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ExternalContainer 에서 받아온다.
 const ExternalAddContainer = () => {
@@ -17,15 +16,17 @@ const ExternalAddContainer = () => {
   const [wifiInfo, setwifiInfo] = useState({});
   // 외부 장소명 정보를 받을 state 변수 생성
   const [locInfo, setLocInfo] = useState({});
+  const [localData, setLocalData] = useState({ u_phone: "" });
   const { ssid, bssid, location } = useSelector(({ external }) => ({
     ssid: external.wifi.ssid,
     bssid: external.wifi.bssid,
     location: external.wifi.location,
   }));
 
-  console.log("Test: ", ssid, bssid, location);
   const dispatch = useDispatch();
-  const LocInput = useRef();
+  const LocInput = useRef('');
+
+  AsyncStorage.setItem("u_phone", "01072695524");
 
   const lastAlert = () => {
     alert("등록이 완료되었습니다.");
@@ -63,6 +64,7 @@ const ExternalAddContainer = () => {
       ]
     );
   };
+
   // TextInput 값이 변경되는 이벤트
   const onChangeLoc = useCallback(
     (loc) => {
@@ -73,31 +75,26 @@ const ExternalAddContainer = () => {
     [locInfo]
   );
 
+  useEffect(async () => {
+    if (await AsyncStorage.getItem("u_phone")) {
+      const phone = await AsyncStorage.getItem("u_phone");
+      setLocalData({ u_phone: phone });
+    }
+  }, []);
+
+
   // 등록 버튼 이벤트
   const onSubmit = () => {
-    const ID = Date.now().toString();
-    // const newExternalObject = {
-    //   [ID]: { id: ID, text: externalInfo, completed: false },
-    // };
     const newExternal = Object.assign({}, wifiInfo, locInfo);
-    // dispatch(getLoc(locInfo));
-    // dispatch(getWifi(wifiInfo));
+    console.log(newExternal);
     console.log("등록 완료");
-    dispatch(setExternal(newExternal));
-    console.log("Test: ", ssid, bssid, location);
+    const apiList = Object.assign({}, newExternal, localData);
+    addWifi(apiList);
+    dispatch(setWifi(newExternal));
     // setExternalList({ ...externalInfo, ...newExternalObject });
     setLocInfo("");
     setwifiInfo("");
   };
-
-  // const _saveExternal = async ({wifiInfo, locInfo}) => {
-  //   try {
-  //     await AsyncStorage.setItem('external', JSON.stringify(wifiInfo, locInfo));
-  //     setExternaInfo(wifiInfo, locInfo);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
 
   // WIFI 수집 버튼 이벤트
   const onPressWifi = useCallback(() => {

@@ -37,7 +37,7 @@ const ExternalAdd = ({
               </Text>
               <TextInput
                 style={[{ borderColor: "#5AA0C8" }, styles.input]}
-                onChangeText={onChangeLoc}
+                onChangeText={onChangeLoc}        
                 ref={LocInput}
                 value={location}
                 maxLength={10}

@@ -5,27 +5,22 @@ import { createAction, handleActions } from "redux-actions";
 //   createRequestActionTypes,
 // } from "../lib/createRequestSaga";
 // import * as authAPI from "../lib/api/auth";
-
-// const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
-// const GET_WIFI = "external/GET_WIFI";
-// const GET_LOC = "external/GET_LOC";
-const SET_EXTERNAL = "external/SET_EXTERNAL";
+const ADD_WIFI = "external/ADD_WIFI";
+const GET_EXTERNAL = "external/GET_EXTERNAL";
+const SAVE_PHONE = "external/SAVE_PHONE";
 const initialState = {
   wifi: {
     ssid: "",
     bssid: "",
     location: "",
   },
+  loclist: [],
 };
 
 // export const initializeForm = createAction(INITIALIZE_FORM, form => form); // register / login
-
-// export const getWifi = createAction(GET_WIFI, (data) => data);
-
-// export const getLoc = createAction(GET_LOC, (data) => data);
-
-export const setExternal = createAction(SET_EXTERNAL, (wifi) => wifi);
-
+export const setWifi = createAction(ADD_WIFI, wifi => wifi);
+export const getList = createAction(GET_EXTERNAL, loclist => loclist);
+export const savePhone = createAction(SAVE_PHONE, u_phone => u_phone)
 // // saga 생성
 // const externalSaga = createRequestSaga(EXTERNAL, authAPI.login);
 // export function* authSaga() {
@@ -44,13 +39,21 @@ export const external = handleActions(
     //   location: data.location,
     // }),
 
-    [SET_EXTERNAL]: (state, { payload: wifi }) => ({
+    [ADD_WIFI]: (state, { payload: wifi }) => ({
+      ...state,
       wifi,
     }),
+    [GET_EXTERNAL]: (state, { payload: loclist }) => ({
+      ...state,
+      loclist: loclist,
+    }),
+    [SAVE_PHONE]: (state, {payload: u_phone}) => ({
+      ...state,
+      u_phone: u_phone,
+    })
   },
   initialState
 );
-
 
 // 로그인 성공
 //     [LOGIN_SUCCESS]: (state, { payload: external }) => ({

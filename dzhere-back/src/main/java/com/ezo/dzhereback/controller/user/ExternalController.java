@@ -22,7 +22,7 @@ public class ExternalController {
 		this.externalService = externalService;
 	}
 	
-	@RequestMapping(value="/external/addwifi", method = RequestMethod.GET)
+	@PostMapping("/api/external/add")
 	public String addWifi(@RequestBody ExternalDto externalDto, External external){
 		String u_phone = externalDto.getU_phone();
 		System.out.println("u_phone:"+u_phone);
@@ -36,7 +36,7 @@ public class ExternalController {
 		return "Ok";
 	}
 	
-	@RequestMapping(value="/external/delwifi", method = RequestMethod.GET)
+	@PostMapping("/api/external/delete")
 	public String removeExternalId(@RequestBody ExternalDto externalDto, External external){
 		String u_phone = externalDto.getU_phone();
 		int e_idx = externalDto.getE_idx();
@@ -48,7 +48,7 @@ public class ExternalController {
 		return "Ok";
 	}
 	
-	@RequestMapping(value="/external/allwifi", method = RequestMethod.GET)
+	@PostMapping("/api/external/select")
 	public Result selectExternal(@RequestBody ExternalDto externalDto){
 		String u_phone = externalDto.getU_phone();
 		User user = externalService.findUser(u_phone); //u_id, c_id 저장
