@@ -25,9 +25,6 @@ const LoginContainer = () => {
     async function getStorage() {
       if (await AsyncStorage.getItem("u_phone")) {
         let LocalData = await AsyncStorage.getItem("u_phone");
-        dispatch(readEmail({LocalData}))
-
-
         //console.log('이메일-->'+LocalData);
         axios({
           method: "GET",

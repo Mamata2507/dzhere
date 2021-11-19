@@ -4,10 +4,12 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 
-export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => {
+export const Contents = ({ userEmail, onPress }) => {
 
     const navigation = useNavigation();
     
+    const [number, onChangeNumber] = React.useState(null);
+  
     return (
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
@@ -18,8 +20,8 @@ export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => 
           <IconButton type={images.email}/>
           <TextInput
           style={styles.input}
-          onChangeText={onChangeNewEmail}
-          value={newEmail}
+          onChangeText={onChangeNumber}
+          value={number}
           placeholder="이메일 변경"
           keyboardType="numeric"
           />

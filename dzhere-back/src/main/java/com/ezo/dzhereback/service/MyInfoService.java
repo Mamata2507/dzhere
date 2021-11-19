@@ -14,6 +14,8 @@ public class MyInfoService {
 	}
 	
 	public User getEmail(String u_phone) {return myInfoMapper.getEmail(u_phone);}
+	
+	public int updateEmail(String u_phone, String u_email) {return myInfoMapper.updateEmail(u_phone, u_email);}
 
 
 }

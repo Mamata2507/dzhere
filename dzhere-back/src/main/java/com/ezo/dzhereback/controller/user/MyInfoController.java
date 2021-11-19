@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +36,24 @@ public class MyInfoController {
 				.build();
 		
 		return new Result(result);
+	}
+		
+	@PostMapping("/api/updateEmail/{u_phone}/{u_email}")
+	public Result updateEmail(@PathVariable("u_phone") String u_phone,
+							  @PathVariable("u_email") String u_email) {
+		System.out.println("이거----->"+u_phone);
+		System.out.println("이거----->"+u_email);
+		int updateResult = myInfoService.updateEmail(u_phone, u_email);
+		if(updateResult>0) {
+			User email = myInfoService.getEmail(u_phone);
+			MyInfoDto result = MyInfoDto.builder()
+					.u_phone(email.getU_phone())
+					.u_email(email.getU_email())
+					.build();
+			return new Result(result);
+		} else {
+			System.out.println("업데이트 실패");
+			return new Result(null);
+		}
 	}
 }
