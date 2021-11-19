@@ -2,7 +2,9 @@ import React, { useState, useCallback, useRef } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import NetInfo from "@react-native-community/netinfo";
+// import {NetInfo} from 'react-native';
 import ExternalForm from "../../../components/client/external/ExternalAdd";
+import * as Location from "expo-location";
 import {
   getLoc,
   getWifi,
@@ -102,9 +104,8 @@ const ExternalAddContainer = () => {
   // WIFI 수집 버튼 이벤트
   const onPressWifi = useCallback(() => {
     console.log("WIFI 수집");
-    // Location.requestPermissionsAsync();
-    NetInfo.fetch().then(
-      (state) => {
+    if (Location.requestForegroundPermissionsAsync()) {
+      NetInfo.fetch("wifi").then((state) => {
         console.log("SSID", state.details.ssid);
         console.log("ipAddress", state.details.ipAddress);
         console.log("BSSID", state.details.bssid);
@@ -113,10 +114,9 @@ const ExternalAddContainer = () => {
           ssid: state.details.ssid,
           bssid: state.details.bssid,
         });
-      },
-      [wifiInfo]
-    );
-  });
+      });
+    }
+  }, [wifiInfo]);
 
   return (
     <ExternalForm

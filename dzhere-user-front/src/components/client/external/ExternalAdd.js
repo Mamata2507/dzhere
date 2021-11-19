@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Platform } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../../common/layout";
 import { useNavigation } from "@react-navigation/core";
+
 // // ExternalContainer 에서 받아온다.
 const ExternalAdd = ({
   onPressWifi,

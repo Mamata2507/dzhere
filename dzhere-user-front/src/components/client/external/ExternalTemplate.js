@@ -9,14 +9,11 @@ import {
   ScrollView,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { Header, Footer } from "../../common/layout";
+import { Header } from "../../common/layout";
 import External from "./ExternalList";
 
 const ExternalTemplate = () => {
   const width = Dimensions.get("window").width;
-  // const externalList = useSelector(({external})=>({
-  //   externalList: external.externalList,
-  // }));
   const navigation = useNavigation();
   const newTaskObject = {
     // [idx]: { id: idx, name: name, ssid: ssid, bssid: bssid, accept: accept },
@@ -43,7 +40,6 @@ const ExternalTemplate = () => {
       <View style={styles.container}>
         <View style={styles.contents}>
           <Text style={[{ fontSize: 20 }, styles.title]}>추가된 외부 장소</Text>
-          {/* <Text>{newTaskObject}</Text> */}
           <ScrollView width={width}>
             {Object.values(newTaskObject).map((item) => (
               <External key={item.id} item={item} />

@@ -23,10 +23,12 @@ const App = () => {
   //   MyPage: {path: "mypage"},
   //   ExternalPage: {path: "external"},
   // };
+
   const linking = {
     prefixes: [prefix],
     config,
   };
+  
   return (
     <NavigationContainer linking={linking}>
       <AuthStack />
