@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-na
 import logo from '../../../../assets/logo.png'
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
 
 export const Header = () => {
@@ -18,36 +17,16 @@ export const Header = () => {
   );
 };
 
-
-export const Contents = () => {
+export const Contents = ({ userPhone, onPress }) => {
 
   const navigation = useNavigation();
-
-  AsyncStorage.setItem('u_phone', '01023454710');
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-        //console.log(LocalData);
-        setData(LocalData);
-      }
-    }
-    getStorage();
-  }, []);
-
-  function onPress(){
-    Alert.alert('asyncStorage & 704p 참고');
-  }
-
 
   return (
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
-        <Text style={{fontSize: 22}}>{data}</Text>
+        <Text style={{fontSize: 22}}>{userPhone}</Text>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.email}/>
@@ -69,10 +48,10 @@ export const Contents = () => {
         <IconButton type={images.on}/>
       </View>
       <View style={styles.myInfo}>
-        <Text style={styles.myInfoText}>이용약관</Text>
+        <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>이용약관</Text>
       </View>
       <View style={styles.myInfo}>
-        <Text style={styles.myInfoText}>개인정보 처리방침</Text>
+        <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>개인정보 처리방침</Text>
       </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity

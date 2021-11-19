@@ -1,24 +1,42 @@
 import { createAction, handleActions } from "redux-actions";
 
-const READ_MYINFO = "myinfo/READ_MYINFO";
+const READPHONE = "myinfo/READPHONE";
+const READEMAIL = "myinfo/READEMAIL";
 
 const initialState = {
-  userInfo: {
-    userEmail: "",
-    userPhone: "",
-    //bssid: "",
+  readEmail: {
+    userEmail: '',
   },
+  readPhone: {
+    userPhone: '',
+  }
 };
 
-export const read_myInfo = createAction(READ_MYINFO, (userInfo) => userInfo);
+export const readPhone = createAction(READPHONE, userPhone => userPhone);
+export const readEmail = createAction(READEMAIL, userEmail => userEmail);
 
 export const myinfo = handleActions(
   {
-    [READ_MYINFO]: (state, { payload: userInfo }) => ({
-      ...state,
-      userInfo,
+  [READEMAIL]: (state, { payload: readEmail }) => ({
+    ...state,
+    readEmail,
     }),
+  [READPHONE]: (state, { payload: readPhone }) => ({
+    ...state,
+    readPhone,
+    }),    
   },
   initialState
 );
+
+
+// export const myinfo1 = handleActions(
+//   {
+//     [READ_MYINFO]: (state, { payload: userInfo }) => ({
+//       //...state,
+//       userInfo,
+//     }),
+//   },
+//   initialState
+// );
 

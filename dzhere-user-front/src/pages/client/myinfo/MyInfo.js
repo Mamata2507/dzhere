@@ -3,13 +3,14 @@
 
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Header, Contents, Footer } from '../../../components/client/myinfo/MyInfo';
+import { Header, Footer } from '../../../components/client/myinfo/MyInfo';
+import MyInfoContainer from '../../../containers/client/myinfo/MyInfoContainer';
 
 const MyInfo = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
                 <Header />
-                <Contents />
+                <MyInfoContainer />
                 <Footer />
         </SafeAreaView>
     );

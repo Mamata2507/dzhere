@@ -1,48 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Alert, TextInput } from 'react-native';
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
-import { read_myInfo } from '../../../modules/client/myinfo/myInfo'
-import { useSelector, useDispatch } from 'react-redux';
 
-export const Contents = () => {
+export const Contents = ({ userEmail, onPress }) => {
+
     const navigation = useNavigation();
-    AsyncStorage.setItem('u_phone', '01023454710');
-    //const [data, setData] = useState([])
-
-    const { userEmail } = useSelector(({ myinfo }) => ({
-      userEmail: myinfo.userInfo.userEmail,
-    }));
-
-    // dispatch : 리듀서로 값 전달
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-
-        axios({
-          method: "GET",
-          url: "http://172.29.240.1:8080/api/getEmail/"+LocalData,
-        }).then((res) => {
-          let LocalEmail = res.data.data.u_email;
-          console.log('로컬-->'+LocalEmail);
-          //setEmail(LocalEmail)
-          dispatch(read_myInfo({userEmail: LocalEmail}));
-        });
-      }
-    }
-      getStorage();
-        }, []);
-  
-    function onPress(){
-      Alert.alert('변경!');
-    }
-
+    
     const [number, onChangeNumber] = React.useState(null);
   
     return (

@@ -1,26 +1,25 @@
 import { Contents } from '../../../components/client/myinfo/MyInfo'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Alert } from 'react-native';
+import { readPhone } from '../../../modules/client/myinfo/myInfo'
 
 const LoginContainer = () => {
 
+    const dispatch = useDispatch();
+
     AsyncStorage.setItem('u_phone', '01023454710');
-    //const [data, setData] = useState([]);
 
     const { userPhone } = useSelector(({ myinfo }) => ({
-      userPhone: myinfo.userInfo.userPhone,
+      userPhone: myinfo.readPhone.userPhone,
     }));
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
       async function getStorage() {
-        if (await AsyncStorage.getItem("u_phone")) {
-          let LocalPhone = await AsyncStorage.getItem("u_phone");
-          console.log(LocalData);
-          //setData(LocalPhone);
-          dispatch(read_myInfo({userPhone: LocalPhone}));
+          if (await AsyncStorage.getItem("u_phone")) {
+          let LocalData = await AsyncStorage.getItem("u_phone");
+          dispatch(readPhone({userPhone: LocalData}));
         }
       }
       getStorage();
@@ -31,11 +30,9 @@ const LoginContainer = () => {
     }
     
     return (
-        // Login -> 컨테이너의 자식 컴포넌트
         <Contents
-            // 자식에게 값 전달
             userPhone={userPhone}
-            //onClick={()=>{onClick()}}
+            onPress={onPress}
         />
     );
 };
