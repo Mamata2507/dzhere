@@ -11,15 +11,14 @@ import MyPage from "../../pages/client/myinfo/myinfo_index";
 import ExternalForm from "../../pages/client/external/ExternalForm";
 // import ExternalAdd from "../client/external/ExternalAdd";
 // import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
+
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
 
 export const NavigationDrawerStructure = (props) => {
-  console.log("토글");
   //Structure for the navigatin Drawer
   function toggleDrawer() {
     //Props to open/close the drawer
-    console.log("함수 실행");
     props.navigationProps.toggleDrawer();
   };
 
@@ -55,7 +54,6 @@ export const firstScreenStack = ({ navigation }) => {
 
 export const secondScreenStack = ({ navigation }) => {
   return (
-    // Link to
     <Stack.Navigator
       initialRouteName="ListPage"
       screenOptions={{
@@ -69,7 +67,7 @@ export const secondScreenStack = ({ navigation }) => {
         name="ListPage"
         component={ListPage}
         options={{
-          title: "", //Set Header Title
+          title: "",
         }}
       />
     </Stack.Navigator>
@@ -85,7 +83,7 @@ export const thirdScreenStack = ({ navigation }) => {
         name="ExternalPage"
         component={ExternalPage}
         options={{
-          title: "", //Set Header Title
+          title: "",
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
@@ -96,7 +94,7 @@ export const thirdScreenStack = ({ navigation }) => {
         name="ExternalForm"
         component={ExternalForm}
         options={{
-          title: "", //Set Header Title
+          title: "",
           headerShown: true,
           headerTransparent: true,
         }}
@@ -120,7 +118,7 @@ export const fourthScreenStack = ({ navigation }) => {
         name="MyPage"
         component={MyPage}
         options={{
-          title: "", //Set Header Title
+          title: "",
         }}
       />
     </Stack.Navigator>

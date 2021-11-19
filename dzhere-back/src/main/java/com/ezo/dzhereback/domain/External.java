@@ -1,5 +1,4 @@
 package com.ezo.dzhereback.domain;
-
 import lombok.*;
 
 @Data

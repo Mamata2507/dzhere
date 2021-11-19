@@ -79,8 +79,6 @@ const ExternalAddContainer = () => {
     // const newExternalObject = {
     //   [ID]: { id: ID, text: externalInfo, completed: false },
     // };
-    // const newLoc = locInfo.location === undefined ? { location: "추가" } : locInfo;
-    // setLocInfo(newLoc);
     const newExternal = Object.assign({}, wifiInfo, locInfo);
     // dispatch(getLoc(locInfo));
     // dispatch(getWifi(wifiInfo));
@@ -104,6 +102,7 @@ const ExternalAddContainer = () => {
   // WIFI 수집 버튼 이벤트
   const onPressWifi = useCallback(() => {
     console.log("WIFI 수집");
+    // 위치 권한에 접근할 수 있게 허용해주는 함수 -> ssid 를 꺼내올 수 있다.
     if (Location.requestForegroundPermissionsAsync()) {
       NetInfo.fetch("wifi").then((state) => {
         console.log("SSID", state.details.ssid);
