@@ -39,7 +39,7 @@ export const allWifi = (data) => {
   console.log("외부장소 리스트 API 호출");
   return api
     .post("/api/external/select", { u_phone: data.u_phone })
-    .then(function (response) {
+    .then(response => () => {
       console.log("data", response.data.data);
       return response.data.data;
     })

@@ -5,9 +5,7 @@ import NetInfo from "@react-native-community/netinfo";
 import ExternalForm from "../../../components/client/external/ExternalAdd";
 import { addWifi } from "../../../lib/api/external/external";
 import * as Location from "expo-location";
-import {
-  setWifi
-} from "../../../modules/client/external/external";
+import { setWifi } from "../../../modules/client/external/external";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ExternalContainer 에서 받아온다.
@@ -17,6 +15,7 @@ const ExternalAddContainer = () => {
   // 외부 장소명 정보를 받을 state 변수 생성
   const [locInfo, setLocInfo] = useState({});
   const [localData, setLocalData] = useState({ u_phone: "" });
+  const wifiList = useSelector(({ external }) => external.loclist);
   const { ssid, bssid, location } = useSelector(({ external }) => ({
     ssid: external.wifi.ssid,
     bssid: external.wifi.bssid,
@@ -24,10 +23,17 @@ const ExternalAddContainer = () => {
   }));
 
   const dispatch = useDispatch();
-  const LocInput = useRef('');
+  const LocInput = useRef("");
 
   AsyncStorage.setItem("u_phone", "01072695524");
 
+  useEffect(async () => {
+    if (await AsyncStorage.getItem("u_phone")) {
+      const phone = await AsyncStorage.getItem("u_phone");
+      setLocalData({ u_phone: phone });
+    }
+  }, []);
+  
   const lastAlert = () => {
     alert("등록이 완료되었습니다.");
     return true;
@@ -56,9 +62,8 @@ const ExternalAddContainer = () => {
         {
           text: "완료",
           onPress: () => {
-            if (lastAlert() == true) {
-              onSubmit();
-            }
+            onSubmit();
+            lastAlert();
           },
         },
       ]
@@ -75,14 +80,6 @@ const ExternalAddContainer = () => {
     [locInfo]
   );
 
-  useEffect(async () => {
-    if (await AsyncStorage.getItem("u_phone")) {
-      const phone = await AsyncStorage.getItem("u_phone");
-      setLocalData({ u_phone: phone });
-    }
-  }, []);
-
-
   // 등록 버튼 이벤트
   const onSubmit = () => {
     const newExternal = Object.assign({}, wifiInfo, locInfo);
@@ -95,7 +92,6 @@ const ExternalAddContainer = () => {
     setLocInfo("");
     setwifiInfo("");
   };
-
   // WIFI 수집 버튼 이벤트
   const onPressWifi = useCallback(() => {
     console.log("WIFI 수집");

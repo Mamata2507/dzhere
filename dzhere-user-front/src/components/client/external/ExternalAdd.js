@@ -41,7 +41,6 @@ const ExternalAdd = ({
                 ref={LocInput}
                 value={location}
                 maxLength={10}
-                multiline={true}
                 placeholder="Enter Location"
               />
             </>

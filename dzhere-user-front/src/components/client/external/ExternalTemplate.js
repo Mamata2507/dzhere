@@ -11,10 +11,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
 
-const ExternalTemplate = ({
-  wifiList,
-  navigation,
-}) => {
+const ExternalTemplate = ({ wifiList, navigation }) => {
   const width = Dimensions.get("window").width;
   // console.log("컴포넌트:", wifiList);
   return (
@@ -26,9 +23,15 @@ const ExternalTemplate = ({
         <View style={styles.contents}>
           <Text style={[{ fontSize: 20 }, styles.title]}>추가된 외부 장소</Text>
           <ScrollView width={width}>
-            {Object.values(wifiList).map((item) => (
-              <External key={item.e_idx} item={item} />
-            ))}
+            {wifiList ? (
+              Object.values(wifiList).map((item) => (
+                <External key={item.e_idx} item={item} />
+              ))
+            ) : (
+              <Text style={[{ fontSize: 20 }, styles.title]}>
+                리스트를 불러오는 중입니다..
+              </Text>
+            )}
           </ScrollView>
 
           {/* // 푸터 */}
