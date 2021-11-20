@@ -40,7 +40,7 @@ const ExternalAddContainer = () => {
   };
 
   const checkTextInput = () => {
-    console.log("알람전 테스트:", locInfo.location);
+    // console.log("알람전 테스트:", locInfo.location);
     if (locInfo.location === undefined || locInfo.location.trim().length < 1) {
       alert("외부 장소의 명칭은 필수 입력입니다!");
       return;
@@ -75,7 +75,7 @@ const ExternalAddContainer = () => {
     (loc) => {
       LocInput.current;
       setLocInfo({ location: loc });
-      console.log("onChange:", locInfo);
+      // console.log("onChange:", locInfo);
     },
     [locInfo]
   );
@@ -83,7 +83,7 @@ const ExternalAddContainer = () => {
   // 등록 버튼 이벤트
   const onSubmit = () => {
     const newExternal = Object.assign({}, wifiInfo, locInfo);
-    console.log(newExternal);
+    // console.log(newExternal);
     console.log("등록 완료");
     const apiList = Object.assign({}, newExternal, localData);
     addWifi(apiList);

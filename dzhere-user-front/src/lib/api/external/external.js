@@ -11,7 +11,7 @@ export const addWifi = (data) => {
       u_phone: data.u_phone,
     })
     .then(function (response) {
-      console.log(response);
+      // console.log(response);
     })
     .catch(function (error) {
       console.log(error);
@@ -20,14 +20,14 @@ export const addWifi = (data) => {
 
 // 외부장소 삭제
 export const delWifi = (data) => {
-  console.log("외부장소 삭제 API 호출");
+  console.log("외부장소 삭제 API 호출", data);
   api
     .post("/api/external/delete", {
-      e_idx: data.idx,
+      e_idx: data.id,
       u_phone: data.u_phone,
     })
     .then(function (response) {
-      console.log(response.data);
+      // console.log(response.data.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -40,7 +40,7 @@ export const allWifi = (data) => {
   return api
     .post("/api/external/select", { u_phone: data.u_phone })
     .then(response => () => {
-      console.log("data", response.data.data);
+      // console.log("data", response.data.data);
       return response.data.data;
     })
     .catch(function (error) {

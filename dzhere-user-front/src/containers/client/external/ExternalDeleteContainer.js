@@ -1,18 +1,36 @@
-import React from "react";
-import { TouchableOpacity, Image, StyleSheet, Platform } from "react-native";
+import React, { useState } from "react";
+import {
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Platform,
+  Alert,
+} from "react-native";
 // import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { images } from "../../../components/common/images";
+import { delWifi } from "../../../lib/api/external/external";
+import { deleteWifi } from "../../../modules/client/external/external";
+import { useDispatch } from "react-redux";
+const DeleteButton = ({ phone, type, item }) => {
+  const dispatch = useDispatch();
+  const [id, setId] = useState({});
 
-const DeleteButton = ({ type, id }) => {
+  // AsyncStorage.setItem("u_phone", "01072695524");
+
+  // async function getStorage() {
+  //   console.log("로컬 스토리지 접근");
+  //   const phone = await AsyncStorage.getItem("u_phone");
+  //   setLocalData({ u_phone: phone });
+  //   console.log("phone", phone);
+  // }
+
   // 삭제 버튼 이벤트
   const onDelete = () => {
-    const newExternal = Object.assign({}, wifiInfo, locInfo);
-    console.log(newExternal);
-    console.log("삭제 완료");
-    dispatch(setWifi(newExternal));
-    const apiList = Object.assign({}, newExternal, localData);
-    delWifi(apiList);
+    const apiData = Object.assign({}, { id: item.e_idx }, phone);
+    delWifi(apiData);
+    dispatch(deleteWifi({ id: item.e_idx }));
+    console.log(phone, id);
   };
 
   const lastAlert = () => {
@@ -21,22 +39,23 @@ const DeleteButton = ({ type, id }) => {
   };
 
   const deleteAlert = () => {
+    console.log("삭제 완료");
     Alert.alert(
       "해당 외부 장소를 삭제하시겠습니까?",
-      locInfo.location + " : " + wifiInfo.ssid + "(" + wifiInfo.bssid + ")",
+      "외부장소: " + item.e_idx + item.e_name + "(" + item.e_ssid + ")",
       [
         {
           text: "취소",
           onPress: () => {
             alert("삭제를 취소하였습니다.");
+            console.log("삭제 취소");
           },
         },
         {
           text: "확인",
           onPress: () => {
-            if (lastAlert() == true) {
-              onDelete();
-            }
+            onDelete();
+            lastAlert();
           },
         },
       ]
@@ -58,9 +77,6 @@ const styles = StyleSheet.create({
 });
 DeleteButton.propTypes = {
   type: PropTypes.oneOf(Object.values(images)).isRequired,
-  // onPressOut: PropTypes.func,
-  id: PropTypes.string,
-  // completed: PropTypes.bool,
 };
 
 export default DeleteButton;

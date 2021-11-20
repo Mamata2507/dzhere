@@ -8,6 +8,7 @@ import { createAction, handleActions } from "redux-actions";
 const ADD_WIFI = "external/ADD_WIFI";
 const GET_EXTERNAL = "external/GET_EXTERNAL";
 const SAVE_PHONE = "external/SAVE_PHONE";
+const DEL_EXTERNAL = "external/DEL_EXTERNAL";
 const initialState = {
   wifi: {
     ssid: "",
@@ -15,11 +16,13 @@ const initialState = {
     location: "",
   },
   loclist: [],
+  id: 0,
 };
 
 // export const initializeForm = createAction(INITIALIZE_FORM, form => form); // register / login
 export const setWifi = createAction(ADD_WIFI, wifi => wifi);
 export const getList = createAction(GET_EXTERNAL, loclist => loclist);
+export const deleteWifi = createAction(DEL_EXTERNAL, id => id);
 export const savePhone = createAction(SAVE_PHONE, u_phone => u_phone)
 // // saga 생성
 // const externalSaga = createRequestSaga(EXTERNAL, authAPI.login);
@@ -49,8 +52,12 @@ export const external = handleActions(
     }),
     [SAVE_PHONE]: (state, {payload: u_phone}) => ({
       ...state,
-      u_phone: u_phone,
-    })
+      u_phone,
+    }),
+    [DEL_EXTERNAL]: (state, {payload: id}) => ({
+      ...state,
+      id,
+    }),
   },
   initialState
 );

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import ExternalTemplate from "../../../components/client/external/ExternalTemplate";
@@ -12,14 +12,14 @@ const ListContainer = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [apiLog, setApiLog] = useState(null);
+  // const [eid, setEid] = useState({});
   const [localData, setLocalData] = useState({});
-  // const [lists, setLists] = useState([]);
   const wifiLog = useSelector(({ external }) => external.wifi);
-  console.log("wifiLog:", wifiLog);
+  const wifiId = useSelector(({ external }) => external.id);
+  // console.log(wifiId);
+  // console.log("wifiLog:", wifiLog);
   // const wifiList = useSelector(({ external }) => external.loclist);
   // console.log("wifiList:", wifiList);
-  // const userPhone = useSelector(({external}) => external.u_phone);
-  // console.log(userPhone);
 
   AsyncStorage.setItem("u_phone", "01072695524");
 
@@ -27,68 +27,54 @@ const ListContainer = () => {
     console.log("로컬 스토리지 접근");
     const phone = await AsyncStorage.getItem("u_phone");
     setLocalData({ u_phone: phone });
-    console.log("phone", phone);
+    // console.log("phone", phone);
   }
 
+  // 최초 렌더링 시 getStorage() 함수 실행
   useEffect(() => {
     getStorage();
   }, []);
 
-  async function getApiList() {
-    console.log("최초 렌더링");
-    const select = await allWifi(localData);
-    setApiLog(select);
-    dispatch(getList(apiLog));
-  }
+  // async function getApiList() {
+  //   console.log("최초 렌더링");
+  //   const select = await allWifi(localData);
+  //   setApiLog(select);
+  //   dispatch(getList(apiLog));
+  // }
 
-  useEffect(() => {
-    getApiList();
-  }, [localData]);
+  // // 최초 렌더링 시 getApiList() 함수 실행
+  // useEffect(() => {
+  //   getApiList();
+  // }, [localData]);
 
   async function againApiList() {
-    console.log("리렌더링");
-    setApiLog(null);
-    const select = await allWifi(localData);
-    setApiLog(select);
+    // console.log("리렌더링");
+    // const select = await allWifi(localData);
+    // console.log("data 길이", select.length);
+    setApiLog(await allWifi(localData));
+    // console.log(apiLog.length);
     dispatch(getList(apiLog));
   }
 
-
+  // 리렌더링 시 getApiList() 함수 실행
   useEffect(() => {
+    console.log("추가 시 리렌더링");
     if (isFocused) {
+      setApiLog(null);
       againApiList();
     }
   }, [isFocused, wifiLog]);
-  // useEffect(async () => {
-  //   const phone = await AsyncStorage.getItem("u_phone");
-  //   setLocalData({ u_phone: phone });
-  //   console.log("phone", phone);
-  //   // dispatch(savePhone(localData));
-  // }, []);
 
-  // useEffect(async () => {
-  //   console.log("최초 렌더링");
-  //   setApiLog(await allWifi(localData));
-  //   dispatch(getList(apiLog));
-  // }, []);
-
-  // useEffect(async () => {
-  //   console.log("리렌더링");
-  //   const select = await allWifi(localData);
-  //   console.log(select);
-  //   dispatch(getList(select));
-  //   setApiLog(select);
-  //   console.log(apiLog);
-  //   // Your code here
-  // }, [apiLog]);
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", async () => {
-  //     const select = await allWifi(localData);
-  //     dispatch(getList(select));
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  // 리렌더링 시 getApiList() 함수 실행
+  useEffect(() => {
+    console.log("삭제 시 리렌더링");
+    if (isFocused) {
+      setApiLog(null);
+      setTimeout(() => {
+        againApiList();
+      }, 10);
+    }
+  }, [localData, wifiId]);
 
   // useFocusEffect(
   //   useCallback(async () => {
@@ -98,34 +84,14 @@ const ListContainer = () => {
   //     dispatch(getList(apiLog));
   //   }, [])
   // );
-  // console.log("리렌더링");
-  // // const select = await allWifi(localData);
-  // setApiLog(await allWifi(localData));
-  // dispatch(getList(apiLog));
-  // console.log(apiLog);
 
-  // useFocusEffect(async () => {
-  //   const select = await allWifi(localData);
-  //   dispatch(getList(select));
-  // }, []);
-
-  // const getwifi = useCallback(async () => {
-  //       console.log("렌더링", wifiList);
-  //       const select = await allWifi(localData);
-  //       dispatch(getList(select));
-  //   },
-  // )
-  // useEffect(() => {
-  //   console.log("렌더링", wifiList);
-  //   getwifi();
-  //   // const select = await allWifi(localData);
-  //   // dispatch(getList(select));
-  //   return () => {
-  //     console.log("리렌더링 전", wifiList);
-  //   };
-  // }, []);
-
-  return <ExternalTemplate wifiList={apiLog} navigation={navigation} />;
+  return (
+    <ExternalTemplate
+      localData={localData}
+      wifiList={apiLog}
+      navigation={navigation}
+    />
+  );
 };
 
 export default ListContainer;

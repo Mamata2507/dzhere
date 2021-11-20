@@ -6,13 +6,16 @@ import {
   Platform,
   Dimensions,
   ScrollView,
+  Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import refresh from "../../../../assets/check/refresh.png";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
 
-const ExternalTemplate = ({ wifiList, navigation }) => {
+const ExternalTemplate = ({ wifiList, navigation, localData }) => {
   const width = Dimensions.get("window").width;
+  // console.log("아이템 있는지 없는지 확인", wifiList);
   // console.log("컴포넌트:", wifiList);
   return (
     <>
@@ -23,15 +26,24 @@ const ExternalTemplate = ({ wifiList, navigation }) => {
         <View style={styles.contents}>
           <Text style={[{ fontSize: 20 }, styles.title]}>추가된 외부 장소</Text>
           <ScrollView width={width}>
-            {wifiList ? (
+            {wifiList ?
               Object.values(wifiList).map((item) => (
-                <External key={item.e_idx} item={item} />
+                <External list={wifiList} localData={localData} key={item.e_idx} item={item} />
               ))
-            ) : (
-              <Text style={[{ fontSize: 20 }, styles.title]}>
-                리스트를 불러오는 중입니다..
-              </Text>
-            )}
+              :
+              <>
+              <View width={width} />
+              <Text style={styles.refresh}>리스트를 불러오는 중입니다..</Text>
+            </>
+            }
+            {/* {wifiList.length === false && 
+              <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text> 
+            }
+              */}
+            {/* {wifiList.length == 0 && <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text>} */}
+            {/* {wifiList.length == 0 ?
+              <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text> 
+              :} */}
           </ScrollView>
 
           {/* // 푸터 */}
@@ -90,6 +102,16 @@ const styles = StyleSheet.create({
   title: {
     color: "black",
     margin: Platform.OS === "android" ? 10 : 20,
+  },
+  refresh: {
+    color: "#5AA0C8",
+    fontWeight: "500",
+    fontSize: 25,
+    margin: Platform.OS === "android" ? 10 : 20,
+  },
+  stretch: {
+    width: 200,
+    height: 200,
   },
 });
 

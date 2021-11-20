@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-// import styled from "styled-components/native";
+import React from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import PropTypes from "prop-types";
 import DeleteButton from "../../../containers/client/external/ExternalDeleteContainer";
 import { images } from "../../common/images";
 
-const ExternalItem = ({ id, item }) => {
+const ExternalItem = ({ list, localData, item }) => {
   return (
     <View style={styles.container}>
       {/* <IconButton
@@ -18,19 +17,20 @@ const ExternalItem = ({ id, item }) => {
         {item.e_accept == 1 ? "승인완료" : "승인대기"}
       </Text>
       <Text style={styles.contents}>
-      <DeleteButton type={images.delete} id={id} /></Text>
+        <DeleteButton list={list} phone={localData} type={images.delete} item={item} />
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: Platform.OS === 'android' ? 10 : "5%",
+    marginLeft: Platform.OS === "android" ? 10 : "5%",
     flexDirection: "row",
     display: "flex",
   },
   contents: {
-    margin: Platform.OS === 'android' ? 6 : "2%",
+    margin: Platform.OS === "android" ? 6 : "2%",
     fontSize: 17,
     flex: 1,
   },
