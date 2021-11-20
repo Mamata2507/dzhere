@@ -33,5 +33,20 @@ return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (retu
 */
 
 
-import App from './src/App';
+import React from 'react';
+import Apps from "./src/App"; 
+import { createStore } from 'redux';
+import rootReducer from './src/modules/index'
+import { Provider } from 'react-redux';
+  
+const store = createStore(rootReducer);
+  
+const App = () => {
+    return (
+        <Provider store={store}>
+            <Apps />
+        </Provider>
+    );
+}
+  
 export default App;
