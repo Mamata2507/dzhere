@@ -10,7 +10,9 @@ import menubar from '../../../assets/menubar.png'
 import CheckPage from '../../pages/client/check/check_index';
 import ListPage from '../../pages/client/list/list_index';
 import ExternalPage from '../../pages/client/external/external_index';
-import MyPage from '../../pages/client/myinfo/myinfo_index';
+import MyPage from '../../pages/client/myinfo/MyInfo';
+import MyPageEmailUpdate from '../../pages/client/myinfo/MyInfoEmailUpdate';
+import MyPagePassUpdate from '../../pages/client/myinfo/MyInfoPassUpdate';
 // Import Custom Sidebar
 // import CustomSidebarMenu from './CustomSidebarMenu';
 
@@ -106,7 +108,7 @@ export const thirdScreenStack = ({ navigation }) => {
   );
 }
 
-export const fourthScreenStack = ({ navigation }) => {
+export const fourthScreenStack = ({ props: params, navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="MyPage"
@@ -121,6 +123,23 @@ export const fourthScreenStack = ({ navigation }) => {
         component={MyPage}
         options={{
           title: '', //Set Header Title
+        }}
+      />
+       <Stack.Screen
+        name="MyPageEmailUpdate"
+        component={MyPageEmailUpdate}
+        options={{
+          title: '',
+          headerShown: true,
+        }}
+        initialParams={params}
+      />
+       <Stack.Screen
+        name="MyPagePassUpdate"
+        component={MyPagePassUpdate}
+        options={{
+          title: '', 
+          headerShown: true,
         }}
       />
     </Stack.Navigator>
