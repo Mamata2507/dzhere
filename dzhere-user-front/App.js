@@ -37,10 +37,9 @@ function loadUser() {
     try {
         const user = (Platform.OS==='web') ? localStorage.getItem('user') : (Platform.OS==='android') ? asyncStorage.getItem('user') : false;
         // const user = asyncStorage.getItem('user');
-        console.log(user);
+
         if (!user) return; // 로그인 상태가 아니라면 아무것도 안함
-    
-        console.log('ㅇㅇ : ', user);
+
         store.dispatch(tempSetUser(JSON.parse(user)));
         store.dispatch(check());
     } catch (e) {
