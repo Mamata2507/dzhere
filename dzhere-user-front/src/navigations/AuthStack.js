@@ -1,21 +1,16 @@
 /* 관리자, 사용자 버튼 부터 로그인 완료 전까지의 stack */
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import UserLoginPage from "../pages/client/auth/auth_index";
-// import UserSignUpPage from "../pages/client/auth/auth_index";
-import UserFindPassword from "../pages/client/auth/auth_findPassword";
-import UserRegister from "../pages/client/auth/auth_register";
-import UserAttendPage from "../pages/client/check/check_index";
+import UserLoginPage from "../pages/client/auth/UserLoginPage";
+import UserRegisterPage from "../pages/client/auth/UserRegisterPage";
 import ClientDrawer from "./ClientDrawer";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Sidebar, firstScreenStack, NavigationDrawerStructure} from '../components/common/SideBar'
+import CheckIndex from '../pages/client/check/check_index'
 const Stack = createStackNavigator();
-
-const AuthStack = (props) => {
-  console.log('props', props);
+const AuthStack = () => {
+  console.log('AuthStack');
   return (
     <Stack.Navigator
-      // initialRouteName="UserLoginPage"
       initialRouteName="UserLoginPage"
       screenOptions={{
         headerTransparent: true,
@@ -36,31 +31,20 @@ const AuthStack = (props) => {
         }}
       />
       <Stack.Screen
-        name="UserFindPassword"
-        component={UserFindPassword}
+        name="UserRegisterPage"
+        component={UserRegisterPage}
         options={{
           title: "", //Set Header Title
         }}
       />
       <Stack.Screen
-        name="UserRegister"
-        component={UserRegister}
-        options={{
-          title: "회원가입", //Set Header Title
-          headerTitleAlign: "center",
-          headerTransparent: false
-          
-        }}
-      />
-      <Stack.Screen
-        name="UserAttendPage"
-        component={UserAttendPage}
+        name="ClientDrawer"
+        component={ClientDrawer}
         options={{
           title: "", //Set Header Title
-          // headerShown: false
         }}
+        options={{ headerShown: false }}
       />
-      
     </Stack.Navigator>
   );
 };
