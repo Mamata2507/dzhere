@@ -35,11 +35,15 @@ return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (retu
 
 import React from 'react';
 import Apps from "./src/App"; 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './src/modules/index'
 import { Provider } from 'react-redux';
-  
-const store = createStore(rootReducer);
+
+import { createLogger } from 'redux-logger'
+import ReduxThunk from 'redux-thunk';
+
+const logger = createLogger();
+const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk));
   
 const App = () => {
     return (

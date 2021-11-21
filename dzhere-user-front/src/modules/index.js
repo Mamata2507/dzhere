@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 // // import auth, { authSaga } from './auth/index';
 //import {check} from './check/check';
 //import {external} from './external/external';
-import {myinfo} from './client/myinfo/myInfo'
+import myinfo from './client/myinfo/myInfo'
+import loading from './client/myinfo/loading'
 // import list from './list/index';
 // import myInfo from './myinfo/index';
 
@@ -17,6 +18,7 @@ import {myinfo} from './client/myinfo/myInfo'
 export default rootReducer = combineReducers({
   //external,
   myinfo,
+  loading,
 });
 // // export function* rootSaga() {
 // //   yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga()]);

@@ -3,73 +3,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
-import { readEmail } from '../../../modules/client/myinfo/myInfo'
-import axios from 'axios';
+import { setPhone, getEmail, updateEmail } from '../../../modules/client/myinfo/myInfo'
 
-const LoginContainer = () => {
+const MyInfoEmailUpdateContainer = () => {
 
     const dispatch = useDispatch();
 
-    AsyncStorage.setItem('u_phone', '01023454710');
-    //const [data, setData] = useState([])
-
-    const { userEmail, userPhone } = useSelector(({ myinfo }) => ({
-      userEmail: myinfo.readEmail.userEmail,
-      userPhone: myinfo.readPhone.userPhone,
+    const { email, loadingEmail, phone } = useSelector(({ myinfo, loading }) => ({
+      email: myinfo.email,
+      loadingEmail: loading.GET_EMAIL,
+      phone: myinfo.phone,
     }));
-
+    
     const [newEmail, onChangeNewEmail] = React.useState(null);
-    console.log(newEmail);
+    
+    AsyncStorage.setItem('u_phone', '01023454710');
 
     useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-        dispatch(readEmail({LocalData}))
-
-
-        //console.log('이메일-->'+LocalData);
-        axios({
-          method: "GET",
-          url: "http://172.24.192.1:8080/api/getEmail/"+LocalData,
-        }).then((res) => {
-          let LocalEmail = res.data.data.u_email;
-          //console.log('로컬-->'+LocalEmail);
-          //setEmail(LocalEmail)
-          dispatch(readEmail({userEmail: LocalEmail}));
-          dispatch(readPhone({userPhone: LocalData}));
-        });
+      async function getStorage() {
+        if (await AsyncStorage.getItem("u_phone")) {
+          let u_phone = await AsyncStorage.getItem("u_phone");
+          dispatch(setPhone(u_phone));
+          dispatch(getEmail(u_phone));
+        }
       }
-    }
-    getStorage();
-  }, []);
+      getStorage();
+    }, []);
   
   function onPress(){
-    console.log(newEmail);
-    console.log(userPhone);
-    axios({
-      method: "POST",
-      url: "http://172.24.192.1:8080/api/updateEmail/"+userPhone+"/"+newEmail,
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-      },
-    }).then((res) => {
-      let newEmail = res.data.data.u_email;
-      console.log('하이----------->'+newEmail);
-      dispatch(readEmail({userEmail: newEmail}));
-    });
-    }
-    
+    dispatch(updateEmail({phone, newEmail}));
+    Alert.alert('이메일 변경 완료');
+  }
+  
     return (
         // Login -> 컨테이너의 자식 컴포넌트
         <Contents
-            // 자식에게 값 전달
-            userEmail={userEmail}
-            onPress={onPress}
-            newEmail={newEmail}
-            onChangeNewEmail={onChangeNewEmail}
+          email={email}
+          loadingEmail={loadingEmail}
+          onPress={onPress}
+          newEmail={newEmail}
+          onChangeNewEmail={onChangeNewEmail}
         />
     );
 };
 
-export default LoginContainer;
+export default MyInfoEmailUpdateContainer;

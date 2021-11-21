@@ -5,15 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 import { readPhone } from '../../../modules/client/myinfo/myInfo'
 
-const LoginContainer = () => {
+const MyInfoContainer = () => {
 
     const dispatch = useDispatch();
 
     AsyncStorage.setItem('u_phone', '01023454710');
 
-    const { userPhone } = useSelector(({ myinfo }) => ({
-      userPhone: myinfo.readPhone.userPhone,
-    }));
+    // const { userPhone } = useSelector(({ myinfo }) => ({
+    //   userPhone: myinfo.readPhone.userPhone,
+    // }));
 
     useEffect(() => {
       async function getStorage() {
@@ -31,10 +31,10 @@ const LoginContainer = () => {
     
     return (
         <Contents
-            userPhone={userPhone}
+            //userPhone={userPhone}
             onPress={onPress}
         />
     );
 };
 
-export default LoginContainer;
+export default MyInfoContainer;

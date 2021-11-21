@@ -4,7 +4,7 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 
-export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => {
+export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail }) => {
 
     const navigation = useNavigation();
     
@@ -12,12 +12,15 @@ export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => 
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{userEmail}</Text>
+          <Text style={styles.myInfoText}>
+          {loadingEmail && '로딩 중..'}
+          {!loadingEmail && email && `${email.u_email}`}
+        </Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <TextInput
-          style={styles.input}
+          style={styles.myInfoText}
           onChangeText={onChangeNewEmail}
           value={newEmail}
           placeholder="이메일 변경"
