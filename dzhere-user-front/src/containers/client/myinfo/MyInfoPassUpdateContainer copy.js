@@ -14,6 +14,7 @@ const MyInfoEmailUpdateContainer = () => {
     phone: myinfo.phone,
   }));
 
+
   const [newEmail, onChangeNewEmail] = React.useState('');
 
   useEffect(() => {

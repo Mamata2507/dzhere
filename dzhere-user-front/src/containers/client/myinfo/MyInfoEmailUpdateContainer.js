@@ -1,50 +1,54 @@
 import { Contents } from '../../../components/client/myinfo/MyInfoEmailUpdate'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
-import { setPhone, getEmail, updateEmail } from '../../../modules/client/myinfo/myInfo'
+import { getEmail, updateEmail } from '../../../modules/client/myinfo/myInfo'
 
 const MyInfoEmailUpdateContainer = () => {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const { email, loadingEmail, phone } = useSelector(({ myinfo, loading }) => ({
-      email: myinfo.email,
-      loadingEmail: loading.GET_EMAIL,
-      phone: myinfo.phone,
-    }));
-    
-    const [newEmail, onChangeNewEmail] = React.useState(null);
-    
-    AsyncStorage.setItem('u_phone', '01023454710');
+  const { email, loadingEmail, phone } = useSelector(({ myinfo, loading }) => ({
+    email: myinfo.email,
+    loadingEmail: loading.GET_EMAIL,
+    phone: myinfo.phone,
+  }));
 
-    useEffect(() => {
-      async function getStorage() {
-        if (await AsyncStorage.getItem("u_phone")) {
-          let u_phone = await AsyncStorage.getItem("u_phone");
-          dispatch(setPhone(u_phone));
-          dispatch(getEmail(u_phone));
-        }
-      }
-      getStorage();
-    }, []);
+
+  const [newEmail, onChangeNewEmail] = React.useState('');
+
+  //console.log(newEmail);
+
+  useEffect(() => {
+    dispatch(getEmail(phone));
+  }, []);
   
   function onPress(){
-    dispatch(updateEmail({phone, newEmail}));
-    Alert.alert('이메일 변경 완료');
+    if(newEmail === ''){
+      Alert.alert('빈 항목이 있습니다.');
+    } else {
+      dispatch(updateEmail({phone, newEmail}));
+      Alert.alert('이메일이 성공적으로 변경되었습니다.');
+      onChangeNewEmail('');
+    }
+  }
+
+  function test(){
+    if(onChangeNewEmail===''){
+      
+    }
   }
   
-    return (
-        // Login -> 컨테이너의 자식 컴포넌트
-        <Contents
-          email={email}
-          loadingEmail={loadingEmail}
-          onPress={onPress}
-          newEmail={newEmail}
-          onChangeNewEmail={onChangeNewEmail}
-        />
-    );
+  return (
+      // Login -> 컨테이너의 자식 컴포넌트
+      <Contents
+        email={email}
+        loadingEmail={loadingEmail}
+        onPress={onPress}
+        newEmail={newEmail}
+        onChangeNewEmail={onChangeNewEmail}
+      />
+  );
 };
 
 export default MyInfoEmailUpdateContainer;

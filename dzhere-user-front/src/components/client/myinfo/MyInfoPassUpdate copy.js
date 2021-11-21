@@ -9,21 +9,37 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
     const navigation = useNavigation();
 
     return (
-      <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+      <View style={[styles.container, {height: 400, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={styles.myInfoText}>
-          {loadingEmail && '로딩 중..'}
-          {!loadingEmail && email && `${email.u_email}`}
-        </Text>
+          <TextInput
+          secureTextEntry={true}
+          style={styles.myInfoText}
+          onChangeText={onChangeNewEmail}
+          value={newEmail}
+          placeholder="기존 비밀번호"
+          keyboardType="numeric"
+          />
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <TextInput
+          secureTextEntry={true}
           style={styles.myInfoText}
           onChangeText={onChangeNewEmail}
           value={newEmail}
-          placeholder="이메일 변경"
+          placeholder="새 비밀번호"
+          keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.myInfo}>
+          <IconButton type={images.email}/>
+          <TextInput
+          secureTextEntry={true}
+          style={styles.myInfoText}
+          onChangeText={onChangeNewEmail}
+          value={newEmail}
+          placeholder="비밀번호 확인"
           keyboardType="numeric"
           />
         </View>
