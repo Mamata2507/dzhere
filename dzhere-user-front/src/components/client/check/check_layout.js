@@ -53,7 +53,7 @@ export const Contents = ({onPressStartTime}) => {
   return (
     <View style={styles.contents}>
       <StyledText >출석 체크</StyledText>
-      <StyledSelect items={items}/>
+      {/* <StyledSelect items={items}/> */}
       <Text style={{fontSize:30}}>{moment().format('YYYY-MM-DD')}</Text>
       <Text style={{fontSize:20}}>강의 시간: </Text>
       <Text style={{fontSize:20}}>점심 시간: </Text>
@@ -65,9 +65,9 @@ export const Contents = ({onPressStartTime}) => {
         <StyledButtons title={'조퇴'} source={check_icon}/>
         <StyledButtons title={'퇴실'} source={check_icon}/>
       </ButtonView>
-      {/* <ScrollView style={{backgroundColor:'pink',width:'100%'}}>          
+      <ScrollView style={{backgroundColor:'pink',width:'100%'}}>          
         <FlatList data={items} keyExtractor={v=>v.value} renderItem={renderItem}/>
-      </ScrollView> */}
+      </ScrollView>
     </View>
   );
 };

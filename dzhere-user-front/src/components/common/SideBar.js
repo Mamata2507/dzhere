@@ -95,7 +95,7 @@ export const thirdScreenStack = ({ navigation }) => {
         component={ExternalForm}
         options={{
           title: "",
-          headerShown: true,
+          headerShown: true, // 뒤로가기 버튼
           headerTransparent: true,
         }}
       />

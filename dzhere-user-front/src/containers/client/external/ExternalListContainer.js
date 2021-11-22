@@ -16,24 +16,32 @@ const ListContainer = () => {
   const [localData, setLocalData] = useState({});
   const wifiLog = useSelector(({ external }) => external.wifi);
   const wifiId = useSelector(({ external }) => external.id);
+  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
+    phone: auth.login.userPhone,
+    token: auth.auth.token,
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
+}));
+
   // console.log(wifiId);
   // console.log("wifiLog:", wifiLog);
   // const wifiList = useSelector(({ external }) => external.loclist);
   // console.log("wifiList:", wifiList);
 
-  AsyncStorage.setItem("u_phone", "01072695524");
+  // AsyncStorage.setItem("u_phone", "01072695524");
 
-  async function getStorage() {
-    console.log("로컬 스토리지 접근");
-    const phone = await AsyncStorage.getItem("u_phone");
-    setLocalData({ u_phone: phone });
-    // console.log("phone", phone);
-  }
+  // async function getStorage() {
+  //   console.log("로컬 스토리지 접근");
+  //   const phone = await AsyncStorage.getItem("u_phone");
+  //   setLocalData({ u_phone: phone });
+  //   // console.log("phone", phone);
+  // }
 
-  // 최초 렌더링 시 getStorage() 함수 실행
-  useEffect(() => {
-    getStorage();
-  }, []);
+  // // 최초 렌더링 시 getStorage() 함수 실행
+  // useEffect(() => {
+  //   getStorage();
+  // }, []);
 
   // async function getApiList() {
   //   console.log("최초 렌더링");
@@ -42,15 +50,16 @@ const ListContainer = () => {
   //   dispatch(getList(apiLog));
   // }
 
-  // // 최초 렌더링 시 getApiList() 함수 실행
-  // useEffect(() => {
-  //   getApiList();
-  // }, [localData]);
+  // 최초 렌더링 시 getApiList() 함수 실행
+  useEffect(() => {
+    setLocalData({u_phone: phone, token: token})
+  }, []);
 
   async function againApiList() {
     // console.log("리렌더링");
     // const select = await allWifi(localData);
     // console.log("data 길이", select.length);
+    console.log(token);
     setApiLog(await allWifi(localData));
     // console.log(apiLog.length);
     dispatch(getList(apiLog));
@@ -59,6 +68,7 @@ const ListContainer = () => {
   // 리렌더링 시 getApiList() 함수 실행
   useEffect(() => {
     console.log("추가 시 리렌더링");
+    console.log("전화번호", localData);
     if (isFocused) {
       // setApiLog(null);
       againApiList();
@@ -87,7 +97,6 @@ const ListContainer = () => {
 
   return (
     <ExternalTemplate
-      localData={localData}
       wifiList={apiLog}
       navigation={navigation}
     />

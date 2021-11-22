@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Button, TouchableOpacity, Image} from 'react-native';
 import styled ,{ css } from 'styled-components/native';
+import { Table } from 'react-native-table-component';
 
 const centerAlign = css`
   justify-content: center;
@@ -74,12 +75,34 @@ const StyledPicker = styled.Picker`
 export const StyledSelect = props => {
   let temp = props.items;
   return(
-    <StyledPicker>  
-      {Object.values(temp)
-        .map((items)=>(
-          <StyledPicker.Item label={items.label} value={items.value}/>        
-      ))}
-      {/* <Picker.Item label='test02' value='test02'/> */}
-    </StyledPicker>
+    <Table striped bordered hover>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td colSpan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</Table>
   );
 }

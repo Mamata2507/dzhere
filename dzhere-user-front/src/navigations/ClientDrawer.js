@@ -2,7 +2,6 @@
 import React from 'react';
 import { Drawer, firstScreenStack, secondScreenStack, thirdScreenStack, fourthScreenStack } from '../components/common/SideBar';
 import CustomSidebarMenu from '../components/common/CustomSidebarMenu';
-
 const ClientDrawer = () => {
     return (
       <Drawer.Navigator

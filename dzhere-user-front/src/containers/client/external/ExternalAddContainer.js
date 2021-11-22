@@ -22,17 +22,26 @@ const ExternalAddContainer = () => {
     location: external.wifi.location,
   }));
 
+  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
+    phone: auth.login.userPhone,
+    token: auth.auth.token,
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
+}));
+
+
   const dispatch = useDispatch();
   const LocInput = useRef("");
 
-  AsyncStorage.setItem("u_phone", "01072695524");
+  // AsyncStorage.setItem("u_phone", "01072695524");
 
-  useEffect(async () => {
-    if (await AsyncStorage.getItem("u_phone")) {
-      const phone = await AsyncStorage.getItem("u_phone");
-      setLocalData({ u_phone: phone });
-    }
-  }, []);
+  // useEffect(async () => {
+  //   if (await AsyncStorage.getItem("u_phone")) {
+  //     const phone = await AsyncStorage.getItem("u_phone");
+  //     setLocalData({ u_phone: phone });
+  //   }
+  // }, []);
   
   const lastAlert = () => {
     alert("등록이 완료되었습니다.");
@@ -85,7 +94,8 @@ const ExternalAddContainer = () => {
     const newExternal = Object.assign({}, wifiInfo, locInfo);
     // console.log(newExternal);
     console.log("등록 완료");
-    const apiList = Object.assign({}, newExternal, localData);
+    console.log(phone);
+    const apiList = Object.assign({}, newExternal, {u_phone: phone, token: token});
     addWifi(apiList);
     dispatch(setWifi(newExternal));
     // setExternalList({ ...externalInfo, ...newExternalObject });

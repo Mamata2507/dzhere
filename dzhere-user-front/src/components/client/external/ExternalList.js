@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import DeleteButton from "../../../containers/client/external/ExternalDeleteContainer";
 import { images } from "../../common/images";
 
-const ExternalItem = ({ list, localData, item }) => {
+const ExternalItem = ({ list, item }) => {
   return (
     <View style={styles.container}>
       {/* <IconButton
@@ -17,7 +17,7 @@ const ExternalItem = ({ list, localData, item }) => {
         {item.e_accept == 1 ? "승인완료" : "승인대기"}
       </Text>
       <Text style={styles.contents}>
-        <DeleteButton list={list} phone={localData} type={images.delete} item={item} />
+        <DeleteButton list={list} type={images.delete} item={item} />
       </Text>
     </View>
   );

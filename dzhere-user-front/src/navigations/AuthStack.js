@@ -1,12 +1,15 @@
 /* 관리자, 사용자 버튼 부터 로그인 완료 전까지의 stack */
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import UserLoginPage from "../pages/client/auth/auth_index";
-import UserSignUpPage from "../pages/client/auth/auth_index";
+import UserLoginPage from "../pages/client/auth/UserLoginPage";
+import UserRegisterPage from "../pages/client/auth/UserRegisterPage";
 import ClientDrawer from "./ClientDrawer";
+import {Sidebar, firstScreenStack, NavigationDrawerStructure} from '../components/common/SideBar';
+import CheckIndex from '../pages/client/check/check_index';
 
 const Stack = createStackNavigator();
 const AuthStack = () => {
+  console.log('AuthStack');
   return (
     <Stack.Navigator
       initialRouteName="UserLoginPage"
@@ -29,8 +32,8 @@ const AuthStack = () => {
         }}
       />
       <Stack.Screen
-        name="UserSignUpPage"
-        component={UserSignUpPage}
+        name="UserRegisterPage"
+        component={UserRegisterPage}
         options={{
           title: "", //Set Header Title
         }}

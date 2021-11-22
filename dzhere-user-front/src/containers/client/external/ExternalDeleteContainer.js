@@ -11,10 +11,18 @@ import PropTypes from "prop-types";
 import { images } from "../../../components/common/images";
 import { delWifi } from "../../../lib/api/external/external";
 import { deleteWifi } from "../../../modules/client/external/external";
-import { useDispatch } from "react-redux";
-const DeleteButton = ({ phone, type, item }) => {
+import { useDispatch, useSelector } from "react-redux";
+const DeleteButton = ({type, item }) => {
   const dispatch = useDispatch();
   const [id, setId] = useState({});
+  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
+    phone: auth.login.userPhone,
+    token: auth.auth.token,
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
+}));
+
 
   // AsyncStorage.setItem("u_phone", "01072695524");
 
@@ -27,7 +35,7 @@ const DeleteButton = ({ phone, type, item }) => {
 
   // 삭제 버튼 이벤트
   const onDelete = () => {
-    const apiData = Object.assign({}, { id: item.e_idx }, phone);
+    const apiData = Object.assign({}, { id: item.e_idx , u_phone: phone, token: token});
     delWifi(apiData);
     dispatch(deleteWifi({ id: item.e_idx }));
     console.log(phone, id);

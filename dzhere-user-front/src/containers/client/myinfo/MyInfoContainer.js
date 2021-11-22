@@ -9,7 +9,7 @@ const LoginContainer = () => {
 
     const dispatch = useDispatch();
 
-    AsyncStorage.setItem('u_phone', '01023454710');
+    AsyncStorage.setItem('u_phone', '01072695524');
 
     const { userPhone } = useSelector(({ myinfo }) => ({
       userPhone: myinfo.readPhone.userPhone,

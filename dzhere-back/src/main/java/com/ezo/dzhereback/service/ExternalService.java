@@ -17,7 +17,7 @@ public class ExternalService {
 		this.externalMapper = externalMapper;
 	}
 	
-	public User findUser(String u_phone) {
+	public Member findUser(String u_phone) {
 		return externalMapper.findUser(u_phone);
 	}
 
@@ -29,8 +29,8 @@ public class ExternalService {
 		externalMapper.removeExternalId(external);
 	}
 	
-	public List<ExternalSelectDto> selectExternal(User user) {
-		return externalMapper.selectExternal(user);
+	public List<ExternalSelectDto> selectExternal(Member member) {
+		return externalMapper.selectExternal(member);
 	}
 
 }

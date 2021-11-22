@@ -13,7 +13,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
 
-const ExternalTemplate = ({ wifiList, navigation, localData }) => {
+const ExternalTemplate = ({ wifiList, navigation }) => {
   const width = Dimensions.get("window").width;
   // console.log("아이템 있는지 없는지 확인", wifiList);
   // console.log("컴포넌트:", wifiList);
@@ -28,7 +28,7 @@ const ExternalTemplate = ({ wifiList, navigation, localData }) => {
           <ScrollView width={width}>
             {wifiList ?
               Object.values(wifiList).map((item) => (
-                <External list={wifiList} localData={localData} key={item.e_idx} item={item} />
+                <External list={wifiList} key={item.e_idx} item={item} />
               ))
               :
               <>
