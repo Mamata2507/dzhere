@@ -2,7 +2,7 @@ import { Contents } from '../../../components/client/myinfo/MyInfo'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { setPhone } from '../../../modules/client/myinfo/myInfo'
 
 const MyInfoContainer = () => {
@@ -26,7 +26,11 @@ const MyInfoContainer = () => {
   }, []);
 
   function onPress(){
-    Alert.alert('asyncStorage & 704p 참고');
+    if (Platform.OS === 'web') {
+      alert('로그아웃 구현 예정')
+   } else {
+       Alert.alert('로그아웃 구현 예정')
+   }
   }
   
   return (

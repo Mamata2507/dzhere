@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-nativ
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native';
 
 export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, onChangePwCk2, onPress }) => {
 
@@ -43,7 +44,7 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
           keyboardType="numeric"
           />
         </View>
-        <View>
+        <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.btn}
             onPress={onPress}
@@ -57,9 +58,9 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
 
   const styles = StyleSheet.create({
     container: {
-      width: '95%',
+      width: Platform.OS === "android" ? "95%" : "60%",
       justifyContent: 'center',
-      height: 190,
+      padding: Platform.OS === "android" ? "1%" : "1.5%",
     },
     myInfo: {
       flexDirection: 'row',
@@ -78,17 +79,17 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
     btnContainer: {
       flex: 1,
       justifyContent: "center",
-      paddingHorizontal: 10
+      paddingHorizontal: 10,
+      alignItems: "center",
     },
     btn: {
       backgroundColor: "#5AA0C8",
       borderRadius: 10,
-      //width: Platform.OS === "android" ? 155 : "50%",
+      width: Platform.OS === "android" ? "95%" : "30%",
       margin: 10,
       alignItems: "center",
       paddingVertical: 8,
       padding: 10,
-      width: '90%',
     },
     text: {
       color: "white",

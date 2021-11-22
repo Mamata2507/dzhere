@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import logo from '../../../../assets/logo.png'
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native';
 
 export const Header = () => {
   return (
@@ -22,7 +23,7 @@ export const Contents = ({ phone, onPress }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.container, {height: 450, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+    <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
@@ -32,14 +33,14 @@ export const Contents = ({ phone, onPress }) => {
         <IconButton type={images.email}/>
         <Text style={styles.myInfoText}>이메일 변경</Text>
         <TouchableOpacity onPress={()=>navigation.navigate('MyPageEmailUpdate')}>
-          <Image style={[{width: 20, height: 20}]} source={require('../../../../assets/myinfo/right.png')} />
+          <Image style={[{width: 30, height: 30}]} source={require('../../../../assets/myinfo/right.png')} />
         </TouchableOpacity>
       </View>
       <View style={styles.myInfo}>
         <IconButton type={images.lock}/>
         <Text style={styles.myInfoText}>비밀번호 변경</Text>
         <TouchableOpacity onPress={()=>navigation.navigate('MyPagePassUpdate')}>
-          <Image style={[{width: 20, height: 20}]} source={require('../../../../assets/myinfo/right.png')} />
+          <Image style={[{width: 30, height: 30}]} source={require('../../../../assets/myinfo/right.png')} />
         </TouchableOpacity>
       </View>
       <View style={styles.myInfo}>
@@ -74,9 +75,9 @@ export const Footer = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    width: Platform.OS === "android" ? "95%" : "60%",
     justifyContent: 'center',
-    height: 190,
+    padding: Platform.OS === "android" ? "1%" : "1.5%",
   },
   header: {
     height: 50
@@ -94,25 +95,26 @@ const styles = StyleSheet.create({
   },
   myInfoText: {
     flex: 1,
-    fontSize: 22
+    fontSize: 22,
   },
   footer: {
-    height: 80,
+    height: "15%",
   },
   btnContainer: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    alignItems: "center",
+    margin: Platform.OS === "android" ? "1%" : "4%",
   },
   btn: {
     backgroundColor: "#5AA0C8",
     borderRadius: 10,
-    //width: Platform.OS === "android" ? 155 : "50%",
+    width: Platform.OS === "android" ? "95%" : "30%",
     margin: 10,
     alignItems: "center",
     paddingVertical: 8,
     padding: 10,
-    width: '90%',
   },
   text: {
     color: "white",

@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-nativ
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native';
 
 export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail, checkEmail }) => {
 
@@ -41,9 +42,9 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
 
   const styles = StyleSheet.create({
     container: {
-      width: '95%',
+      width: Platform.OS === "android" ? "95%" : "60%",
       justifyContent: 'center',
-      height: 190,
+      padding: Platform.OS === "android" ? "1%" : "1.5%",
     },
     myInfo: {
       flexDirection: 'row',
@@ -62,17 +63,17 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
     btnContainer: {
       flex: 1,
       justifyContent: "center",
-      paddingHorizontal: 10
+      paddingHorizontal: 10,
+      alignItems: "center",
     },
     btn: {
       backgroundColor: "#5AA0C8",
       borderRadius: 10,
-      //width: Platform.OS === "android" ? 155 : "50%",
+      width: Platform.OS === "android" ? "95%" : "30%",
       margin: 10,
       alignItems: "center",
       paddingVertical: 8,
       padding: 10,
-      width: '90%',
     },
     text: {
       color: "white",

@@ -1,10 +1,13 @@
 import { Contents } from '../../../components/client/myinfo/MyInfoEmailUpdate'
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { getEmail, updateEmail } from '../../../modules/client/myinfo/myInfo'
+import { useNavigation } from '@react-navigation/native'
 
 const MyInfoEmailUpdateContainer = () => {
+
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -14,7 +17,6 @@ const MyInfoEmailUpdateContainer = () => {
     phone: myinfo.phone,
   }));
 
-
   const [newEmail, onChangeNewEmail] = React.useState('');
 
   useEffect(() => {
@@ -22,12 +24,28 @@ const MyInfoEmailUpdateContainer = () => {
   }, []);
   
   function onPress(){
-    if(newEmail === ''){
-      Alert.alert('빈 항목이 있습니다.');
+      if (Platform.OS === 'web') {
+        if(newEmail === ''){
+          alert('빈 항목이 있습니다.');
+        } else {
+          dispatch(updateEmail({phone, newEmail}));
+          alert('이메일이 성공적으로 변경되었습니다.');
+          onChangeNewEmail('');
+          setTimeout(()=>{
+            navigation.goBack()
+          }, 800);
+        }
     } else {
-      dispatch(updateEmail({phone, newEmail}));
-      Alert.alert('이메일이 성공적으로 변경되었습니다.');
-      onChangeNewEmail('');
+        if(newEmail === ''){
+          Alert.alert('빈 항목이 있습니다.');
+        } else {
+          dispatch(updateEmail({phone, newEmail}));
+          Alert.alert('이메일이 성공적으로 변경되었습니다.');
+          onChangeNewEmail('');
+          setTimeout(()=>{
+            navigation.goBack()
+          }, 800);
+        }
     }
   }
   

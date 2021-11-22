@@ -1,10 +1,13 @@
 import { Contents } from '../../../components/client/myinfo/MyInfoPassUpdate'
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { getPw, updatePw } from '../../../modules/client/myinfo/myInfo'
+import { useNavigation } from '@react-navigation/native'
 
 const MyInfoPassUpdateContainer = () => {
+
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -21,26 +24,40 @@ const MyInfoPassUpdateContainer = () => {
   // 비밀번호 확인
   const [pwCk2, onChangePwCk2] = React.useState('');
 
-  console.log(pwCk1);
-
   useEffect(() => {
     dispatch(getPw(phone));
   }, []);
   console.log(pw);
 
   function onPress(){
-    if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
-      Alert.alert('빈 항목이 있습니다.');
-    } else if(!loadingPw && pw && pwCk1 !== pw.u_pw){
-      Alert.alert('기존 비밀번호 정보가 틀립니다.');
-    } else if(newPw !== pwCk2){
-      Alert.alert('비밀번호 확인 정보가 틀립니다.');
+    if (Platform.OS === 'web') {
+      if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
+        alert('빈 항목이 있습니다.');
+      } else if(!loadingPw && pw && pwCk1 !== pw.u_pw){
+        alert('기존 비밀번호 정보가 틀립니다.');
+      } else if(newPw !== pwCk2){
+        alert('비밀번호 확인 정보가 틀립니다.');
+      } else {
+        dispatch(updatePw({phone, newPw}));
+        alert('비밀번호가 성공적으로 변경되었습니다.');
+        setTimeout(()=>{
+          navigation.goBack()
+        }, 800);
+      }
     } else {
-      dispatch(updatePw({phone, newPw}));
-      Alert.alert('비밀번호가 성공적으로 변경되었습니다.');
-      onChangePwCk1('');
-      onChangeNewPw('');
-      onChangePwCk2('');
+      if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
+        Alert.alert('빈 항목이 있습니다.');
+      } else if(!loadingPw && pw && pwCk1 !== pw.u_pw){
+        Alert.alert('기존 비밀번호 정보가 틀립니다.');
+      } else if(newPw !== pwCk2){
+        Alert.alert('비밀번호 확인 정보가 틀립니다.');
+      } else {
+        dispatch(updatePw({phone, newPw}));
+        Alert.alert('비밀번호가 성공적으로 변경되었습니다.');
+        setTimeout(()=>{
+          navigation.goBack()
+        }, 800);
+      }
     }
   }
   
