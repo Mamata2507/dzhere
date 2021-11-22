@@ -13,7 +13,7 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }
     console.log('AuthForm');
     const text = textMap[type];
     return (
-      <View>
+      <>
         {type === "register" && (
           <AuthFormRegister
             form={form}
@@ -34,7 +34,7 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }
             route = {route}
           />
         )}
-      </View>
+      </>
     );
 };
 

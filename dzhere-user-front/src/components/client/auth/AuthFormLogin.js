@@ -8,62 +8,57 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
     console.log('AuthFormLogin');
     console.log('form : ', form);
     return (
-      <SafeAreaView style={styles.safearea}>
-        <View style={{ flex: 1, padding: 16 }}>
-          <View style={styles.container}>
-            <Image source={image} style={styles.logo} />
-            <Text style={styles.logoTitle}>DZ Here</Text>
-
-            <View style={{ flexDirection: "row" }}>
-                {error && <ErrorMessage>{error}</ErrorMessage>}
-            </View>
-
-            <CustomTextInput
-              name='userPhone'
-              autoCompleteType='tel'
-              value={form.userPhone}
-              onChangeText={onChangeText}
-              placeholder='휴대폰 번호'
-              maxLength={13}
-              keyboardType='numeric'
-              style={styles.inputUserPhone}
-            />
-
-            <CustomTextInput
-              name='password'
-              autoCompleteType='password'
-              value={form.password}
-              onChangeText={onChangeText}
-              placeholder={'패스워드'}
-              maxLength={20}
-              keyboardType='default'
-              style={styles.inputPassword}
-            />
-
-            <Text
-              style={styles.txtFindPassword}
-              onPress={() => navigation.navigate("UserFindPassword")}
-              /* 구현 예정 */
-            >
-              비밀번호 찾기
-            </Text>
-
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={onPress}
-            >
-              <Text style={styles.text}>로그인</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.signupBtn}
-              onPress={() => navigation.navigate("UserRegisterPage")}
-            >
-              <Text style={styles.text}>회원가입</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <>
         <StatusBar style="light" />
-      </SafeAreaView>
+        <View style={styles.container}>
+          <Image source={image} style={styles.logo} />
+          <Text style={styles.logoTitle}>DZ Here</Text>
+
+          <View style={{ flexDirection: "row" }}>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+          </View>
+
+          <CustomTextInput
+            name="userPhone"
+            autoCompleteType="tel"
+            value={form.userPhone}
+            onChangeText={onChangeText}
+            placeholder="휴대폰 번호"
+            maxLength={13}
+            keyboardType="numeric"
+            style={styles.inputUserPhone}
+          />
+
+          <CustomTextInput
+            name="password"
+            autoCompleteType="password"
+            value={form.password}
+            onChangeText={onChangeText}
+            placeholder={"패스워드"}
+            maxLength={20}
+            keyboardType="default"
+            style={styles.inputPassword}
+          />
+
+          <Text
+            style={styles.txtFindPassword}
+            onPress={() => navigation.navigate("UserFindPassword")}
+            /* 구현 예정 */
+          >
+            비밀번호 찾기
+          </Text>
+
+          <TouchableOpacity style={styles.loginBtn} onPress={onPress}>
+            <Text style={styles.text}>로그인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.signupBtn}
+            onPress={() => navigation.navigate("UserRegisterPage")}
+          >
+            <Text style={styles.text}>회원가입</Text>
+          </TouchableOpacity>
+        </View>
+      </>
     );
 };
 
