@@ -4,10 +4,8 @@
 import * as React from 'react';
 import { Button, View, Text, SafeAreaView } from 'react-native';
 
-const external_add = ({ navigation }) => {
+const List = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1,  backgroundColor: 'white' }}>
-      <View style={{ flex: 1, padding: 16}}>
         <View
           style={{
             flex: 1,
@@ -20,23 +18,18 @@ const external_add = ({ navigation }) => {
               textAlign: 'center',
               marginBottom: 16,
             }}>
-            외부 장소
+            지난 출석 보기
           </Text>
           {/* <Button
-            onPress={() => navigation.navigate('CheckPage')}
             title="오늘의 출석"
+            onPress={() => navigation.navigate('CheckPage')}
           />
           <Button
-            onPress={() => navigation.navigate('SecondPage')}
-            title="Go to Second Page"
+            title="Go to Third Page"
+            onPress={() => navigation.navigate('ThirdPage')}
           /> */}
         </View>
-        <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
-          Custom React Navigate Drawer
-        </Text>
-      </View>
-    </SafeAreaView>
   );
 };
 
-export default external_add;
+export default List;

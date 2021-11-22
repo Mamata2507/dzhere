@@ -32,11 +32,10 @@ AuthForm(component) -> LoginPage(page)
 return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (return AuthForm)
 */
 
-
 import React from 'react';
 import Apps from "./src/App"; 
 import { createStore } from 'redux';
-import rootReducer from './src/modules/index'
+import rootReducer from './src/modules/client/index'
 import { Provider } from 'react-redux';
   
 const store = createStore(rootReducer);

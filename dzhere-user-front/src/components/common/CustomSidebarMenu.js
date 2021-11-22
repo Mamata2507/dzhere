@@ -1,7 +1,5 @@
-// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
-// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
-import image from '../../../assets/logo.png';
-import React from 'react';
+import image from "../../../assets/logo.png";
+import React from "react";
 import {
   SafeAreaView,
   View,
@@ -9,40 +7,34 @@ import {
   Image,
   Text,
   Linking,
-} from 'react-native';
+} from "react-native";
 
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from '@react-navigation/drawer';
+} from "@react-navigation/drawer";
 
 const CustomSidebarMenu = (props) => {
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/*Top Large Image */}
-      <Image
-        source={image}
-        style={styles.sideMenuProfileIcon}
-      />
+      <Image source={image} style={styles.sideMenuProfileIcon} />
+      <Text style={styles.text}>더존HERE</Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <Text style={{ fontSize: 16, textAlign: 'center', color: 'grey' }}>
-        더존HERE
-      </Text>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   sideMenuProfileIcon: {
-    resizeMode: 'center',
+    resizeMode: "center",
     width: 100,
     height: 100,
-    borderRadius: 100 / 2,
-    alignSelf: 'center',
+    alignSelf: "center",
+    marginTop: 40,
   },
   iconStyle: {
     width: 15,
@@ -51,8 +43,13 @@ const styles = StyleSheet.create({
   },
   customItem: {
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  text: { 
+    fontSize: 16, 
+    textAlign: "center", 
+    color: "grey" 
   },
 });
 
