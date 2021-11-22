@@ -3,20 +3,15 @@ import { combineReducers } from 'redux';
 // // import auth, { authSaga } from './auth/index';
 import {check} from './check/check';
 import {external} from './external/external';
+import {myinfo} from './myinfo/myInfo'
 // import list from './list/index';
-// import myInfo from './myinfo/index';
 
-// // const rootReducer = combineReducers({
-// //   auth,
-// //   check,
-// //   external,
-// //   list,
-// //   myInfo,
-// // });
-export const rootReducer = combineReducers({
-    external,
-    check,
-  });
+export default rootReducer = combineReducers({
+  external,
+  check,
+  myinfo,
+});
+
 // // export function* rootSaga() {
 // //   yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga()]);
 // // }

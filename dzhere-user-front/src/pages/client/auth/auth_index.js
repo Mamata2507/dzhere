@@ -15,7 +15,7 @@ const auth_index = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.signupBtn}
-            onPress={() => navigation.navigate("UserSignUpPage")}
+            // onPress={() => navigation.navigate("AdminLoginPage")}
           >
             <Text style={styles.text}>회원가입</Text>
           </TouchableOpacity>

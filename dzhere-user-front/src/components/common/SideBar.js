@@ -7,10 +7,10 @@ import menubar from "../../../assets/menubar.png";
 import CheckPage from "../../pages/client/check/check_index";
 import ListPage from "../../pages/client/list/list_index";
 import ExternalPage from "../../pages/client/external/ExternalPage";
-import MyPage from "../../pages/client/myinfo/myinfo_index";
 import ExternalForm from "../../pages/client/external/ExternalForm";
-// import ExternalAdd from "../client/external/ExternalAdd";
-// import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
+import MyPage from '../../pages/client/myinfo/MyInfo';
+import MyPageEmailUpdate from '../../pages/client/myinfo/MyInfoEmailUpdate';
+import MyPagePassUpdate from '../../pages/client/myinfo/MyInfoPassUpdate';
 
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
@@ -103,24 +103,40 @@ export const thirdScreenStack = ({ navigation }) => {
   );
 };
 
-export const fourthScreenStack = ({ navigation }) => {
+export const fourthScreenStack = ({ props: params, navigation }) => {
   return (
     <Stack.Navigator
-    initialRouteName="MyPage"
+      initialRouteName="MyPage"
       screenOptions={{
         headerLeft: () => (
           <NavigationDrawerStructure navigationProps={navigation} />
         ),
-        headerTransparent: true,
-      }}
-    >
+        headerTransparent: true
+      }}>
       <Stack.Screen
         name="MyPage"
         component={MyPage}
         options={{
-          title: "",
+          title: '', //Set Header Title
+        }}
+      />
+       <Stack.Screen
+        name="MyPageEmailUpdate"
+        component={MyPageEmailUpdate}
+        options={{
+          title: '',
+          headerShown: true,
+        }}
+        initialParams={params}
+      />
+       <Stack.Screen
+        name="MyPagePassUpdate"
+        component={MyPagePassUpdate}
+        options={{
+          title: '', 
+          headerShown: true,
         }}
       />
     </Stack.Navigator>
   );
-};
+}

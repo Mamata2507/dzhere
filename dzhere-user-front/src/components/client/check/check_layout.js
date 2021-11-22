@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView } from 'react-native';
-import { ButtonView, Picker, StyledButtons, StyledSelect, StyledText } from './check_styled_layout';
+import { ButtonView, StyledButtons, StyledSelect, StyledText } from './check_styled_layout';
 import moment from 'moment';
 import 'moment/locale/ko';  // 자동으로 한국시간을 가져온다. 하지만 명확히 하기 위해 import
 

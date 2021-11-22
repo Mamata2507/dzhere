@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import refresh from "../../../../assets/check/refresh.png";
+// import refresh from "../../../../assets/check/refresh.png";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
 

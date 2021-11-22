@@ -42,7 +42,7 @@ const DeleteButton = ({ phone, type, item }) => {
     console.log("삭제 완료");
     Alert.alert(
       "해당 외부 장소를 삭제하시겠습니까?",
-      "외부장소: " + item.e_idx + item.e_name + "(" + item.e_ssid + ")",
+      "외부장소: " + item.e_name + "(" + item.e_ssid + ")",
       [
         {
           text: "취소",

@@ -3,9 +3,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserLoginPage from "../pages/client/auth/auth_index";
 import UserSignUpPage from "../pages/client/auth/auth_index";
-import {ClientDrawer} from "./ClientDrawer";
-import {Sidebar, firstScreenStack, NavigationDrawerStructure} from '../components/common/SideBar'
-import CheckIndex from '../pages/client/check/check_index'
+import ClientDrawer from "./ClientDrawer";
+
 const Stack = createStackNavigator();
 const AuthStack = () => {
   return (
