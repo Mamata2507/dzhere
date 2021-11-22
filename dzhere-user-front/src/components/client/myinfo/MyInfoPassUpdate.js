@@ -4,7 +4,7 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 
-export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail, checkEmail }) => {
+export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, onChangePwCk2, onPress }) => {
 
     const navigation = useNavigation();
 
@@ -15,8 +15,8 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
           <TextInput
           secureTextEntry={true}
           style={styles.myInfoText}
-          onChangeText={onChangeNewEmail}
-          value={newEmail}
+          onChangeText={onChangePwCk1}
+          value={pwCk1}
           placeholder="기존 비밀번호"
           keyboardType="numeric"
           />
@@ -26,8 +26,8 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
           <TextInput
           secureTextEntry={true}
           style={styles.myInfoText}
-          //onChangeText={onChangeNewEmail}
-          //value={newEmail}
+          onChangeText={onChangeNewPw}
+          value={newPw}
           placeholder="새 비밀번호"
           keyboardType="numeric"
           />
@@ -37,8 +37,8 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
           <TextInput
           secureTextEntry={true}
           style={styles.myInfoText}
-          //onChangeText={onChangeNewEmail}
-          //value={newEmail}
+          onChangeText={onChangePwCk2}
+          value={pwCk2}
           placeholder="비밀번호 확인"
           keyboardType="numeric"
           />

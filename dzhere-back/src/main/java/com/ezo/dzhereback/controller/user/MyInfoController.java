@@ -56,4 +56,34 @@ public class MyInfoController {
 			return new Result(null);
 		}
 	}
+	
+	@GetMapping("/api/getPw/{u_phone}")
+	public Result getPw(@PathVariable("u_phone") String u_phone) {
+		System.out.println("로컬폰---->"+u_phone);
+		User pw = myInfoService.getPw(u_phone);
+		MyInfoDto result = MyInfoDto.builder()
+				.u_pw(pw.getU_pw())
+				.build();
+		System.out.println("완료"+result);
+		return new Result(result);
+	}
+	
+	@PostMapping("/api/updatePw/{u_phone}/{u_pw}")
+	public Result updatePw(@PathVariable("u_phone") String u_phone,
+							  @PathVariable("u_pw") String u_pw) {
+		System.out.println("로컬폰------->"+u_phone);
+		System.out.println("로컬패스워드---->"+u_pw);
+		int updateResult = myInfoService.updatePw(u_phone, u_pw);
+		if(updateResult>0) {
+			User pw = myInfoService.getPw(u_phone);
+			MyInfoDto result = MyInfoDto.builder()
+					.u_phone(pw.getU_phone())
+					.u_pw(pw.getU_pw())
+					.build();
+			return new Result(result);
+		} else {
+			System.out.println("업데이트 실패");
+			return new Result(null);
+		}
+	}
 }
