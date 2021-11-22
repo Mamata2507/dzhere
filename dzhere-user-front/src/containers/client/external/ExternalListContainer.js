@@ -60,7 +60,7 @@ const ListContainer = () => {
   useEffect(() => {
     console.log("추가 시 리렌더링");
     if (isFocused) {
-      setApiLog(null);
+      // setApiLog(null);
       againApiList();
     }
   }, [isFocused, wifiLog]);
