@@ -15,11 +15,13 @@ import loading from './client/myinfo/loading'
 // //   list,
 // //   myInfo,
 // // });
-export default rootReducer = combineReducers({
+const rootReducer = combineReducers({
   //external,
   myinfo,
   loading,
 });
+
+export default rootReducer;
 // // export function* rootSaga() {
 // //   yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga()]);
 // // }

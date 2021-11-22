@@ -9,7 +9,7 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
     const navigation = useNavigation();
 
     return (
-      <View style={[styles.container, {height: 400, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+      <View style={[styles.container, {height: 340, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <TextInput
@@ -43,7 +43,7 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
           keyboardType="numeric"
           />
         </View>
-        <View style={styles.btnContainer}>
+        <View>
           <TouchableOpacity
             style={styles.btn}
             onPress={onPress}
@@ -51,13 +51,6 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
             <Text style={[{ fontSize: 18 }, styles.text]}>변경</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          >
-          <Text>뒤로가기</Text>
-          </TouchableOpacity>
-          </View>
       </View>
     );
   };

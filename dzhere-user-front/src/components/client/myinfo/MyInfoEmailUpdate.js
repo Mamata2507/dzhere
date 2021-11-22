@@ -35,13 +35,6 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
             <Text style={[{ fontSize: 18 }, styles.text]}>변경</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          >
-          <Text>뒤로가기</Text>
-          </TouchableOpacity>
-          </View>
       </View>
     );
   };

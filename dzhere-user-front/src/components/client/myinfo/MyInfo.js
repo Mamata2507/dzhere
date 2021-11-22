@@ -22,7 +22,7 @@ export const Contents = ({ phone, onPress }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+    <View style={[styles.container, {height: 450, backgroundColor: '#CEEDFF', marginTop: 50}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     height: 190,
   },
   header: {
-    height: 70
+    height: 50
   },
   headerImage: {
     width: 100,
