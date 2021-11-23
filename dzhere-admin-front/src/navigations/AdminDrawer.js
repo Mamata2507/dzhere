@@ -3,8 +3,8 @@ import React from 'react';
 import { View, Text } from "react-native";
 import { Drawer, ClassListScreenStack, ClassManageScreenStack, 
     ClassLocationScreenStack, ClassExternalScreenStack, 
-    StudentManageScreenStack, StudentAttendScreenStack, 
-    StudentAttendClassScreenStack, TeacherManageScreenStack, TeacherAttendClassScreenStack } 
+    StudentListScreenStack, StudentAttendScreenStack, 
+    StudentAttendClassScreenStack, TeacherListScreenStack, TeacherAttendClassScreenStack } 
     from '../components/common/SideBar';
 import CustomSidebarMenu from '../components/common/CustomSidebarMenu';
 import { DrawerItem } from '@react-navigation/drawer';
@@ -38,9 +38,9 @@ const AdminDrawer = () => {
           component={ClassExternalScreenStack}
         />
         <Drawer.Screen
-          name="StudentManage"
+          name="StudentList"
           options={{ drawerLabel: '수강생 정보 관리' }}
-          component={StudentManageScreenStack}
+          component={StudentListScreenStack}
         />
         <Drawer.Screen
           name="StudentAttend"
@@ -53,9 +53,9 @@ const AdminDrawer = () => {
           component={StudentAttendClassScreenStack}
         />
         <Drawer.Screen
-          name="TeacherManageClass"
+          name="TeacherList"
           options={{ drawerLabel: '강사 정보 관리' }}
-          component={TeacherManageScreenStack}
+          component={TeacherListScreenStack}
         />
         <Drawer.Screen
           name="TeacherAttendClass"

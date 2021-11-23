@@ -10,10 +10,10 @@ import ClassManage from '../../pages/admin/class/ClassManage'
 import ClassList from '../../pages/admin/class/ClassList'
 import ClassLocation from '../../pages/admin/class/ClassLocation'
 import ClassExternal from '../../pages/admin/class/ClassExternal'
-import StudentManage from '../../pages/admin/student/StudentManage'
+import StudentList from '../../pages/admin/student/StudentList'
 import StudentAttend from '../../pages/admin/student/StudentAttend'
 import StudentAttendClass from '../../pages/admin/student/StudentAttendClass'
-import TeacherManage from '../../pages/admin/teacher/TeacherManage'
+import TeacherList from '../../pages/admin/teacher/TeacherList'
 import TeacherAttendClass from '../../pages/admin/teacher/TeacherAttendClass'
 
 
@@ -128,14 +128,14 @@ export const ClassExternalScreenStack = ({ navigation }) => {
 }
 
 // 수강생 관리
-export const StudentManageScreenStack = ({ navigation }) => {
+export const StudentListScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="StudentManage"
+      initialRouteName="StudentList"
     >
       <Stack.Screen
-        name="StudentManage"
-        component={StudentManage}
+        name="StudentList"
+        component={StudentList}
         options={{
           title: "",
           headerLeft: () => (
@@ -191,14 +191,14 @@ export const StudentAttendClassScreenStack = ({ navigation }) => {
 }
 
 // 강사 정보 관리
-export const TeacherManageScreenStack = ({ navigation }) => {
+export const TeacherListScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="TeacherManageClass"
+      initialRouteName="TeacherListClass"
     >
       <Stack.Screen
-        name="TeacherManage"
-        component={TeacherManage}
+        name="TeacherList"
+        component={TeacherList}
         options={{
           title: "",
           headerLeft: () => (
