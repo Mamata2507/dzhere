@@ -3,14 +3,20 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import menubar from '../../../assets/menubar.png'
-import CheckPage from '../../pages/client/check/check_index';
-import ListPage from '../../pages/client/list/list_index';
-import ExternalPage from '../../pages/client/external/external_index';
-import MyPage from '../../pages/client/myinfo/myinfo_index';
+import ClassManage from '../../pages/admin/class/ClassManage'
+import ClassList from '../../pages/admin/class/ClassList'
+import ClassLocation from '../../pages/admin/class/ClassLocation'
+import ClassExternal from '../../pages/admin/class/ClassExternal'
+import StudentManage from '../../pages/admin/student/StudentManage'
+import StudentAttend from '../../pages/admin/student/StudentAttend'
+import StudentAttendClass from '../../pages/admin/student/StudentAttendClass'
+import TeacherManage from '../../pages/admin/teacher/TeacherManage'
+import TeacherAttendClass from '../../pages/admin/teacher/TeacherAttendClass'
+
+
 // Import Custom Sidebar
 // import CustomSidebarMenu from './CustomSidebarMenu';
 
@@ -37,127 +43,195 @@ export const NavigationDrawerStructure = (props) => {
   );
 };
 
-export const firstScreenStack = ({ navigation }) => {
+// 강의 목록
+export const ClassListScreenStack = ({ navigation }) => {
   return (
-    <Stack.Navigator initialRouteName="CheckPage">
+    <Stack.Navigator
+      initialRouteName="ClassList"
+    >
       <Stack.Screen
-        name="오늘의 출석"
-        component={CheckPage}
+        name="ClassList"
+        component={ClassList}
         options={{
+          title: "",
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          title: '',
-          headerTransparent: true
+          headerTransparent: true,
         }}
       />
     </Stack.Navigator>
   );
 }
 
-export const secondScreenStack = ({ navigation }) => {
-  return (
-    // Link to
-    <Stack.Navigator
-      initialRouteName="ListPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerTransparent: true
-      }}>
-      <Stack.Screen
-        name="ListPage"
-        component={ListPage}
-        options={{
-          title: '', //Set Header Title
-        }}
-      />
-      <Stack.Screen
-        name="ExternalPage"
-        component={ExternalPage}
-        options={{
-          title: '', //Set Header Title
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-export const thirdScreenStack = ({ navigation }) => {
+// 강의 관리
+export const ClassManageScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="ExternalPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerTransparent: true
-      }}>
+      initialRouteName="ClassManage"
+    >
       <Stack.Screen
-        name="ExternalPage"
-        component={ExternalPage}
+        name="ClassManage"
+        component={ClassManage}
         options={{
-          title: '', //Set Header Title
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
         }}
       />
     </Stack.Navigator>
   );
 }
 
-export const fourthScreenStack = ({ navigation }) => {
+// 강의 장소 관리
+export const ClassLocationScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="MyPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerTransparent: true
-      }}>
+      initialRouteName="ClassLocation"
+    >
       <Stack.Screen
-        name="MyPage"
-        component={MyPage}
+        name="ClassLocation"
+        component={ClassLocation}
         options={{
-          title: '', //Set Header Title
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
         }}
       />
     </Stack.Navigator>
   );
 }
 
-// // 첫 번째로 들어오는 곳, View
-// function SideBar() {
-//   return (
-//     <NavigationContainer>
-//       <Drawer.Navigator
-//         drawerContentOptions={{
-//           activeTintColor: '#e91e63',
-//           itemStyle: { marginVertical: 5 },
-//         }}
-//         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-//         <Drawer.Screen
-//           name="CheckPage"
-//           options={{ drawerLabel: '오늘의 출석' }}
-//           component={firstScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="SecondPage"
-//           options={{ drawerLabel: '지난 출석 보기' }}
-//           component={secondScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="ThirdPage"
-//           options={{ drawerLabel: '외부 장소' }}
-//           component={thirdScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="FourthPage"
-//           options={{ drawerLabel: '내 장소' }}
-//           component={secondScreenStack}
-//         />
-//       </Drawer.Navigator>
-//     </NavigationContainer>
-//   );
-// }
+// 외부 장소 관리
+export const ClassExternalScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ClassExternal"
+    >
+      <Stack.Screen
+        name="ClassExternal"
+        component={ClassExternal}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// 수강생 관리
+export const StudentManageScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="StudentManage"
+    >
+      <Stack.Screen
+        name="StudentManage"
+        component={StudentManage}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// 수강생별 출결 현황
+export const StudentAttendScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="StudentAttend"
+    >
+      <Stack.Screen
+        name="StudentAttend"
+        component={StudentAttend}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// 수강생 강의별 출결 현황
+export const StudentAttendClassScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="StudentAttendClass"
+    >
+      <Stack.Screen
+        name="StudentAttendClass"
+        component={StudentAttendClass}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// 강사 정보 관리
+export const TeacherManageScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="TeacherManageClass"
+    >
+      <Stack.Screen
+        name="TeacherManage"
+        component={TeacherManage}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// 강사 강의별 출결 현황
+export const TeacherAttendClassScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="TeacherAttendClass"
+    >
+      <Stack.Screen
+        name="TeacherAttendClass"
+        component={TeacherAttendClass}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
+
 
