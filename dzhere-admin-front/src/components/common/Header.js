@@ -1,30 +1,21 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
-import logo from '../../../assets/logo.png'
+import { StyleSheet, View, Text } from 'react-native';
+import { Platform } from 'react-native';
 
 export const Header = () => {
     return (
-      <View style={styles.container, {alignItems: 'center', marginTop: 40}}>
         <View style={styles.header}></View>
-        <Image
-          style={styles.headerImage}
-          source={logo}
-        />
-      </View>
     );
   };
 
   const styles = StyleSheet.create({
-    container: {
+    header: {
+      marginTop: Platform.OS === "android" ? '25%' : '30%',
+      height: Platform.OS === "android" ? "20%" : "30%",
       width: Platform.OS === "android" ? "95%" : "60%",
       justifyContent: 'center',
       padding: Platform.OS === "android" ? "1%" : "1.5%",
-    },
-    header: {
-      height: 50
-    },
-    headerImage: {
-      width: 100,
-      height: 100,
+      backgroundColor: '#CEEDFF',
+      borderRadius: 15,
     },
   });

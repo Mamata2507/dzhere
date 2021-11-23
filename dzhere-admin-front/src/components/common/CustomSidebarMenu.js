@@ -83,7 +83,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label="▪️ 수강생 정보 관리"
           onPress={()=>{
-            props.navigation.navigate('StudentManage')
+            props.navigation.navigate('StudentList')
           }}
         />
         <DrawerItem 
@@ -109,7 +109,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label="▪️ 강사 정보 관리"
           onPress={()=>{
-            props.navigation.navigate('TeacherManageClass')
+            props.navigation.navigate('TeacherList')
           }}
         />
         <DrawerItem 
