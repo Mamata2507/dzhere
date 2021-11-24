@@ -1,9 +1,9 @@
 import React from 'react';
 import { Contents } from '../../../components/admin/student/StudentList'
 
-const StudentContainer = () => {
+const StudentListContainer = () => {
 
-    const test = '하이';
+  const test = "테스트"
 
   return (
       <Contents
@@ -12,4 +12,4 @@ const StudentContainer = () => {
   );
 };
 
-export default StudentContainer;
+export default StudentListContainer;

@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Header } from '../../../components/common/Header' 
 import { Footer } from '../../../components/common/Footer' 
-import StudentContainer from '../../../containers/admin/student/StudentListContainer'
+import StudentListContainer from '../../../containers/admin/student/StudentListContainer'
 
-const StudentManage = ({ navigation }) => {
+const StudentList = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
-                <Header/>
-                <StudentContainer />
-                <Footer />
+                <StudentListContainer />
         </SafeAreaView>
     );
 };
@@ -23,4 +20,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default StudentManage;
+export default StudentList;

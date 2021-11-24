@@ -1,21 +1,28 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
 import { Platform } from 'react-native';
+import { StudentListAndroid } from './StudentListAndroid'
+import { StudentListWeb } from './StudentListWeb'
 
-export const Contents = ({ test }) => {
+export const Contents = ( {test} ) => {
+  return (Platform.OS === "android") ? 
+  <StudentListAndroid test={test}/> : <StudentListWeb test={test}/>
+};
 
-    return (
-      <View style={styles.container}>
-        <Text>{test}</Text>
-      </View>
-    );
-  };
+//   return (Platform.OS === "android") ? 
+//   <ListLayoutContentAndroid 
+//                   classTime={classTime} 
+//                   tableHead={tableHead} 
+//                   tableData={tableData} 
+//                   days={days}
+//                   onPressSearch={onPressSearch}/>
+// : 
+//   (classTime) ? <ListLayoutContentWeb
+//                   classTime={classTime} 
+//                   tableHead={tableHead} 
+//                   tableData={tableData} 
+//                   days={days}
+//                   onPressSearch={onPressSearch}
+//                   onMonthChange={onMonthChange}
+//                   attendList={attendList}/>
 
-  const styles = StyleSheet.create({
-    container: {
-      width: Platform.OS === "android" ? "95%" : "60%",
-      height: Platform.OS === "android" ? '60%' : "70%",
-      justifyContent: 'center',
-      padding: Platform.OS === "android" ? "1%" : "1.5%",
-    },
-  });
+//               : <Text>empty</Text>
