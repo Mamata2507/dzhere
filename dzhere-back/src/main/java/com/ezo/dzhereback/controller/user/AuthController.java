@@ -6,7 +6,6 @@ import com.ezo.dzhereback.dto.AuthDto;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.service.AuthService;
 import com.ezo.dzhereback.jwt.TokenProvider;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +41,8 @@ public class AuthController {
             System.out.println(authDto.toString());
             // 회원 가입할 사용자 객체 생성
             Member member = Member.builder()
-                    .u_phone(authDto.getU_phone())
-                    .u_pw(authDto.getU_pw())
+                    .u_phone(authDto.getUserPhone())
+                    .u_pw(authDto.getPassword())
                     .u_email(authDto.getU_email())
                     .build();
             System.out.println(member.toString());
@@ -70,10 +69,11 @@ public class AuthController {
 
     @PostMapping("/api/user/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthDto authDto){
+        log.info(String.valueOf(authDto));
         try{
             Member member = authService.getByCredentials(
-                    authDto.getU_phone(),
-                    authDto.getU_pw(),
+                    authDto.getUserPhone(),
+                    authDto.getPassword(),
                     passwordEncoder
             );
 
