@@ -6,23 +6,16 @@ import {
   Platform,
   Alert,
 } from "react-native";
-// import styled from "styled-components/native";
-import PropTypes from "prop-types";
-import { images } from "../../../components/common/images";
 import { delWifi } from "../../../lib/api/external/external";
-import { deleteWifi } from "../../../modules/client/external/external";
+import { deleteWifi, getList } from "../../../modules/client/external/external";
 import { useDispatch, useSelector } from "react-redux";
-const DeleteButton = ({type, item }) => {
+const DeleteButton = ({ type, item }) => {
   const dispatch = useDispatch();
   const [id, setId] = useState({});
-  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
+  const { phone, token } = useSelector(({ auth }) => ({
     phone: auth.login.userPhone,
     token: auth.auth.token,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-}));
-
+  }));
 
   // AsyncStorage.setItem("u_phone", "01072695524");
 
@@ -33,12 +26,23 @@ const DeleteButton = ({type, item }) => {
   //   console.log("phone", phone);
   // }
 
+  async function againApiList() {
+    // console.log(token);
+    const data = await delWifi({
+      id: item.e_idx,
+      u_phone: phone,
+      token: token,
+    });
+    dispatch(getList(data));
+    dispatch(deleteWifi(id));
+  }
+
   // 삭제 버튼 이벤트
   const onDelete = () => {
-    const apiData = Object.assign({}, { id: item.e_idx , u_phone: phone, token: token});
-    delWifi(apiData);
-    dispatch(deleteWifi({ id: item.e_idx }));
-    console.log(phone, id);
+    setId({ id: item.e_idx });
+    againApiList();
+    // dispatch(deleteWifi({ id: item.e_idx }));
+    console.log(token, phone, id);
   };
 
   const lastAlert = () => {
@@ -46,28 +50,40 @@ const DeleteButton = ({type, item }) => {
     return true;
   };
 
+  const firstAlert = () => {
+    alert(
+      "해당 외부 장소를 삭제하시겠습니까?\n 외부장소: " +
+        item.e_name +
+        "(" +
+        item.e_ssid +
+        ")"
+    );
+    return true;
+  };
   const deleteAlert = () => {
     console.log("삭제 완료");
-    Alert.alert(
-      "해당 외부 장소를 삭제하시겠습니까?",
-      "외부장소: " + item.e_name + "(" + item.e_ssid + ")",
-      [
-        {
-          text: "취소",
-          onPress: () => {
-            alert("삭제를 취소하였습니다.");
-            console.log("삭제 취소");
-          },
-        },
-        {
-          text: "확인",
-          onPress: () => {
-            onDelete();
-            lastAlert();
-          },
-        },
-      ]
-    );
+    Platform.OS === "android"
+      ? Alert.alert(
+          "해당 외부 장소를 삭제하시겠습니까?",
+          "외부장소: " + item.e_name + "(" + item.e_ssid + ")",
+          [
+            {
+              text: "취소",
+              onPress: () => {
+                alert("삭제를 취소하였습니다.");
+                console.log("삭제 취소");
+              },
+            },
+            {
+              text: "확인",
+              onPress: () => {
+                onDelete();
+                lastAlert();
+              },
+            },
+          ]
+        )
+      : (firstAlert(), onDelete(), lastAlert());
   };
 
   return (
@@ -83,8 +99,5 @@ const styles = StyleSheet.create({
     height: Platform.OS === "android" ? 20 : 30,
   },
 });
-DeleteButton.propTypes = {
-  type: PropTypes.oneOf(Object.values(images)).isRequired,
-};
 
 export default DeleteButton;

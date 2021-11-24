@@ -1,4 +1,4 @@
-import client from '../index';
+import client from './client';
 
 // 로그인
 export const login = ({ userPhone, password }) =>

@@ -3,31 +3,22 @@ import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import ExternalTemplate from "../../../components/client/external/ExternalTemplate";
-import { getList, savePhone } from "../../../modules/client/external/external";
+import { getList } from "../../../modules/client/external/external";
 import { allWifi } from "../../../lib/api/external/external";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListContainer = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  // const [isNull, setIsNull] = useState(null);
   const [apiLog, setApiLog] = useState(null);
-  // const [eid, setEid] = useState({});
-  const [localData, setLocalData] = useState({});
   const wifiLog = useSelector(({ external }) => external.wifi);
   const wifiId = useSelector(({ external }) => external.id);
-  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
+  const locList = useSelector(({ external }) => external.loclist);
+  const { phone, token } = useSelector(({ auth }) => ({
     phone: auth.login.userPhone,
     token: auth.auth.token,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-}));
-
-  // console.log(wifiId);
-  // console.log("wifiLog:", wifiLog);
-  // const wifiList = useSelector(({ external }) => external.loclist);
-  // console.log("wifiList:", wifiList);
+  }));
 
   // AsyncStorage.setItem("u_phone", "01072695524");
 
@@ -43,48 +34,48 @@ const ListContainer = () => {
   //   getStorage();
   // }, []);
 
-  // async function getApiList() {
-  //   console.log("최초 렌더링");
-  //   const select = await allWifi(localData);
-  //   setApiLog(select);
-  //   dispatch(getList(apiLog));
-  // }
-
-  // 최초 렌더링 시 getApiList() 함수 실행
-  useEffect(() => {
-    setLocalData({u_phone: phone, token: token})
-  }, []);
-
   async function againApiList() {
-    // console.log("리렌더링");
-    // const select = await allWifi(localData);
-    // console.log("data 길이", select.length);
-    console.log(token);
-    setApiLog(await allWifi(localData));
+    const data = await allWifi(phone, token);
+    // // const temp = data.length === 0 ? false : true;
+    // console.log(data.length);
+    // setIsNull(data.length === 0 ? false : true);
+    setApiLog(data);
     // console.log(apiLog.length);
     dispatch(getList(apiLog));
   }
 
+  // 최초 렌더링 시 getApiList() 함수 실행
+  useEffect(() => {
+    // setLocalData({ u_phone: phone, token: token });
+    againApiList();
+  }, []);
+
+  // 리렌더링 시 getApiList() 함수 실행
+  useEffect(() => {
+    console.log("해당 페이지로 돌아왔을 때 리렌더링");
+    if (isFocused) {
+      againApiList();
+    }
+  }, [isFocused]);
+
   // 리렌더링 시 getApiList() 함수 실행
   useEffect(() => {
     console.log("추가 시 리렌더링");
-    console.log("전화번호", localData);
+    console.log(wifiLog);
     if (isFocused) {
-      // setApiLog(null);
-      againApiList();
+      setApiLog(locList);
     }
   }, [isFocused, wifiLog]);
 
   // 리렌더링 시 getApiList() 함수 실행
   useEffect(() => {
     console.log("삭제 시 리렌더링");
+    console.log(wifiId);
     if (isFocused) {
-      setApiLog(null);
-      setTimeout(() => {
-        againApiList();
-      }, 10);
+      setApiLog(locList);
+      console.log(locList);
     }
-  }, [localData, wifiId]);
+  }, [wifiId]);
 
   // useFocusEffect(
   //   useCallback(async () => {

@@ -16,10 +16,11 @@ export const finishLoading = createAction(
 );
 
 /*** initial state ***/
-const initialState = {};
+const initialState = {
+};
 
 /*** 리듀서 ***/
-const loading = handleActions(
+export const loading = handleActions(
   {
     [START_LOADING]: (state, action) => ({
       ...state,

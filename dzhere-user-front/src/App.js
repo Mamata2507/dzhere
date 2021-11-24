@@ -3,7 +3,7 @@ import AuthStack from "./navigations/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { enableScreens } from 'react-native-screens';
-const prefix = Linking.createURL('/');
+// const prefix = Linking.createURL('/');
 
 enableScreens();
 
@@ -23,14 +23,14 @@ enableScreens();
 //   ExternalPage: {path: "external"},
 // };
 
-const linking = {
-  prefixes: [prefix],
-  // config,
-};
+// const linking = {
+//   prefixes: [prefix],
+//   // config,
+// };
 
 const App = () => {
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer>
       <AuthStack />
     </NavigationContainer>
   );

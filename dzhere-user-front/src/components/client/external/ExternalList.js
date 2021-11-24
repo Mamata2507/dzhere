@@ -5,6 +5,7 @@ import DeleteButton from "../../../containers/client/external/ExternalDeleteCont
 import { images } from "../../common/images";
 
 const ExternalItem = ({ list, item }) => {
+  console.log("item", item);
   return (
     <View style={styles.container}>
       {/* <IconButton

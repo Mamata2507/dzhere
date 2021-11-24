@@ -6,19 +6,21 @@ import {
   Platform,
   Dimensions,
   ScrollView,
-  Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 // import refresh from "../../../../assets/check/refresh.png";
 import { Header } from "../../common/layout";
 import External from "./ExternalList";
+import { StatusBar } from "expo-status-bar";
 
 const ExternalTemplate = ({ wifiList, navigation }) => {
   const width = Dimensions.get("window").width;
+  // console.log("temp",temp.lastIndex);
   // console.log("아이템 있는지 없는지 확인", wifiList);
   // console.log("컴포넌트:", wifiList);
   return (
     <>
+      <StatusBar />
       {/* // 헤더 */}
       <Header />
       {/* // 본문 */}
@@ -30,20 +32,18 @@ const ExternalTemplate = ({ wifiList, navigation }) => {
               Object.values(wifiList).map((item) => (
                 <External list={wifiList} key={item.e_idx} item={item} />
               ))
-              :
-              <>
-              <View width={width} />
-              <Text style={styles.refresh}>리스트를 불러오는 중입니다..</Text>
-            </>
+            : <>
+            <View width={width} />
+            <Text style={styles.refresh}>리스트를 불러오는 중입니다..</Text>
+          </>
             }
-            {/* {wifiList.length === false && 
-              <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text> 
-            }
-              */}
-            {/* {wifiList.length == 0 && <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text>} */}
-            {/* {wifiList.length == 0 ?
-              <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text> 
-              :} */}
+            {/* <>
+                <View width={width} />
+                <Text style={styles.refresh}>리스트를 불러오는 중입니다..</Text>
+              </> */}
+             {/* {temp.length === 0 && (
+              <Text style={styles.refresh}>등록된 외부 장소가 없습니다.</Text>
+            )} */}
           </ScrollView>
 
           {/* // 푸터 */}
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   contents: {
     margin: 10,
-    width: Platform.OS === "android" ? "90%" : "70%",
+    width: Platform.OS === "android" ? "90%" : "60%",
     height: Platform.OS === "android" ? "70%" : 400,
     backgroundColor: "#CEEDFF",
     marginTop: Platform.OS === "android" ? 0 : 40,
@@ -114,5 +114,6 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
+
 
 export default ExternalTemplate;

@@ -76,7 +76,7 @@ const initialState = {
 };
 
 /*** 리듀서 ***/
-const auth = handleActions(
+export const auth = handleActions(
   {
     [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
       produce(state, draft => {

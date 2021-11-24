@@ -76,7 +76,7 @@ const App = () => {
           // userToken = await "dummy-auth-token";
           userToken = await axios({
             method: "POST",
-            url: "http://192.168.0.112:8080/api/user/login",
+            url: "http://192.168.25.193:8080/api/user/login",
             headers: {
               "X-Requested-With": "XMLHttpRequest",
             },
@@ -108,7 +108,7 @@ const App = () => {
         try {
           await axios({
             method: "POST",
-            url: "http://192.168.45.37:8080/api/user/register",
+            url: "http://192.168.25.193:8080/api/user/register",
             headers: {
               "X-Requested-With": "XMLHttpRequest",
             },

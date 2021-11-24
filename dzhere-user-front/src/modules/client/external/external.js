@@ -7,7 +7,6 @@ import { createAction, handleActions } from "redux-actions";
 // import * as authAPI from "../lib/api/auth";
 const ADD_WIFI = "external/ADD_WIFI";
 const GET_EXTERNAL = "external/GET_EXTERNAL";
-const SAVE_PHONE = "external/SAVE_PHONE";
 const DEL_EXTERNAL = "external/DEL_EXTERNAL";
 const initialState = {
   wifi: {
@@ -23,7 +22,6 @@ const initialState = {
 export const setWifi = createAction(ADD_WIFI, wifi => wifi);
 export const getList = createAction(GET_EXTERNAL, loclist => loclist);
 export const deleteWifi = createAction(DEL_EXTERNAL, id => id);
-export const savePhone = createAction(SAVE_PHONE, u_phone => u_phone)
 // // saga 생성
 // const externalSaga = createRequestSaga(EXTERNAL, authAPI.login);
 // export function* authSaga() {
@@ -48,11 +46,7 @@ export const external = handleActions(
     }),
     [GET_EXTERNAL]: (state, { payload: loclist }) => ({
       ...state,
-      loclist: loclist,
-    }),
-    [SAVE_PHONE]: (state, {payload: u_phone}) => ({
-      ...state,
-      u_phone,
+      loclist,
     }),
     [DEL_EXTERNAL]: (state, {payload: id}) => ({
       ...state,
@@ -62,6 +56,7 @@ export const external = handleActions(
   initialState
 );
 
+export default external;
 // 로그인 성공
 //     [LOGIN_SUCCESS]: (state, { payload: external }) => ({
 //       ...state,

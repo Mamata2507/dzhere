@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import NetInfo from "@react-native-community/netinfo";
 import ExternalForm from "../../../components/client/external/ExternalAdd";
 import { addWifi } from "../../../lib/api/external/external";
 import * as Location from "expo-location";
-import { setWifi } from "../../../modules/client/external/external";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setWifi, getList } from "../../../modules/client/external/external";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ExternalContainer 에서 받아온다.
 const ExternalAddContainer = () => {
@@ -14,25 +14,14 @@ const ExternalAddContainer = () => {
   const [wifiInfo, setwifiInfo] = useState({});
   // 외부 장소명 정보를 받을 state 변수 생성
   const [locInfo, setLocInfo] = useState({});
-  const [localData, setLocalData] = useState({ u_phone: "" });
-  const wifiList = useSelector(({ external }) => external.loclist);
-  const { ssid, bssid, location } = useSelector(({ external }) => ({
-    ssid: external.wifi.ssid,
-    bssid: external.wifi.bssid,
-    location: external.wifi.location,
-  }));
-
-  const { phone, token, auth, authError, user } = useSelector(({auth, user}) => ({
-    phone: auth.login.userPhone,
-    token: auth.auth.token,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-}));
-
-
+  // const [localData, setLocalData] = useState({ u_phone: "" });
+  // const wifiList = useSelector(({ external }) => external.loclist);
   const dispatch = useDispatch();
   const LocInput = useRef("");
+  const { phone, token } = useSelector(({auth}) => ({
+    phone: auth.login.userPhone,
+    token: auth.auth.token,
+}));
 
   // AsyncStorage.setItem("u_phone", "01072695524");
 
@@ -89,19 +78,32 @@ const ExternalAddContainer = () => {
     [locInfo]
   );
 
-  // 등록 버튼 이벤트
-  const onSubmit = () => {
+  async function againApiList() {
+    // console.log(token);
     const newExternal = Object.assign({}, wifiInfo, locInfo);
     // console.log(newExternal);
     console.log("등록 완료");
-    console.log(phone);
+    // console.log(phone);
     const apiList = Object.assign({}, newExternal, {u_phone: phone, token: token});
-    addWifi(apiList);
+    const data = await addWifi(apiList);
+    dispatch(getList(data));
     dispatch(setWifi(newExternal));
+  }
+
+  // 등록 버튼 이벤트
+  const onSubmit = () => {
+    // const newExternal = Object.assign({}, wifiInfo, locInfo);
+    // // console.log(newExternal);
+    // console.log("등록 완료");
+    // // console.log(phone);
+    // const apiList = Object.assign({}, newExternal, {u_phone: phone, token: token});
+    // dispatch(getList(addWifi(apiList)));
     // setExternalList({ ...externalInfo, ...newExternalObject });
+    againApiList();
     setLocInfo("");
     setwifiInfo("");
-  };
+  }
+
   // WIFI 수집 버튼 이벤트
   const onPressWifi = useCallback(() => {
     console.log("WIFI 수집");

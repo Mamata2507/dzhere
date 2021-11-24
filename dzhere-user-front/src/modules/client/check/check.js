@@ -25,3 +25,5 @@ export const check = handleActions(
         }),
     },initState
 )
+
+export default check;

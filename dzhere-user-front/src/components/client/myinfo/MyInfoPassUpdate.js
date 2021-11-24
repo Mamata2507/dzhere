@@ -5,7 +5,7 @@ import IconButton from './MyInfoIconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
-import { read_myInfo } from '../../../modules/client/myinfo/myInfo'
+// import myInfo from '../../../modules/client/myinfo/myInfo'
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Contents = () => {

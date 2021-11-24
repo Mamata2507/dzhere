@@ -2,6 +2,8 @@ package com.ezo.dzhereback.config;
 
 import com.ezo.dzhereback.jwt.JwtAuthenticationFilter;
 import com.ezo.dzhereback.service.AuthService;
+
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -37,11 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors()
-                .disable()
-                .csrf()// csrf는 현재 사용하지 않으므로 disable
-                .disable()
+    	http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+    	http.csrf().disable()
                 .httpBasic()// token을 사용하므로 basic 인증 disable
                 .disable()
                 .sessionManagement()  // session 기반이 아님을 선언
@@ -54,6 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/register/**").permitAll()
                 .antMatchers("/api/user/login").permitAll()
                 .antMatchers("/api/admin/login").permitAll()
+                .antMatchers("/api/external/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_TEACHER")
+//                .antMatchers("/api/external/select").permitAll()
+//                .antMatchers("/api/external/add").permitAll()
+//                .antMatchers("/api/external/delete").permitAll()
                 .anyRequest().authenticated();
 
         // filter 등록.

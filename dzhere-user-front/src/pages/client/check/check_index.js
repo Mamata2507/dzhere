@@ -5,7 +5,7 @@ const check_index = ({ navigation, onPressStartTime }) => {
   return (
     <View style={{ flex: 1,  backgroundColor: 'white' }}>
       <Header/>
-      <Contents onPressStartTime={onPressStartTime}/>
+      {/* <Contents onPressStartTime={onPressStartTime}/> */}
       {/* <Footer/> */}
     </View>
   );

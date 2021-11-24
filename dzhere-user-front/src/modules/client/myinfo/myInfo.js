@@ -29,6 +29,7 @@ export const myinfo = handleActions(
   initialState
 );
 
+export default myinfo;
 
 // export const myinfo1 = handleActions(
 //   {

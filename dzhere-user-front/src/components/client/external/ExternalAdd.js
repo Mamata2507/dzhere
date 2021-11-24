@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Platform } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../../common/layout";
 import { useNavigation } from "@react-navigation/core";
+import { StatusBar } from "expo-status-bar";
 
 // // ExternalContainer 에서 받아온다.
 const ExternalAdd = ({
@@ -16,6 +17,7 @@ const ExternalAdd = ({
   const navigation = useNavigation();
   return (
     <>
+    <StatusBar style={{width: 20, height: 10}}/>
       {/* // 헤더 */}
       <Header />
       {/* // 본문 */}
@@ -39,7 +41,7 @@ const ExternalAdd = ({
                 style={[{ borderColor: "#5AA0C8" }, styles.input]}
                 onChangeText={onChangeLoc}        
                 ref={LocInput}
-                value={location}
+                value={location.location}
                 maxLength={10}
                 placeholder="Enter Location"
               />

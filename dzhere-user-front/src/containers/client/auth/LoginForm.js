@@ -40,7 +40,6 @@ const LoginForm = ({ navigation, route }) => {
         const {userPhone, password} = form;
         // console.log('아이디 비번 : ', {userPhone, password});
         dispatch(login({userPhone, password}));
-        navigation.navigate("ClientDrawer");
     };
 
     // 컴포넌트 처음 렌더링 시, 변수 form의 값 초기화
@@ -58,7 +57,7 @@ const LoginForm = ({ navigation, route }) => {
         }
         if (auth) {
             console.log('로그인 성공');
-            // navigation.navigate("ClientDrawer");
+            navigation.navigate("ClientDrawer");
             // // dispatch(check());
         }
     }, [auth, authError, dispatch]);
