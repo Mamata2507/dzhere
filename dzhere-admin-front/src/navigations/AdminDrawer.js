@@ -12,10 +12,6 @@ import { DrawerItem } from '@react-navigation/drawer';
 const AdminDrawer = () => {
     return (
       <Drawer.Navigator
-        drawerContentOptions={{
-          activeTintColor: '#1293dd',
-          itemStyle: { marginVertical: 100 },
-        }}
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
         <Drawer.Screen
           name="ClassList"
