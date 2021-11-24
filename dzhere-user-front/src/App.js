@@ -1,9 +1,26 @@
 import React from "react";
 import AuthStack from "./navigations/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
+import * as Linking from "expo-linking";
+import {enableScreens} from 'react-native-screens';
+const prefix = Linking.createURL('/');
+
+enableScreens();
+
 const App = () => {
+  const config = {
+    screens: {
+      UserLoginPage: 'index',
+      UserSignUpPage: 'signups'
+    },
+  };
+
+  const linking = {
+    prefixes: [prefix],
+    config,
+  };
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <AuthStack />
     </NavigationContainer>
   );

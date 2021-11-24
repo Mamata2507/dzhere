@@ -1,36 +1,34 @@
-import 'react-native-gesture-handler';
-
-import * as React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import menubar from '../../../assets/menubar.png'
-import CheckPage from '../../pages/client/check/check_index';
-import ListPage from '../../pages/client/list/list_index';
-import ExternalPage from '../../pages/client/external/external_index';
-import MyPage from '../../pages/client/myinfo/myinfo_index';
-// Import Custom Sidebar
-// import CustomSidebarMenu from './CustomSidebarMenu';
-
+import "react-native-gesture-handler";
+import * as React from "react";
+import { View, TouchableOpacity, Image } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import menubar from "../../../assets/menubar.png";
+import CheckPage from "../../pages/client/check/CheckIndex";
+import ListPage from "../../pages/client/list/ListPage";
+import ExternalPage from "../../pages/client/external/ExternalPage";
+import MyPage from "../../pages/client/myinfo/myinfo_index";
+import ExternalForm from "../../pages/client/external/ExternalForm";
+// import ExternalAdd from "../client/external/ExternalAdd";
+// import ExternalAddContainer from "../../containers/client/external/ExternalAddContainer";
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
 
 export const NavigationDrawerStructure = (props) => {
+  console.log("토글");
   //Structure for the navigatin Drawer
-  const toggleDrawer = () => {
+  function toggleDrawer() {
     //Props to open/close the drawer
+    console.log("함수 실행");
     props.navigationProps.toggleDrawer();
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: "row" }}>
       <TouchableOpacity onPress={toggleDrawer}>
-        {/*Donute Button Image */}
         <Image
           source={menubar}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{ width: 30, height: 30, marginLeft: 20 }}
         />
       </TouchableOpacity>
     </View>
@@ -41,19 +39,19 @@ export const firstScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator initialRouteName="CheckPage">
       <Stack.Screen
-        name="오늘의 출석"
+        name="CheckPage"
         component={CheckPage}
         options={{
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          title: '',
-          headerTransparent: true
+          title: "",
+          headerTransparent: true,
         }}
       />
     </Stack.Navigator>
   );
-}
+};
 
 export const secondScreenStack = ({ navigation }) => {
   return (
@@ -64,101 +62,67 @@ export const secondScreenStack = ({ navigation }) => {
         headerLeft: () => (
           <NavigationDrawerStructure navigationProps={navigation} />
         ),
-        headerTransparent: true
-      }}>
+        headerTransparent: true,
+      }}
+    >
       <Stack.Screen
         name="ListPage"
         component={ListPage}
         options={{
-          title: '', //Set Header Title
+          title: "", //Set Header Title
         }}
       />
     </Stack.Navigator>
   );
-}
+};
 
 export const thirdScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="ExternalPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerTransparent: true
-      }}>
+    >
       <Stack.Screen
         name="ExternalPage"
         component={ExternalPage}
         options={{
-          title: '', //Set Header Title
+          title: "", //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
         }}
       />
-      
-      {/* <Stack.Screen
-        name="ExternalPage"
-        component={ExternalPage}
+      <Stack.Screen
+        name="ExternalForm"
+        component={ExternalForm}
         options={{
-          title: '', //Set Header Title
+          title: "", //Set Header Title
+          headerShown: true,
+          headerTransparent: true,
         }}
-      /> */}
+      />
     </Stack.Navigator>
   );
-}
+};
 
 export const fourthScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="MyPage"
+    initialRouteName="MyPage"
       screenOptions={{
         headerLeft: () => (
           <NavigationDrawerStructure navigationProps={navigation} />
         ),
-        headerTransparent: true
-      }}>
+        headerTransparent: true,
+      }}
+    >
       <Stack.Screen
         name="MyPage"
         component={MyPage}
         options={{
-          title: '', //Set Header Title
+          title: "", //Set Header Title
         }}
       />
     </Stack.Navigator>
   );
-}
-
-// // 첫 번째로 들어오는 곳, View
-// function SideBar() {
-//   return (
-//     <NavigationContainer>
-//       <Drawer.Navigator
-//         drawerContentOptions={{
-//           activeTintColor: '#e91e63',
-//           itemStyle: { marginVertical: 5 },
-//         }}
-//         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-//         <Drawer.Screen
-//           name="CheckPage"
-//           options={{ drawerLabel: '오늘의 출석' }}
-//           component={firstScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="SecondPage"
-//           options={{ drawerLabel: '지난 출석 보기' }}
-//           component={secondScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="ThirdPage"
-//           options={{ drawerLabel: '외부 장소' }}
-//           component={thirdScreenStack}
-//         />
-//         <Drawer.Screen
-//           name="FourthPage"
-//           options={{ drawerLabel: '내 장소' }}
-//           component={secondScreenStack}
-//         />
-//       </Drawer.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-
+};
