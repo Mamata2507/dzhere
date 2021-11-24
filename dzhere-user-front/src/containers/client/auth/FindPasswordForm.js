@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../../modules/client/auth/auth';
 import AuthForm from '../../../components/client/auth/AuthForm';
-import { check } from '../../../modules/client/auth/user';
-import asyncStorage from '../../../lib/asyncStorage';
 import { Platform } from 'react-native';
 
 const FindPasswordForm = ({ navigation, route }) => {
@@ -12,7 +10,7 @@ const FindPasswordForm = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
     const {form, auth, authError, user } = useSelector(({auth, user}) => ({
-        form: auth.register,
+        form: auth.findPassword,
         auth: auth.auth,
         authError: auth.authError,
         user: user.user,
@@ -20,6 +18,7 @@ const FindPasswordForm = ({ navigation, route }) => {
 
     // TextInput 값 변경 이벤트 핸들러
     const onChangeText = e => {
+        console.log(e);
         const {value, name} = e;
         dispatch(
             changeField({
@@ -33,24 +32,16 @@ const FindPasswordForm = ({ navigation, route }) => {
     // 버튼 onPress 이벤트 핸들러
     const onPress = e => {
         e.preventDefault();
-        const { userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3 } = form;
+        const { userEmail, } = form;
 
         // 하나라도 비어 있다면
-        if([userPhone, authNum, password, passwordConfirm].includes('') && [isChecked1, isChecked2, isChecked3].includes(false)){
+        if([userEmail].includes('')){
             console.log('양식을 모두 입력하세요.');
             setError('양식을 모두 입력하세요.');
             return;
         }
 
-        // 비밀번호 불일치
-        if(password !== passwordConfirm){
-            console.log('비밀번호가 일치하지 않습니다.');
-            setError('비밀번호가 일치하지 않습니다.');
-            dispatch(changeField({ form: 'register', key: 'password', value: '' }));
-            dispatch(changeField({ form: 'register', key: 'passwordConfirm', value: '' }));
-            return;
-        }
-        dispatch(register({ userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3 }));
+        dispatch(register({ userEmail, }));
     };
 
     // 컴포넌트 처음 렌더링 시, 변수 form의 값 초기화
@@ -107,7 +98,7 @@ const FindPasswordForm = ({ navigation, route }) => {
 
     return (
         <AuthForm
-            type='register'
+            type='findPw'
             form={form}
             onChangeText={onChangeText}
             onPress={onPress}
@@ -118,4 +109,4 @@ const FindPasswordForm = ({ navigation, route }) => {
     );
 };
 
-export default RegisterForm;
+export default FindPasswordForm;

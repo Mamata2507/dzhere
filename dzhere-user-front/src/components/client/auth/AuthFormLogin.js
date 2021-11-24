@@ -1,12 +1,11 @@
 import React from 'react';
-import { SafeAreaView, View, Image, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import CustomTextInput from './CustomTextInput';
 import ErrorMessage from './ErrorMessage';
 import image from '../../../../assets/logo.png'
 
 const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
-    console.log('AuthFormLogin');
-    console.log('form : ', form);
+    console.log("AuthFormLogin");
     return (
       <>
         <StatusBar style="light" />
@@ -42,7 +41,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
 
           <Text
             style={styles.txtFindPassword}
-            onPress={() => navigation.navigate("UserFindPassword")}
+            onPress={() => navigation.navigate("UserFindPasswordPage")}
             /* 구현 예정 */
           >
             비밀번호 찾기

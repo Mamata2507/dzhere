@@ -15,48 +15,22 @@ AuthForm(component) -> LoginPage(page)
 return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (return AuthForm)
 */
 
-import React from 'react';
-import Apps from "./src/App"; 
-import { applyMiddleware, createStore } from 'redux';
-import rootReducer, { rootSaga } from './src/modules/index'
-import { Provider } from 'react-redux';
-import createSagaMiddleware from '@redux-saga/core';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { tempSetUser, check } from './src/modules/client/auth/user';
-import { Platform } from 'react-native';
-import asyncStorage from './src/lib/asyncStorage';
+import React from "react";
+import Apps from "./src/App";
+import { createStore } from "redux";
+import rootReducer from "./src/modules/index";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, composeWithDevTools());
 
-const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(sagaMiddleware)),
-    );
-
-function loadUser() {
-    try {
-        const user = (Platform.OS==='web') ? localStorage.getItem('user') : (Platform.OS==='android') ? asyncStorage.getItem('user') : false;
-        // const user = asyncStorage.getItem('user');
-
-        if (!user) return; // 로그인 상태가 아니라면 아무것도 안함
-
-        store.dispatch(tempSetUser(JSON.parse(user)));
-        store.dispatch(check());
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-sagaMiddleware.run(rootSaga);
-loadUser();
-  
 const App = () => {
-    console.log('root App');
-    return (
-        <Provider store={store}>
-            <Apps/>
-        </Provider>
-    );
-}
-  
+  console.log("root App");
+  return (
+    <Provider store={store}>
+      <Apps />
+    </Provider>
+  );
+};
+
 export default App;

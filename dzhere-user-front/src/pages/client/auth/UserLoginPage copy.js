@@ -1,10 +1,10 @@
 import React from 'react';
-import FindPasswordForm from '../../../containers/client/auth/FindPasswordForm';
+import LoginForm from '../../../containers/client/auth/LoginForm';
 
-const UserFindPasswordPage = ({ navigation, route }) => {
-    console.log('UserFindPasswordPage');
+const UserLoginPage = ({ navigation, route }) => {
+    console.log('UserLoginPage');
     return (
-        <FindPasswordForm
+        <LoginForm
             navigation={navigation}
             route = {route}
         />
@@ -18,4 +18,4 @@ const UserFindPasswordPage = ({ navigation, route }) => {
     );
 };
 
-export default UserFindPasswordPage;
+export default UserLoginPage;

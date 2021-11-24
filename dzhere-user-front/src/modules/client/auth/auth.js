@@ -1,16 +1,13 @@
 import {createAction, handleActions} from 'redux-actions';
 import produce from 'immer';
-import createRequestSaga, {createRequestActionTypes} from '../../../lib/createRequestSaga';
-import { takeLatest } from '@redux-saga/core/effects';
-import * as authAPI from '../../../lib/api/auth';
 
 /*** 액션 타입 ***/
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
-
-const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes('auth/REGISTER');
-const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes('auth/LOGIN');
-
+const RESTORE_INFO = 'auth/RESTORE_INFO';
+const LOGIN = 'auth/LOGIN';
+const LOGIN_ERROR = 'auth/LOGIN_ERROR';
+const LOGOUT = 'auth/LOGOUT';
 
 /*** 액션 생성 ***/
 //  TextInput 필드 값 변경
@@ -26,35 +23,22 @@ export const changeField = createAction(
 // 폼 초기화 (register 혹은 login)
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);   
 
-// 회원가입
-export const register = createAction(REGISTER, ({ userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3, }) => ({ 
-  userPhone, 
-  authNum, 
-  password, 
-  passwordConfirm, 
-  userEmail, 
-  isChecked1, 
-  isChecked2, 
-  isChecked3, 
-}));
-
+// 앱 실행 시 유저 정보 불러오기
+export const restoreInfo = createAction(RESTORE_INFO, userInfo => userInfo);
 // 로그인
-export const login = createAction(LOGIN, ({ userPhone, password }) => ({ 
-  userPhone, 
-  password 
-}));
+export const login = createAction(LOGIN, userInfo => userInfo);
+// 로그인 에러
+export const loginError = createAction(LOGIN_ERROR, error => error);
+// 로그아웃
+export const logout = createAction(LOGOUT);
+// 회원가입
 
-/*** 사가 생성 ***/
-const registerSaga = createRequestSaga(REGISTER, authAPI.register);
-const loginSaga = createRequestSaga(LOGIN, authAPI.login);
-export function* authSaga(){
-  yield takeLatest(REGISTER, registerSaga);
-  yield takeLatest(LOGIN, loginSaga);
-}
+// 비밀번호 찾기
 
 /*** initial state ***/
 const initialState = {
   register: {
+    userPhoneAgency: 'KT',
     userPhone: '',
     authNum: '',
     password: '',
@@ -71,41 +55,50 @@ const initialState = {
   findPassword: {
     userEmail: '',
   },
-  auth: null,
-  authError: null,
+  userInfo: '',
+  // userToken: '',
+  authError: '',
+  isLoading: true,
+  isLogout: false,
 };
 
 /*** 리듀서 ***/
 const auth = handleActions(
   {
     [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
-      produce(state, draft => {
+      produce(state, (draft) => {
         draft[form][key] = value;
       }),
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
       [form]: initialState[form],
     }),
-    [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
+
+    [RESTORE_INFO]: (state, {payload: userInfo}) => ({
       ...state,
-      authError: null,
-      auth,
+      // userToken: userInfo.userToken,
+      userInfo,
+      isLoading: false,
     }),
-    [REGISTER_FAILURE]: (state, { payload: error }) => ({
+
+    [LOGIN]: (state, action) => ({
       ...state,
-      authError: error,
+      isLogout: false,
+      userInfo: action.payload,
+      authError: '',
     }),
-    [LOGIN_SUCCESS]: (state, { payload: auth }) => ({
+    [LOGIN_ERROR]: (state, action) => ({
       ...state,
-      authError: null,
-      auth,
+      authError: action.payload,
     }),
-    [LOGIN_FAILURE]: (state, { payload: error }) => ({
+    [LOGOUT]: (state, action) => ({
       ...state,
-      authError: error,
+      isLogout: true,
+      userInfo: '',
+      authError: '',
     }),
   },
-  initialState,
+  initialState
 );
 
 export default auth;

@@ -4,6 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import CustomTextInput from "./CustomTextInput";
 import CustomCheckbox from "./CustomCheckbox";
 import ErrorMessage from "./ErrorMessage";
+import CustomPicker from "./CustomPicker";
 
 const AuthFormRegister = ({
   form,
@@ -16,28 +17,38 @@ const AuthFormRegister = ({
   return (
     <>
       <StatusBar style="light" />
-      <ScrollView style={{ flex: 1, paddingHorizontal: 15 }}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 5,}}>
         <View style={styles.container}>
-          <View style={{ flexDirection: "row", margin: 10 }}>
-            <Picker
+          <View style={{ flexDirection: "row", marginVertical: 10, justifyContent: "center", alignItems: "center",}}>
+            <View
               style={{
-                margin: 10,
                 borderColor: "#5d7bba",
-                borderWidth: 1,
-                width: 100,
-              }}
-              itemStyle={{
-                margin: 10,
-                borderColor: "#5d7bba",
-                borderWidth: 1,
-                width: 100,
+                borderWidth: 2,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center"
               }}
             >
-              <Picker.Item label="KT" value="KT" />
-              <Picker.Item label="LG" value="LG" />
-              <Picker.Item label="SKT" value="SKT" />
-              <Picker.Item label="알뜰폰" value="알뜰폰" />
-            </Picker>
+              <CustomPicker
+                name='userPhoneAgency'
+                selectedValue={form.userPhoneAgency}
+                onChangeText={onChangeText}
+                style={{width: 110}}
+              />
+              {/* <Picker
+                selectedValue={form.userPhoneAgency}
+                onChangeText={onChangeText}
+                style={{
+                  width: 90
+                }}
+              >
+                <Picker.Item label="KT" value="KT" />
+                <Picker.Item label="LG" value="LG" />
+                <Picker.Item label="SKT" value="SKT" />
+                <Picker.Item label="알뜰폰" value="알뜰폰" />
+              </Picker> */}
+            </View>
             <CustomTextInput
               name="userPhone"
               autoCompleteType="tel"
@@ -48,11 +59,12 @@ const AuthFormRegister = ({
               maxLength={13}
               keyboardType="numeric"
               style={{
-                margin: 10,
+                margin: 5,
                 borderColor: "#5d7bba",
                 borderWidth: 2,
-                width: 200,
-                paddingHorizontal: 20,
+                width: 210,
+                paddingHorizontal: 15,
+                height: 40,
               }}
             />
           </View>
@@ -60,6 +72,7 @@ const AuthFormRegister = ({
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{
+                flex: 1,
                 margin: 10,
                 borderColor: "#5d7bba",
                 borderWidth: 2,
@@ -183,7 +196,7 @@ const AuthFormRegister = ({
                 style={{ marginRight:10, marginLeft:10 }}
               />
               <Text style={{ marginRight:10, marginLeft:10, flexShrink: 1 }}>
-                사용자의 AP(wifi) 관련 정보 수집 및 서비스 이용 약관에
+                사용자의 AP(wifi) 관련 정보 수집 및 서비스{'\n'}이용 약관에
                 동의합니다.
               </Text>
             </View>
@@ -216,9 +229,11 @@ const AuthFormRegister = ({
             <TouchableOpacity
               onPress={onPress}
               style={{
+                flex: 1,
                 margin: 10,
                 borderColor: "#5d7bba",
                 borderWidth: 2,
+                justifyContent: "center"
               }}
             >
               <Text>회원가입</Text>

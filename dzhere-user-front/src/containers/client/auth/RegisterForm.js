@@ -3,22 +3,21 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../../modules/client/auth/auth';
 import AuthForm from '../../../components/client/auth/AuthForm';
-import { check } from '../../../modules/client/auth/user';
-import asyncStorage from '../../../lib/asyncStorage';
 
 const RegisterForm = ({ navigation, route }) => {
     const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
-    const {form, auth, authError, user } = useSelector(({auth, user}) => ({
+    const {form, auth, authError, /*user*/ } = useSelector(({auth, /*user*/}) => ({
         form: auth.register,
         auth: auth.auth,
         authError: auth.authError,
-        user: user.user,
+        // user: user.user,
     }));
 
     // TextInput 값 변경 이벤트 핸들러
     const onChangeText = e => {
+        console.log('register onchange : ', e);
         const {value, name} = e;
         dispatch(
             changeField({
@@ -50,6 +49,7 @@ const RegisterForm = ({ navigation, route }) => {
             return;
         }
         dispatch(register({ userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3 }));
+        
     };
 
     // 컴포넌트 처음 렌더링 시, 변수 form의 값 초기화
@@ -75,34 +75,42 @@ const RegisterForm = ({ navigation, route }) => {
         if(auth){
             console.log('회원가입 성공');
             console.log(auth);
-            dispatch(check())
-        }
-    }, [auth, authError, dispatch]);
-
-    // user 값이 잘 설정되었는지 확인
-    useEffect(() => {
-        if (user) {
-            console.log('check API 성공');
-            console.log(user);
-            // history.push('/'); // 로그인 화면으로 이동. // 수정 필요.
+            // dispatch(check())
             navigation.reset({
                 index: 0,
                 routes: [
                     {
-                        name: "ClientDrawer",
+                        name: "UserLoginPage",
                     }
                 ]
             })
-            try {
-                if(Platform.OS==='web')
-                    localStorage.setItem('user', JSON.stringify(user));
-                if(Platform.OS==='android')
-                    asyncStorage.setItem('user', JSON.stringify(user));
-            } catch (e) {
-                console.log('localStorage is not working');
-            }
         }
-    }, [navigation, user]);
+    }, [auth, authError, dispatch]);
+
+    // // user 값이 잘 설정되었는지 확인
+    // useEffect(() => {
+    //     if (user) {
+    //         console.log('check API 성공');
+    //         console.log(user);
+    //         // history.push('/'); // 로그인 화면으로 이동. // 수정 필요.
+    //         navigation.reset({
+    //             index: 0,
+    //             routes: [
+    //                 {
+    //                     name: "ClientDrawer",
+    //                 }
+    //             ]
+    //         })
+    //         try {
+    //             if(Platform.OS==='web')
+    //                 localStorage.setItem('user', JSON.stringify(user));
+    //             if(Platform.OS==='android')
+    //                 asyncStorage.setItem('user', JSON.stringify(user));
+    //         } catch (e) {
+    //             console.log('localStorage is not working');
+    //         }
+    //     }
+    // }, [navigation, user]);
 
     return (
         <AuthForm

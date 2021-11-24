@@ -1,17 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import AuthFormBlock from './AuthFormBlock';
+import AuthFormFindPassword from './AuthFormFindPassword';
 import AuthFormLogin from './AuthFormLogin';
 import AuthFormRegister from './AuthFormRegister';
 
-const textMap = {
-    login: '로그인',
-    register : '회원가입',
-}
+// const textMap = {
+//     login: '로그인',
+//     register : '회원가입',
+// }
 
 const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }) => {
-    console.log('AuthForm');
-    const text = textMap[type];
+    console.log("AuthForm");
+    // const text = textMap[type];
     return (
       <>
         {type === "register" && (
@@ -20,8 +19,8 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }
             onChangeText={onChangeText}
             onPress={onPress}
             error={error}
-            navigation = {navigation}
-            route = {route}
+            navigation={navigation}
+            route={route}
           />
         )}
         {type === "login" && (
@@ -31,7 +30,17 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }
             onPress={onPress}
             error={error}
             navigation={navigation}
-            route = {route}
+            route={route}
+          />
+        )}
+        {type === "findPw" && (
+          <AuthFormFindPassword
+            form={form}
+            onChangeText={onChangeText}
+            onPress={onPress}
+            error={error}
+            navigation={navigation}
+            route={route}
           />
         )}
       </>

@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { View, Image } from 'react-native';
+import image from '../../../assets/splash.png';
 
-const splash = () => {
+const Splash = () => {
     console.log('splash...');
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{alignContent: 'center', justifyContent: 'center'}}>
+        <Image source={image}/>
       </View>
     );
 };
 
-export default splash;
+export default Splash;
