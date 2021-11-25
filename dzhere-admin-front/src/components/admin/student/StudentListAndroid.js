@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, ScrollView } from 'react-native';
-import { DataTable, TextInput } from 'react-native-paper';
+import { DataTable } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
 import { onChange } from 'react-native-reanimated';
-import CustomTextInput from './CustomTextInput';
 
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, onSearch, studentList }) => {
 
@@ -39,18 +38,6 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
 
   return (
     <View style={styles.container}>
-          {/* <CustomTextInput
-            name="ag_idx"
-            onChangeNumber={onChangeNumber}
-            value={String(agName.ag_idx)}
-            keyboardType="numeric"
-          />
-          <TouchableOpacity
-            onPress={onSearch}
-            >
-            <Text>변경</Text>
-          </TouchableOpacity> */}
-          
       <View style={[styles.header, {backgroundColor: '#CEEDFF'}]}>
         <View>
           <View style={[styles.picker]}>
@@ -93,28 +80,25 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
         </View>
       </View>
 
-      <ScrollView>
         <View style={styles.content}>
           <DataTable>
-            <ScrollView>
             <DataTable.Header>
               <DataTable.Title>선택</DataTable.Title>
               <DataTable.Title>성명</DataTable.Title>
               <DataTable.Title>전화번호</DataTable.Title>
               <DataTable.Title numeric>가입상태</DataTable.Title>
             </DataTable.Header>
-            </ScrollView>
+
             <ScrollView>
-          
             {
              studentList.map(s => (              
             <DataTable.Row>
               <DataTable.Title>
-                <Checkbox
-                  style={styles.checkbox}
-                  value={s.u_idx}
-                  onValueChange={setChecked}
-                  color={isChecked ? '#4630EB' : undefined}
+               <Checkbox 
+                style={styles.checkbox} 
+                value={isChecked} 
+                onValueChange={setChecked} 
+                color={isChecked ? '#4630EB' : undefined}
                 />
               </DataTable.Title>
               <DataTable.Cell>{s.u_name}</DataTable.Cell>
@@ -158,7 +142,6 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
             </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
     </View>
   );
 };
@@ -179,7 +162,6 @@ header: {
   height: "20%",
   padding: "3%",
   margin: 10,
-  marginTop: 70,
   borderRadius: 15,
 },
 picker: {
