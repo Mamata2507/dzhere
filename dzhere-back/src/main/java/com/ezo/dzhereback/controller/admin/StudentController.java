@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ezo.dzhereback.controller.user.MyInfoController;
@@ -40,7 +43,7 @@ public class StudentController {
 				.build();
 		System.out.println("<<<<<< getAgName 컨트롤러 완료 >>>>>>"+result);
 		return new Result(result);
-	}
+	} 
 	
 	@GetMapping("/api/getClassList/{u_phone}")
 	public Result getClassList(@PathVariable("u_phone") String u_phone) {
@@ -50,6 +53,28 @@ public class StudentController {
 		return new Result(classList);
 	}
 	
-
-
+	@PostMapping("/api/getStudentList")
+	public Result getStudentList(@RequestBody StudentDto studentDto) {
+		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
+		System.out.println(studentDto.getAg_idx()+" "+studentDto.getC_idx());
+		List<User> studentList = studentService.getStudentList(studentDto.getAg_idx(), studentDto.getC_idx());
+		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
+		return new Result(studentList);
+	}
+//	@GetMapping("/api/getStudentList")
+//	public Result getStudentList(@RequestParam("ag_idx") String ag_idx,
+//			@RequestParam("c_idx") String c_idx) {
+//		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
+//		List<User> studentList = studentService.getStudentList(Integer.parseInt(c_idx), Integer.parseInt(ag_idx));
+//		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
+//		return new Result(studentList);
+//	}
+//	@GetMapping("/api/getStudentList/{ag_idx}/{c_idx}")
+//	public Result getStudentList(@PathVariable("ag_idx") String ag_idx,
+//			@PathVariable("c_idx") String c_idx) {
+//		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
+//		List<User> studentList = studentService.getStudentList(Integer.parseInt(c_idx), Integer.parseInt(ag_idx));
+//		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
+//		return new Result(studentList);
+//	}
 }

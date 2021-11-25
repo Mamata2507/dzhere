@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, Image  } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, ScrollView } from 'react-native';
+import { DataTable, TextInput } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
+import { onChange } from 'react-native-reanimated';
+import CustomTextInput from './CustomTextInput';
 
-export const StudentListAndroid = ({ agName, classList }) => {
+export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, onSearch, studentList }) => {
 
   // 버튼 이벤트
   const onPress = () => {
@@ -12,7 +14,7 @@ export const StudentListAndroid = ({ agName, classList }) => {
   }
 
   // Picker
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState(0);
   
   // DataTable - Pagination
   const optionsPerPage = [2, 3, 4];
@@ -37,6 +39,18 @@ export const StudentListAndroid = ({ agName, classList }) => {
 
   return (
     <View style={styles.container}>
+          {/* <CustomTextInput
+            name="ag_idx"
+            onChangeNumber={onChangeNumber}
+            value={String(agName.ag_idx)}
+            keyboardType="numeric"
+          />
+          <TouchableOpacity
+            onPress={onSearch}
+            >
+            <Text>변경</Text>
+          </TouchableOpacity> */}
+          
       <View style={[styles.header, {backgroundColor: '#CEEDFF'}]}>
         <View>
           <View style={[styles.picker]}>
@@ -49,13 +63,15 @@ export const StudentListAndroid = ({ agName, classList }) => {
         <View style={styles.picker}>
             <Text style={[styles.text, {marginLeft: 15}]}>강의</Text>
             <Picker
-              selectedValue={selectedValue}
+              selectedValue={selectedClass}
+              onValueChange={(itemValue, itemIndex) => setSelectedClass(itemValue)}
               style={styles.pickerText}
-              onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
-              {classList.map(c => (
-                <Picker.Item key={c.c_id} label={c.c_name} value={c.c_name}/>
-              ))}
+               <Picker.Item label="선택하세요" value="0"/>
+                {classList.map(c => (
+                <Picker.Item label={c.c_name} value={c.c_idx}/>
+                ))}
+                <Picker.Item label='테스트' value='2'/>
             </Picker> 
         </View>
         <View style={styles.btnContainer}>
@@ -77,40 +93,37 @@ export const StudentListAndroid = ({ agName, classList }) => {
         </View>
       </View>
 
-      
+      <ScrollView>
         <View style={styles.content}>
-
           <DataTable>
+            <ScrollView>
             <DataTable.Header>
               <DataTable.Title>선택</DataTable.Title>
               <DataTable.Title>성명</DataTable.Title>
               <DataTable.Title>전화번호</DataTable.Title>
               <DataTable.Title numeric>가입상태</DataTable.Title>
             </DataTable.Header>
-
+            </ScrollView>
+            <ScrollView>
+          
+            {
+             studentList.map(s => (              
             <DataTable.Row>
               <DataTable.Title>
-                <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+                <Checkbox
+                  style={styles.checkbox}
+                  value={s.u_idx}
+                  onValueChange={setChecked}
+                  color={isChecked ? '#4630EB' : undefined}
+                />
               </DataTable.Title>
-              <DataTable.Cell>김령은</DataTable.Cell>
-              <DataTable.Cell>01023454710</DataTable.Cell>
-              <DataTable.Cell numeric>승인(1)</DataTable.Cell>
+              <DataTable.Cell>{s.u_name}</DataTable.Cell>
+              <DataTable.Cell>{s.u_phone}</DataTable.Cell>
+              <DataTable.Cell numeric>{s.u_accept}</DataTable.Cell>
             </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>
-              <Checkbox
-                style={styles.checkbox}
-                value={isChecked}
-                onValueChange={setChecked}
-                color={isChecked ? '#4630EB' : undefined}
-              />
-              </DataTable.Cell>
-              <DataTable.Cell>홍길동</DataTable.Cell>
-              <DataTable.Cell>01000000000</DataTable.Cell>
-              <DataTable.Cell numeric>미승인(0)</DataTable.Cell>
-            </DataTable.Row>
-
+             ))
+            }
+            </ScrollView>
             <DataTable.Pagination
               page={page}
               numberOfPages={3}
@@ -145,6 +158,7 @@ export const StudentListAndroid = ({ agName, classList }) => {
             </TouchableOpacity>
             </View>
           </View>
+          </ScrollView>
     </View>
   );
 };
@@ -156,14 +170,16 @@ container: {
   flex: 1,
 },
 content: {
+  marginTop: 60,
   justifyContent: "center", 
-  height: '60%',
+  height: '50%',
   margin: 10,
 },
 header: {
   height: "20%",
   padding: "3%",
   margin: 10,
+  marginTop: 70,
   borderRadius: 15,
 },
 picker: {

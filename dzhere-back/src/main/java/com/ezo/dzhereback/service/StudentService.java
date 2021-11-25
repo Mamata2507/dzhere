@@ -21,5 +21,7 @@ public class StudentService {
 	
 	public List<Class> getClassList(String u_phone) {return studentMapper.getClassList(u_phone);}
 	
+	public List<User> getStudentList(int ag_idx, int c_idx) {return studentMapper.getStudentList(ag_idx, c_idx);}
+	
 
 }

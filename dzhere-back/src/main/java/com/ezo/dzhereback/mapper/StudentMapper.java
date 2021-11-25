@@ -17,4 +17,7 @@ public interface StudentMapper {
 	@Select("select c.c_idx, c.c_name from User u join Class c on u.c_idx = c.c_idx where u.u_phone='${u_phone}';")
 	List<Class> getClassList(String u_phone);
 	
+	@Select("select u_idx, u_name, u_phone, u_accept from User where ag_idx='${ag_idx}' and c_idx='${c_idx}';")
+	List<User> getStudentList(int ag_idx, int c_idx);
+	
 }
