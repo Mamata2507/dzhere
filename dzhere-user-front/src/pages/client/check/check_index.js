@@ -11,6 +11,8 @@ import { logout, restoreInfo } from '../../../modules/client/auth/auth';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import client from '../../../lib/api/client';
+import axios from 'axios';
 
 const check_index = ({ navigation, route }) => {
   // console.log(navigation);
@@ -56,7 +58,6 @@ const check_index = ({ navigation, route }) => {
             onPress={async () => {
               try {
                 AsyncStorage.clear();
-
                 // if(Platform.OS == 'web'){
                 //   await localStorage.setItem('userToken', '');
                 //   await localStorage.setItem('userInfo', '');
@@ -66,7 +67,7 @@ const check_index = ({ navigation, route }) => {
                 //   // await AsyncStorage.setItem('userToken', '');
                 //   // await AsyncStorage.setItem('userInfo', '');
                 // }
-                await dispatch(logout());
+                dispatch(logout());
                 console.log('로그아웃. Storage 초기화.');
                 navigation.navigate("UserLoginPage");
                 // navigation.reset({
@@ -77,10 +78,8 @@ const check_index = ({ navigation, route }) => {
                 //     },
                 //   ],
                 // });
-                return true;
               } catch (error) {
                 console.log('로그아웃 에러 : ', error);
-                return false;
               }
               
             }}

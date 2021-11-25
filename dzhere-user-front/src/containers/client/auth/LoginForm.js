@@ -5,18 +5,16 @@ import { changeField, initializeForm, login, loginError, restoreInfo, } from '..
 import AuthForm from '../../../components/client/auth/AuthForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiLogin } from '../../../lib/api/auth';
-import { Platform } from 'react-native';
 
 const LoginForm = ({ navigation, route }) => {
     console.log("LoginForm");
     const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
-    const { form, userInfo, authError, isLoading } = useSelector(({ auth }) => ({
+    const { form, userInfo, authError, } = useSelector(({ auth }) => ({
       form: auth.login,
       userInfo: auth.userInfo,
       authError: auth.authError,
-      // isLoading: auth.isLoading,
     }));
 
     // 컴포넌트 처음 렌더링 시, 변수 form의 값 초기화
@@ -50,19 +48,13 @@ const LoginForm = ({ navigation, route }) => {
       
       apiLogin({ userPhone, password })
         .then(async (res) => {
-          if (res) {
-            console.log("==================res.result", res.userInfo);
+          if (res.result) {
+            console.log("==================res.result==================", res.result.userInfo);
             dispatch(login(res.userInfo));
             try {
               await AsyncStorage.setItem("userInfo",JSON.stringify(res.userInfo));
 
-              // if (Platform.OS == "android") {
-              //   await AsyncStorage.setItem("userInfo",JSON.stringify(res.userInfo));
-              // }
-              // if (Platform.OS == "web") {
-              //   await localStorage.setItem("userInfo",JSON.stringify(userInfo));
-              // }
-            } catch (error) {
+            } catch (e) {
               console.log("Storage is not working : ", e);
             }
           } else {
@@ -80,7 +72,7 @@ const LoginForm = ({ navigation, route }) => {
     };
 
     useEffect(() => {
-      // 로그인 혹은 회원 가입 시도에서 오류가 있는지  
+      // 로그인 시도에서 오류가 있는지  
       if (authError !== "") {
         console.log("로그인 실패");
         console.log(authError);
@@ -90,29 +82,31 @@ const LoginForm = ({ navigation, route }) => {
         console.log("authErrorDetail : ", authErrorDetail);
 
         // 오류에 대한 구체적 유형
-        if (authErrorDetail === "401")
+        if (authErrorDetail === "401"){
+          console.log('로그인 실패 : 잘못된 비밀번호(401)');
           setError("로그인 실패 : 잘못된 비밀번호(401)");
-        else if (authErrorDetail === "402")
-          setError("로그인 실패 : 존재하지 않는 계정(402)");
-        else if (authErrorDetail === "500")
+          return;
+        }
+        else if (authErrorDetail === "402"){
+          console.log('로그인 실패 : 존재하지 않는 아이디(402)');
+          setError("로그인 실패 : 존재하지 않는 아이디(402)");
+          return;
+        }
+          
+        else if (authErrorDetail === "500"){
+          console.log('로그인 실패 : 원인 불명(500)');
           setError("로그인 실패 : 원인 불명(500)");
-        return;
+          return;
+        }
       }
 
       // userInfo(유저 정보) state 값이 null이 아니면 로그인 처리 및 ClientDrawer-출석 페이지로 자동 이동
-      if (String(userInfo).trim() !== "" && String(userInfo).trim() !== "null") {
+      if (String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
         console.log("로그인 성공");
-        console.log("유저 정보 : ", userInfo, typeof userInfo);
-        
-        // navigation.reset({
-        //     index: 0,
-        //     routes: [
-        //         {
-        //             name: "ClientDrawer",
-        //         }
-        //     ]
-        // })
+        console.log("로그인 유저 정보 : ", userInfo, typeof userInfo);
 
+        dispatch(changeField({ form: 'login', key: 'userPhone', value: '' }));
+        dispatch(changeField({ form: 'login', key: 'password', value: '' }));
         navigation.navigate("ClientDrawer");
       }
     }, [userInfo, authError]);
@@ -125,19 +119,12 @@ const LoginForm = ({ navigation, route }) => {
           let userInfo;
 
           userInfo = await AsyncStorage.getItem("userInfo");
-          
-          // if (Platform.OS == "android") {
-          //   userInfo = await AsyncStorage.getItem("userInfo");
-          // }
-          // if (Platform.OS == "web") {
-          //   userInfo = await localStorage.getItem("userInfo");
-          //   console.log();
-          // }
+
           console.log("grepTokenAsync success");
-          console.log("grepTokenAsync success-userInfo", JSON.parse(userInfo));
+          console.log("grepTokenAsync success-userInfo : ", JSON.parse(userInfo));
 
           userInfo = JSON.parse(userInfo);
-          if (userInfo !== null) {
+          if (userInfo !== null && userInfo !== undefined && userInfo !== '' && userInfo !== 'null') {
             console.log("restore 발생");
             dispatch(restoreInfo(userInfo));
           }

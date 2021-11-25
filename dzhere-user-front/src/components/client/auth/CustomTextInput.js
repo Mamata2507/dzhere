@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 
-const CustomTextInput = ({ name, autoCompleteType, value, onChangeText, placeholder, placeholderTextColor, keyboardType, maxLength, style}) => {
+const CustomTextInput = ({ name, autoCompleteType, value, onChangeText, placeholder, placeholderTextColor, keyboardType, maxLength, secureTextEntry, style}) => {
     
     return (
       <TextInput
@@ -12,6 +12,7 @@ const CustomTextInput = ({ name, autoCompleteType, value, onChangeText, placehol
         placeholderTextColor={placeholderTextColor}
         maxLength={maxLength}
         keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
         style={style}
       ></TextInput>
     );

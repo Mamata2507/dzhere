@@ -7,6 +7,8 @@ const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 const RESTORE_INFO = 'auth/RESTORE_INFO';
 const LOGIN = 'auth/LOGIN';
 const LOGIN_ERROR = 'auth/LOGIN_ERROR';
+const REGISTER = 'auth/REGISTER';
+const REGISTER_ERROR = 'auth/REGISTER_ERROR';
 const LOGOUT = 'auth/LOGOUT';
 
 /*** 액션 생성 ***/
@@ -32,7 +34,9 @@ export const loginError = createAction(LOGIN_ERROR, error => error);
 // 로그아웃
 export const logout = createAction(LOGOUT);
 // 회원가입
-
+export const register = createAction(REGISTER, userInfo => userInfo);
+// 회원가입 에러
+export const registerError = createAction(REGISTER_ERROR, error => error);
 // 비밀번호 찾기
 
 /*** initial state ***/
@@ -86,8 +90,20 @@ const auth = handleActions(
       isLogout: false,
       userInfo: action.payload,
       authError: '',
+      isLoading: false,
     }),
     [LOGIN_ERROR]: (state, action) => ({
+      ...state,
+      authError: action.payload,
+    }),
+    [REGISTER]: (state, action) => ({
+      ...state,
+      isLogout: true,
+      userInfo: action.payload,
+      authError: '',
+      isLoading: false,
+    }),
+    [REGISTER_ERROR]: (state, action) => ({
       ...state,
       authError: action.payload,
     }),

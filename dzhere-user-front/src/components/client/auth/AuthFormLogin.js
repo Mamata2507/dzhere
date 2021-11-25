@@ -23,7 +23,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
             value={form.userPhone}
             onChangeText={onChangeText}
             placeholder="휴대폰 번호"
-            maxLength={13}
+            maxLength={11}
             keyboardType="numeric"
             style={styles.inputUserPhone}
           />
@@ -36,6 +36,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
             placeholder={"패스워드"}
             maxLength={20}
             keyboardType="default"
+            secureTextEntry={true}
             style={styles.inputPassword}
           />
 

@@ -24,8 +24,28 @@ export const apiLogin = ({ userPhone, password }) => {
 }
 
 // 회원가입
-export const register = ({ userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3, }) =>
-  client.post('/api/user/register', { userPhone, authNum, password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3, });
+export const apiRegister = ({ userPhone, password, userEmail }) => {
+  console.log('======= 회원가입 요청========');
+  console.log('요청 입력 휴대폰 번호 :', userPhone);
+  console.log('요청 입력 비밀번호', password);
+
+  return client.post('/api/user/register', { userPhone, password, userEmail })
+  .then(res => {
+    console.log('axios 회원가입 요청 성공 정보 : ', res.data);
+    return {
+      result : true,
+      userInfo : res.data,
+    }
+  })
+  .catch(e => {
+    console.log('axios 회원가입 요청 실패 정보 : ', e);
+    return {
+      result : false,
+      error : e,
+    }
+  });
+}
+  
 
 // 비밀번호 찾기
 export const findPassword = ({userEmail}) =>

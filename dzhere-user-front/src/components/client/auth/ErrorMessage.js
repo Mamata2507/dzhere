@@ -15,7 +15,7 @@ const style = StyleSheet.create({
     errorMessage:{
         color: 'red',
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 13,
         marginBottom: 10,
     }
 })

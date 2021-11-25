@@ -8,7 +8,7 @@ import AuthFormRegister from './AuthFormRegister';
 //     register : '회원가입',
 // }
 
-const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }) => {
+const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route, validErrors }) => {
     console.log("AuthForm");
     // const text = textMap[type];
     return (
@@ -21,6 +21,7 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route }
             error={error}
             navigation={navigation}
             route={route}
+            validErrors={validErrors}
           />
         )}
         {type === "login" && (
