@@ -54,11 +54,11 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               onValueChange={(itemValue, itemIndex) => setSelectedClass(itemValue)}
               style={styles.pickerText}
             >
-               <Picker.Item label="선택하세요" value="0"/>
+               <Picker.Item label="강의명 선택하기" value='0'/>
                 {classList.map(c => (
                 <Picker.Item label={c.c_name} value={c.c_idx}/>
                 ))}
-                <Picker.Item label='테스트' value='2'/>
+                <Picker.Item label='테스트데이터' value='2'/>
             </Picker> 
         </View>
         <View style={styles.btnContainer}>
@@ -103,7 +103,10 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               </DataTable.Title>
               <DataTable.Cell>{s.u_name}</DataTable.Cell>
               <DataTable.Cell>{s.u_phone}</DataTable.Cell>
-              <DataTable.Cell numeric>{s.u_accept}</DataTable.Cell>
+              <DataTable.Cell numeric>
+                {s.u_accept === 0 && '미승인'}
+                {s.u_accept === 1 && '승인'}
+              </DataTable.Cell>
             </DataTable.Row>
              ))
             }

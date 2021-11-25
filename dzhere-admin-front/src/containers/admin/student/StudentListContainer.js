@@ -25,12 +25,16 @@ const StudentListContainer = () => {
   }, []);
 
   const onSearch = () => {
-    //Alert.alert(`${selectedClass}`);
-    // Alert.alert(`${agName.ag_idx}`);
-    let agIdx = agName.ag_idx
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+agIdx);
-    dispatch(getStudentList({agIdx, selectedClass}))
-    Alert.alert('검색완료');
+    if(selectedClass < 1){
+      Alert.alert('강의명을 선택해주세요')
+    } else {
+      //Alert.alert(`${selectedClass}`);
+      // Alert.alert(`${agName.ag_idx}`);
+      let agIdx = agName.ag_idx
+      // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+agIdx);
+      dispatch(getStudentList({agIdx, selectedClass}))
+      Alert.alert('검색완료');
+    }
   }
 
   return (
