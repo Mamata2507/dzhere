@@ -20,4 +20,7 @@ public interface StudentMapper {
 	@Select("select u_idx, u_name, u_phone, u_accept from User where ag_idx='${ag_idx}' and c_idx='${c_idx}';")
 	List<User> getStudentList(int ag_idx, int c_idx);
 	
+	@Select("select u_idx, u_name, u_phone, u_accept from User;")
+	List<User> getStudentListAll(int ag_idx, int c_idx);
+	
 }

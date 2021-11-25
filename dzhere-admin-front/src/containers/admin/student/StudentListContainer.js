@@ -12,10 +12,12 @@ const StudentListContainer = () => {
 
   const [selectedClass, setSelectedClass] = useState(0);
 
-  const { agName, classList, studentList } = useSelector(({ student }) => ({
+  const { agName, classList, studentList, loadingAgName, loadingStudentList } = useSelector(({ student, loading }) => ({
     agName: student.agName,
+    loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
     studentList: student.studentList,
+    loadingStudentList: loading['student/GET_STUDENT_LIST']
   }))
 
 
@@ -25,16 +27,12 @@ const StudentListContainer = () => {
   }, []);
 
   const onSearch = () => {
-    if(selectedClass < 1){
-      Alert.alert('강의명을 선택해주세요')
-    } else {
       //Alert.alert(`${selectedClass}`);
       // Alert.alert(`${agName.ag_idx}`);
       let agIdx = agName.ag_idx
       // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+agIdx);
       dispatch(getStudentList({agIdx, selectedClass}))
       Alert.alert('검색완료');
-    }
   }
 
   return (
@@ -45,6 +43,8 @@ const StudentListContainer = () => {
          setSelectedClass={setSelectedClass}
          onSearch={onSearch}
          studentList={studentList}
+         loadingAgName={loadingAgName}
+         loadingStudentList={loadingStudentList}
       />
   );
 };

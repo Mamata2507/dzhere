@@ -57,9 +57,13 @@ public class StudentController {
 	public Result getStudentList(@RequestBody StudentDto studentDto) {
 		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
 		System.out.println(studentDto.getAg_idx()+" "+studentDto.getC_idx());
-		List<User> studentList = studentService.getStudentList(studentDto.getAg_idx(), studentDto.getC_idx());
-		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
-		return new Result(studentList);
+		if(studentDto.getC_idx() == 0) {
+			List<User> studentList = studentService.getStudentListAll(studentDto.getAg_idx(), studentDto.getC_idx());
+			return new Result(studentList);
+		} else {
+			List<User> studentList = studentService.getStudentList(studentDto.getAg_idx(), studentDto.getC_idx());
+			return new Result(studentList);
+		}
 	}
 //	@GetMapping("/api/getStudentList")
 //	public Result getStudentList(@RequestParam("ag_idx") String ag_idx,

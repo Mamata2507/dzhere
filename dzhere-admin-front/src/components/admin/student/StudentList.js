@@ -3,7 +3,8 @@ import { Platform } from 'react-native';
 import { StudentListAndroid } from './StudentListAndroid'
 import { StudentListWeb } from './StudentListWeb'
 
-export const Contents = ({agName, classList, selectedClass, setSelectedClass, onSearch, studentList}) => {
+export const Contents = ({agName, classList, selectedClass, setSelectedClass, 
+                          onSearch, studentList, loadingAgName, loadingStudentList}) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
     agName={agName}
@@ -12,6 +13,8 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass, on
     setSelectedClass={setSelectedClass}
     onSearch={onSearch}
     studentList={studentList}
+    loadingAgName={loadingAgName}
+    loadingStudentList={loadingStudentList}
   /> 
   : 
   <StudentListWeb 

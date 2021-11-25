@@ -4,7 +4,8 @@ import { DataTable } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
 import { onChange } from 'react-native-reanimated';
 
-export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, onSearch, studentList }) => {
+export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
+                                      onSearch, studentList, loadingAgName, loadingStudentList }) => {
 
   // 버튼 이벤트
   const onPress = () => {
@@ -43,7 +44,8 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
           <View style={[styles.picker]}>
             <Text style={[styles.text, {marginLeft: 15}]}>기관</Text>
             <Text style={[styles.pickerText, {fontSize: 16}, {marginLeft: 8}]}>
-              {agName.ag_name}
+              {loadingAgName && '로딩중...'}
+              {!loadingAgName && agName.ag_name}
             </Text>
           </View>
         </View>
@@ -54,23 +56,22 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               onValueChange={(itemValue, itemIndex) => setSelectedClass(itemValue)}
               style={styles.pickerText}
             >
-               <Picker.Item label="강의명 선택하기" value='0'/>
+               <Picker.Item label="전체선택" value='0'/>
                 {classList.map(c => (
                 <Picker.Item label={c.c_name} value={c.c_idx}/>
                 ))}
-                <Picker.Item label='테스트데이터' value='2'/>
             </Picker> 
         </View>
         <View style={styles.btnContainer}>
-            <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            {/* <Picker
+            selectedValue={selectedAccept}
+            onValueChange={(itemValue, itemIndex) => setSelectedAccept(itemValue)}
             style={styles.miniPicker}
             >
             <Picker.Item label="가입승인상태" value="all"/>
             <Picker.Item label="승인" value="accept" />
             <Picker.Item label="미승인" value="hold" />
-            </Picker>
+            </Picker> */}
           <TouchableOpacity
             style={styles.btn}
             onPress={onSearch}
@@ -88,19 +89,20 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               <DataTable.Title>전화번호</DataTable.Title>
               <DataTable.Title numeric>가입상태</DataTable.Title>
             </DataTable.Header>
-
+            <Text>{loadingStudentList && '로딩중...'}</Text>
+            {!loadingStudentList && 
             <ScrollView>
             {
              studentList.map(s => (              
             <DataTable.Row>
-              <DataTable.Title>
+              <DataTable.Cell>
                <Checkbox 
                 style={styles.checkbox} 
                 value={isChecked} 
                 onValueChange={setChecked} 
                 color={isChecked ? '#4630EB' : undefined}
                 />
-              </DataTable.Title>
+              </DataTable.Cell>
               <DataTable.Cell>{s.u_name}</DataTable.Cell>
               <DataTable.Cell>{s.u_phone}</DataTable.Cell>
               <DataTable.Cell numeric>
@@ -111,6 +113,7 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
              ))
             }
             </ScrollView>
+            }
             <DataTable.Pagination
               page={page}
               numberOfPages={3}
