@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -54,7 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/register/**").permitAll()
                 .antMatchers("/api/user/login").permitAll()
                 .antMatchers("/api/admin/login").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+                .deleteCookies("JSESSIONID")    // 로그아웃 시 쿠키를 제거 : 로그아웃 했는데 로그인이 되어있다거나 하는 예외 상황 발생하지 않도록.
+                .invalidateHttpSession(true) ;  // 로그아웃 처리에 대한 spring security와의 url 매핑;
 
         // filter 등록.
         // 매 리퀘스트마다

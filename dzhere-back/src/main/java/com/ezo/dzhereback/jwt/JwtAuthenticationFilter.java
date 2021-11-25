@@ -50,6 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Client 요청으로부터 토큰을 가져온다.
             String token = parseBearerToken(request);
             log.info("Filter is running");
+            log.info(token);
             // 토큰을 검사한다.
             if(token != null && !token.equalsIgnoreCase("null")){
                 // userId 가져오기. 위조 된 경우 예외 처리

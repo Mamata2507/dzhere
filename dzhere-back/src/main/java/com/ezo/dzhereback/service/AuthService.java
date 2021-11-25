@@ -26,15 +26,15 @@ public class AuthService implements UserDetailsService {
     }
 
     public int join(final Member member){
-        if(member == null || member.getU_phone().equals(null) || member.getU_pw().equals(null))
-            throw new RuntimeException("가입 할 사용자 객체가 유효하지 않거나 아이디 혹은 비밀번호를 입력하지 않았습니다.");
+//        if(member == null || member.getU_phone().equals(null) || member.getU_pw().equals(null))
+//            throw new RuntimeException("가입 할 사용자 객체가 유효하지 않거나 아이디 혹은 비밀번호를 입력하지 않았습니다.");
 
         final String u_phone = member.getU_phone();
 
         if(!authMapper.existsByPhone(u_phone))
-            throw new RuntimeException("가입 불가 : 관리자가 등록하지 않은 사용자");
+            throw new RuntimeException("가입 불가 : 관리자가 등록하지 않은 사용자,410");
         else if(authMapper.findAcceptByPhone(u_phone) == 1){
-            throw new RuntimeException("가입 불가 : 이미 가입한 회원");
+            throw new RuntimeException("가입 불가 : 이미 가입한 회원,409");
         }
         else{
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -55,11 +55,19 @@ public class AuthService implements UserDetailsService {
     public Member getByCredentials(final String u_phone, final String u_pw, final PasswordEncoder passwordEncoder){
         final Member originalMember = authMapper.findByPhone(u_phone);
 
-        //matches 메소드를 이용해 패스워드가 같은지 확인
-        if(originalMember != null && passwordEncoder.matches(u_pw, originalMember.getU_pw()))
-            return originalMember;
-        else
-            return null;
+//        //matches 메소드를 이용해 패스워드가 같은지 확인
+//        if(originalMember != null && passwordEncoder.matches(u_pw, originalMember.getU_pw()))
+//            return originalMember;
+//        else
+//            return null;
+        if(originalMember != null)
+            //matches 메소드를 이용해 패스워드가 같은지 확인
+            if(passwordEncoder.matches(u_pw, originalMember.getU_pw()))
+                return originalMember;
+            else throw new RuntimeException("잘못된 비밀번호,401");
+        else throw new RuntimeException("존재하지 않는 계정,402");
+
+
     }
 
     @Override

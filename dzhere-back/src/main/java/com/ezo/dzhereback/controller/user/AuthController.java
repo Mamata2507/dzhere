@@ -48,22 +48,35 @@ public class AuthController {
             System.out.println(member.toString());
 
             // 서비스의 회원가입 함수 호출
-            if(authService.join(member)==1){
-                Member registeredMember = authService.findRegisteredMemberByPhone(member.getU_phone());
-                AuthDto responseMemberDto = AuthDto.builder()
-                        .u_id(registeredMember.getU_id())
-                        .u_phone(registeredMember.getU_phone())
-                        .u_email(registeredMember.getU_email())
-                        .build();
-                return ResponseEntity.ok().body(responseMemberDto);
-            }
-            else{
-                ResponseDto responseDto = ResponseDto.builder().error("이미 가입한 계정입니다.").build();
-                return ResponseEntity.badRequest().body(responseDto);
-            }
+//            if(authService.join(member)==1){
+//                Member registeredMember = authService.findRegisteredMemberByPhone(member.getU_phone());
+//                AuthDto responseMemberDto = AuthDto.builder()
+//                        .u_id(registeredMember.getU_id())
+//                        .u_phone(registeredMember.getU_phone())
+//                        .u_email(registeredMember.getU_email())
+//                        .build();
+//                return ResponseEntity.ok().body(responseMemberDto);
+//            }
+            authService.join(member);
+            Member registeredMember = authService.findRegisteredMemberByPhone(member.getU_phone());
+            AuthDto responseMemberDto = AuthDto.builder()
+                    .u_id(registeredMember.getU_id())
+                    .u_phone(registeredMember.getU_phone())
+                    .u_email(registeredMember.getU_email())
+                    .build();
+            return ResponseEntity.ok().body(responseMemberDto);
+//            else{
+//                ResponseDto responseDto = ResponseDto.builder().error("이미 가입한 계정입니다.").build();
+//                return ResponseEntity.badRequest().body(responseDto);
+//            }
         }catch (Exception e){
-            ResponseDto responseDto = ResponseDto.builder().error(e.getMessage()).build();
-            return ResponseEntity.badRequest().body(responseDto);
+            if(e.getMessage().equals("가입 불가 : 이미 가입한 회원,409"))
+                return ResponseEntity.status(409).body(new Result<String>("가입 불가 : 이미 가입한 회원"));
+            else if(e.getMessage().equals("가입 불가 : 관리자가 등록하지 않은 사용자,410"))
+                return ResponseEntity.status(410).body(new Result<String>("가입 불가 : 관리자가 등록하지 않은 사용자"));
+            else return ResponseEntity.status(500).body(new Result<String>(e.getMessage()));
+//            ResponseDto responseDto = ResponseDto.builder().error(e.getMessage()).build();
+//            return ResponseEntity.badRequest().body(responseDto);
         }
     }
 
@@ -77,27 +90,41 @@ public class AuthController {
                     passwordEncoder
             );
 
-            if(member != null){
-                final String token = tokenProvider.create(member);
-                final AuthDto responseAuthDto = AuthDto.builder()
-                        .u_id(member.getU_id())
-                        .u_email(member.getU_email())
-                        .token(token)
-                        .build();
-                return ResponseEntity.ok().body(responseAuthDto);
-            }
-            else{
-                ResponseDto responseDto = ResponseDto.builder()
-                        .error("로그인 실패")
-                        .build();
-                return ResponseEntity.badRequest().body(responseDto);
-            }
+            final String token = tokenProvider.create(member);
+            final AuthDto responseAuthDto = AuthDto.builder()
+                    .u_id(member.getU_id())
+                    .u_email(member.getU_email())
+                    .token(token)
+                    .build();
+            return ResponseEntity.ok().body(responseAuthDto);
+
+
+//            if(member != null){
+//                final String token = tokenProvider.create(member);
+//                final AuthDto responseAuthDto = AuthDto.builder()
+//                        .u_id(member.getU_id())
+//                        .u_email(member.getU_email())
+//                        .token(token)
+//                        .build();
+//                return ResponseEntity.ok().body(responseAuthDto);
+//            }
+//            else{
+//                ResponseDto responseDto = ResponseDto.builder()
+//                        .error("로그인 실패")
+//                        .build();
+//                return ResponseEntity.badRequest().body(responseDto);
+//            }
         }
         // 작동 안함. 수정 필요.
         catch(Exception e){
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(new Result<String>("토큰 불일치"));
+            if(e.getMessage().equals("잘못된 비밀번호,401"))
+                return ResponseEntity.status(401).body(new Result<String>("잘못된 비밀번호"));
+            else if(e.getMessage().equals("존재하지 않는 계정,402"))
+                return ResponseEntity.status(402).body(new Result<String>("존재하지 않는 아이디"));
+            else return ResponseEntity.status(500).body(new Result<String>("기타"));
+//            return ResponseEntity
+//                    .status(HttpStatus.UNAUTHORIZED)
+//                    .body(new Result<String>("토큰 불일치"));
         }
 
     }
