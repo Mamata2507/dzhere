@@ -3,11 +3,12 @@ import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, Image  } from 
 import { DataTable } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
 
-export const StudentListAndroid = ({test}) => {
+export const StudentListAndroid = ({ agName, classList }) => {
 
   // 버튼 이벤트
   const onPress = () => {
-    Alert.alert(`${test}`);
+    Alert.alert(`${agName.ag_idx}`);
+    Alert.alert(`${agName.ag_name}`);
   }
 
   // Picker
@@ -40,7 +41,9 @@ export const StudentListAndroid = ({test}) => {
         <View>
           <View style={[styles.picker]}>
             <Text style={[styles.text, {marginLeft: 15}]}>기관</Text>
-            <Text style={[styles.text, {flex: 1.5}]}>비트교육원</Text>
+            <Text style={[styles.pickerText, {fontSize: 16}, {marginLeft: 8}]}>
+              {agName.ag_name}
+            </Text>
           </View>
         </View>
         <View style={styles.picker}>
@@ -50,9 +53,10 @@ export const StudentListAndroid = ({test}) => {
               style={styles.pickerText}
               onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
-              <Picker.Item  label="웹 Full Stack 개발자 양성 과정" value="subject"/>
-              <Picker.Item label="리액트를 다루는 기술" value="minjun" />
-            </Picker>
+              {classList.map(c => (
+                <Picker.Item key={c.c_id} label={c.c_name} value={c.c_name}/>
+              ))}
+            </Picker> 
         </View>
         <View style={styles.btnContainer}>
             <Picker
@@ -60,13 +64,13 @@ export const StudentListAndroid = ({test}) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             style={styles.miniPicker}
             >
-            <Picker.Item  label="가입승인상태" value="all"/>
+            <Picker.Item label="가입승인상태" value="all"/>
             <Picker.Item label="승인" value="accept" />
             <Picker.Item label="미승인" value="hold" />
             </Picker>
           <TouchableOpacity
             style={styles.btn}
-            onPress={onPress}
+            onPress={onSearch}
             >
             <Text style={styles.btnText}>검색</Text>
           </TouchableOpacity>
@@ -170,7 +174,6 @@ picker: {
     borderWidth: 1,
     borderRadius: 8,
     borderColor: '#99c0d6',
-
 },
 text: {
     flex: 1,
@@ -211,7 +214,8 @@ btnText: {
 miniPicker: {
     width:'50%',
     height: 30,
-    color: '#448bb4',
+    color: '#004cff',
+    
 },
 checkbox: {
   alignSelf: "center",

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Footer } from '../../../components/common/Footer' 
 import StudentListContainer from '../../../containers/admin/student/StudentListContainer'
 
 const StudentList = ({ navigation }) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
 
-export const StudentListWeb = ({test}) => {
+export const StudentListWeb = ({agName}) => {
   return (
-    <Text>{test}</Text>
+    <Text>{agName}</Text>
   );
 };
 
