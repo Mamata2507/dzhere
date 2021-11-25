@@ -1,5 +1,3 @@
-// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
-// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 import image from "../../../assets/logo.png";
 import React, { useState } from "react";
 import {
@@ -64,14 +62,22 @@ const CustomSidebarMenu = (props) => {
       <Image source={image} style={styles.headerImage} />
       <DrawerContentScrollView {...props}>
         {/* <DrawerItemList {...props} /> */}
-        <View>
+        <View style={{flexDirection: "row"}}>
           <TouchableOpacity onPress={onPressClass}>
             <Text style={styles.title}>강의 및 장소</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate("ClassList")
+                setLabel("ClassList");
+              }}
+            >
+              <Text style={{color: "white"}, styles.title}>- HOME</Text>
+            </TouchableOpacity>
         </View>
         {pressClass === true ? (
           <>
-            <DrawerItem
+            {/* <DrawerItem
               label="▪️ 강의 목록"
               labelStyle={{ color: labels === "ClassList" ? "white" : colors }}
               onPress={() => {
@@ -79,7 +85,7 @@ const CustomSidebarMenu = (props) => {
                 setLabel("ClassList");
                 setColors("#505050");
               }}
-            />
+            /> */}
             <DrawerItem
               label="▪️ 강의 관리"
               labelStyle={{
@@ -211,10 +217,9 @@ const styles = StyleSheet.create({
   },
   title: {
     padding: 16,
-    flexDirection: "row",
+    // flexDirection: "row",
     alignItems: "center",
     fontWeight: "bold",
-    color: "#505050",
   },
 });
 

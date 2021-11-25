@@ -16,10 +16,6 @@ public class ExternalService {
 	public ExternalService(ExternalMapper externalMapper) {
 		this.externalMapper = externalMapper;
 	}
-	
-	public User findUser(String u_phone) {
-		return externalMapper.findUser(u_phone);
-	}
 
 	public void addWifi(External external) {
 		externalMapper.addWifi(external);

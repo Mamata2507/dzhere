@@ -1,45 +1,53 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import * as React from "react";
+import { View, Text, StyleSheet, Platform} from "react-native";
+import ClassCardComponent from "./ClassCardComponent";
 
-const ClassListComponent = ({ today, agency }) => {
+const ClassListComponent = ({ today, agency, classname, navigation }) => {
   return (
     <>
       <StatusBar />
       <View style={styles.container}>
         <Text style={styles.today}>{"🐥" + today + "🐥"}</Text>
         <View style={styles.box}>
-          <Text style={styles.agency}>{agency}</Text>
+          <Text style={styles.agency}>{agency.ag_name}</Text>
         </View>
+        {classname ? <ClassCardComponent classname={classname} navigation={navigation} />
+        : <Text style={styles.loading}>리스트를 불러오는 중입니다.</Text>}
       </View>
     </>
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: Platform.OS === "android" ? 15 : "20%",
   },
   today: {
     fontSize: 25,
     textAlign: "center",
-    marginTop: "25%",
+    marginTop: Platform.OS === "android" ? "25%" : "5%",
     fontWeight: "bold",
   },
   agency: {
     fontSize: 18,
-    textAlign: "center",
     padding: 5,
   },
   box: {
     borderColor: "#B8B8B8",
     backgroundColor: "#F0F0F0",
     borderWidth: 1,
-    marginTop: "9%",
+    marginTop: Platform.OS === "android" ? "10%" : "5%",
+    marginBottom: Platform.OS === "android" ? "5%" : "5%",
     justifyContent: "center",
     alignItems: "center",
   },
+  loading:{
+    fontSize: Platform.OS === "android" ? 12 : 20,
+    justifyContent: "center",
+    alignItems: "center",
+  }
 });
 
 export default ClassListComponent;

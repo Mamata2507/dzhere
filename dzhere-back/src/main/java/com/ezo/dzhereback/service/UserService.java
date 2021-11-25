@@ -14,7 +14,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public User findKre(){
-        return userMapper.findKre();
-    }
+    public User findUser(String u_phone) {
+		return userMapper.findUser(u_phone);
+	}
 }

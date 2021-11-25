@@ -18,13 +18,13 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/api/kre")
-    public Result kre() {
-        User findKre = userService.findKre();
-        UserTestDto result = UserTestDto.builder()
-                .u_name(findKre.getU_name())
-                .build();
-
-        return new Result(result);
-    }
+//    @GetMapping("/api/kre")
+//    public Result kre() {
+//        User findKre = userService.findKre();
+//        UserTestDto result = UserTestDto.builder()
+//                .u_name(findKre.getU_name())
+//                .build();
+//
+//        return new Result(result);
+//    }
 }

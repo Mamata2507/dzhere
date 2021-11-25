@@ -4,11 +4,11 @@ import { Header } from '../../../components/common/Header'
 import { Footer } from '../../../components/common/Footer' 
 import StudentContainer from '../../../containers/admin/student/StudentListContainer'
 
-const StudentManage = ({ navigation }) => {
+const StudentManage = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
                 <Header/>
-                <StudentContainer />
+                <StudentContainer navigation={navigation}/>
                 <Footer />
         </SafeAreaView>
     );
