@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
 import SortableGridview from "react-native-sortable-gridview";
-import MoveStudentListContainer from "../../../containers/admin/class/MoveStudentListContainer";
+import MoveStudentListContainer from "../../../../containers/admin/class/class_manage/MoveStudentListContainer";
 
 const ClassCardComponent = ({ classname, navigation }) => {
   return (
@@ -9,7 +9,6 @@ const ClassCardComponent = ({ classname, navigation }) => {
       {Platform.OS === "android" ? (
         <SortableGridview
           data={classname}
-          sensitivity={500}
           numPerRow={3}
           onDragStart={() => {
             console.log("CustomLayout onDragStart");

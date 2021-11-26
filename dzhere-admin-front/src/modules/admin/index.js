@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import classes from "./class/classlist";
+import classes from "./class/course";
 // import { all } from '@redux-saga/core/effects';
 // import auth, {authSaga} from './auth/auth';
 // import user, {userSaga} from './auth/user';

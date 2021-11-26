@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import * as React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Platform } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -36,7 +36,7 @@ export const NavigationDrawerStructure = (props) => {
         {/*Donute Button Image */}
         <Image
           source={menubar}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{ width: Platform.OS === 'android' ? 25 : 35, height: Platform.OS === 'android' ? 25 : 30, margin: Platform.OS === 'android' ? "18%" : "100%" }}
         />
       </TouchableOpacity>
     </View>

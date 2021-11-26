@@ -1,20 +1,14 @@
 import client from "../index";
 
-// 관리자 기관의 강의 리스트 가져오기
+// 관리자 기관의 강의(class) 리스트 가져오기
 export const getClassList = (data) => {
-  // const accessToken = data.token;
-  console.log("강의 목록 리스트 API 호출");
+  console.log("강의 목록(class) 리스트 API 호출");
   return client
     .post(
       "/api/class/list",
       {
         u_phone: data.u_phone,
       },
-    //   {
-    //     headers: {
-    //       Authorization: "Bearer " + accessToken,
-    //     },
-    //   }
     )
     .then(function (response) {
       console.log(response.data.data);
@@ -25,21 +19,56 @@ export const getClassList = (data) => {
     });
 };
 
-// 관리자(기관) 정보 가져오기
+
+// 관리자 기관의 강의 리스트(classtime) 가져오기
+export const getClasstimeList = (data) => {
+  console.log("강의 목록(classtime) 리스트 API 호출");
+  return client
+    .post(
+      "/api/class/time/list",
+      {
+        ag_idx: data.ag_idx
+      },
+    )
+    .then(function (response) {
+      console.log(response.data.data);
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+
+// 관리자 기관의 강의 장소 리스트(classlocation) 가져오기
+export const getClasslocationList = (data) => {
+  console.log("강의 장소 목록(classlocation) 리스트 API 호출");
+  return client
+    .post(
+      "/api/class/location/list",
+      {
+        ag_idx: data.ag_idx
+      },
+    )
+    .then(function (response) {
+      console.log(response.data.data);
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+
+// 관리자 정보 및 기관 가져오기
 export const getAdmin = (data) => {
-  // const accessToken = data.token;
-  console.log("관리자(기관) 정보 API 호출");
+  console.log("관리자 정보 및 기관 API 호출");
   return client
     .post(
       "/api/admin/agency",
       {
         u_phone: data.u_phone,
       },
-    //   {
-    //     headers: {
-    //       Authorization: "Bearer " + accessToken,
-    //     },
-    //   }
     )
     .then(function (response) {
       console.log(response.data.data);
@@ -52,8 +81,7 @@ export const getAdmin = (data) => {
 
 // 강의별 수강생 리스트 가져오기
 export const getStudentList = (data) => {
-  // const accessToken = data.token;
-  // console.log("강의별 수강생 리스트 API 호출", accessToken);
+  console.log("강의별 수강생 리스트 API 호출");
   return client
     .post(
       "/api/class/student/list",
@@ -61,11 +89,6 @@ export const getStudentList = (data) => {
         c_idx: data.c_idx,
         ag_idx: data.ag_idx,
       },
-    //   {
-    //     headers: {
-    //       Authorization: "Bearer " + accessToken,
-    //     },
-    //   }
     )
     .then(function (response) {
       console.log(response.data.data);

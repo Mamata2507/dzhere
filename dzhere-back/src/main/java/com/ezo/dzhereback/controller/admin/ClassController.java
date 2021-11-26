@@ -26,14 +26,14 @@ public class ClassController {
 	@PostMapping("/api/admin/agency")
 	public Result selectAgency(@RequestBody UserDto userDto){
 		String u_phone = userDto.getU_phone();
-		System.out.println("u_phone:"+u_phone);
-		User user = userService.findUser(u_phone);
-		Agency agency = classService.selectAgencyName(user);
+//		System.out.println("u_phone:"+u_phone);
+//		User user = userService.findUser(u_phone);
+		AgencyDto agency = classService.selectAgencyName(u_phone);
 		System.out.println(agency);
 		return new Result(agency);
 	}
 	
-	// 기관의 강의 리스트 호출
+	// 기관의 강의(class) 리스트 호출
 	@PostMapping("/api/class/list")
 	public Result selectClassList(@RequestBody UserDto userDto){
 		String u_phone = userDto.getU_phone();
@@ -51,6 +51,23 @@ public class ClassController {
 		System.out.println(classStudentList);
 		return new Result(classStudentList);
 	}
+	
+	//기관의 강의 수강기간(classtime) 정보 리스트 호출
+	@PostMapping("/api/class/time/list")
+	public Result selectClassTimeList(@RequestBody UserDto userDto){  //ag_idx
+		List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userDto);
+		System.out.println(classtimeList);
+		return new Result(classtimeList);
+	}
+
+	//기관의 강의 장소(location) 정보 리스트 호출
+	@PostMapping("/api/class/location/list")
+	public Result selectClassLocationList(@RequestBody UserDto userDto){  //ag_idx
+		List<ClasslocationDto> classlocationList = classService.selectClassLocationList(userDto);
+		System.out.println(classlocationList);
+		return new Result(classlocationList);
+	}
+	
 //	
 //	@PostMapping("/api/external/delete")
 //	public String removeExternalId(@RequestBody ExternalDto externalDto, External external){
@@ -64,13 +81,5 @@ public class ClassController {
 //		return "Ok";
 //	}
 //	
-//	@PostMapping("/api/external/select")
-//	public Result selectExternal(@RequestBody ExternalDto externalDto){
-//		String u_phone = externalDto.getU_phone();
-//		User user = externalService.findUser(u_phone); //u_id, c_id 저장
-//		List<ExternalSelectDto> external = externalService.selectExternal(user);
-//		System.out.println(external);
-//		return new Result(external);
-//	}
 
 }

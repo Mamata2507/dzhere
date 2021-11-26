@@ -15,8 +15,8 @@ public class ClassService {
 		this.classMapper = classMapper;
 	}
 	
-	public Agency selectAgencyName(User user){
-		return classMapper.selectAgencyName(user);
+	public AgencyDto selectAgencyName(String u_phone){
+		return classMapper.selectAgencyName(u_phone);
 	}
 	
 	public List<ClassInfoDto> selectClassList(User user) {
@@ -27,6 +27,14 @@ public class ClassService {
 		return classMapper.selectClassStudentList(userDto);
 	}
 //	
+	public List<ClasstimeDto> selectClassTimeList(UserDto userdto) {
+		return classMapper.selectClassTimeList(userdto);
+	}
+	
+	public List<ClasslocationDto> selectClassLocationList(UserDto userdto) {
+		return classMapper.selectClassLocationList(userdto);
+	}
+	
 //	public void removeExternalId(External external) {
 //		externalMapper.removeExternalId(external);
 //	}
