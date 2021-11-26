@@ -30,6 +30,10 @@ public class LessonService {
         return lessonMapper.getCidx(u_phone);
     }
 
+    public int getAgidx(int c_idx){
+        return lessonMapper.getAgidx(c_idx);
+    }
+
     public List<Lessontime> getAllLessonTime(int u_phone) {
         return lessonMapper.getLessonTimeList(u_phone);
     }

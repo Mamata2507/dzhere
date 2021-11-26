@@ -1,29 +1,22 @@
-import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { DataTable } from 'react-native-paper';
-import { StyledSelect } from './ListStyledLayout';
-import { styles } from './Styles';
+import React from 'react'
+import { Button, Text, View } from 'react-native'
+import { DataTable } from 'react-native-paper'
+import { StyledSelect } from './ListStyledLayout'
+import { styles } from './Styles'
 
-export default function ListLayoutContentAndroid({classTime,tableHead,tableData,days}) {
-    
+const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthChange,attendCnt}) => {
     return (
-        <>
-        <View style={styles.contents}>
+        <View style={styles.contents}>            
             <View style={styles.contentContainer}>
-                {(days)&&<StyledSelect items={days} />}
-                <Button title={'검색'}/>
+                {(days)&&<StyledSelect items={days} onMonthChange={onMonthChange}/>}
+                <Button title={'검색'} onPress={onPressSearch}/>
             </View>
-            {
-            classTime[0]?
-            <>
-            <Text style={styles.test2}>강의 시간: {classTime[0].ct_start_time} ~ {classTime[0].ct_end_time}</Text>
-            <Text style={styles.test2}>점심 시간: {classTime[0].ct_break_start} ~ {classTime[0].ct_break_end}</Text>
-            <Text style={styles.test2}>출석 인정 시간: {classTime[0].ct_attend_starttime} ~ {classTime[0].ct_attend_endtime}</Text>
-            <Text style={styles.test2}>퇴실 인정 시간: {classTime[0].ct_end_time} ~ {'23:50:00'}</Text>
-            </>
-            :
-            <Text>loading...</Text>
-            }
+            <View>
+                <Text style={styles.text_android}>강의 시간: {(classTime[0].ct_start_time).slice(0,5)} ~ {(classTime[0].ct_end_time).slice(0,5)}</Text>
+                <Text style={styles.text_android}>점심 시간: {(classTime[0].ct_break_start).slice(0,5)} ~ {(classTime[0].ct_break_end).slice(0,5)}</Text>
+                <Text style={styles.text_android}>출석 인정 시간: {(classTime[0].ct_attend_starttime).slice(0,5)} ~ {(classTime[0].ct_attend_endtime).slice(0,5)}</Text>
+                <Text style={styles.text_android}>퇴실 인정 시간: {(classTime[0].ct_end_time).slice(0,5)} ~ {'23:50'}</Text>
+            </View>
             <View style={styles.tableContainer}>
                 <DataTable>
                     <DataTable.Header>
@@ -33,13 +26,20 @@ export default function ListLayoutContentAndroid({classTime,tableHead,tableData,
                         ))
                     }                        
                     </DataTable.Header>
-                    <DataTable.Row>
-                        {
-                            tableData.map((v,i)=>(
-                                <DataTable.Cell numeric>{v}</DataTable.Cell>
-                            ))
-                        }
-                    </DataTable.Row>
+                    {
+                        (attendCnt)&&
+                        <>
+                        <DataTable.Row>
+                            <DataTable.Cell numeric>{attendCnt.a_total_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_real_date_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_absent_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_leave_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_late_status_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{'100%(sample)'}일</DataTable.Cell>
+                        </DataTable.Row>                        
+                        </>                        
+                    }
                 </DataTable>
             </View>
             <View style={styles.noticeContainer}>
@@ -47,6 +47,6 @@ export default function ListLayoutContentAndroid({classTime,tableHead,tableData,
                 <Text style={{fontSize:15}}>결석률 : 출석일 / 총 훈련일수</Text>
             </View>
         </View>
-        </>
     )
 }
+export default ListLayoutContentWeb;

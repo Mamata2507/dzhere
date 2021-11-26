@@ -18,7 +18,7 @@ export default function createRequestSaga(type, request) { //type : type, reques
     try {
       // 함수 호출
       const response = yield call(request, action.payload);
-      // (type==='attend/ATTEND_LIST_LOAD')&&console.log(response);
+      // (type==='attend/ATTEND_LIST_LOAD')&&console.log(response.data);
       yield put({
         type: SUCCESS,
         payload: response.data,

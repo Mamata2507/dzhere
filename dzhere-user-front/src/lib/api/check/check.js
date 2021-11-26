@@ -29,14 +29,27 @@ export const insertCheckExit = (u_phone) => {
     });
 }
 
-export const loadAttendList = (u_phone, month) => {    
-    const queryString = qs.stringify(u_phone,month);
-    checkAxios.get(`${classURL}/attend/load?${queryString}`)
-    .then((res)=>{
-        console.log(res);
-        return res;
-    })
-    .catch((e)=>{
-        console.log(e);
+export const insertCheckReave = (u_phone) => {
+    return checkAxios.post(`${classURL}/attend/reaveinsert`,{
+        u_phone:u_phone,         
     });
+}
+
+export const loadAttendCnt = async (u_phone,month) => {    
+    const queryString = qs.stringify(u_phone,month);
+    return await checkAxios.get(`${classURL}/attend/load?${queryString}`);
+}
+
+export const loadAttendList = async (u_phone,month) => {    
+    const queryString = qs.stringify(u_phone,month);
+    return await checkAxios.get(`${classURL}/attend/allload?${queryString}`);
+}
+
+export const checkWifi = (wifi_info) => {
+    return checkAxios.post(`${classURL}/check/wifi`,{
+        ssid: wifi_info.ssid,
+        ipAddress: wifi_info.ipAddress,
+        bssid: wifi_info.bssid,
+        u_phone: wifi_info.u_phone,
+    })
 }

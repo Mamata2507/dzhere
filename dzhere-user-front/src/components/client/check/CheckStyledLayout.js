@@ -50,11 +50,12 @@ const Title = styled.Text`
 const ButtonContainer = styled.TouchableOpacity`
   ${centerAlign}  
   flex: 1;
-  background-color: #C4C4C4;
+  background-color: #E4E2E1;   
   border-radius: 15px;
-  margin: 20px 40px;
+  margin: 10px 20px;
   justify-content: center;
 `;
+//E4E2E1
 
 const ImageStyled = `
   width: 100;
@@ -63,8 +64,8 @@ const ImageStyled = `
 
 const styles = StyleSheet.create({
   imageStyled: {
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
   }
 });
 

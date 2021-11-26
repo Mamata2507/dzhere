@@ -17,6 +17,9 @@ public interface LessonMapper {
     @Select("select c_idx from User where u_phone=#{u_phone}")
     int getCidx(String u_phone);
 
+    @Select("select ag_idx from Class where c_idx = #{c_idx}")
+    int getAgidx(int c_idx);
+
     @Select("SELECT * FROM Classtime WHERE c_idx = #{c_idx}")
     List<Lessontime> getLessonTimeList(int c_idx);
 }

@@ -10,8 +10,12 @@ const [CLASS_TIME_LOAD, CLASS_TIME_LOAD_SUCCESS, CLASS_TIME_LOAD_FAILURE] = crea
 
 // 출석
 const ATTEND_LOAD = 'check/ATTEND_LOAD';
-const [ATTEND_INSERT, ATTEND_INSERT_SUCCESS, ATTEND_INSERT_DELETE] = createRequestActionTypes('check/ATTEND_INSERT');
-const [ATTEND_EXIT_INSERT, ATTEND_EXIT_INSERT_SUCCESS, ATTEND_EXIT_INSERT_DELETE] = createRequestActionTypes('check/ATTEND_EXIT_INSERT');
+const [ATTEND_INSERT, ATTEND_INSERT_SUCCESS, ATTEND_INSERT_FAILURE] = createRequestActionTypes('check/ATTEND_INSERT');
+const [ATTEND_LEAVE_INSERT, ATTEND_LEAVE_INSERT_SUCCESS, ATTEND_LEAVE_INSERT_FAILURE] = createRequestActionTypes('check/ATTEND_LEAVE_INSERT');
+const [ATTEND_EXIT_INSERT, ATTEND_EXIT_INSERT_SUCCESS, ATTEND_EXIT_INSERT_FAILURE] = createRequestActionTypes('check/ATTEND_EXIT_INSERT');
+
+// 장소 확인
+const [CHECK_WIFI, CHECK_WIFI_SUCCESS, CHECK_WIFI_FAILURE] = createRequestActionTypes('check/CHECK_WIFI');
 
 // Reducers
 // 수업
@@ -21,7 +25,11 @@ export const loadClassTimeList = createAction(CLASS_TIME_LOAD, u_phone=>u_phone)
 // 출석
 export const loadCheck = createAction(ATTEND_LOAD, u_phone=>u_phone);
 export const checkInsert = createAction(ATTEND_INSERT, u_phone=>u_phone);
+export const checkLeaveInsert = createAction(ATTEND_LEAVE_INSERT, u_phone=>u_phone);
 export const checkExitInsert = createAction(ATTEND_EXIT_INSERT, u_phone=>u_phone);
+
+// 장소 확인
+export const checkWifi = createAction(CHECK_WIFI, (wifi_info) => wifi_info);
 
 // saga 생성
 // 수업
@@ -29,22 +37,30 @@ const classListSaga = createRequestSaga(CLASS_LOAD, checkAPI.loadClasses);
 const classTimeListSaga = createRequestSaga(CLASS_TIME_LOAD, checkAPI.loadClassTime);
 // 출석
 const attendCheckInsertSaga = createRequestSaga(ATTEND_INSERT, checkAPI.insertCheck);
+const attendCheckLeaveInsertSaga = createRequestSaga(ATTEND_LEAVE_INSERT, checkAPI.insertCheckReave);
 const attendCheckExitInsertSaga = createRequestSaga(ATTEND_EXIT_INSERT, checkAPI.insertCheckExit);
+
+// 장소 확인
+const checkWifiSaga = createRequestSaga(CHECK_WIFI, checkAPI.checkWifi);
 
 export function* checkSaga() {
     yield takeLatest(CLASS_LOAD, classListSaga);
     yield takeLatest(CLASS_TIME_LOAD, classTimeListSaga);
     yield takeLatest(ATTEND_INSERT, attendCheckInsertSaga);
+    yield takeLatest(ATTEND_LEAVE_INSERT, attendCheckLeaveInsertSaga);
     yield takeLatest(ATTEND_EXIT_INSERT, attendCheckExitInsertSaga);
+    yield takeLatest(CHECK_WIFI, checkWifiSaga);
 }
 
 const initState = {
     classTime : {},
     classList : [],
     result: '',
+    checkWifiInfo: '',
     classLoadError : null,
     classTimeLoadError : null,
     attendError : null,
+    checkWifiError : null,
 }
 
 export const check = handleActions(
@@ -69,7 +85,15 @@ export const check = handleActions(
             ...state,
             result: result,
         }),
-        [ATTEND_INSERT_DELETE]: (state, {payload: error})=>({
+        [ATTEND_INSERT_FAILURE]: (state, {payload: error})=>({
+            ...state,
+            attendError: error,
+        }),
+        [ATTEND_LEAVE_INSERT_SUCCESS]: (state, {payload: result})=>({
+            ...state,
+            result: result,
+        }),
+        [ATTEND_LEAVE_INSERT_FAILURE]: (state, {payload: error})=>({
             ...state,
             attendError: error,
         }),
@@ -77,9 +101,17 @@ export const check = handleActions(
             ...state,
             result: result,
         }),
-        [ATTEND_EXIT_INSERT_DELETE]: (state, {payload: error})=>({
+        [ATTEND_EXIT_INSERT_FAILURE]: (state, {payload: error})=>({
             ...state,
             attendError: error,
+        }),
+        [CHECK_WIFI_SUCCESS]: (state, {payload: wifiInfo})=>({
+            ...state,
+            checkWifiInfo: wifiInfo,
+        }),
+        [CHECK_WIFI_FAILURE]: (state, {payload: error})=>({
+            ...state,
+            checkWifiError: error,
         }),
     },initState
 )

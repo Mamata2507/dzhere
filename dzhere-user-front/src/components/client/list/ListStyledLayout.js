@@ -11,10 +11,9 @@ const centerAlign = css `
 export const StyledText = styled.Text`
   ${centerAlign}
   padding: 10px;
-  width: 60%;
   text-align: center;
   color: black;
-  font-size: 40;
+  font-size: 30;
 `;
 
 const StyledPicker = styled.Picker`
@@ -30,7 +29,7 @@ export const StyledSelect = props => {
             {
                 Object
                     .values(temp)
-                    .map((items,i) => (<StyledPicker.Item label={items.label} value={items.value} key={i}/>))
+                    .map((items,i) => (<StyledPicker.Item label={items.label} value={items.value} key={items.id}/>))
             }
         </StyledPicker>
     );

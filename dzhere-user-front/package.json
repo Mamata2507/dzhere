@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
-    "@react-native-community/netinfo": "^6.2.0",
+    "@react-native-community/netinfo": "^7.1.2",
     "@react-navigation/core": "^6.1.0",
     "@react-navigation/drawer": "^5.12.9",
     "@react-navigation/native": "*",
@@ -17,6 +17,7 @@
     "axios": "^0.24.0",
     "expo": "~43.0.2",
     "expo-linking": "^2.4.2",
+    "expo-location": "~13.0.4",
     "expo-status-bar": "~1.1.0",
     "moment": "^2.29.1",
     "qs": "^6.10.1",
