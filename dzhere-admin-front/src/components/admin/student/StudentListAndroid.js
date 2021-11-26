@@ -6,7 +6,7 @@ import { onChange } from 'react-native-reanimated';
 
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
                                       onSearch, studentList, loadingAgName, loadingStudentList,
-                                      selectedAccept, setSelectedAccept}) => {
+                                      selectedAccept, setSelectedAccept, filterList, loadingFilterList}) => {
 
   // 버튼 이벤트
   const onPress = () => {
@@ -69,7 +69,7 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
             onValueChange={(itemValue, itemIndex) => setSelectedAccept(itemValue)}
             style={styles.miniPicker}
             >
-            <Picker.Item label='가입상태' value="2" />
+            <Picker.Item label='전체선택[승인]' value="2" />
             <Picker.Item label='승인' value="1" />
             <Picker.Item label='미승인' value="0" />
             </Picker>
@@ -90,31 +90,58 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               <DataTable.Title>전화번호</DataTable.Title>
               <DataTable.Title numeric>가입상태</DataTable.Title>
             </DataTable.Header>
-            <Text>{loadingStudentList && '로딩중...'}</Text>
-            {!loadingStudentList && 
-            <ScrollView>
-            {
-             studentList.map(s => (              
-            <DataTable.Row>
-              <DataTable.Cell>
-               <Checkbox 
-                style={styles.checkbox} 
-                value={isChecked} 
-                onValueChange={setChecked} 
-                color={isChecked ? '#4630EB' : undefined}
-                />
-              </DataTable.Cell>
-              <DataTable.Cell>{s.u_name}</DataTable.Cell>
-              <DataTable.Cell>{s.u_phone}</DataTable.Cell>
-              <DataTable.Cell numeric>
-                {s.u_accept === 0 && '미승인'}
-                {s.u_accept === 1 && '승인'}
-              </DataTable.Cell>
-            </DataTable.Row>
-             ))
+            
+            {selectedAccept<2?
+              <ScrollView>
+              <Text>{loadingFilterList == true && '로딩중...'}</Text>
+              {loadingFilterList == false && 
+              filterList.map(s => (              
+              <DataTable.Row>
+                <DataTable.Cell>
+                <Checkbox 
+                  style={styles.checkbox} 
+                  value={isChecked} 
+                  onValueChange={setChecked} 
+                  color={isChecked ? '#4630EB' : undefined}
+                  />
+                </DataTable.Cell>
+                <DataTable.Cell>{s.u_name}</DataTable.Cell>
+                <DataTable.Cell>{s.u_phone}</DataTable.Cell>
+                <DataTable.Cell numeric>
+                  {s.u_accept === 0 && '미승인'}
+                  {s.u_accept === 1 && '승인'}
+                </DataTable.Cell>
+              </DataTable.Row>
+              ))
+              }
+              </ScrollView>
+            :
+              <ScrollView>
+              <Text>{loadingStudentList && '로딩중...'}</Text>
+              {!loadingStudentList &&
+               studentList.map(s => (              
+              <DataTable.Row>
+                <DataTable.Cell>
+                 <Checkbox 
+                  style={styles.checkbox} 
+                  value={isChecked} 
+                  onValueChange={setChecked} 
+                  color={isChecked ? '#4630EB' : undefined}
+                  />
+                </DataTable.Cell>
+                <DataTable.Cell>{s.u_name}</DataTable.Cell>
+                <DataTable.Cell>{s.u_phone}</DataTable.Cell>
+                <DataTable.Cell numeric>
+                  {s.u_accept === 0 && '미승인'}
+                  {s.u_accept === 1 && '승인'}
+                </DataTable.Cell>
+              </DataTable.Row>
+               ))
+              }
+              </ScrollView>
             }
-            </ScrollView>
-            }
+
+            
             <DataTable.Pagination
               page={page}
               numberOfPages={3}
@@ -217,7 +244,7 @@ btnText: {
     textAlignVertical: "center",
 },
 miniPicker: {
-    width:'45%',
+    width:'46%',
     height: 30,
     color: '#004cff',
     

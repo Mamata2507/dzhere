@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../../components/admin/student/StudentList'
-import { getAgName, getClassList, getStudentList } from '../../../modules/admin/student/student'
+import { getAgName, getClassList, getStudentList, setFilterList } from '../../../modules/admin/student/student'
  
 const StudentListContainer = () => {
 
@@ -12,14 +12,15 @@ const StudentListContainer = () => {
 
   const [selectedClass, setSelectedClass] = useState(0);
   const [selectedAccept, setSelectedAccept] = useState(2);
-  const [filterStudentList, setFilterStudentList] = useState([]);
 
-  const { agName, classList, studentList, loadingAgName, loadingStudentList } = useSelector(({ student, loading }) => ({
+  const { agName, classList, studentList, loadingAgName, loadingStudentList, filterList, loadingFilterList } = useSelector(({ student, loading }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
     studentList: student.studentList,
-    loadingStudentList: loading['student/GET_STUDENT_LIST']
+    loadingStudentList: loading['student/GET_STUDENT_LIST'],
+    filterList: student.filterList,
+    loadingFilterList: student.loadingFilterList,
   }))
 
   useEffect(() => {
@@ -29,10 +30,8 @@ const StudentListContainer = () => {
 
   useEffect(() => {
     if(!loadingStudentList && selectedAccept!==2){
-        // alert(selectedAccept)
-        const tempArr = studentList;
-        const tempArr2 = tempArr.filter(item => {return item.u_accept == selectedAccept});
-        console.log(tempArr2[0]);
+        const tempArr = studentList.filter(item => {return item.u_accept == selectedAccept});
+        dispatch(setFilterList(tempArr))
       }
     },[selectedAccept])
 
@@ -55,7 +54,8 @@ const StudentListContainer = () => {
          loadingStudentList={loadingStudentList}
          selectedAccept={selectedAccept}
          setSelectedAccept={setSelectedAccept}
-        //  pickerActivity={pickerActivity}
+         filterList={filterList}
+         loadingFilterList={loadingFilterList}
       />
   );
 };
