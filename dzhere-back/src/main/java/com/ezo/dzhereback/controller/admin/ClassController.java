@@ -68,6 +68,23 @@ public class ClassController {
 		return new Result(classlocationList);
 	}
 	
+
+	//기관의 강의 외부장소 정보 리스트 호출
+	@PostMapping("/api/class/external/list")
+	public Result selectClassExternalList(@RequestBody UserDto userDto){  // u_name, c_idx
+		List<ExternalDto> classexternalList = classService.selectClassExternalList(userDto);
+		System.out.println(classexternalList);
+		return new Result(classexternalList);
+	}
+	
+	//기관의 강의 내부장소 정보 리스트 호출
+	@PostMapping("/api/class/internal/list")
+	public Result selectClassInternalList(@RequestBody UserDto userDto){  //ag_idx
+		List<InternalDto> classinternalList = classService.selectClassInternalList(userDto);
+		System.out.println(classinternalList);
+		return new Result(classinternalList);
+	}
+
 //	
 //	@PostMapping("/api/external/delete")
 //	public String removeExternalId(@RequestBody ExternalDto externalDto, External external){

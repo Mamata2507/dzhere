@@ -18,7 +18,7 @@ public interface ClassListMapper {
 	@Select("select * from User where ag_idx=#{user.ag_idx} and c_idx=#{user.c_idx}")
 	List<UserDto> selectClassStudentList(@Param("user") final UserDto userDto);
 
-	// 소속 기관이 연 강의 장소 리스트
+	// 소속 기관이 연 강의 장소(classlocation) 리스트
 	@Select("select c.c_idx, c.c_name, cl.cl_idx, cl.cl_name from Class as c join Classlocation as cl on c.c_idx = cl.c_idx where ag_idx=#{user.ag_idx}")
 	List<ClasslocationDto> selectClassLocationList(@Param("user") final UserDto userDto);
 
@@ -26,6 +26,12 @@ public interface ClassListMapper {
 	@Select("select ct.ct_idx, ct.ct_day, ct.ct_start_time, ct.ct_end_time, ct.ct_attend_starttime, ct.ct_attend_endtime, ct.ct_start_date, ct.ct_end_date, ct.ct_break_start, ct.ct_break_end, cl.c_idx, cl.c_name from Classtime as ct join Class as cl on cl.c_idx=ct.c_idx and cl.ag_idx=#{user.ag_idx}")
 	List<ClasstimeDto> selectClassTimeList(@Param("user") final UserDto userDto);
 
+	// 소속 기관이 연 강의의 수강생 외부장소 등록 정보(external) 리스트
+	@Select("select * from External where c_idx=#{user.c_idx} and u_idx in (select u_idx from User where u_name=#{user.u_name} and ag_idx=#{user.ag_idx} and u_accept=1 and u_auth=1)")
+	List<ExternalDto> selectClassExternalList(@Param("user") final UserDto userDto);
+	
+	@Select("select * from Internal where c_idx=#{user.c_idx}")
+	List<InternalDto> selectClassInternalList(@Param("user") final UserDto userDto);
 	//	// 소속 기관이 연 강의 정보(classtime) 리스트
 	//	@Select("select * from Classtime where c_idx in (select c_idx from Class where ag_idx=#{user.ag_idx})")
 	//	List<ClasstimeDto> selectClassTimeList(@Param("user") final UserDto userDto);

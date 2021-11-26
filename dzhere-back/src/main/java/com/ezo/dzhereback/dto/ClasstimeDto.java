@@ -3,6 +3,8 @@ import lombok.*;
 import java.sql.Time;
 import java.util.Date;
 
+import com.ezo.dzhereback.domain.Classtime;
+
 @Data
 @Getter @Setter
 @NoArgsConstructor
@@ -35,5 +37,22 @@ public class ClasstimeDto {
         this.c_idx = c_idx;
         this.c_name = c_name; // 강의명
     }
+    
+    public Classtime toEntity() {
+		return Classtime.builder()
+				.ct_idx(ct_idx)
+				.ct_day(ct_day)
+				.ct_start_time(ct_start_time)
+				.ct_end_time(ct_end_time)
+				.ct_attend_starttime(ct_attend_starttime)
+				.ct_attend_endtime(ct_attend_endtime)
+				.ct_start_date(ct_start_date)
+				.ct_end_date(ct_end_date)
+				.ct_break_start(ct_break_start)
+				.ct_break_end(ct_break_end)
+				.c_idx(c_idx)
+				.c_name(c_name)
+				.build();
+	}
 }
 

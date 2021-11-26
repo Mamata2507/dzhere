@@ -35,6 +35,14 @@ public class ClassService {
 		return classMapper.selectClassLocationList(userdto);
 	}
 	
+	public List<ExternalDto> selectClassExternalList(UserDto userdto) {
+		return classMapper.selectClassExternalList(userdto);
+	}
+	
+	public List<InternalDto> selectClassInternalList(UserDto userdto) {
+		return classMapper.selectClassInternalList(userdto);
+	}
+	
 //	public void removeExternalId(External external) {
 //		externalMapper.removeExternalId(external);
 //	}

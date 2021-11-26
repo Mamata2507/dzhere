@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClassListComponent from "../../../../components/admin/class/class_main/ClassListComponent";
-import { useNavigation } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { getAdmin, getClassList } from "../../../../lib/api/class/course";
 import { getClass, setAgency } from "../../../../modules/admin/class/course";
 
@@ -11,6 +11,8 @@ const ClassListContainer = () => {
   const [today, setToday] = useState("");
   const [agency, setAgencyInfo] = useState({});
   const [classList, setClassList] = useState(null);
+  const clist = useSelector(({ classes }) => classes.clist);
+  const isFocused = useIsFocused();
   const calculate_today = () => {
     const now = new Date();
     const todayYear = now.getFullYear() + "년 ";
@@ -22,7 +24,7 @@ const ClassListContainer = () => {
   };
 
   async function adminInfoApi() {
-    console.log("관리자 정보 및 기관 불러오기");
+    console.log("렌더링) 관리자 정보 및 기관 불러오기");
     const data = await getAdmin({ u_phone: "hohoho" });
     // console.log(data);
     setAgencyInfo(data);
@@ -30,7 +32,7 @@ const ClassListContainer = () => {
   }
 
   async function classListApi() {
-    console.log("강의 리스트 불러오기");
+    console.log("렌더링) 강의 리스트 불러오기");
     const data = await getClassList({ u_phone: "hohoho" });
     // console.log(data);
     setClassList(data);
@@ -39,13 +41,19 @@ const ClassListContainer = () => {
 
   useEffect(() => {
     setToday(calculate_today());
-    console.log("날짜 계산");
+    console.log("렌더링) 날짜 계산");
   }, [today]);
 
   useEffect(() => {
     adminInfoApi();
     classListApi();
   }, []);
+
+  // useEffect(()=>{
+  //   if(isFocused){
+  //     setClassList(clist);
+  //   }
+  // },[classList])
 
   return (
     <ClassListComponent

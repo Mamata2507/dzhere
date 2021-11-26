@@ -6,11 +6,14 @@ import {
   View,
   Text,
   ScrollView,
+  // TextInput
 } from "react-native";
 import CheckBoxIcon from "../../../../containers/admin/class/class_manage/CheckBoxContainer";
 import { DataTable } from "react-native-paper";
+import { TextInput } from "react-native-gesture-handler";
+import PickerBox from "../../../../containers/admin/class/class_external/PickerBoxContainer";
 
-const ClassExternalComponent = ({ agency, classList }) => {
+const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, name, click }) => {
   return (
     <View style={styles.container}>
       <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
@@ -22,6 +25,27 @@ const ClassExternalComponent = ({ agency, classList }) => {
             {agency}
           </Text>
         </View>
+        <View style={styles.picker}>
+          <Text style={[styles.text, { marginLeft: 15 }]}>강의명</Text>
+          <PickerBox style={styles}/>
+        </View>
+        <View style={[styles.picker]}>
+          <Text style={[styles.text, { marginLeft: 15 }]}>수강생명</Text>
+          <TextInput
+            style={styles.inputText}
+            onChangeText={onChangeText}
+            value={name === null ? '' : name}
+            placeholder="수강생 이름을 입력해주세요."
+          />
+        </View>
+      </View>
+      <View style={styles.btnContainer2}>
+        <TouchableOpacity
+          style={[styles.btn, { margin: 5 }]}
+          onPress={onSearch}
+        >
+          <Text style={styles.btnText}>검색</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.content}>
@@ -30,70 +54,91 @@ const ClassExternalComponent = ({ agency, classList }) => {
             {Platform.OS === "android" ? (
               <>
                 {/* <DataTable.Title></DataTable.Title> */}
-                <DataTable.Title style={{marginLeft: "10%"}}>강의명</DataTable.Title>
-                <DataTable.Title style={{marginLeft: "10%"}}>수강기간</DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "8%" }}>
+                  외부 장소 명
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "6%" }}>
+                  등록 상태
+                </DataTable.Title>
               </>
             ) : (
               <>
                 {/* <DataTable.Title></DataTable.Title> */}
-                <DataTable.Title style={{marginLeft: "10%"}}>강의명</DataTable.Title>
-                <DataTable.Title style={{marginLeft: "10%"}}>수강기간</DataTable.Title>
-                <DataTable.Title style={{marginLeft: "10%"}}>수강요일 및 시간</DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "7%" }}>
+                  외부 장소 명
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "6%" }}>
+                  등록된 WIFI 명
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "6%" }}>
+                  등록된 WIFI ID
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "6%" }}>
+                  등록 상태
+                </DataTable.Title>
               </>
             )}
           </DataTable.Header>
 
           <ScrollView>
-            {classList ? (
-              classList.map((item) => (
+            {click === null && externalist && (
+              externalist.map((item) => (
                 <DataTable.Row>
                   {Platform.OS === "android" ? (
                     <>
-                     <CheckBoxIcon item={item} style={styles.checkbox} />
-                      <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                      <DataTable.Cell>
-                        {item.ct_start_date}{item.ct_end_date}
-                      </DataTable.Cell> 
+                      <CheckBoxIcon item={item} style={styles.checkbox} />
+                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_name}</DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "5%"}}>
+                        <TouchableOpacity
+                          style={{ margin: 5 }}
+                          onPress={() => {}}
+                        >
+                          {item.e_accept === 0 ? (
+                            <Text style={({ color: "red" }, styles.btnText)}>
+                              승인 대기
+                            </Text>
+                          ) : (
+                            <Text style={({ color: "black" }, styles.btnText)}>
+                              승인완료
+                            </Text>
+                          )}
+                        </TouchableOpacity>
+                      </DataTable.Cell>
                     </>
                   ) : (
                     <>
                       <CheckBoxIcon item={item} style={styles.checkbox} />
-                      <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                      <DataTable.Cell>
-                        {item.ct_start_date} ~ {item.ct_end_date}
-                      </DataTable.Cell>
-                      <DataTable.Cell>
-                        {item.ct_day} / {item.ct_start_time}
-                        {item.ct_end_time}
+                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_name}</DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_ssid}</DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "3%"}}>{item.e_bssid}</DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "5%"}}>
+                        <TouchableOpacity
+                          style={{ margin: 5 }}
+                          onPress={() => {}}
+                          disabled={item.e_accept === 0 ? false : true}
+                        >
+                          {item.e_accept === 0 ? (
+                            <Text style={[{ color: "red" }, styles.btnText]}>
+                              승인 대기
+                            </Text>
+                          ) : (
+                            <Text style={[{ color: "black" }, styles.btnText]}>
+                              승인완료
+                            </Text>
+                          )}
+                        </TouchableOpacity>
                       </DataTable.Cell>
                     </>
                   )}
                 </DataTable.Row>
               ))
-            ) : (
-              <Text>리스트를 가져오는 중입니다.</Text>
             )}
+            {click !== null && name !== null && 
+              <Text>{click}</Text>
+            }
           </ScrollView>
-          {/* <DataTable.Pagination
-            page={page}
-            numberOfPages={3}
-            onPageChange={(page) => setPage(page)}
-            label="1-2 of 6"
-            optionsPerPage={optionsPerPage}
-            itemsPerPage={itemsPerPage}
-            setItemsPerPage={setItemsPerPage}
-            showFastPagination
-            optionsLabel={"Rows per page"}
-          /> */}
         </DataTable>
-
         <View style={styles.btnContainer2}>
-          <TouchableOpacity
-            style={[styles.btn, { margin: 5 }]}
-            onPress={() => {}}
-          >
-            <Text style={styles.btnText}>등록</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.btn, { margin: 5 }]}
             onPress={() => {}}
@@ -119,16 +164,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    marginTop : 20,
-    // alignItems: "center",
-    // alignItems: "flex-end",
+    marginTop: 20,
     textAlign: "center",
-    marginLeft: 0,
-    // justifyContent: "center",
-    height: "55%",
+    height: "40%",
   },
   header: {
-    // height: "10%",
     padding: "3%",
     margin: 5,
     borderRadius: 15,
@@ -143,16 +183,28 @@ const styles = StyleSheet.create({
     borderColor: "#99c0d6",
   },
   text: {
-    // flex: 2,
-    marginRight : 10,
+    width: "8%",
+    marginRight: 10,
     fontSize: 16,
     fontWeight: "bold",
     color: "#000000",
   },
-  pickerText: {
-    fontSize: 25,
+  inputText: {
+    fontSize: 15,
+    width: "30%",
     alignItems: "center",
-    color: "#000000",
+    borderRadius: 50,
+    color: "black",
+    padding: 6,
+  },
+  pickerText: {
+    fontSize: 15,
+    width: "30%",
+    alignItems: "center",
+    borderRadius: 20,
+    borderColor: "#99c0d6",
+    backgroundColor: "#00000000",
+    color: "black",
   },
   btnContainer: {
     flex: 1,
@@ -174,7 +226,6 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "white",
     textAlignVertical: "center",
   },
   miniPicker: {
@@ -184,8 +235,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     alignSelf: "center",
-    marginRight: Platform.OS === 'android' ? "5%" : "5%",
-    margin: Platform.OS === 'android' ? 3 : 5,
+    marginLeft: Platform.OS === 'android' ? "5%" : "2%",
+    margin: Platform.OS === 'android' ? 3 : 0,
     width:  Platform.OS === 'android' ? 15: 18,
     height: Platform.OS === 'android' ? 15: 18,
     borderColor: "#004cff",

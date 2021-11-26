@@ -59,6 +59,25 @@ export const getClasslocationList = (data) => {
     });
 };
 
+// 관리자 기관의 강의 외부 장소 리스트(external) 가져오기
+export const getExternalList = (data) => {
+  console.log("강의 외부 장소 목록(external) 리스트 API 호출");
+  return client
+    .post(
+      "/api/class/external/list",
+      {
+        c_idx: data.c_idx, u_name: data.u_name, ag_idx: data.ag_idx
+      },
+    )
+    .then(function (response) {
+      console.log(response.data.data);
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 
 // 관리자 정보 및 기관 가져오기
 export const getAdmin = (data) => {

@@ -8,6 +8,8 @@ const SET_AGENCY = "agency/SET_AGENCY";
 const SET_CHECK = "class/SET_CHECK";
 const SET_VALUE = "class/SET_VALUE";
 const GET_CLASSLOCATION = "class/GET_CLASSLOCATION";
+const SELECT_CLASS = "class/SELECT_CLASS";
+const SELECT_EXTERNAL = "class/SELECT_EXTERNAL";
 
 const initialState = {
   stlist: [],
@@ -15,14 +17,7 @@ const initialState = {
   ctlist: [],
   agency: {
     u_idx: 0,
-    u_phone: "",
-    u_pw: "",
-    u_email: "",
-    u_alarm: 0, // tinyint
     u_name: "",
-    u_accept: 1, // tinyint
-    u_auth: 0,
-    c_idx: 0,
     ag_idx: 0,
     ag_name: "",
   },
@@ -34,6 +29,9 @@ const initialState = {
     ag_idx: 0,
   },
   loclist: [],
+  externalist: [],
+  selectClass: 0,
+  selectStudent: '',
 };
 
 export const getClass = createAction(GET_CLASS, (clist) => clist);
@@ -47,6 +45,8 @@ export const getClasslocation = createAction(
   GET_CLASSLOCATION,
   (loclist) => loclist
 );
+export const setSelectClass = createAction(SELECT_CLASS, (selectClass) => selectClass);
+export const setExternal = createAction(SELECT_EXTERNAL, (externalist) => externalist);
 
 const classes = handleActions(
   {
@@ -81,6 +81,14 @@ const classes = handleActions(
     [SET_VALUE]: (state, { payload: classid }) => ({
       ...state,
       classid,
+    }),
+    [SELECT_CLASS]: (state, { payload: selectClass }) => ({
+      ...state,
+      selectClass,
+    }),
+    [SELECT_EXTERNAL]: (state, { payload: externalist }) => ({
+      ...state,
+      externalist,
     }),
   },
   initialState

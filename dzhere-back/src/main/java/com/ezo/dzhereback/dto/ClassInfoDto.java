@@ -1,4 +1,5 @@
 package com.ezo.dzhereback.dto;
+import com.ezo.dzhereback.domain.ClassInfo;
 
 import lombok.*;
 
@@ -16,4 +17,12 @@ public class ClassInfoDto {
         this.c_name = c_name;
         this.ag_idx = ag_idx;
     }
+    
+    public ClassInfo toEntity() {
+		return ClassInfo.builder()
+				.c_idx(c_idx)
+				.c_name(c_name)
+				.ag_idx(ag_idx)
+				.build();
+	}
 }
