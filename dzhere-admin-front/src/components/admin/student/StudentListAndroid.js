@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import Checkbox from 'expo-checkbox';
-import { onChange } from 'react-native-reanimated';
+import CheckBoxIcon from '../../../containers/admin/student/CheckBoxContainer'
 
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
                                       onSearch, studentList, loadingAgName, loadingStudentList,
@@ -98,11 +97,9 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               filterList.map(s => (              
               <DataTable.Row>
                 <DataTable.Cell>
-                <Checkbox 
+                <CheckBoxIcon 
+                  item={s.u_idx}
                   style={styles.checkbox} 
-                  value={isChecked} 
-                  onValueChange={setChecked} 
-                  color={isChecked ? '#4630EB' : undefined}
                   />
                 </DataTable.Cell>
                 <DataTable.Cell>{s.u_name}</DataTable.Cell>
@@ -122,11 +119,9 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
                studentList.map(s => (              
               <DataTable.Row>
                 <DataTable.Cell>
-                 <Checkbox 
+                 <CheckBoxIcon 
+                  item={s}
                   style={styles.checkbox} 
-                  value={isChecked} 
-                  onValueChange={setChecked} 
-                  color={isChecked ? '#4630EB' : undefined}
                   />
                 </DataTable.Cell>
                 <DataTable.Cell>{s.u_name}</DataTable.Cell>

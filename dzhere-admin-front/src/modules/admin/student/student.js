@@ -18,6 +18,9 @@ const GET_STUDENT_LIST_FAILURE = 'student/GET_STUDENT_LIST_FAILURE'
 
 const SET_FILTER_LIST = 'student/SET_FILTER_LIST'
 
+const SET_CHECK = "student/SET_CHECK";
+const SET_VALUE = "student/SET_VALUE";
+
 // thunk 함수 생성
 // thunk 함수 내부에서는 시작할 때, 성공했을 때, 실패했을 때 다른 액션을 디스패치한다.
 
@@ -25,6 +28,8 @@ export const getAgName = createRequestThunk(GET_AG_NAME, api.getAgName);
 export const getClassList = createRequestThunk(GET_CLASS_LIST, api.getClassList);
 export const getStudentList = createRequestThunk(GET_STUDENT_LIST, api.getStudentList);
 export const setFilterList = createAction(SET_FILTER_LIST, filterList => filterList);
+export const setCheck = createAction(SET_CHECK, checkid => checkid);
+export const setValue = createAction(SET_VALUE, uid => uid);
   
 // 초기 상태를 선언한다
 // 요청의 로딩 중 상태는 loading이라는 객체에서 관리한다.
@@ -35,6 +40,8 @@ const initialState = {
   studentList: [],
   filterList: [],
   loadingFilterList: true,
+  uid: 0,
+  checkid: false,
 };
 
 const student = handleActions(
@@ -65,9 +72,16 @@ const student = handleActions(
       filterList,
       loadingFilterList: false,
     }),
+    [SET_CHECK]: (state, { payload: checkid }) => ({
+      ...state,
+      checkid,
+    }),
+    [SET_VALUE]: (state, { payload: uid }) => ({
+      ...state,
+      uid,
+    }),
   },
   initialState
 );
 
 export default student;
-
