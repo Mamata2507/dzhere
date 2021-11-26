@@ -166,7 +166,7 @@ const RegisterForm = ({ navigation, route }) => {
 
             const strError = '필수항목 미입력\n: '+arrayError.toString();
 
-            setError1(null);
+            // setError1(null);
             setError2(null);
             setError3(null);
             setError4(null);
@@ -189,7 +189,7 @@ const RegisterForm = ({ navigation, route }) => {
             dispatch(changeField({ form: 'register', key: 'password', value: '' }));
             dispatch(changeField({ form: 'register', key: 'passwordConfirm', value: '' }));
             
-            setError1(null);
+            // setError1(null);
             setError2(null);
             setError3(null);
             setError4(null);

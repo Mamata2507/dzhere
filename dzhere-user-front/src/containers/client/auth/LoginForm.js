@@ -5,6 +5,8 @@ import { changeField, initializeForm, login, loginError, restoreInfo, } from '..
 import AuthForm from '../../../components/client/auth/AuthForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiLogin } from '../../../lib/api/auth';
+import client from '../../../lib/api/client';
+import { BackHandler, Alert } from 'react-native';
 
 const LoginForm = ({ navigation, route }) => {
     console.log("LoginForm");
@@ -43,10 +45,26 @@ const LoginForm = ({ navigation, route }) => {
       e.preventDefault();
 
       const { userPhone, password } = form;
-      
+
       console.log("LoginForm | onPress | 아이디, 비밀번호 : ", {userPhone,password,});
+
       
-      apiLogin({ userPhone, password })
+      if(userPhone === ''){
+        setError('휴대폰 번호를 입력해주세요.');
+        return;
+      }
+      else if(userPhone.length < 11){
+        setError('휴대폰 번호가 올바르지 않습니다.');
+        return;
+      }
+      else if(password === ''){
+        setError('비밀번호를 입력해주세요.');
+        return;
+      }
+
+      else{
+        setError(null);
+        apiLogin({ userPhone, password })
         .then(async (res) => {
           if (res.result) {
             console.log("==================res.result==================", res.result.userInfo);
@@ -57,6 +75,7 @@ const LoginForm = ({ navigation, route }) => {
             } catch (e) {
               console.log("Storage is not working : ", e);
             }
+            
           } else {
             console.log(res.error);
             dispatch(loginError(res.error));
@@ -65,10 +84,12 @@ const LoginForm = ({ navigation, route }) => {
         .catch((e) => {
           console.log("apiLogin.catch - e:", e);
         });
-      console.log("LoginForm | onPress | After dispatch(login)");
-      console.log("userInfo : ", userInfo);
-      console.log("userToken : ", userInfo.token);
-      console.log("authError : ", authError);
+
+        console.log("LoginForm | onPress | After dispatch(login)");
+        console.log("userInfo : ", userInfo);
+        console.log("userToken : ", userInfo.token);
+        console.log("authError : ", authError);
+      }
     };
 
     useEffect(() => {
@@ -78,6 +99,7 @@ const LoginForm = ({ navigation, route }) => {
         console.log(authError);
 
         const authErrorDetail = String(authError).split("status code ")[1];
+        const isNetworkError = String(authError).indexOf('Network Error');
 
         console.log("authErrorDetail : ", authErrorDetail);
 
@@ -98,6 +120,11 @@ const LoginForm = ({ navigation, route }) => {
           setError("로그인 실패 : 원인 불명(500)");
           return;
         }
+        else if (authErrorDetail === undefined && isNetworkError !== -1){
+          console.log('네트워크 에러 : WIFI 연결을 확인해주세요.');
+          setError("네트워크 에러 : WIFI 연결을 확인해주세요.");
+          return;
+        }
       }
 
       // userInfo(유저 정보) state 값이 null이 아니면 로그인 처리 및 ClientDrawer-출석 페이지로 자동 이동
@@ -107,6 +134,9 @@ const LoginForm = ({ navigation, route }) => {
 
         dispatch(changeField({ form: 'login', key: 'userPhone', value: '' }));
         dispatch(changeField({ form: 'login', key: 'password', value: '' }));
+
+        client.defaults.headers.common['Authorization'] = 'Bearer ' + userInfo.token;
+
         navigation.navigate("ClientDrawer");
       }
     }, [userInfo, authError]);
@@ -114,6 +144,8 @@ const LoginForm = ({ navigation, route }) => {
     // 앱 실행마다 처음 한번 Storage에 저장된 userInfo(유저 정보)가 있는지 검사하고,
     // 있을 경우, state : userInfo  값을 storage : userInfo 값으로 초기화 해준다.
     useEffect(() => {
+      setError(null);
+
       const grepTokenAsync = async () => {
         try {
           let userInfo;
@@ -126,6 +158,7 @@ const LoginForm = ({ navigation, route }) => {
           userInfo = JSON.parse(userInfo);
           if (userInfo !== null && userInfo !== undefined && userInfo !== '' && userInfo !== 'null') {
             console.log("restore 발생");
+            console.log('헤더가 박혀있나? : ', client.defaults.headers.common['Authorization']);
             dispatch(restoreInfo(userInfo));
           }
         } catch (e) {
@@ -133,6 +166,25 @@ const LoginForm = ({ navigation, route }) => {
         }
       };
       grepTokenAsync();
+    }, []);
+
+    // 뒤로가기 앱 종료
+    const backAction = () => {
+      Alert.alert('잠깐!', 'App을 정말로 종료 하시겠어요?', [
+        {
+          text: '아니오',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: '네', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    useEffect(() => {
+      BackHandler.addEventListener('hardwareBackPress', backAction);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', backAction);
     }, []);
 
     return (

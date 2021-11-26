@@ -2,17 +2,14 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import * as React from 'react';
-import { Button, View, Text, SafeAreaView, Platform } from 'react-native';
+import { useEffect } from 'react';
+import { View, Text, SafeAreaView, Alert, BackHandler } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { AuthContext } from '../../../App';
-import JWT from 'expo-jwt';
-import jwt_decode from "jwt-decode";
-import { logout, restoreInfo } from '../../../modules/client/auth/auth';
+import { logout } from '../../../modules/client/auth/auth';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import client from '../../../lib/api/client';
-import axios from 'axios';
 
 const check_index = ({ navigation, route }) => {
   // console.log(navigation);
@@ -28,9 +25,26 @@ const check_index = ({ navigation, route }) => {
 
   console.log('check_index 페이지에서 정보 받은 결과 : ', userInfo.token, typeof(userInfo.token));
 
-
-
   // console.log('check_index 페이지에서 유저 토큰 받은 결과 : ', userToken);
+
+  // 뒤로가기 앱 종료
+  const backAction = () => {
+    Alert.alert('잠깐!', 'App을 정말로 종료 하시겠어요?', [
+      {
+        text: '아니오',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      { text: '네', onPress: () => BackHandler.exitApp() },
+    ]);
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flex: 1, padding: 16 }}>
@@ -68,7 +82,9 @@ const check_index = ({ navigation, route }) => {
                 //   // await AsyncStorage.setItem('userInfo', '');
                 // }
                 dispatch(logout());
-                console.log('로그아웃. Storage 초기화.');
+                client.defaults.headers.common['Authorization'] = null;
+                console.log('로그아웃. Storage 초기화. client 헤더 초기화');
+                
                 navigation.navigate("UserLoginPage");
                 // navigation.reset({
                 //   index: 0,
@@ -85,6 +101,13 @@ const check_index = ({ navigation, route }) => {
             }}
           >
             <Text>로그아웃</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            // style={styles.signupBtn}
+            onPress={() => client.get('api/user/test')}
+          >
+            <Text>테스트</Text>
           </TouchableOpacity>
           {/* <Button
             onPress={() => navigation.navigate('SecondPage')}
