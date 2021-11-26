@@ -5,7 +5,8 @@ import Checkbox from 'expo-checkbox';
 import { onChange } from 'react-native-reanimated';
 
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
-                                      onSearch, studentList, loadingAgName, loadingStudentList }) => {
+                                      onSearch, studentList, loadingAgName, loadingStudentList,
+                                      selectedAccept, setSelectedAccept}) => {
 
   // 버튼 이벤트
   const onPress = () => {
@@ -63,15 +64,15 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
             </Picker> 
         </View>
         <View style={styles.btnContainer}>
-            {/* <Picker
+            <Picker
             selectedValue={selectedAccept}
             onValueChange={(itemValue, itemIndex) => setSelectedAccept(itemValue)}
             style={styles.miniPicker}
             >
-            <Picker.Item label="가입승인상태" value="all"/>
-            <Picker.Item label="승인" value="accept" />
-            <Picker.Item label="미승인" value="hold" />
-            </Picker> */}
+            <Picker.Item label='가입상태' value="2" />
+            <Picker.Item label='승인' value="1" />
+            <Picker.Item label='미승인' value="0" />
+            </Picker>
           <TouchableOpacity
             style={styles.btn}
             onPress={onSearch}
@@ -216,7 +217,7 @@ btnText: {
     textAlignVertical: "center",
 },
 miniPicker: {
-    width:'50%',
+    width:'45%',
     height: 30,
     color: '#004cff',
     

@@ -4,7 +4,8 @@ import { StudentListAndroid } from './StudentListAndroid'
 import { StudentListWeb } from './StudentListWeb'
 
 export const Contents = ({agName, classList, selectedClass, setSelectedClass, 
-                          onSearch, studentList, loadingAgName, loadingStudentList}) => {
+                          onSearch, studentList, loadingAgName, loadingStudentList,
+                          selectedAccept, setSelectedAccept, pickerActivity}) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
     agName={agName}
@@ -15,6 +16,9 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
     studentList={studentList}
     loadingAgName={loadingAgName}
     loadingStudentList={loadingStudentList}
+    selectedAccept={selectedAccept}
+    setSelectedAccept={setSelectedAccept}
+    pickerActivity={pickerActivity}
   /> 
   : 
   <StudentListWeb 

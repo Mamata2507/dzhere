@@ -11,6 +11,8 @@ const StudentListContainer = () => {
   const u_phone = '01023454710'
 
   const [selectedClass, setSelectedClass] = useState(0);
+  const [selectedAccept, setSelectedAccept] = useState(2);
+  const [filterStudentList, setFilterStudentList] = useState([]);
 
   const { agName, classList, studentList, loadingAgName, loadingStudentList } = useSelector(({ student, loading }) => ({
     agName: student.agName,
@@ -20,19 +22,25 @@ const StudentListContainer = () => {
     loadingStudentList: loading['student/GET_STUDENT_LIST']
   }))
 
-
   useEffect(() => {
     dispatch(getAgName(u_phone));
     dispatch(getClassList(u_phone));
   }, []);
 
+  useEffect(() => {
+    if(!loadingStudentList && selectedAccept!==2){
+        // alert(selectedAccept)
+        const tempArr = studentList;
+        const tempArr2 = tempArr.filter(item => {return item.u_accept == selectedAccept});
+        console.log(tempArr2[0]);
+      }
+    },[selectedAccept])
+
   const onSearch = () => {
-      //Alert.alert(`${selectedClass}`);
       // Alert.alert(`${agName.ag_idx}`);
       let agIdx = agName.ag_idx
       // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+agIdx);
       dispatch(getStudentList({agIdx, selectedClass}))
-      Alert.alert('검색완료');
   }
 
   return (
@@ -45,6 +53,9 @@ const StudentListContainer = () => {
          studentList={studentList}
          loadingAgName={loadingAgName}
          loadingStudentList={loadingStudentList}
+         selectedAccept={selectedAccept}
+         setSelectedAccept={setSelectedAccept}
+        //  pickerActivity={pickerActivity}
       />
   );
 };
