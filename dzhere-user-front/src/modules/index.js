@@ -1,23 +1,14 @@
-import { combineReducers } from 'redux';
-// // import { all } from 'redux-saga/effects';
-// // import auth, { authSaga } from './auth/index';
-//import {check} from './check/check';
-//import {external} from './external/external';
-import {myinfo} from './client/myinfo/myInfo'
-// import list from './list/index';
-// import myInfo from './myinfo/index';
+import { combineReducers } from "redux";
+import auth from "./auth/auth";
+// import check from './check/check';
+import external from './external/external';
+import myinfo from './myinfo/myInfo'
 
-// // const rootReducer = combineReducers({
-// //   auth,
-// //   check,
-// //   external,
-// //   list,
-// //   myInfo,
-// // });
-export default rootReducer = combineReducers({
-  //external,
+const rootReducer = combineReducers({
+  auth,
+  external,
+  // check,
   myinfo,
 });
-// // export function* rootSaga() {
-// //   yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga()]);
-// // }
+
+export default rootReducer;

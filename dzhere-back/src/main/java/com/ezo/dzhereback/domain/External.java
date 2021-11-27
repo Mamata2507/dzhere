@@ -1,8 +1,9 @@
 package com.ezo.dzhereback.domain;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
+@Data @Slf4j
 @Getter @Setter
 @NoArgsConstructor
 public class External {
@@ -13,9 +14,10 @@ public class External {
     private int e_accept; // tinyint
     private int u_idx;
     private int c_idx;
+    private String u_phone;
 
     @Builder
-    public External(int e_idx, String e_name, String e_ssid, String e_bssid, int e_accept, int u_idx, int c_idx) {
+    public External(int e_idx, String e_name, String e_ssid, String e_bssid, int e_accept, int u_idx, int c_idx, String u_phone) {
         this.e_idx = e_idx;
         this.e_name = e_name;
         this.e_ssid = e_ssid;
@@ -23,5 +25,6 @@ public class External {
         this.e_accept = e_accept;
         this.u_idx = u_idx;
         this.c_idx = c_idx;
+        this.u_phone = u_phone;
     }
 }

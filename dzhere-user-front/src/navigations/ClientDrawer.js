@@ -17,7 +17,7 @@ const ClientDrawer = () => {
           component={firstScreenStack}
         />
         <Drawer.Screen
-          name="LisPage"
+          name="ListPage"
           options={{ drawerLabel: '지난 출석 보기' }}
           component={secondScreenStack}
         />

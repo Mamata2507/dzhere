@@ -38,6 +38,7 @@ public class ExternalDto {
 				.e_accept(e_accept)
 				.u_idx(u_idx)
 				.c_idx(c_idx)
+				.u_phone(u_phone)
 				.build();
 	}
 

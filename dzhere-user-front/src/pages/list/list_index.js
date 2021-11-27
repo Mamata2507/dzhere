@@ -1,0 +1,39 @@
+import * as React from 'react';
+import {View, Text, SafeAreaView } from 'react-native';
+
+const list_index = () => {
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ flex: 1, padding: 16 }}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: 25,
+              textAlign: 'center',
+              marginBottom: 16,
+            }}>
+            지난 출석 보기
+          </Text>
+          {/* <Button
+            title="오늘의 출석"
+            onPress={() => navigation.navigate('CheckPage')}
+          />
+          <Button
+            title="Go to Third Page"
+            onPress={() => navigation.navigate('ThirdPage')}
+          /> */}
+        </View>
+        <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
+          Custom React Navigate Drawer
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default list_index;

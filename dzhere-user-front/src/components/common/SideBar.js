@@ -4,21 +4,19 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import menubar from "../../../assets/menubar.png";
-import CheckPage from "../../pages/client/check/check_index";
-import ListPage from "../../pages/client/list/list_index";
-import ExternalPage from "../../pages/client/external/ExternalPage";
-import ExternalForm from "../../pages/client/external/ExternalForm";
-import MyPage from '../../pages/client/myinfo/MyInfo';
-import MyPageEmailUpdate from '../../pages/client/myinfo/MyInfoEmailUpdate';
-import MyPagePassUpdate from '../../pages/client/myinfo/MyInfoPassUpdate';
+import CheckPage from "../../pages/check/check_index";
+import ListPage from "../../pages/list/list_index";
+import ExternalPage from "../../pages/external/ExternalPage";
+import ExternalForm from "../../pages/external/ExternalForm";
+import MyPage from '../../pages/myinfo/MyInfo';
+import MyPageEmailUpdate from '../../pages/myinfo/MyInfoEmailUpdate';
+import MyPagePassUpdate from '../../pages/myinfo/MyInfoPassUpdate';
 
 export const Stack = createStackNavigator();
 export const Drawer = createDrawerNavigator();
 
 export const NavigationDrawerStructure = (props) => {
-  //Structure for the navigatin Drawer
   function toggleDrawer() {
-    //Props to open/close the drawer
     props.navigationProps.toggleDrawer();
   };
 
@@ -95,7 +93,7 @@ export const thirdScreenStack = ({ navigation }) => {
         component={ExternalForm}
         options={{
           title: "",
-          headerShown: true,
+          headerShown: true, // 뒤로가기 버튼
           headerTransparent: true,
         }}
       />

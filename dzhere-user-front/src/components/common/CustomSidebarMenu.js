@@ -1,19 +1,17 @@
-import image from "../../../assets/logo.png";
-import React from "react";
+import image from '../../../assets/logo.png';
+import React from 'react';
 import {
   SafeAreaView,
-  View,
   StyleSheet,
   Image,
   Text,
-  Linking,
-} from "react-native";
+} from 'react-native';
 
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from "@react-navigation/drawer";
+} from '@react-navigation/drawer';
 
 const CustomSidebarMenu = (props) => {
   return (
