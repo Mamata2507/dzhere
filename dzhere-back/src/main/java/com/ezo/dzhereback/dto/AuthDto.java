@@ -9,26 +9,26 @@ import lombok.extern.slf4j.Slf4j;
 @Getter @Setter
 public class AuthDto {
     private String token;
-    private int u_id;
+    private int u_idx;
     private String userPhone;
     private String password;
-    private String u_email;
+    private String userEmail;
 
     public Member toEntity(){
         return Member.builder()
-                .u_id(u_id)
+                .u_id(u_idx)
                 .u_phone(userPhone)
                 .u_pw(password)
-                .u_email(u_email)
+                .u_email(userEmail)
                 .build();
     }
 
     @Builder
-    public AuthDto(String token, int u_id, String u_phone, String u_pw, String u_email) {
+    public AuthDto(String token, int u_idx, String userPhone, String password, String userEmail) {
         this.token = token;
-        this.u_id = u_id;
-        this.userPhone = u_phone;
-        this.password = u_pw;
-        this.u_email = u_email;
+        this.u_idx = u_idx;
+        this.userPhone = userPhone;
+        this.password = password;
+        this.userEmail = userEmail;
     }
 }

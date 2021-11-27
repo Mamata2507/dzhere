@@ -60,7 +60,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.signupBtn}
-            onPress={() => client.get('api/user/test')}
+            onPress={() => client.get("api/user/test")}
           >
             <Text style={styles.text}>테스트</Text>
           </TouchableOpacity>

@@ -40,61 +40,60 @@ const LoginForm = ({ navigation, route }) => {
       );
     };
 
-    // 버튼 onPress 이벤트 핸들러
+    // 로그인 버튼(onPress) 이벤트 핸들러
     const onPress = (e) => {
+      console.log('어디지3');
       e.preventDefault();
-
       const { userPhone, password } = form;
+      console.log("LoginForm | onPress | 아이디, 비밀번호 : ", {
+        userPhone,
+        password,
+      });
 
-      console.log("LoginForm | onPress | 아이디, 비밀번호 : ", {userPhone,password,});
-
-      
-      if(userPhone === ''){
-        setError('휴대폰 번호를 입력해주세요.');
+      if (userPhone === "") {
+        setError("휴대폰 번호를 입력해주세요.");
         return;
-      }
-      else if(userPhone.length < 11){
-        setError('휴대폰 번호가 올바르지 않습니다.');
+      } else if (userPhone.length < 11) {
+        setError("휴대폰 번호가 올바르지 않습니다.");
         return;
-      }
-      else if(password === ''){
-        setError('비밀번호를 입력해주세요.');
+      } else if (password === "") {
+        setError("비밀번호를 입력해주세요.");
         return;
-      }
-
-      else{
+      } else {
         setError(null);
         apiLogin({ userPhone, password })
-        .then(async (res) => {
-          if (res.result) {
-            console.log("==================res.result==================", res.result.userInfo);
-            dispatch(login(res.userInfo));
-            try {
-              await AsyncStorage.setItem("userInfo",JSON.stringify(res.userInfo));
-
-            } catch (e) {
-              console.log("Storage is not working : ", e);
+          .then(async (res) => {
+            if (res.result) {
+              console.log(
+                "==================res.result==================",
+                res.result.userInfo
+              );
+              dispatch(login(res.userInfo));
+              try {
+                await AsyncStorage.setItem(
+                  "userInfo",
+                  JSON.stringify(res.userInfo)
+                );
+              } catch (e) {
+                console.log("Storage is not working : ", e);
+              }
+            } else {
+              console.log(res.error);
+              dispatch(loginError(res.error));
             }
-            
-          } else {
-            console.log(res.error);
-            dispatch(loginError(res.error));
-          }
-        })
-        .catch((e) => {
-          console.log("apiLogin.catch - e:", e);
-        });
-
-        console.log("LoginForm | onPress | After dispatch(login)");
-        console.log("userInfo : ", userInfo);
-        console.log("userToken : ", userInfo.token);
-        console.log("authError : ", authError);
+          })
+          .catch((e) => {
+            console.log("apiLogin.catch - e:", e);
+          });
       }
     };
 
+    // 로그인 실패 / 성공 처리
     useEffect(() => {
+      console.log('어디지2');
       // 로그인 시도에서 오류가 있는지  
       if (authError !== "") {
+        console.log('어디지3');
         console.log("로그인 실패");
         console.log(authError);
 
@@ -127,45 +126,48 @@ const LoginForm = ({ navigation, route }) => {
         }
       }
 
+      console.log('어디지4');
       // userInfo(유저 정보) state 값이 null이 아니면 로그인 처리 및 ClientDrawer-출석 페이지로 자동 이동
       if (String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
         console.log("로그인 성공");
-        console.log("로그인 유저 정보 : ", userInfo, typeof userInfo);
+        console.log("로그인 유저 정보 : ", userInfo, typeof(userInfo));
 
         dispatch(changeField({ form: 'login', key: 'userPhone', value: '' }));
         dispatch(changeField({ form: 'login', key: 'password', value: '' }));
-
+        console.log('어디지2');
         client.defaults.headers.common['Authorization'] = 'Bearer ' + userInfo.token;
 
         navigation.navigate("ClientDrawer");
       }
-    }, [userInfo, authError]);
+      console.log('어디지5');
+    }, [userInfo, authError, dispatch]);
 
     // 앱 실행마다 처음 한번 Storage에 저장된 userInfo(유저 정보)가 있는지 검사하고,
     // 있을 경우, state : userInfo  값을 storage : userInfo 값으로 초기화 해준다.
     useEffect(() => {
+      console.log('어디지1');
       setError(null);
 
-      const grepTokenAsync = async () => {
+      const grepUserInfoAsync = async () => {
         try {
           let userInfo;
 
           userInfo = await AsyncStorage.getItem("userInfo");
 
-          console.log("grepTokenAsync success");
-          console.log("grepTokenAsync success-userInfo : ", JSON.parse(userInfo));
+          console.log("grepUserInfoAsync success");
+          console.log("grepUserInfoAsync success-userInfo : ", JSON.parse(userInfo));
 
           userInfo = JSON.parse(userInfo);
           if (userInfo !== null && userInfo !== undefined && userInfo !== '' && userInfo !== 'null') {
-            console.log("restore 발생");
-            console.log('헤더가 박혀있나? : ', client.defaults.headers.common['Authorization']);
+            console.log("Restore 발생");
+            console.log('Restore 헤더 정보 : ', client.defaults.headers.common['Authorization']);
             dispatch(restoreInfo(userInfo));
           }
         } catch (e) {
-          console.log("grepTokenAsync fail : ", e);
+          console.log("grepUserInfoAsync fail : ", e);
         }
       };
-      grepTokenAsync();
+      grepUserInfoAsync();
     }, []);
 
     // 뒤로가기 앱 종료
@@ -180,10 +182,8 @@ const LoginForm = ({ navigation, route }) => {
       ]);
       return true;
     };
-
     useEffect(() => {
       BackHandler.addEventListener('hardwareBackPress', backAction);
-
       return () => BackHandler.removeEventListener('hardwareBackPress', backAction);
     }, []);
 

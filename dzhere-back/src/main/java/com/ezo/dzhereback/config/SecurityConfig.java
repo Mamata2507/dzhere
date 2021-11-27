@@ -18,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
+@Configuration
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthService authService;
@@ -28,7 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.authService = authService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
-
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -50,17 +50,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/").permitAll()
-                .antMatchers("/api/kre").permitAll()
                 .antMatchers("/api/user/register").permitAll()
                 .antMatchers("/api/user/register/**").permitAll()
                 .antMatchers("/api/user/login").permitAll()
                 .antMatchers("/api/admin/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
-                .deleteCookies("JSESSIONID")    // 로그아웃 시 쿠키를 제거 : 로그아웃 했는데 로그인이 되어있다거나 하는 예외 상황 발생하지 않도록.
-                .invalidateHttpSession(true) ;  // 로그아웃 처리에 대한 spring security와의 url 매핑;
+                .antMatchers("/api/kre").hasAnyRole("STUDENT", "TEACHER")
+                .antMatchers("/api/user/**").hasRole("STUDENT")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+//                .deleteCookies("JSESSIONID")    // 로그아웃 시 쿠키를 제거 : 로그아웃 했는데 로그인이 되어있다거나 하는 예외 상황 발생하지 않도록.
+//                .invalidateHttpSession(true)   // 로그아웃 처리에 대한 spring security와의 url 매핑;
+//                .clearAuthentication(true);
 
         // filter 등록.
         // 매 리퀘스트마다
@@ -71,15 +74,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 CorsFilter.class
         );
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-
 }

@@ -2,12 +2,9 @@ package com.ezo.dzhereback.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,32 +31,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.tokenProvider = tokenProvider;
     }
 
-    private String parseBearerToken(HttpServletRequest request){
+    private String parseBearerToken(HttpServletRequest request) {
         // HTTP 요청의 헤더를 파싱해 Bearer 토큰을 리턴
         String bearerToken = request.getHeader("Authorization");
         log.info(bearerToken);
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
-        }
-        else return null;
+        } else return null;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try{
+        try {
             // Client 요청으로부터 토큰을 가져온다.
             String token = parseBearerToken(request);
             log.info("Filter is running");
             log.info(token);
             // 토큰을 검사한다.
-            if(token != null && !token.equalsIgnoreCase("null")){
-                // userId 가져오기. 위조 된 경우 예외 처리
-//                String userId = tokenProvider.validateAndGetUserId(token);
-                String headerSubject = tokenProvider.validateAndGetUserId(token);
+            if (token != null && !token.equalsIgnoreCase("null")) {
+                // userId, 권한 가져오기. 위조 된 경우 예외 처리
+                String headerSubject = tokenProvider.validateAndGetUserIdAndUserAuth(token);
+
+                log.info("헤더 서브젝트 : " + headerSubject);
                 String userId = headerSubject.split(",")[0];
                 String userAuth = headerSubject.split(",")[1];
                 log.info("Authenticated user ID : " + userId);
-                log.info("User Auth : ", userAuth);
+                log.info("User Auth : " + userAuth);
 
                 // 인증 완료. SecurityContextHolder에 등록해야 인증된 사용자로 인지.
                 List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
@@ -74,11 +71,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 securityContext.setAuthentication(authentication);
                 SecurityContextHolder.setContext(securityContext);
             }
-        }catch (Exception e){
-            log.error("Could not set user authentication in security context", e);
-            throw new RuntimeException("Jwt 필터 - 로그인 에러 : 토큰 불일치");
+        } catch (Exception e) {
+            /**
+             *      토큰 위조 : SignatureException
+             *      만료 : ExpiredJwtException
+             **/
+
+            log.error("Could not set user authentication in security context\n" + e);
+            log.info("에러 정보 : " + e.getClass().getSimpleName());
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
 }

@@ -29,8 +29,9 @@ public class TokenProvider {
 
     public String create(Member member){
         String u_auth = (authMapper.findAuthByPhone(member.getU_phone()) == 0) ? Role.ADMIN.getValue() : (authMapper.findAuthByPhone(member.getU_phone()) == 1) ? Role.STUDENT.getValue() : Role.TEACHER.getValue();
+        log.info("생성 토큰에 넣을 u_auth : " + u_auth);
         Date expiryDate = Date.from(
-                Instant.now().plus(1, ChronoUnit.DAYS));
+                Instant.now().plus(30, ChronoUnit.DAYS));
 
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
@@ -42,7 +43,7 @@ public class TokenProvider {
     }
 
 
-    public String validateAndGetUserId(String token){
+    public String validateAndGetUserIdAndUserAuth(String token) {
         /**
          * 토큰 디코딩 & 파싱 & 위조 여부 검사
          * parseClaimsJws메서드가 Base 64로 디코딩 및 파싱.

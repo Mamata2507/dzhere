@@ -8,14 +8,14 @@ export const apiLogin = ({ userPhone, password }) => {
 
   return client.post('/api/user/login', { userPhone, password })
   .then(res => {
-    console.log('axios 로그인 요청 성공 정보 : ', res.data);
+    console.log('axios 로그인 요청 성공 정보 : \n', res.data);
     return {
       result : true,
       userInfo : res.data,
     }
   })
   .catch(e => {
-    console.log('axios 로그인 요청 실패 정보 : ', e);
+    console.log('axios 로그인 요청 실패 정보 : \n', e);
     return {
       result : false,
       error : e,
@@ -31,14 +31,14 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
 
   return client.post('/api/user/register', { userPhone, password, userEmail })
   .then(res => {
-    console.log('axios 회원가입 요청 성공 정보 : ', res.data);
+    console.log('axios 회원가입 요청 성공 정보 : \n', res.data);
     return {
       result : true,
       userInfo : res.data,
     }
   })
   .catch(e => {
-    console.log('axios 회원가입 요청 실패 정보 : ', e);
+    console.log('axios 회원가입 요청 실패 정보 : \n', e);
     return {
       result : false,
       error : e,
@@ -46,14 +46,26 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
   });
 }
   
+// 로그아웃
+export const apiLogout = () => {
+  return client.post('api/logout')
+  .then(res => {
+    console.log('axios 로그아웃 요청 성공 정보 : \n', res.data);
+    return {
+      result : true,
+      message : res.data,
+    }
+  })
+  .catch(e => {
+    console.log('axios 로그아웃 요청 실패 정보 : \n', e);
+    return {
+      result : false,
+      message : '로그아웃 실패',
+    }
+  });
+}
 
 // 비밀번호 찾기
 export const findPassword = ({userEmail}) =>
   client.post('/api/user/find-password', {userEmail, });
 
-// export const logout = () => {
-//   if(Platform.OS == 'web')
-//     localStorage.removeItem('auth')
-//   if(Platform.OS == 'android')
-//     asyncStorage.removeItem('auth')
-// }

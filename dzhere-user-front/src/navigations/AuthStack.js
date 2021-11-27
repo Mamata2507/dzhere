@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import Splash from "../components/common/Splash"
 
 const Stack = createStackNavigator();
+
 const AuthStack = () => {
   console.log("AuthStack");
   const { isSignout } = useSelector(({ auth }) => ({

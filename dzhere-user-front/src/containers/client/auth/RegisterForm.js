@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../../modules/client/auth/auth';
 import AuthForm from '../../../components/client/auth/AuthForm';
 import { apiRegister } from '../../../lib/api/auth';
+import { Alert } from 'react-native';
 
 const RegisterForm = ({ navigation, route }) => {
     // const [error1, setError1] = useState(null);
@@ -23,7 +24,7 @@ const RegisterForm = ({ navigation, route }) => {
     // 컴포넌트 처음 렌더링 시, 변수 form의 값 초기화
     // 두 번째 매개변수 배열 : 무한루프 방지.
     useEffect(() => {
-        dispatch(initializeForm('register'))
+        dispatch(initializeForm('register'));
     }, [dispatch]); 
 
     // TextInput 값 변경 이벤트 핸들러
@@ -218,6 +219,12 @@ const RegisterForm = ({ navigation, route }) => {
     };
 
     // 회원가입 성공 / 실패 처리
+    const registerSuccessAlert = () => {
+        Alert.alert('알림', '정상적으로 회원가입 되었습니다.', [
+          { text: '확인', onPress: () => navigation.navigate("UserLoginPage") },
+        ]);
+        return true;
+    };
     useEffect(() => {
         if(authError !== ''){
             console.log('회원가입 실패');
@@ -254,26 +261,10 @@ const RegisterForm = ({ navigation, route }) => {
             console.log('회원가입 성공');
             console.log("회원가입 유저 정보 : ", userInfo, typeof userInfo);
 
-            dispatch(changeField({ form: 'register', key: 'userPhone', value: '' }));
-            dispatch(changeField({ form: 'register', key: 'password', value: '' }));
-            dispatch(changeField({ form: 'register', key: 'passwordConfirm', value: '' }));
-            dispatch(changeField({ form: 'register', key: 'userEmail', value: '' }));
-            dispatch(changeField({ form: 'register', key: 'isChecked1', value: false }));
-            dispatch(changeField({ form: 'register', key: 'isChecked2', value: false }));
-            dispatch(changeField({ form: 'register', key: 'isChecked3', value: false }));
+            dispatch(initializeForm('register'));
 
-            alert('정상적으로 회원가입 되었습니다.')
+            registerSuccessAlert();
 
-            navigation.navigate("UserLoginPage");
-
-            // navigation.reset({
-            //     index: 0,
-            //     routes: [
-            //         {
-            //             name: "UserLoginPage",
-            //         }
-            //     ]
-            // })
         }
     }, [userInfo, authError]);
 

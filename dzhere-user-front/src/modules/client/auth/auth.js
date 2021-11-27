@@ -39,6 +39,7 @@ export const register = createAction(REGISTER, userInfo => userInfo);
 export const registerError = createAction(REGISTER_ERROR, error => error);
 // 비밀번호 찾기
 
+
 /*** initial state ***/
 const initialState = {
   register: {
@@ -60,10 +61,9 @@ const initialState = {
     userEmail: '',
   },
   userInfo: '',
-  // userToken: '',
   authError: '',
-  isLoading: true,
-  isLogout: false,
+  // isLoading: true,
+  isLogout: true,
 };
 
 /*** 리듀서 ***/
@@ -76,13 +76,17 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
       [form]: initialState[form],
+      userInfo: '',
+      authError: '',
+      // isLoading: true,
+      isLogout: true,
     }),
 
     [RESTORE_INFO]: (state, {payload: userInfo}) => ({
       ...state,
-      // userToken: userInfo.userToken,
       userInfo,
-      isLoading: false,
+      // isLoading: false,
+      isLogout: false
     }),
 
     [LOGIN]: (state, action) => ({
@@ -90,7 +94,7 @@ const auth = handleActions(
       isLogout: false,
       userInfo: action.payload,
       authError: '',
-      isLoading: false,
+      // isLoading: false,
     }),
     [LOGIN_ERROR]: (state, action) => ({
       ...state,
@@ -101,7 +105,7 @@ const auth = handleActions(
       isLogout: true,
       userInfo: action.payload,
       authError: '',
-      isLoading: false,
+      // isLoading: false,
     }),
     [REGISTER_ERROR]: (state, action) => ({
       ...state,
