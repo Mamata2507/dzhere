@@ -45,10 +45,10 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
             <Portal>
               <Modal visible={visibleAdd} onDismiss={hideModalAdd} contentContainerStyle={styles.modal}>
                 <Text style={styles.modalText}>수강생 정보 추가</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={{flex: 1, height: 1, backgroundColor: 'gray', marginTop: '4%'}} />
+                <View style={styles.lineContainer}>
+                  <View style={styles.line} />
                 </View>
-                <View style={[styles.picker, {margin: '5%'}]}>
+                <View style={styles.picker}>
                   <Text style={styles.text}>강의명</Text>
                   <Picker
                     selectedValue={selectedClass}
@@ -311,5 +311,16 @@ modalText: {
   fontSize: 18,
   fontWeight: '700',
   textAlign: 'center',
-}
+},
+lineContainer: {
+  flexDirection: 'row', 
+  alignItems: 'center',
+},
+line: {
+  flex: 1, 
+  height: 1, 
+  backgroundColor: 'gray', 
+  marginTop: '5%', 
+  marginBottom: '5%'
+},
 });
