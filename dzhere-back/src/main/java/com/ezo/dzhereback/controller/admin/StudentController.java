@@ -65,6 +65,14 @@ public class StudentController {
 			return new Result(studentList);
 		}
 	}
+	
+	@PostMapping("/api/deleteUser/{u_idx}")
+	public Result deleteUser(@PathVariable("u_idx") int u_idx) {
+		System.out.println("<<<<<< userDelete 컨트롤러 시작 >>>>>>");
+		int deleteResult = studentService.deleteUser(u_idx);
+		System.out.println("<<<<<< userDelete 컨트롤러 완료 >>>>>>"+deleteResult);
+		return new Result(deleteResult);
+	}
 //	@GetMapping("/api/getStudentList")
 //	public Result getStudentList(@RequestParam("ag_idx") String ag_idx,
 //			@RequestParam("c_idx") String c_idx) {

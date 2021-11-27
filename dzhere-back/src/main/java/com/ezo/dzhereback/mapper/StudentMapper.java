@@ -2,6 +2,7 @@ package com.ezo.dzhereback.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -22,5 +23,8 @@ public interface StudentMapper {
 	
 	@Select("select u_idx, u_name, u_phone, u_accept from User;")
 	List<User> getStudentListAll(int ag_idx, int c_idx);
+	
+	@Delete("delete from User where u_idx='${u_idx}'")
+	int deleteUser(int u_idx);
 	
 }
