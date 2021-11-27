@@ -66,7 +66,11 @@ const check_index = ({ navigation, route }) => {
                     dispatch(logout());
                     try{
                       await AsyncStorage.clear();
-                      navigation.navigate("UserLoginPage");
+                      client.defaults.headers.common['Authorization'] = '';
+                      navigation.reset({
+                          index: 0,
+                          routes: [{ name: "UserLoginPage"}]
+                        })
                     }
                     catch (e) {
                       console.log("Storage is not working : ", e);
