@@ -29,17 +29,13 @@ const ClassLocationComponent = ({ agency, classList }) => {
           <DataTable.Header>
             {Platform.OS === "android" ? (
               <>
-                {/* <DataTable.Title></DataTable.Title> */}
                 <DataTable.Title style={{marginLeft: "10%"}}>강의명</DataTable.Title>
                 <DataTable.Title style={{marginLeft: "10%"}}>장소명</DataTable.Title>
-                {/* <DataTable.Title style={{marginLeft: "10%"}}>인증 WIFI</DataTable.Title> */}
               </>
             ) : (
               <>
-                {/* <DataTable.Title></DataTable.Title> */}
                 <DataTable.Title style={{marginLeft: "10%"}}>강의명</DataTable.Title>
                 <DataTable.Title style={{marginLeft: "10%"}}>장소명</DataTable.Title>
-                {/* <DataTable.Title style={{marginLeft: "10%"}}>수강요일 및 시간</DataTable.Title> */}
               </>
             )}
           </DataTable.Header>
@@ -47,7 +43,7 @@ const ClassLocationComponent = ({ agency, classList }) => {
           <ScrollView>
             {classList ? (
               classList.map((item) => (
-                <DataTable.Row>
+                <DataTable.Row key={item.c_idx}>
                   {Platform.OS === "android" ? (
                     <>
                      <CheckBoxIcon item={item} style={styles.checkbox} />
@@ -63,10 +59,6 @@ const ClassLocationComponent = ({ agency, classList }) => {
                       <DataTable.Cell>
                         {item.cl_name}
                       </DataTable.Cell>
-                      {/* <DataTable.Cell>
-                        {item.ct_day} / {item.ct_start_time}
-                        {item.ct_end_time}
-                      </DataTable.Cell> */}
                     </>
                   )}
                 </DataTable.Row>
@@ -121,15 +113,11 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop : 20,
-    // alignItems: "center",
-    // alignItems: "flex-end",
     textAlign: "center",
     marginLeft: 0,
-    // justifyContent: "center",
     height: "55%",
   },
   header: {
-    // height: "10%",
     padding: "3%",
     margin: 5,
     borderRadius: 15,
@@ -144,7 +132,6 @@ const styles = StyleSheet.create({
     borderColor: "#99c0d6",
   },
   text: {
-    // flex: 2,
     marginRight : 10,
     fontSize: 16,
     fontWeight: "bold",
@@ -177,11 +164,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlignVertical: "center",
-  },
-  miniPicker: {
-    width: "50%",
-    height: 30,
-    color: "#004cff",
   },
   checkbox: {
     alignSelf: "center",

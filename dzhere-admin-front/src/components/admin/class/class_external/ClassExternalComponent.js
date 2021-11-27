@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -6,14 +6,26 @@ import {
   View,
   Text,
   ScrollView,
-  // TextInput
+  Alert,
+  Modal,
+  Pressable,
 } from "react-native";
 import CheckBoxIcon from "../../../../containers/admin/class/class_manage/CheckBoxContainer";
 import { DataTable } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import PickerBox from "../../../../containers/admin/class/class_external/PickerBoxContainer";
+import ModalComponent from "../ModalComponent";
 
-const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, name, click }) => {
+const ClassExternalComponent = ({
+  agency,
+  externalist,
+  onSearch,
+  onChangeText,
+  name,
+  click,
+  NameRef,
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container}>
       <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
@@ -27,14 +39,15 @@ const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, n
         </View>
         <View style={styles.picker}>
           <Text style={[styles.text, { marginLeft: 15 }]}>강의명</Text>
-          <PickerBox style={styles}/>
+          <PickerBox style={styles} />
         </View>
         <View style={[styles.picker]}>
           <Text style={[styles.text, { marginLeft: 15 }]}>수강생명</Text>
           <TextInput
             style={styles.inputText}
             onChangeText={onChangeText}
-            value={name === null ? '' : name}
+            value={name === null ? "" : name}
+            ref={NameRef}
             placeholder="수강생 이름을 입력해주세요."
           />
         </View>
@@ -53,17 +66,18 @@ const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, n
           <DataTable.Header>
             {Platform.OS === "android" ? (
               <>
-                {/* <DataTable.Title></DataTable.Title> */}
                 <DataTable.Title style={{ marginLeft: "8%" }}>
                   외부 장소 명
                 </DataTable.Title>
-                <DataTable.Title style={{ marginLeft: "6%" }}>
+                <DataTable.Title style={{ marginLeft: "4%" }}>
+                  등록된 WIFI 명
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "3%" }}>
                   등록 상태
                 </DataTable.Title>
               </>
             ) : (
               <>
-                {/* <DataTable.Title></DataTable.Title> */}
                 <DataTable.Title style={{ marginLeft: "7%" }}>
                   외부 장소 명
                 </DataTable.Title>
@@ -81,14 +95,20 @@ const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, n
           </DataTable.Header>
 
           <ScrollView>
-            {click === null && externalist && (
+            {click === null &&
+              externalist &&
               externalist.map((item) => (
-                <DataTable.Row>
+                <DataTable.Row key={item.c_idx}>
                   {Platform.OS === "android" ? (
                     <>
                       <CheckBoxIcon item={item} style={styles.checkbox} />
-                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_name}</DataTable.Cell>
-                      <DataTable.Cell style={{ marginLeft: "5%"}}>
+                      <DataTable.Cell style={{ marginLeft: "3%" }}>
+                        {item.e_name}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "3%" }}>
+                        {item.e_ssid}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "3%" }}>
                         <TouchableOpacity
                           style={{ margin: 5 }}
                           onPress={() => {}}
@@ -108,10 +128,16 @@ const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, n
                   ) : (
                     <>
                       <CheckBoxIcon item={item} style={styles.checkbox} />
-                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_name}</DataTable.Cell>
-                      <DataTable.Cell style={{ marginLeft: "5%"}}>{item.e_ssid}</DataTable.Cell>
-                      <DataTable.Cell style={{ marginLeft: "3%"}}>{item.e_bssid}</DataTable.Cell>
-                      <DataTable.Cell style={{ marginLeft: "5%"}}>
+                      <DataTable.Cell style={{ marginLeft: "5%" }}>
+                        {item.e_name}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "5%" }}>
+                        {item.e_ssid}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "3%" }}>
+                        {item.e_bssid}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={{ marginLeft: "5%" }}>
                         <TouchableOpacity
                           style={{ margin: 5 }}
                           onPress={() => {}}
@@ -131,13 +157,18 @@ const ClassExternalComponent = ({ agency, externalist, onSearch, onChangeText, n
                     </>
                   )}
                 </DataTable.Row>
-              ))
-            )}
-            {click !== null && name !== null && 
-              <Text>{click}</Text>
-            }
+              ))}
+            {click !== null && name !== null && <Text>{click}</Text>}
           </ScrollView>
         </DataTable>
+        {/* <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        /> */}
         <View style={styles.btnContainer2}>
           <TouchableOpacity
             style={[styles.btn, { margin: 5 }]}
@@ -183,15 +214,15 @@ const styles = StyleSheet.create({
     borderColor: "#99c0d6",
   },
   text: {
-    width: "8%",
+    width: Platform.OS === "android" ? "15%" : "8%",
     marginRight: 10,
-    fontSize: 16,
+    fontSize: Platform.OS === "android" ? 16 : 16,
     fontWeight: "bold",
     color: "#000000",
   },
   inputText: {
     fontSize: 15,
-    width: "30%",
+    width: Platform.OS === "android" ? "90%" : "30%",
     alignItems: "center",
     borderRadius: 50,
     color: "black",
@@ -199,7 +230,7 @@ const styles = StyleSheet.create({
   },
   pickerText: {
     fontSize: 15,
-    width: "30%",
+    width: Platform.OS === "android" ? "90%" : "30%",
     alignItems: "center",
     borderRadius: 20,
     borderColor: "#99c0d6",
@@ -228,19 +259,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlignVertical: "center",
   },
-  miniPicker: {
-    width: "50%",
-    height: 30,
-    color: "#004cff",
-  },
   checkbox: {
     alignSelf: "center",
-    marginLeft: Platform.OS === 'android' ? "5%" : "2%",
-    margin: Platform.OS === 'android' ? 3 : 0,
-    width:  Platform.OS === 'android' ? 15: 18,
-    height: Platform.OS === 'android' ? 15: 18,
+    marginLeft: Platform.OS === "android" ? 0 : "2%",
+    margin: Platform.OS === "android" ? "2%" : 0,
+    width: Platform.OS === "android" ? 15 : 18,
+    height: Platform.OS === "android" ? 15 : 18,
     borderColor: "#004cff",
-  }
+  },
 });
 
 export default ClassExternalComponent;

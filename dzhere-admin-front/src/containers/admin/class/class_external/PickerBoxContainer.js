@@ -7,7 +7,7 @@ import { useIsFocused } from "@react-navigation/core";
 const PickerBoxContainer = ({ style }) => {
   const dispatch = useDispatch();
   const classList = useSelector(({ classes }) => classes.clist);
-  console.log(classList);
+  // console.log(classList);
   const [selectedValue, setSelectedValue] = useState(0);
   const isFocused = useIsFocused();
 
