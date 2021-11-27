@@ -63,10 +63,8 @@ export const Contents = ({onPressStartTime, onPressExitTime, classList, classTim
         <StyledButtons title={'조퇴'} source={(!exitBtnDisable)?exit_icon:exit_disable_icon} disabled={exitBtnDisable} onPress={onPressLeaveTime}/>
         <StyledButtons title={'퇴실'} source={(!exitBtnDisable)?check_icon:check_disable_icon} disabled={exitBtnDisable} onPress={onPressExitTime}/>
       </ButtonView>
-      <SafeAreaView style={styles.mySafeArea}>
-        <ScrollView style={styles.myScrollView}>          
-          <FlatList data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/>
-        </ScrollView>
+      <SafeAreaView style={[styles.mySafeArea,styles.myScrollView]}>        
+          <FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/>        
       </SafeAreaView>
     </View>
   );
@@ -123,7 +121,7 @@ const styles = StyleSheet.create({
   },
   mySafeArea: {
     flex:1,
-    marginBottom:3,
+    marginBottom:4,
     width:'100%'
   },
   myScrollView: {

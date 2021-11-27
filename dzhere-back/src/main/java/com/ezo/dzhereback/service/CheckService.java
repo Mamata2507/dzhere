@@ -2,6 +2,7 @@ package com.ezo.dzhereback.service;
 
 import com.ezo.dzhereback.domain.AttendList;
 import com.ezo.dzhereback.domain.LoadAttendCnt;
+import com.ezo.dzhereback.domain.TodayAttendList;
 import com.ezo.dzhereback.domain.WifiInfo;
 import com.ezo.dzhereback.mapper.CheckMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,9 @@ public class CheckService {
 
     public int checkExternalWifiInfo(String bssid, int u_idx, int c_idx, int e_accept){
         return checkMapper.checkExternalWifiInfo(bssid, u_idx, c_idx, e_accept);
+    }
+
+    public TodayAttendList loadTodayAttendList(int u_idx, String today){
+        return checkMapper.getLoadTodayAttendList(u_idx, today);
     }
 }

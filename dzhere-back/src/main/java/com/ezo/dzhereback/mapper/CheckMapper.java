@@ -2,6 +2,7 @@ package com.ezo.dzhereback.mapper;
 
 import com.ezo.dzhereback.domain.AttendList;
 import com.ezo.dzhereback.domain.LoadAttendCnt;
+import com.ezo.dzhereback.domain.TodayAttendList;
 import com.ezo.dzhereback.domain.WifiInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -53,4 +54,7 @@ public interface CheckMapper {
 
     @Select("select count(*) from External where u_idx = #{u_idx} and c_idx = #{c_idx} and e_accept = #{e_accept} and e_bssid IN(#{bssid})")
     int checkExternalWifiInfo(String bssid, int u_idx, int c_idx, int e_accept);
+
+    @Select("select a_absent, a_attend_time, a_exit_time from Attend where a_today_date = #{today} and u_idx = #{u_idx} order by a_idx desc limit 1")
+    TodayAttendList getLoadTodayAttendList(int u_idx, String today);
 }

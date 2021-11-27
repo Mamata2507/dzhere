@@ -1,9 +1,6 @@
 package com.ezo.dzhereback.controller.user;
 
-import com.ezo.dzhereback.domain.Attend;
-import com.ezo.dzhereback.domain.AttendList;
-import com.ezo.dzhereback.domain.LoadAttendCnt;
-import com.ezo.dzhereback.domain.WifiInfo;
+import com.ezo.dzhereback.domain.*;
 import com.ezo.dzhereback.dto.CheckInsertDto;
 import com.ezo.dzhereback.dto.WifiInfoDto;
 import com.ezo.dzhereback.service.CheckService;
@@ -62,7 +59,7 @@ public class CheckController {
         u_phone = checkInsertDto.getU_phone();
         int u_idx = checkService.getUidx(u_phone);
 
-        format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         format2 = new SimpleDateFormat("yyyy-MM-dd");
         attendExitTime = format.format(Calendar.getInstance().getTime());
         attendExitDate = format2.format(Calendar.getInstance().getTime());
@@ -78,7 +75,7 @@ public class CheckController {
         u_phone = checkInsertDto.getU_phone();
         int u_idx = checkService.getUidx(u_phone);
 
-        format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         format2 = new SimpleDateFormat("yyyy-MM-dd");
         attendExitTime = format.format(Calendar.getInstance().getTime());
         attendExitDate = format2.format(Calendar.getInstance().getTime());
@@ -102,6 +99,7 @@ public class CheckController {
         return loadAttendList;
     }
 
+    // list 페이지 전체 검색
     @GetMapping("/m/user/attend/allload")
     public List<AttendList> AllLoadAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("month") String month){
         int u_idx = checkService.getUidx(u_phone);
@@ -113,6 +111,15 @@ public class CheckController {
             attend = checkService.loadAllAttendList(u_idx);
         }
         return attend;
+    }
+
+    @GetMapping("/m/user/attend/todayload")
+    public TodayAttendList TodayAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("today") String today){
+        int u_idx = checkService.getUidx(u_phone);
+        TodayAttendList  todayAttendList = checkService.loadTodayAttendList(u_idx,today);
+        System.out.println("m/user/attend/todayload");
+        System.out.println(todayAttendList);
+        return todayAttendList;
     }
 
     @PostMapping("/m/user/check/wifi")
