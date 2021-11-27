@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../../components/admin/student/StudentList'
-import { getAgName, getClassList, getStudentList, setFilterList } from '../../../modules/admin/student/student'
- 
-const StudentListContainer = () => {
+import { getAgName, getClassList, getStudentList, setFilterList, deleteUser } from '../../../modules/admin/student/student'
 
+const StudentListContainer = () => {
+  
   const dispatch = useDispatch();
 
   const u_phone = '01023454710'
-
+  
   const [selectedClass, setSelectedClass] = useState(0);
   const [selectedAccept, setSelectedAccept] = useState(2);
+  const [visibleAdd, setVisibleAdd] = React.useState(false);
 
-  const { agName, classList, studentList, loadingAgName, loadingStudentList, filterList, loadingFilterList } = useSelector(({ student, loading }) => ({
+  const { agName, classList, studentList, loadingAgName, 
+          loadingStudentList, filterList, loadingFilterList,
+          uid, } = useSelector(({ student, loading }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
@@ -21,6 +24,7 @@ const StudentListContainer = () => {
     loadingStudentList: loading['student/GET_STUDENT_LIST'],
     filterList: student.filterList,
     loadingFilterList: student.loadingFilterList,
+    uid: student.uid, 
   }))
 
   useEffect(() => {
@@ -42,6 +46,42 @@ const StudentListContainer = () => {
       dispatch(getStudentList({agIdx, selectedClass}))
   }
 
+  const showModalAdd = () => setVisibleAdd(true);
+  const hideModalAdd = () => setVisibleAdd(false);
+  
+  const onAdd = () => {
+    Alert.alert('추가')
+  }
+
+  const showModalUpdate = () => setVisibleUpdate(true);
+  
+  const onUpdate = () => {
+      Alert.alert('수정')
+  }
+
+
+  const onDelete = () => {
+    Alert.alert(
+      "",
+      "수강생을 삭제 하시겠습니까?",
+      [
+        {
+          text: "취소",
+          onPress: () => console.log("취소"),
+          style: "cancel"
+        },
+        { text: "확인", onPress: () => 
+          {
+            dispatch(deleteUser(uid))
+            alert('삭제완료!')
+            let agIdx = agName.ag_idx
+            dispatch(getStudentList({agIdx, selectedClass}))
+          }
+        }
+      ]
+    );
+  }
+
   return (
       <Contents
          agName={agName}
@@ -56,6 +96,12 @@ const StudentListContainer = () => {
          setSelectedAccept={setSelectedAccept}
          filterList={filterList}
          loadingFilterList={loadingFilterList}
+         onDelete={onDelete}
+         showModalAdd={showModalAdd}
+         visibleAdd={visibleAdd}
+         hideModalAdd={hideModalAdd}
+
+         showModalUpdate={showModalUpdate}
       />
   );
 };

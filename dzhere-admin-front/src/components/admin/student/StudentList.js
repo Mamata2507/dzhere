@@ -6,7 +6,8 @@ import { StudentListWeb } from './StudentListWeb'
 export const Contents = ({agName, classList, selectedClass, setSelectedClass, 
                           onSearch, studentList, loadingAgName, loadingStudentList,
                           selectedAccept, setSelectedAccept, pickerActivity, filterList,
-                          loadingFilterList, }) => {
+                          loadingFilterList, showModalAdd, showModalUpdate, onDelete,
+                          visibleAdd, hideModalAdd }) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
     agName={agName}
@@ -22,6 +23,11 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
     pickerActivity={pickerActivity}
     filterList={filterList}
     loadingFilterList={loadingFilterList}
+    showModalAdd={showModalAdd}
+    visibleAdd={visibleAdd}
+    hideModalAdd={hideModalAdd}
+    showModalUpdate={showModalUpdate}
+    onDelete={onDelete}
   /> 
   : 
   <StudentListWeb 

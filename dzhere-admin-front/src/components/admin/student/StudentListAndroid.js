@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, ScrollView } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import { Alert, StyleSheet, TouchableOpacity, View, Text, Picker, ScrollView, TextInput } from 'react-native';
+import { Modal, Portal, Provider, DataTable } from 'react-native-paper';
 import CheckBoxIcon from '../../../containers/admin/student/CheckBoxContainer'
 
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
                                       onSearch, studentList, loadingAgName, loadingStudentList,
-                                      selectedAccept, setSelectedAccept, filterList, loadingFilterList}) => {
+                                      selectedAccept, setSelectedAccept, filterList, loadingFilterList,
+                                      showModalAdd, visibleAdd, hideModalAdd, 
+                                      showModalUpdate, onDelete, }) => {
 
   // 버튼 이벤트
   const onPress = () => {
@@ -39,9 +41,57 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
 
   return (
     <View style={styles.container}>
+      <Provider>
+            <Portal>
+              <Modal visible={visibleAdd} onDismiss={hideModalAdd} contentContainerStyle={styles.modal}>
+                <Text style={styles.modalText}>수강생 정보 추가</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={{flex: 1, height: 1, backgroundColor: 'gray', marginTop: '4%'}} />
+                </View>
+                <View style={[styles.picker, {margin: '5%'}]}>
+                  <Text style={styles.text}>강의명</Text>
+                  <Picker
+                    selectedValue={selectedClass}
+                    onValueChange={(itemValue, itemIndex) => setSelectedClass(itemValue)}
+                    style={[styles.pickerText, {flex: 4}]}
+                  >
+                    {classList.map(c => (
+                    <Picker.Item label={c.c_name} value={c.c_idx}/>
+                    ))}
+                  </Picker> 
+                </View>
+                <View style={styles.picker}>
+                  <Text style={styles.text}>수강생명</Text>
+                  <TextInput
+                  style={[styles.pickerText, {flex: 3,}]}
+                  // onChangeText={onChangeNewEmail}
+                  // value={newEmail}
+                  placeholder="수강생명을 입력하세요"
+                  keyboardType="default"
+                  />
+                </View>
+                <View style={styles.picker}>
+                  <Text style={styles.text}>전화번호</Text>
+                  <TextInput
+                  style={[styles.pickerText, {flex: 3,}]}
+                  // onChangeText={onChangeNewEmail}
+                  // value={newEmail}
+                  placeholder="전화번호를 입력하세요"
+                  keyboardType="default"
+                  />
+                </View>
+                <TouchableOpacity
+                style={[styles.btn, {marginTop: 15, alignSelf: 'center', width: '20%', height: '11%'}]}
+                onPress={showModalAdd}
+                >
+                <Text style={styles.btnText}>등록</Text>
+              </TouchableOpacity>
+              </Modal>
+          </Portal>
+          
       <View style={[styles.header, {backgroundColor: '#CEEDFF'}]}>
         <View>
-          <View style={[styles.picker]}>
+          <View style={styles.picker}>
             <Text style={[styles.text, {marginLeft: 15}]}>기관</Text>
             <Text style={[styles.pickerText, {fontSize: 16}, {marginLeft: 8}]}>
               {loadingAgName && '로딩중...'}
@@ -80,7 +130,6 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
           </TouchableOpacity>
         </View>
       </View>
-
         <View style={styles.content}>
           <DataTable>
             <DataTable.Header>
@@ -120,7 +169,7 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
               <DataTable.Row>
                 <DataTable.Cell>
                  <CheckBoxIcon 
-                  item={s}
+                  item={s.u_idx}
                   style={styles.checkbox} 
                   />
                 </DataTable.Cell>
@@ -150,27 +199,28 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
             />
           </DataTable>
 
-        <View style={styles.btnContainer2}> 
-            <TouchableOpacity
+          <View style={styles.btnContainer2}> 
+              <TouchableOpacity
                 style={[styles.btn, {margin: 5}]}
-                onPress={onPress}
+                onPress={showModalAdd}
                 >
                 <Text style={styles.btnText}>등록</Text>
               </TouchableOpacity>
               <TouchableOpacity
               style={[styles.btn, {margin: 5}]}
-              onPress={onPress}
+              onPress={showModalUpdate}
               >
               <Text style={styles.btnText}>수정</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, {margin: 5}]}
-              onPress={onPress}
+              onPress={onDelete}
               >
               <Text style={styles.btnText}>삭제</Text>
             </TouchableOpacity>
             </View>
           </View>
+        </Provider>
     </View>
   );
 };
@@ -191,6 +241,7 @@ header: {
   height: "20%",
   padding: "3%",
   margin: 10,
+  marginTop: 70,
   borderRadius: 15,
 },
 picker: {
@@ -198,9 +249,7 @@ picker: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 4,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: '#99c0d6',
+
 },
 text: {
     flex: 1,
@@ -210,7 +259,7 @@ text: {
 },
 pickerText: {
     flex: 6,
-    fontSize: 25,
+    fontSize: 16,
     alignItems: 'center',
     color: '#000000',
 },
@@ -252,5 +301,15 @@ checkbox: {
 tableContainer: {
   paddingTop: 100,
   paddingHorizontal: 30,
+},
+modal: {
+  backgroundColor: '#CEEDFF', 
+  padding: '5%', 
+  height: '45%'
+},
+modalText: {
+  fontSize: 18,
+  fontWeight: '700',
+  textAlign: 'center',
 }
 });

@@ -36,7 +36,7 @@ const CheckBoxIcon = ({ item, style }) => {
       value={isSelected}
       onValueChange={onValueChange}
       disabled={checkId ? (!isSelected ? true : false) : false}
-      color={isSelected ? "#4630EB" : "black"}
+      color={isSelected ? "#004cff" : "#666666"}
     />
   );
 };
