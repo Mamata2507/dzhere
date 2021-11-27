@@ -7,6 +7,7 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
                           onSearch, studentList, loadingAgName, loadingStudentList,
                           selectedAccept, setSelectedAccept, pickerActivity, filterList,
                           loadingFilterList, showModalAdd, showModalUpdate, onDelete,
+                          uName, onChangeUname, uPhone, onChangeUphone, onAdd,
                           visibleAdd, hideModalAdd }) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
@@ -26,6 +27,11 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
     showModalAdd={showModalAdd}
     visibleAdd={visibleAdd}
     hideModalAdd={hideModalAdd}
+    uName={uName}
+    onChangeUname={onChangeUname}
+    uPhone={uPhone}
+    onChangeUphone={onChangeUphone}
+    onAdd={onAdd}
     showModalUpdate={showModalUpdate}
     onDelete={onDelete}
   /> 

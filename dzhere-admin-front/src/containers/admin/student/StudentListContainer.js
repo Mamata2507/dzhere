@@ -12,7 +12,9 @@ const StudentListContainer = () => {
   
   const [selectedClass, setSelectedClass] = useState(0);
   const [selectedAccept, setSelectedAccept] = useState(2);
-  const [visibleAdd, setVisibleAdd] = React.useState(false);
+  const [visibleAdd, setVisibleAdd] = useState(false);
+  const [uName, onChangeUname] = useState('');
+  const [uPhone, onChangeUphone] = useState('');
 
   const { agName, classList, studentList, loadingAgName, 
           loadingStudentList, filterList, loadingFilterList,
@@ -100,7 +102,11 @@ const StudentListContainer = () => {
          showModalAdd={showModalAdd}
          visibleAdd={visibleAdd}
          hideModalAdd={hideModalAdd}
-
+         uName={uName}
+         onChangeUname={onChangeUname}
+         uPhone={uPhone}
+         onChangeUphone={onChangeUphone}
+         onAdd={onAdd}
          showModalUpdate={showModalUpdate}
       />
   );

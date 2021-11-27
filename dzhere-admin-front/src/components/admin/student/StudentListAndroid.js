@@ -6,7 +6,8 @@ import CheckBoxIcon from '../../../containers/admin/student/CheckBoxContainer'
 export const StudentListAndroid = ({ agName, classList, selectedClass, setSelectedClass, 
                                       onSearch, studentList, loadingAgName, loadingStudentList,
                                       selectedAccept, setSelectedAccept, filterList, loadingFilterList,
-                                      showModalAdd, visibleAdd, hideModalAdd, 
+                                      showModalAdd, visibleAdd, hideModalAdd, onAdd,
+                                      uName, onChangeUname, uPhone, onChangeUphone, 
                                       showModalUpdate, onDelete, }) => {
 
   // 버튼 이벤트
@@ -64,8 +65,8 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
                   <Text style={styles.text}>수강생명</Text>
                   <TextInput
                   style={[styles.pickerText, {flex: 3,}]}
-                  // onChangeText={onChangeNewEmail}
-                  // value={newEmail}
+                  onChangeText={onChangeUname}
+                  value={uName}
                   placeholder="수강생명을 입력하세요"
                   keyboardType="default"
                   />
@@ -74,15 +75,15 @@ export const StudentListAndroid = ({ agName, classList, selectedClass, setSelect
                   <Text style={styles.text}>전화번호</Text>
                   <TextInput
                   style={[styles.pickerText, {flex: 3,}]}
-                  // onChangeText={onChangeNewEmail}
-                  // value={newEmail}
+                  onChangeText={onChangeUphone}
+                  value={uPhone}
                   placeholder="전화번호를 입력하세요"
                   keyboardType="default"
                   />
                 </View>
                 <TouchableOpacity
-                style={[styles.btn, {marginTop: 15, alignSelf: 'center', width: '20%', height: '11%'}]}
-                onPress={showModalAdd}
+                style={[styles.btn, {marginTop: 15, alignSelf: 'center', width: '20%'}]}
+                onPress={onAdd}
                 >
                 <Text style={styles.btnText}>등록</Text>
               </TouchableOpacity>
@@ -305,7 +306,7 @@ tableContainer: {
 modal: {
   backgroundColor: '#CEEDFF', 
   padding: '5%', 
-  height: '45%'
+  height: '65%'
 },
 modalText: {
   fontSize: 18,
