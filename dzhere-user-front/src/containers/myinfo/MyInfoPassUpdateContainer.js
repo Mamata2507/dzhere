@@ -11,9 +11,9 @@ const MyInfoPassUpdateContainer = () => {
 
   const dispatch = useDispatch();
 
-  const { pw, loadingPw, phone } = useSelector(({ myinfo }) => ({
+  const { pw, loadingPw, phone } = useSelector(({ myinfo, loading }) => ({
     pw: myinfo.pw,
-    // loadingPw: loading.GET_PW,
+    loadingPw: loading.GET_PW,
     phone: myinfo.phone,
   }));
 

@@ -11,9 +11,9 @@ const MyInfoEmailUpdateContainer = () => {
 
   const dispatch = useDispatch();
 
-  const { email, loadingEmail, phone } = useSelector(({ myinfo }) => ({
+  const { email, loadingEmail, phone } = useSelector(({ myinfo, loading }) => ({
     email: myinfo.email,
-    // loadingEmail: loading.GET_EMAIL,
+    loadingEmail: loading.GET_EMAIL,
     phone: myinfo.phone,
   }));
 
