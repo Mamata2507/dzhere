@@ -64,7 +64,8 @@ export const Contents = ({onPressStartTime, onPressExitTime, classList, classTim
         <StyledButtons title={'퇴실'} source={(!exitBtnDisable)?check_icon:check_disable_icon} disabled={exitBtnDisable} onPress={onPressExitTime}/>
       </ButtonView>
       <SafeAreaView style={[styles.mySafeArea,styles.myScrollView]}>        
-          <FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/>        
+          {(attendList)?<><FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/></>:<><Text>{'...'}</Text></>}
+          {/* <FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/> */}
       </SafeAreaView>
     </View>
   );

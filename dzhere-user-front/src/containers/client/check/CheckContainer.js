@@ -133,8 +133,7 @@ const CheckContainer = () => {
         const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
         const newCheckObject = {id: ID, time: nowTime, attendState:'출석'};
         const newCheckObject2 = {id: ID+1, time: nowTime, attendState:'조퇴'};
-        const newCheckObject3 = {id: ID+2, time: nowTime, attendState:'퇴실'};
-        console.log(777);
+        const newCheckObject3 = {id: ID+2, time: nowTime, attendState:'퇴실'};        
         if(btnState === 1){  // 출석
             if(attendStartTime && (moment().format('HH:mm:ss')>attend_starttime) ){                    
                 dispatch(checkInsert(u_phone));            
@@ -156,20 +155,20 @@ const CheckContainer = () => {
     }
 
     // 출석 리스트 받아 오기
-    const loadCheckList = useCallback(() => {
+    const loadCheckList = () => {        
         const u_phone = temp_uphone;
         const today = moment().format('YYYY-MM-DD');
         dispatch(checkLoadTodayAttendList({u_phone, today}));        
-    })
+    }
         
     useEffect(()=>{                
         const ID = Date.now();
         const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
-
         const newCheckObject = {id: ID, time: todayAttendList.a_attend_time, attendState:'출석'};
         const newCheckObject2 = {id: ID+1, time: todayAttendList.a_exit_time, attendState:'조퇴'};
         const newCheckObject3 = {id: ID+2, time: todayAttendList.a_exit_time, attendState:'퇴실'};
-        if(todayAttendList&&first){                        
+        setAttendList(()=>([]));
+        if(todayAttendList){                        
             if(todayAttendList.a_attend_time){                
                 setAttendEndTime(nowTime);
                 setBtnDisable(true);
@@ -181,8 +180,13 @@ const CheckContainer = () => {
                 }                
             }
         }
-        console.log(attendList);
-    },[todayAttendList])
+        // console.log(attendList);
+    },[todayAttendList])        
+
+    // useEffect(()=>{
+    //     loadCheckList();
+    //     // console.log(attendList);
+    // },[])
     
     useEffect(()=>{        
         console.log(btnClick,first,checkWifiInfo);
@@ -199,25 +203,20 @@ const CheckContainer = () => {
         dispatch(initCheckWifiInfo());
         setBtnClick(false);
     },[checkWifiInfo])
-    
-    useDispatch(()=>{
-        loadCheckList();
-    },[])
 
     // 수업 목록 load
-    useEffect(async()=>{              
+    useEffect(()=>{     
         // const u_phone = (Platform.OS==='android')? AsyncStorage.getItem('u_phone'):temp_uphone;
         const u_phone = temp_uphone;
+        // 퇴실 인정 시간
+        setEndtime('23:50:00');
+        loadCheckList();
         // class list load
         dispatch(loadClassList(u_phone));
         // class time load
         setTimeout(() => {
             (u_phone) && dispatch(loadClassTimeList(u_phone));
         }, 10);
-        
-        // 퇴실 인정 시간
-        setEndtime('23:50:00');
-
     },[])    
 
     // Error
