@@ -1,69 +1,64 @@
 import { Contents } from '../../components/myinfo/MyInfoEmailUpdate'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { readEmail } from '../../modules/myinfo/myInfo'
-import axios from 'axios';
+import { Alert, Platform } from 'react-native';
+import { getEmail, updateEmail } from '../../modules/myinfo/myInfo'
+import { useNavigation } from '@react-navigation/native'
 
-const LoginContainer = () => {
+const MyInfoEmailUpdateContainer = () => {
 
-    const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-    AsyncStorage.setItem('u_phone', '01023454710');
+  const dispatch = useDispatch();
 
-    const { userEmail, userPhone } = useSelector(({ myinfo }) => ({
-      userEmail: myinfo.readEmail.userEmail,
-      userPhone: myinfo.readPhone.userPhone,
-    }));
+  const { email, loadingEmail, phone } = useSelector(({ myinfo }) => ({
+    email: myinfo.email,
+    // loadingEmail: loading.GET_EMAIL,
+    phone: myinfo.phone,
+  }));
 
-    const [newEmail, onChangeNewEmail] = React.useState(null);
-    console.log(newEmail);
+  const [newEmail, onChangeNewEmail] = React.useState('');
 
-    useEffect(() => {
-    async function getStorage() {
-      if (await AsyncStorage.getItem("u_phone")) {
-        let LocalData = await AsyncStorage.getItem("u_phone");
-        dispatch(readEmail({LocalData}))
-
-        axios({
-          method: "GET",
-          url: "http://192.168.0.112:8080/api/getEmail/"+LocalData,
-        }).then((res) => {
-          let LocalEmail = res.data.data.u_email;
-          dispatch(readEmail({userEmail: LocalEmail}));
-          dispatch(readPhone({userPhone: LocalData}));
-        });
-      }
-    }
-    getStorage();
+  useEffect(() => {
+    dispatch(getEmail(phone));
   }, []);
   
   function onPress(){
-    console.log(newEmail);
-    console.log(userPhone);
-    axios({
-      method: "POST",
-      url: "http://192.168.0.112:8080/api/updateEmail/"+userPhone+"/"+newEmail,
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-      },
-    }).then((res) => {
-      let newEmail = res.data.data.u_email;
-      console.log('하이----------->'+newEmail);
-      dispatch(readEmail({userEmail: newEmail}));
-    });
+      if (Platform.OS === 'web') {
+        if(newEmail === ''){
+          alert('빈 항목이 있습니다.');
+        } else {
+          dispatch(updateEmail({phone, newEmail}));
+          alert('이메일이 성공적으로 변경되었습니다.');
+          onChangeNewEmail('');
+          setTimeout(()=>{
+            navigation.goBack()
+          }, 800);
+        }
+    } else {
+        if(newEmail === ''){
+          Alert.alert('빈 항목이 있습니다.');
+        } else {
+          dispatch(updateEmail({phone, newEmail}));
+          Alert.alert('이메일이 성공적으로 변경되었습니다.');
+          onChangeNewEmail('');
+          setTimeout(()=>{
+            navigation.goBack()
+          }, 800);
+        }
     }
-    
-    return (
-        // Login -> 컨테이너의 자식 컴포넌트
-        <Contents
-            // 자식에게 값 전달
-            userEmail={userEmail}
-            onPress={onPress}
-            newEmail={newEmail}
-            onChangeNewEmail={onChangeNewEmail}
-        />
-    );
+  }
+  
+  return (
+      // Login -> 컨테이너의 자식 컴포넌트
+      <Contents
+        email={email}
+        loadingEmail={loadingEmail}
+        onPress={onPress}
+        newEmail={newEmail}
+        onChangeNewEmail={onChangeNewEmail}
+      />
+  );
 };
 
-export default LoginContainer;
+export default MyInfoEmailUpdateContainer;

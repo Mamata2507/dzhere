@@ -105,17 +105,16 @@ export const fourthScreenStack = ({ props: params, navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="MyPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerTransparent: true
-      }}>
+    >
       <Stack.Screen
         name="MyPage"
         component={MyPage}
         options={{
-          title: '', //Set Header Title
+          title: "",
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTransparent: true,
         }}
       />
        <Stack.Screen
@@ -124,6 +123,7 @@ export const fourthScreenStack = ({ props: params, navigation }) => {
         options={{
           title: '',
           headerShown: true,
+          headerTransparent: true,
         }}
         initialParams={params}
       />
@@ -133,6 +133,7 @@ export const fourthScreenStack = ({ props: params, navigation }) => {
         options={{
           title: '', 
           headerShown: true,
+          headerTransparent: true,
         }}
       />
     </Stack.Navigator>

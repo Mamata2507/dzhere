@@ -2,7 +2,7 @@ import axios from "axios";
 
 const client = axios.create();
 
-client.defaults.baseURL = 'http://172.30.1.32:8080/';
+client.defaults.baseURL = 'http://172.26.160.1:8080/';
 /*
   글로벌 설정 예시:
   

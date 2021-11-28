@@ -3,21 +3,25 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-nativ
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native';
 
-export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => {
+export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail, checkEmail }) => {
 
     const navigation = useNavigation();
-    
+
     return (
       <View style={[styles.container, {height: 300, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <Text style={{fontSize: 18, marginLeft: 21}}>{userEmail}</Text>
+          <Text style={styles.myInfoText}>
+          {loadingEmail && '로딩 중..'}
+          {!loadingEmail && email && `${email.u_email}`}
+        </Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <TextInput
-          style={styles.input}
+          style={styles.myInfoText}
           onChangeText={onChangeNewEmail}
           value={newEmail}
           placeholder="이메일 변경"
@@ -32,22 +36,15 @@ export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => 
             <Text style={[{ fontSize: 18 }, styles.text]}>변경</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          >
-          <Text>뒤로가기</Text>
-          </TouchableOpacity>
-          </View>
       </View>
     );
   };
 
   const styles = StyleSheet.create({
     container: {
-      width: '95%',
+      width: Platform.OS === "android" ? "95%" : "60%",
       justifyContent: 'center',
-      height: 190,
+      padding: Platform.OS === "android" ? "1%" : "1.5%",
     },
     myInfo: {
       flexDirection: 'row',
@@ -58,7 +55,7 @@ export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => 
     },
     myInfoText: {
       flex: 1,
-      fontSize: 22
+      fontSize: 22,
     },
     footer: {
       height: 80,
@@ -66,30 +63,21 @@ export const Contents = ({ userEmail, onPress, newEmail, onChangeNewEmail }) => 
     btnContainer: {
       flex: 1,
       justifyContent: "center",
-      paddingHorizontal: 10
+      paddingHorizontal: 10,
+      alignItems: "center",
     },
     btn: {
       backgroundColor: "#5AA0C8",
       borderRadius: 10,
-      //width: Platform.OS === "android" ? 155 : "50%",
+      width: Platform.OS === "android" ? "95%" : "30%",
       margin: 10,
       alignItems: "center",
       paddingVertical: 8,
       padding: 10,
-      width: '90%',
     },
     text: {
       color: "white",
       fontWeight: "bold",
       margin: 10,
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      borderColor: '#CEEDFF',
-      padding: 10,
-      flex:1, 
-      fontSize: 18
     },
   });
