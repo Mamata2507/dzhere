@@ -6,15 +6,16 @@ import UserRegisterPage from "../pages/auth/UserRegisterPage";
 import UserFindPasswordPage from "../pages/auth/UserFindPasswordPage";
 import ClientDrawer from "./ClientDrawer";
 import { useSelector } from "react-redux";
-import Splash from "../components/common/splash"
+import Splash from "../components/common/splash";
 
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
   console.log("AuthStack");
-  const { isSignout } = useSelector(({ auth }) => ({
+  const { isSignout, } = useSelector(({ auth }) => ({
     isSignout: auth.isSignout,
   }));
+
   return (
     <Stack.Navigator
       initialRouteName="UserLoginPage"

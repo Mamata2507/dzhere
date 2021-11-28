@@ -18,6 +18,8 @@ const App = () => {
   //   prefixes: [prefix],
   //   config,
   // }
+
+  
   console.log('src/App');
   return (
     <NavigationContainer /*linking={linking}*/>
