@@ -5,18 +5,18 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-@Getter @Setter
-public class UserTestDto {
-    private String u_name;
-
+@Getter
+@Setter
+public class CheckInsertDto {
+    String u_phone;
     public User toEntity(){
         return User.builder()
-                .u_name(u_name)
+                .u_phone(u_phone)
                 .build();
     }
 
     @Builder
-    public UserTestDto(String u_name) {
-        this.u_name = u_name;
+    public CheckInsertDto(String u_phone) {
+        this.u_phone = u_phone;
     }
 }
