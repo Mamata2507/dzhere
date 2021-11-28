@@ -110,6 +110,7 @@ const LoginForm = ({ navigation, route }) => {
 
         const authErrorDetail = String(authError).split("status code ")[1];
         const isNetworkError = String(authError).indexOf('Network Error');
+        const notResponse = String(authError).indexOf('timeout of');
 
         console.log("authErrorDetail : ", authErrorDetail);
 
@@ -133,6 +134,11 @@ const LoginForm = ({ navigation, route }) => {
         else if (authErrorDetail === undefined && isNetworkError !== -1){
           console.log('네트워크 에러 : WIFI 연결을 확인해주세요.');
           setError("네트워크 에러 : WIFI 연결을 확인해주세요.");
+          return;
+        }
+        else if (notResponse != -1){
+          console.log('네트워크 에러 : 서버가 응답하지 않습니다.\n(관리자에게 문의)');
+          setError("네트워크 에러 : 서버가 응답하지 않습니다.\n(관리자에게 문의 : 1544-응애응애)");
           return;
         }
       }
