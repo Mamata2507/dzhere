@@ -1,6 +1,5 @@
 import React from "react";
 import {View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, Platform,} from "react-native";
-// import { Picker } from "@react-native-picker/picker";
 import CustomTextInput from "./CustomTextInput";
 import CustomCheckbox from "./CustomCheckbox";
 import ErrorMessage from "./ErrorMessage";
@@ -51,7 +50,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                 onChangeText={onChangeText}
                 placeholder={"📞 휴대폰 번호"}
                 placeholderTextColor="#5d7bba"
-                maxLength={13}
+                maxLength={11}
                 keyboardType="numeric"
                 style={{
                   margin: 5,

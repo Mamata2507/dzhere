@@ -31,7 +31,7 @@ const AuthStack = () => {
         component={UserLoginPage}
         options={{
           headerTransparent: true,
-          title: "로그인",
+          title: "", //Set Header Title
           animationTypeForReplace: isSignout ? "pop" : "push",
         }}
       />
@@ -40,7 +40,7 @@ const AuthStack = () => {
         name="UserRegisterPage"
         component={UserRegisterPage}
         options={{
-          title: "회원가입",
+          title: "회원가입", //Set Header Title
         }}
       />
 
@@ -48,7 +48,7 @@ const AuthStack = () => {
         name="UserFindPasswordPage"
         component={UserFindPasswordPage}
         options={{
-          title: "비밀번호 찾기",
+          title: "비밀번호 찾기", //Set Header Title
         }}
       />
 
@@ -56,7 +56,7 @@ const AuthStack = () => {
         name="ClientDrawer"
         component={ClientDrawer}
         options={{
-          title: "오늘의 출석",
+          title: "", //Set Header Title
         }}
         options={{ headerShown: false }}
       />
@@ -65,7 +65,7 @@ const AuthStack = () => {
         name="Splash"
         component={Splash}
         options={{
-          title: "",
+          title: "", //Set Header Title
         }}
         options={{ headerShown: false }}
       />

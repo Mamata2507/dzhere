@@ -48,6 +48,8 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
   
 // 로그아웃
 export const apiLogout = () => {
+  console.log('로그아웃을 요청합니다.');
+  console.log('요청 헤더 토큰 정보 : ', client.defaults.headers.common['Authorization']);
   return client.post('api/logout')
   .then(res => {
     console.log('axios 로그아웃 요청 성공 정보 : \n', res.data);

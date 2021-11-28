@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm, register } from '../../modules/auth/auth';
+import { changeField, initializeForm, register, registerError } from '../../modules/auth/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { apiRegister } from '../../lib/api/auth/auth';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 const RegisterForm = ({ navigation, route }) => {
     // const [error1, setError1] = useState(null);
@@ -102,7 +102,7 @@ const RegisterForm = ({ navigation, route }) => {
                 setError4(null);
             }
         }
-        else {
+        if(name === 'isChecked1' || name === 'isChecked2' || name === 'isChecked3') {
           dispatch(
             changeField({
               form: "register",
@@ -117,17 +117,9 @@ const RegisterForm = ({ navigation, route }) => {
     const onPress = e => {
         e.preventDefault();
         const { userPhone, /*authNum, */password, passwordConfirm, userEmail, isChecked1, isChecked2, isChecked3 } = form;
-        
-        // // 하나라도 비어 있다면
-        // if([userPhone, authNum, password, passwordConfirm].includes('') && [isChecked1, isChecked2, isChecked3].includes(false)){
-        //     console.log('양식을 모두 입력하세요.');
-        //     setError('양식을 모두 입력하세요.');
-        //     return;
-        // }
 
         // 하나라도 비어 있다면
-        // if([userPhone, /*authNum, */password, passwordConfirm, userEmail].includes('') && [isChecked1, isChecked2, isChecked3].includes(false)){
-        if((userPhone.length===0 || password.length===0 || passwordConfirm.length===0 || userEmail.length===0) && (isChecked1 === false || isChecked2 === false || isChecked3 === false)){
+        if((userPhone.length===0 || password.length===0 || passwordConfirm.length===0 || userEmail.length===0) || (isChecked1 === false || isChecked2 === false || isChecked3 === false)){
             console.log("이메일 길이", userEmail.length);
             let arrayError = [];
             if (userPhone.length === 0) arrayError.push("휴대폰");
@@ -184,6 +176,9 @@ const RegisterForm = ({ navigation, route }) => {
 
             return;
         }
+        else{
+            setError5(null)
+        }
 
         // 비밀번호 불일치
         if(password.length>0 && passwordConfirm.length>0 && password !== passwordConfirm){
@@ -201,28 +196,36 @@ const RegisterForm = ({ navigation, route }) => {
             return;
         }
 
-
-        apiRegister({userPhone, password, userEmail})
-            .then(async (res) => {
-                if(res.result) {
-                    console.log("==================apiRegister.res.result==================", res.userInfo);
-                    dispatch(register(res.userInfo));
-                }
-                else{
-                    console.log(res.error);
-                    dispatch(registerError(res.error));
-                }
-            })
-            .catch((e) => {
-                console.log("apiRegister.catch - e:", e);
-            });
+        
+        if(error2 === null && error3 === null && error4 === null){
+            apiRegister({userPhone, password, userEmail})
+                .then(async (res) => {
+                    if(res.result) {
+                        console.log("==================apiRegister.res.result==================", res.userInfo);
+                        dispatch(register(res.userInfo));
+                    }
+                    else{
+                        console.log('apiRegister.res.result is false, error is : ', res.error);
+                        dispatch(registerError(res.error));
+                    }
+                })
+                .catch((e) => {
+                    console.log("apiRegister.catch - e:", e);
+                });
+        }
     };
 
     // 회원가입 성공 / 실패 처리
     const registerSuccessAlert = () => {
-        Alert.alert('알림', '정상적으로 회원가입 되었습니다.', [
-          { text: '확인', onPress: () => navigation.navigate("UserLoginPage") },
-        ]);
+        if(Platform.OS == 'android')
+            Alert.alert('알림', '정상적으로 회원가입 되었습니다.', [
+            { text: '확인', onPress: () => navigation.navigate("UserLoginPage") },
+            ]);
+        else if(Platform.OS == 'web'){
+            alert('정상적으로 회원가입 되었습니다.');
+            navigation.navigate("UserLoginPage");
+        }
+            
         return true;
     };
     useEffect(() => {
@@ -241,8 +244,8 @@ const RegisterForm = ({ navigation, route }) => {
                 return;
             }
             else if (authErrorDetail === '410'){
-                console.log('가입 실패: 관리자가 등록하지 않은 사용자(410)');
-                setError5('가입 실패: 관리자가 등록하지 않은 사용자(410)');
+                console.log('가입 실패: 담당자가 등록하지 않은 사용자(410)');
+                setError5('가입 실패: 담당자가 등록하지 않은 사용자(410)\n강사 혹은 담당자에게 문의해주세요!!');
                 return;
             }
             else if(authErrorDetail === '500'){

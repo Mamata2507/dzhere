@@ -31,13 +31,28 @@ const LoginForm = ({ navigation, route }) => {
       console.log("onChangeText");
       console.log(e);
       const { value, name } = e;
-      dispatch(
-        changeField({
-          form: "login",
-          key: name,
-          value: value,
-        })
-      );
+
+      if(name === 'userPhone'){
+        let regexpUserPhone = /^[0-9]{0,11}$/;
+        if (regexpUserPhone.test(value)) {
+          console.log("userPhone 입력 : ", value);
+          dispatch(
+            changeField({
+              form: "login",
+              key: name,
+              value: value,
+            })
+          );
+        } else console.log("userPhone - 숫자 아닌 값 입력 : ", value);
+      }
+      if(name === 'password')
+        dispatch(
+          changeField({
+            form: "login",
+            key: name,
+            value: value,
+          })
+        );
     };
 
     // 로그인 버튼(onPress) 이벤트 핸들러
