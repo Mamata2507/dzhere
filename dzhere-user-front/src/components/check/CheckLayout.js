@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView } from 'react-native';
-import { ButtonView, StyledButtons, StyledSelect, StyledText, StyledClassList } from './CheckStyledLayout';
+import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView, Button, TouchableOpacity, Alert, Platform } from 'react-native';
+import { ButtonView, StyledButtons, StyledSelect, StyledText, StyledClassList, StyledRefreshButtons } from './CheckStyledLayout';
 import moment from 'moment';
 import 'moment/locale/ko';  // 자동으로 한국시간을 가져온다. 하지만 명확히 하기 위해 import
 
@@ -12,27 +12,37 @@ import exit_icon from '../../../assets/check/exit.png';
 import exit_disable_icon from '../../../assets/check/exit_gray.png';
 import clock_icon from '../../../assets/check/clock.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import refresh_icon from '../../../assets/check/refresh.png';
 
-export const Header = () => {
+export const Header = ({onRefresh}) => {
   return (
+    <>    
     <View style={styles.container}>
+      <View style={{alignSelf:'flex-end', marginRight:15}}>                
+        <TouchableOpacity onPress={onRefresh}>
+          <Image source={refresh_icon} />
+        </TouchableOpacity>
+      </View>
       <Image
         style={styles.headerImage}
         source={logo}
       />
     </View>
+    </>
   );
 };
 
-const Item = ( {label,attendState} ) => (
+const Item = ( {label,attendState,source} ) => (
   <View style={styles.footer}>
-    <View style={[{flexDirection:'row',height:70} ,styles.centerAlign]}>
-      <Image source={check_icon}/>
-      <Image source={clock_icon} style={{width:15,height:15}}/>
+    <View style={(Platform.OS==='android')?[{flexDirection:'row',height:70} ,styles.centerAlign]
+      : [{flexDirection:'row',height:100} ,styles.centerAlign]}>
+      {(Platform.OS==='web')&&(<Text style={{fontSize:30}}>{attendState}</Text>)}
+      <Image source={check_icon} />
+      <Image source={clock_icon} style={{width:15,height:15,alignSelf:'baseline'}}/>
       <Text style={styles.footerText}>{label}</Text>
     </View>
     <View style={{flexDirection:'row'}}>
-      <Text style={{fontSize:30}}>{attendState}</Text>
+      {(Platform.OS==='android')&&(<Text style={{fontSize:30}}>{attendState}</Text>)}
     </View>
   </View>
 );
@@ -40,7 +50,7 @@ const Item = ( {label,attendState} ) => (
 export const Contents = ({onPressStartTime, onPressExitTime, classList, classTime, endtime, attendList, btnDisable, onPressLeaveTime, exitBtnDisable}) => {
   
   const renderItem = ({item}) => (
-    <Item label={item.time} attendState={item.attendState}/>
+    <Item label={item.time} attendState={item.attendState} source={item.source}/>
   );
   
   var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
@@ -63,8 +73,8 @@ export const Contents = ({onPressStartTime, onPressExitTime, classList, classTim
         <StyledButtons title={'조퇴'} source={(!exitBtnDisable)?exit_icon:exit_disable_icon} disabled={exitBtnDisable} onPress={onPressLeaveTime}/>
         <StyledButtons title={'퇴실'} source={(!exitBtnDisable)?check_icon:check_disable_icon} disabled={exitBtnDisable} onPress={onPressExitTime}/>
       </ButtonView>
-      <SafeAreaView style={[styles.mySafeArea,styles.myScrollView]}>        
-          {(attendList)?<><FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/></>:<><Text>{'...'}</Text></>}
+      <SafeAreaView style={(Platform.OS==='android')?[styles.mySafeArea,styles.myScrollView]:{width:'50%'}}>        
+          {(attendList)?<><FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem} source={check_disable_icon}/></>:<><Text>{'...'}</Text></>}
           {/* <FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/> */}
       </SafeAreaView>      
     </View>    
@@ -89,7 +99,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 190,
+    height: 160,
   },
   headerImage: {
     width: 100,
@@ -126,7 +136,9 @@ const styles = StyleSheet.create({
     width:'100%'
   },
   myScrollView: {
-    backgroundColor:'pink',
+    backgroundColor:'white',
     width:'100%'
   }
+
+  
 });

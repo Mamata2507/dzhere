@@ -9,6 +9,7 @@ import client from '../../lib/api/client';
 import { apiLogout } from '../../lib/api/auth/auth';
 import { Header, Contents, Footer } from '../../components/check/CheckLayout';
 import CheckContainer from '../../containers/check/CheckContainer';
+import CheckHeaderContainer from '../../containers/check/CheckHeaderContainer';
 
 const check_index = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -114,9 +115,9 @@ const check_index = ({ navigation, route }) => {
     //     </Text>
     //   </View>
     // </SafeAreaView>
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Header />
-      <CheckContainer />
+    <View style={{ flex: 1,  backgroundColor: 'white' }}>
+      <CheckHeaderContainer/>
+      <CheckContainer/>
       {/* <Footer/> */}
       <View>
         <TouchableOpacity

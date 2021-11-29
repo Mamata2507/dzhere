@@ -24,11 +24,13 @@ import ReduxThunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
   rootReducer, 
   // composeWithDevTools(), 
   applyMiddleware(ReduxThunk, sagaMiddleware)
-);
+)
+
 
 // // saga실행
 // sagaMiddleware.run(rootSaga);

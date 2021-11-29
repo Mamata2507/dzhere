@@ -29,7 +29,6 @@ const sagaMiddleware = createSagaMiddleware();
 const logger = createLogger();
 const store = createStore(
   rootReducer, 
-  composeWithDevTools(), 
   applyMiddleware(logger, ReduxThunk, sagaMiddleware)
 );
 

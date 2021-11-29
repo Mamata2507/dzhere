@@ -31,18 +31,15 @@ export const styles = StyleSheet.create({
         height: 100
     },
     contents: {
-        flex: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        height: '60%',
-        width: '100%',
     },
     footer: {
         flex: 5,
         top: 5,
         bottom: 5,
         backgroundColor: '#CEEDFF',
-        height: '30%',
+        
         width: '100%',
     },
     head: { height: 40, backgroundColor: '#f1f8ff' },
