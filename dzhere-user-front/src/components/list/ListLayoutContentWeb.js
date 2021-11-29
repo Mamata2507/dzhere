@@ -27,8 +27,7 @@ const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthCha
                     }                        
                     </DataTable.Header>
                     {
-                        (attendCnt)&&
-                        <>
+                        (attendCnt)&&                        
                         <DataTable.Row>
                             <DataTable.Cell numeric>{attendCnt.a_total_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_real_date_cnt}일</DataTable.Cell>
@@ -37,8 +36,7 @@ const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthCha
                             <DataTable.Cell numeric>{attendCnt.a_late_status_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{'100%(sample)'}일</DataTable.Cell>
-                        </DataTable.Row>                        
-                        </>                        
+                        </DataTable.Row>                                                                        
                     }
                 </DataTable>
             </View>

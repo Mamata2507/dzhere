@@ -28,7 +28,7 @@ const list_index = () => {
     //     </Text>
     //   </View>
     // </SafeAreaView>
-    <View style={{ flex: 1, padding: 15 ,width:'100%'}}>
+    <View style={{flex: 1, padding: 15 ,width:'100%'}}>
       <ListHeaderContainer />
       <ListContentContainer />
       <ListFooterContainer />

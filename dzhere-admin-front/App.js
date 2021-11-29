@@ -26,11 +26,10 @@ import ReduxThunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware();
-const logger = createLogger();
+// const logger = createLogger();
 const store = createStore(
   rootReducer, 
-  composeWithDevTools(), 
-  applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+  applyMiddleware( ReduxThunk, sagaMiddleware)  //logger   loge 미들웨어
 );
 
 // // saga실행

@@ -26,7 +26,7 @@ const days = [
 
 export const Header = ({classList}) => {    
     return (
-    <View style={{ alignSelf:'center',width:'100%', height:'15%'}}>
+    <View style={{alignSelf:'center',width:'100%', }}>
         <StyledText>지난 출석 현황</StyledText>
         <View style={styles.container}>
             <Text>{(classList)&&classList.c_name}</Text>        
