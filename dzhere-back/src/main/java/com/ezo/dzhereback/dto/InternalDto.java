@@ -12,17 +12,17 @@ public class InternalDto {
 	private String i_bssid;
 	private int ag_idx;
 	private int c_idx;
-	private String cl_name;
+	private String c_name;
 
 	@Builder
-	public InternalDto(int i_idx, String i_name, String i_ssid, String i_bssid, int ag_idx, int c_idx, String cl_name) {
+	public InternalDto(int i_idx, String i_name, String i_ssid, String i_bssid, int ag_idx, int c_idx, String c_name) {
 		this.i_idx = i_idx;
 		this.i_name = i_name;
 		this.i_ssid = i_ssid;
 		this.i_bssid = i_bssid;
 		this.ag_idx = ag_idx;
 		this.c_idx = c_idx;
-		this.cl_name = cl_name;
+		this.c_name = c_name;
 	}
 
 	public Internal toEntity() {

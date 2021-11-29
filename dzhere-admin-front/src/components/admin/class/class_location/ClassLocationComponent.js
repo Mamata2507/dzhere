@@ -18,16 +18,27 @@ const ClassLocationComponent = ({
   classList,
   onModalShow,
   onSubmit,
+  onChangeSubmit,
   hideModalShow,
   visible,
   onChangeType,
   onChangeSsid,
   onChangeBssid,
   onChangeLocation,
+  onChangeOldType,
+  onChangeOldSsid,
+  onChangeOldBssid,
+  onChangeOldLocation,
+  onUpdate,
   type,
   ssid,
   bssid,
-  location
+  location,
+  updates,
+  oldbssid,
+  oldlocation,
+  oldssid,
+  oldtype
 }) => {
   console.log(type);
   console.log(ssid);
@@ -163,6 +174,134 @@ const ClassLocationComponent = ({
             </TouchableOpacity>
           </Modal>
         </Portal>
+        {updates && 
+        <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModalShow}
+          contentContainerStyle={styles.modal}
+        >
+          <Text style={styles.modalText}>강의장소 등록</Text>
+          <View style={styles.lineContainer}>
+            <View style={styles.line} />
+          </View>
+          <View style={styles.picker}>
+            <Text style={({ width: "10%" }, styles.text)}>강의명</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                color: "#000000",
+              }}
+            >
+              {classname}
+            </Text>
+          </View>
+          <View style={styles.picker}>
+            <Text style={({ width: "10%" }, styles.text)}>장소명</Text>
+
+            <TextInput
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                color: "#000000",
+                width: "20%",
+                padding: 5,
+              }}
+              onChangeText={onChangeOldLocation}
+              value={oldlocation}
+              placeholder="장소명을 입력하세요"
+            />
+          </View>
+
+          <View style={styles.picker}>
+            <Text
+              style={{
+                height: 35,
+                margin: "13%",
+                fontWeight: "bold",
+              }}
+            >
+              기기종류
+            </Text>
+            <Text
+              style={{
+                height: 35,
+                margin: "15%",
+                fontWeight: "bold",
+              }}
+            >
+              SSID
+            </Text>
+            <Text
+              style={{
+                height: 35,
+                margin: "15%",
+                fontWeight: "bold",
+              }}
+            >
+              BSSID
+            </Text>
+          </View>
+          <View style={styles.table}>
+            <TextInput
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                backgroundColor: "white",
+                textAlign: "center",
+                justifyContent: "center",
+                width: "15%",
+                margin: "8%",
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onChangeText={onChangeOldType}
+              value={oldtype}
+            />
+            <TextInput
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                backgroundColor: "white",
+                textAlign: "center",
+                justifyContent: "center",
+                width: "25%",
+                margin: "5%",
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onChangeText={onChangeOldSsid}
+              value={oldssid}
+            />
+            <TextInput
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                backgroundColor: "white",
+                textAlign: "center",
+                justifyContent: "center",
+                width: "25%",
+                margin: "5%",
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onChangeText={onChangeOldBssid}
+              value={oldbssid}
+            />
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              { marginTop: 15, alignSelf: "center", width: "20%" },
+            ]}
+            onPress={onChangeSubmit}
+          >
+            <Text style={styles.btnText}>등록</Text>
+          </TouchableOpacity>
+        </Modal>
+      </Portal>
+        }
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View style={[styles.picker]}>
             <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
@@ -192,8 +331,14 @@ const ClassLocationComponent = ({
                   <DataTable.Title style={{ marginLeft: "10%" }}>
                     강의명
                   </DataTable.Title>
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
+                  <DataTable.Title style={{ marginLeft: "5%" }}>
                     장소명
+                  </DataTable.Title>
+                  <DataTable.Title>
+                    등록된 WIFI 명
+                  </DataTable.Title>
+                  <DataTable.Title>
+                    등록된 WIFI BSSID
                   </DataTable.Title>
                 </>
               )}
@@ -207,13 +352,15 @@ const ClassLocationComponent = ({
                       <>
                         <CheckBoxIcon item={item} style={styles.checkbox} />
                         <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                        <DataTable.Cell>{item.cl_name}</DataTable.Cell>
+                        <DataTable.Cell>{item.i_name}</DataTable.Cell>
                       </>
                     ) : (
                       <>
                         <CheckBoxIcon item={item} style={styles.checkbox} />
                         <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                        <DataTable.Cell>{item.cl_name}</DataTable.Cell>
+                        <DataTable.Cell>{item.i_name}</DataTable.Cell>
+                        <DataTable.Cell>{item.i_ssid}</DataTable.Cell>
+                        <DataTable.Cell>{item.i_bssid}</DataTable.Cell>
                       </>
                     )}
                   </DataTable.Row>
@@ -244,7 +391,7 @@ const ClassLocationComponent = ({
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
-              onPress={() => {}}
+              onPress={onUpdate}
             >
               <Text style={styles.btnText}>수정</Text>
             </TouchableOpacity>

@@ -85,6 +85,20 @@ public class ClassController {
 		return new Result(classinternalList);
 	}
 	
+	
+	//기관의 강의 내부장소 정보 리스트 호출
+		@PostMapping("/api/class/internal/update")
+		public Result updateClassInternal(@RequestBody InternalDto internalDto, UserDto userDto){  //ag_idx
+			classService.updateClassInternal(internalDto);
+			classService.updateClassLocation(internalDto);
+			userDto.setAg_idx(internalDto.getAg_idx());
+			List<InternalDto> classinternalList = classService.selectClassInternalList(userDto);
+			System.out.println(classinternalList);
+			return new Result(classinternalList);
+		}
+		
+	
+	
 //
 	// 강의명(Class) 등록
 	@PostMapping("/api/class/add")
@@ -99,12 +113,17 @@ public class ClassController {
 	@PostMapping("/api/class/time/add")
 	public Result addClasstime(@RequestBody ClasstimeDto classtimeDto, UserDto userDto){  //ag_idx
 		userDto.setAg_idx(classtimeDto.getAg_idx());
+		userDto.setC_idx(classtimeDto.getC_idx());
 		System.out.println(userDto.getAg_idx());
 //		classService.addClass(classtimeDto);
 //		int c_idx = classService.selectClassId(classtimeDto);
 //		System.out.println(c_idx);
+		// Classtime 테이블 insert
 		classService.addClasstime(classtimeDto);
+		// Classlocation 테이블 insert
 		classService.addClasslocation(classtimeDto.getC_idx());
+		// Internal 테이블 insert
+		classService.insertClassInternal(userDto);
 		List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userDto);
 		System.out.println(classtimeList);
 		return new Result(classtimeList);

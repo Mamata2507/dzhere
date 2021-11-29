@@ -38,7 +38,7 @@ export const getClasstimeList = (data) => {
 export const getClasslocationList = (data) => {
   console.log("강의 장소 목록(classlocation) 리스트 API 호출");
   return client
-    .post("/api/class/location/list", {
+    .post("/api/class/internal/list", {
       ag_idx: data.ag_idx,
     })
     .then(function (response) {
@@ -49,6 +49,7 @@ export const getClasslocationList = (data) => {
       console.log(error);
     });
 };
+
 
 // 관리자 기관의 강의 외부 장소 리스트(external) 가져오기
 export const getExternalList = (data) => {
@@ -151,13 +152,32 @@ export const setClasstime = (data) => {
 };
 
 
-// 강의 장소 (update) 등록하기
+// 강의 장소 등록하기
 export const setClassLocAdd = (data) => {
   console.log("강의(classlocation) 등록 API 호출");
   return client
     .post("/api/class/location/add", {
       c_idx: data.c_idx,
-      cl_name: data.cl_name,
+      i_name: data.i_name,
+      i_ssid: data.i_ssid,
+      i_bssid: data.i_bssid,
+      ag_idx: data.ag_idx,
+      // c_name: data.c_name,
+    })
+    .then(function (response) {
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+// 강의 장소 (update) 수정하기
+export const setClassLocUpdate = (data) => {
+  console.log("강의(internal) 수정 API 호출");
+  return client
+    .post("/api/class/internal/update", {
+      c_idx: data.c_idx,
       i_name: data.i_name,
       i_ssid: data.i_ssid,
       i_bssid: data.i_bssid,

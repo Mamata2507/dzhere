@@ -42,6 +42,10 @@ public class ClassService {
 	public List<InternalDto> selectClassInternalList(UserDto userdto) {
 		return classMapper.selectClassInternalList(userdto);
 	}
+
+	public void insertClassInternal(UserDto userdto) {
+		classMapper.insertClassInternal(userdto);
+	}
 	
 	public void addClass(ClassInfoDto classinfodto) {
 		classMapper.addClass(classinfodto);
@@ -61,6 +65,14 @@ public class ClassService {
 	
 	public void deleteClassInternal(int c_idx) {
 		classMapper.deleteClassInternal(c_idx);
+	}
+	
+	public void updateClassInternal(InternalDto internalDto) {
+		classMapper.updateClassInternal(internalDto);
+	}
+	
+	public void updateClassLocation(InternalDto internalDto) {
+		classMapper.updateClassLocation(internalDto);
 	}
 //	public void addClass(ClasstimeDto classtimedto) {
 //		classMapper.addClass(classtimedto);
