@@ -7,6 +7,7 @@ import client from '../../lib/api/client';
 
 const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
     console.log("AuthFormLogin");
+
     return (
       <>
         <StatusBar style="light" />

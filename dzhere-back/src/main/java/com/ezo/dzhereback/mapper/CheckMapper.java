@@ -19,10 +19,13 @@ public interface CheckMapper {
 //    int insertCheck(String attendTime, int u_idx);
     @Insert("insert into Attend(a_attend_time, a_late_status, u_idx)\n" +
             "values(now() ,if((DATE_FORMAT(#{attendTime},'%H:%i') > " +
-            "time_format((select ct_attend_endtime from Classtime where c_idx = #{c_idx}),'%H:%i')), 1, 0), 3)")
+            "time_format((select ct_attend_endtime from Classtime where c_idx = #{c_idx}),'%H:%i')), 1, 0), #{u_idx})")
     int insertCheck(String attendTime, int u_idx, int c_idx);
 
-    @Update("update Attend set a_exit_time = #{attendTime}, a_leave = 1 where a_today_date = #{attendDate} and u_idx = #{u_idx}")
+    //  update Attend set a_exit_time = #{attendTime}, a_leave = 1 where a_today_date = #{attendDate} and u_idx = #{u_idx}
+    @Update("update Attend \n" +
+            "set a_exit_time = #{attendTime}, a_result_time = timediff(DATE_FORMAT(now(),'%H:%i:%m'), DATE_FORMAT(a_attend_time,'%H:%i:%m')) \n" +
+            "where a_today_date = #{attendDate} and u_idx = #{u_idx}")
     int insertCheckLeave(String attendDate,String attendTime, int u_idx);
 
     @Update("update Attend set a_exit_time = #{attendTime} where a_today_date = #{attendDate} and u_idx = #{u_idx}")
