@@ -21,13 +21,20 @@ const check_index = ({ navigation, route }) => {
 
   // 뒤로가기 앱 종료
   const backAction = () => {
+    if (!navigation.isFocused()) {
+      return false;
+    }
     Alert.alert('잠깐!', 'App을 정말로 종료 하시겠어요?', [
       {
         text: '아니오',
         onPress: () => null,
         style: 'cancel',
       },
-      { text: '네', onPress: () => BackHandler.exitApp() },
+      { text: '네', onPress: () => {
+          
+          BackHandler.exitApp()
+        }
+      },
     ]);
     return true;
   };
@@ -57,7 +64,7 @@ const check_index = ({ navigation, route }) => {
     //       </Text>
 
     //       <Text>토큰 정보 : {'\n'+String(userInfo.token)}</Text>
-          
+
     //       <TouchableOpacity
     //         onPress={() => {
     //             apiLogout()
@@ -107,10 +114,59 @@ const check_index = ({ navigation, route }) => {
     //     </Text>
     //   </View>
     // </SafeAreaView>
-    <View style={{ flex: 1,  backgroundColor: 'white' }}>
-      <Header/>
-      <CheckContainer/>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <Header />
+      <CheckContainer />
       {/* <Footer/> */}
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            apiLogout()
+              .then(async (res) => {
+                if (res.result) {
+                  console.log("result : ", res.message);
+                  dispatch(logout());
+                  try {
+                    await AsyncStorage.clear();
+                    client.defaults.headers.common["Authorization"] = "";
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "UserLoginPage" }],
+                    });
+                  } catch (e) {
+                    console.log("Storage is not working : ", e);
+                  }
+                } else {
+                  console.log(res.message);
+                  dispatch(logout());
+                  try {
+                    await AsyncStorage.clear();
+                    client.defaults.headers.common["Authorization"] = "";
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "UserLoginPage" }],
+                    });
+                  } catch (e) {
+                    console.log("Storage is not working : ", e);
+                  }
+                }
+              })
+              .catch((e) => {
+                console.log("apiLogout.catch - e:", e);
+              });
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              textAlign: "center",
+              marginBottom: 16,
+            }}
+          >
+            로그아웃
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
