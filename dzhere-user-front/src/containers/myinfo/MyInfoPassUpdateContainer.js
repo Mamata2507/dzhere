@@ -1,136 +1,105 @@
 import { Contents } from '../../components/myinfo/MyInfoPassUpdate'
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert, Platform } from 'react-native';
-import { getPw, updatePw } from '../../modules/myinfo/myInfo'
+import { Alert } from 'react-native';
+import { checkPw, updatePw } from '../../modules/myinfo/myInfo'
 import { useNavigation } from '@react-navigation/native'
-import { changeField } from '../../modules/myinfo/myInfo';
 
 const MyInfoPassUpdateContainer = () => {
 
-  const [error1, setError1] = useState(null);
-  const [error2, setError2] = useState(null);
-  const [error3, setError3] = useState(null);
-  const [passwordTemp, setPasswordTemp] = useState('');
+  const navigation = useNavigation();
+
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordConfirmError, setPasswordConfirmError] = useState('');
+  const [emptyError, setEmptyError] = useState('');
+  const [checkError1, setCheckError1] = useState('');
+  const [checkError2, setCheckError2] = useState('');
+  const [edit, setEdit] = useState(true);
 
   const dispatch = useDispatch();
 
-  const { phone, myInfoError } = useSelector(({ auth, myinfo }) => ({
+  const { phone, check, loadingCheck } = useSelector(({ auth, myinfo, loading }) => ({
     phone: auth.userInfo.userPhone,
-    myInfoError: myinfo.myInfoError
+    check: myinfo.check,
+    loadingCheck: loading['myinfo/CHECK_PW'],
   }));
 
-  // TextInput 값 변경 이벤트 핸들러
-  const onChangeText = e => {
-    console.log('onChange : ', e);
-    const { value, name } = e;
-    if(name === 'currentPassword' || name === 'newPassword'){
-      let regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
-      console.log('password 입력 : ', value);
-      dispatch(
-        changeField({
-          key: name,
-          value: value,
-        })
-      );
-      setPasswordTemp(value);
-
-      if(value.length>0 && false === regex.test(value)){
-        setError1('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
-        console.log('비밀번호 유효성 체크(error) : ', error1);
-      }else{
-          setError2(null);
-      }
+  console.log('기존 비밀번호'+currentPassword);
+  console.log('새 비밀번호'+newPassword);
+  console.log('비밀번호 확인'+passwordConfirm);
+  
+  function onPress(){
+    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
+  
+    if(newPassword.length > 0 && regex.test(newPassword) === false ){
+      setNewPasswordError('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.')
+      console.log('비밀번호 유효성 체크(새 비밀번호) : ', newPasswordError);
+    } else {
+      setNewPasswordError('');
     }
-    if(name === 'passwordConfirm'){
-      console.log('passwordConfirm 입력 : ', value);
-      dispatch(
-          changeField({
-              key: name,
-              value: value,
-          })
-      );
-      if(passwordTemp.length>0 && value.length>0 && passwordTemp !== value){
-          setError2('비밀번호가 일치하지 않습니다.');
-          console.log('비밀번호 확인 유효성 체크(error2) : ', error2);
-      }
-      else{
-          setError2(null);
-      }
+  
+    if(passwordConfirm.length > 0 && passwordConfirm !== newPassword){
+      setPasswordConfirmError('비밀번호가 일치하지 않습니다')
+      console.log('비밀번호 확인 유효성 체크(비밀번호 확인) : ', passwordConfirmError);
+    } else {
+      setPasswordConfirmError('');
+    }
+
+    if(currentPassword === '' || newPassword === '' || passwordConfirm === ''){
+      setEmptyError('빈 항목이 있습니다.')
+    } else {
+      setEmptyError('');
+    }
+
+    if(edit === true){
+      setCheckError2('기존 비밀번호를 확인해주세요.')
+    } else {
+      setCheckError2('');
+    }
+
+    if(newPasswordError === '' && passwordConfirmError === '' && 
+      emptyError === '' && checkError1 === '' && checkError2 === '' && edit === false){
+      dispatch(updatePw({newPassword, phone}));
+      Alert.alert('비밀번호가 성공적으로 변경되었습니다.');
+      setTimeout(()=>{
+        navigation.goBack()
+      }, 800);
+    }
+
+  }
+
+  const onCheck = () => {
+    dispatch(checkPw({currentPassword, phone}));
+    if((currentPassword) && check === true){
+      setCheckError1('')
+      setEdit(false)
+    } 
+    else if(currentPassword !== '') {
+      setCheckError1((()=>('비밀번호가 일치하지 않습니다')))
     }
   }
 
-  // 버튼 onPress 이벤트 핸들러
-  const onPress = e => {
-    e.preventDefault();
-    // currentPassword, newPassword, passwordConfirm
 
-    // 하나라도 비어 있다면
-    if((currentPassword.length === 0 || newPassword === 0 || passwordConfirm === 0)){
-      let arrayError = [];
-      if (currentPassword.length === 0) arrayError.push('기존 비밀번호');
-      else if (arrayError.includes('기존 비밀번호')){
-        arrayError.splice(arrayError.indexOf('기존 비밀번호'), 1);
-      }
-      if (newPassword.length === 0) arrayError.push('새 비밀번호');
-      else if (arrayError.includes('새 비밀번호')){
-        arrayError.splice(arrayError.indexOf('새 비밀번호'), 1);
-      }
-      if (passwordConfirm.length === 0) arrayError.push('새 비밀번호');
-      else if (arrayError.includes('비밀번호 확인')){
-        arrayError.splice(arrayError.indexOf('비밀번호 확인'), 1);
-      }
-    }
-
-    const strError = '필수항목 미입력\n: '+arrayError.toString();
-
-    setError1(null);
-    setError2(null);
-    setError3(strError);
-    console.log('미입력 유효성 체크(error3) : ', error3);
-  }
-
-  // 비밀번호 불일치
-  if(newPassword.length > 0 && passwordConfirm.length > 0 && newPassword !== passwordConfirm){
-    dispatch(changeField({ key: 'newPassword', value: '' }));
-    dispatch(changeField({ key: 'passwordConfirm', value: '' }));
-    
-    // setError1(null);
-    setError1(null);
-    setError2(null);
-
-    console.log('비밀번호가 일치하지 않습니다.');
-    setError3('비밀번호가 일치하지 않습니다.');
-
-    return;    
-  }
-
-  // 200번줄부터 시작
-  // 1. 기존 비번 동일한가? 암호화, 복호화?
-  // 2. 새로운 비번으로 업데이트
-  
-  // if(error2 === null && error3 === null && error4 === null){
-  //   apiRegister({userPhone, password, userEmail})
-  //       .then(async (res) => {
-  //           if(res.result) {
-  //               console.log("==================apiRegister.res.result==================", res.userInfo);
-  //               dispatch(register(res.userInfo));
-  //           }
-  //           else{
-  //               console.log('apiRegister.res.result is false, error is : ', res.error);
-  //               dispatch(registerError(res.error));
-  //           }
-  //       })
-  //       .catch((e) => {
-  //           console.log("apiRegister.catch - e:", e);
-  //       });
-  // }
-  
-
-  
   return (
       <Contents
-
+        currentPassword={currentPassword}
+        setCurrentPassword={setCurrentPassword}
+        newPassword={newPassword}
+        setNewPassword={setNewPassword}
+        passwordConfirm={passwordConfirm}
+        setPasswordConfirm={setPasswordConfirm}
+        newPasswordError={newPasswordError}
+        passwordConfirmError={passwordConfirmError}
+        onPress={onPress}
+        emptyError={emptyError}
+        checkError1={checkError1}
+        onCheck={onCheck}
+        loadingCheck={loadingCheck}
+        checkError2={checkError2}
+        edit={edit}
       />
   );
 };

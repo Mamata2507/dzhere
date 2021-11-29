@@ -1,8 +1,8 @@
 import { Contents } from '../../components/myinfo/MyInfoEmailUpdate'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Platform } from 'react-native';
-import { updateEmail } from '../../modules/myinfo/myInfo'
+import { getEmail, updateEmail } from '../../modules/myinfo/myInfo'
 import { useNavigation } from '@react-navigation/native'
 
 const MyInfoEmailUpdateContainer = () => {
@@ -11,10 +11,17 @@ const MyInfoEmailUpdateContainer = () => {
 
   const dispatch = useDispatch();
 
-  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const email = useSelector(({ auth }) => auth.userInfo.userEmail);
+  const { email, loadingEmail, phone } = useSelector(({ myinfo, loading, auth }) => ({
+    email: myinfo.email,
+    loadingEmail: loading['myinfo/GET_EMAIL'],
+    phone: auth.userInfo.userPhone,
+  }));
 
   const [newEmail, onChangeNewEmail] = React.useState('');
+
+  useEffect(() => {
+    dispatch(getEmail(phone));
+  }, []);
 
   function onPress(){
       if (Platform.OS === 'web') {
@@ -26,7 +33,7 @@ const MyInfoEmailUpdateContainer = () => {
           onChangeNewEmail('');
           setTimeout(()=>{
             navigation.goBack()
-          }, 800);
+          }, 500);
         }
     } else {
         if(newEmail === ''){
@@ -37,7 +44,7 @@ const MyInfoEmailUpdateContainer = () => {
           onChangeNewEmail('');
           setTimeout(()=>{
             navigation.goBack()
-          }, 800);
+          }, 500);
         }
     }
   }
@@ -46,6 +53,7 @@ const MyInfoEmailUpdateContainer = () => {
       // Login -> 컨테이너의 자식 컴포넌트
       <Contents
         email={email}
+        loadingEmail={loadingEmail}
         onPress={onPress}
         newEmail={newEmail}
         onChangeNewEmail={onChangeNewEmail}
