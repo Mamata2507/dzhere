@@ -11,11 +11,13 @@ const MyInfoPassUpdateContainer = () => {
 
   const dispatch = useDispatch();
 
-  const { pw, loadingPw, phone } = useSelector(({ myinfo, loading }) => ({
+  const { pw, phone } = useSelector(({ myinfo, auth }) => ({
     pw: myinfo.pw,
-    loadingPw: loading.GET_PW,
-    phone: myinfo.phone,
+    phone: auth.userInfo.userPhone
   }));
+
+  console.log('패스워드==============');
+  console.log(pw);
 
   // 기존 비밀번호 체크
   const [pwCk1, onChangePwCk1] = React.useState('');
@@ -33,7 +35,7 @@ const MyInfoPassUpdateContainer = () => {
     if (Platform.OS === 'web') {
       if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
         alert('빈 항목이 있습니다.');
-      } else if(!loadingPw && pw && pwCk1 !== pw.u_pw){
+      } else if(pw && pwCk1 !== pw.u_pw){
         alert('기존 비밀번호 정보가 틀립니다.');
       } else if(newPw !== pwCk2){
         alert('비밀번호 확인 정보가 틀립니다.');
@@ -47,7 +49,7 @@ const MyInfoPassUpdateContainer = () => {
     } else {
       if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
         Alert.alert('빈 항목이 있습니다.');
-      } else if(!loadingPw && pw && pwCk1 !== pw.u_pw){
+      } else if(pw && pwCk1 !== pw.u_pw){
         Alert.alert('기존 비밀번호 정보가 틀립니다.');
       } else if(newPw !== pwCk2){
         Alert.alert('비밀번호 확인 정보가 틀립니다.');
