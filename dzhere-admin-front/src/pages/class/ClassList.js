@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ClassListContainer from '../../../containers/admin/class/ClassListContainer';
+import ClassListContainer from '../../containers/class/ClassListContainer';
 
 const ClassList = () => {
   return (

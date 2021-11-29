@@ -9,14 +9,21 @@ import {
   Image,
   Text,
   Linking,
+  TouchableOpacity
 } from "react-native";
+
+import { useDispatch } from "react-redux";
 
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { apiLogout } from "../../lib/api/auth/auth";
+import { logout } from "../../modules/auth/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import client from "../../lib/api/client";
 
 const CustomSidebarMenu = (props) => {
   const [pressClass, setPressClass] = useState(false);
@@ -58,6 +65,9 @@ const CustomSidebarMenu = (props) => {
   //   },
   //   [colors],
   // )
+
+  const dispatch = useDispatch();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#40cae9" }}>
       {/*Top Large Image */}
@@ -195,6 +205,53 @@ const CustomSidebarMenu = (props) => {
           <></>
         )}
       </DrawerContentScrollView>
+      <TouchableOpacity
+        onPress={() => {
+          apiLogout()
+            .then(async (res) => {
+              if (res.result) {
+                console.log("result : ", res.message);
+                dispatch(logout());
+                try {
+                  await AsyncStorage.clear();
+                  client.defaults.headers.common["Authorization"] = "";
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: "AdminLoginPage" }],
+                  });
+                } catch (e) {
+                  console.log("Storage is not working : ", e);
+                }
+              } else {
+                console.log(res.message);
+                dispatch(logout());
+                try {
+                  await AsyncStorage.clear();
+                  client.defaults.headers.common["Authorization"] = "";
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: "UserLoginPage" }],
+                  });
+                } catch (e) {
+                  console.log("Storage is not working : ", e);
+                }
+              }
+            })
+            .catch((e) => {
+              console.log("apiLogout.catch - e:", e);
+            });
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 25,
+            textAlign: "center",
+            marginBottom: 16,
+          }}
+        >
+          로그아웃
+        </Text>
+      </TouchableOpacity>
       <Text style={{ fontSize: 16, textAlign: "center", color: "grey" }}>
         더존HERE
       </Text>

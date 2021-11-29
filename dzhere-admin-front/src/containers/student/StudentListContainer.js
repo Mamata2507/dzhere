@@ -1,5 +1,5 @@
 import React from 'react';
-import { Contents } from '../../../components/admin/student/StudentList'
+import { Contents } from '../../components/student/StudentList'
 
 const StudentContainer = () => {
 

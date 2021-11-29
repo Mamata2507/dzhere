@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Header } from '../../../components/common/Header' 
-import { Footer } from '../../../components/common/Footer' 
-import StudentContainer from '../../../containers/admin/student/StudentListContainer'
+import { Header } from '../../components/common/Header' 
+import { Footer } from '../../components/common/Footer' 
+import StudentContainer from '../../containers/student/StudentListContainer'
 
 const StudentManage = ({ navigation }) => {
     return (

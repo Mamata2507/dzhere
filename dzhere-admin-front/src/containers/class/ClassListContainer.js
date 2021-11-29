@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ClassListComponent from "../../../components/admin/class/ClassListComponent";
+import ClassListComponent from "../../components/class/ClassListComponent";
 import { Dimensions } from "react-native";
 
 const ClassListContainer = () => {
