@@ -28,7 +28,7 @@ const Item = ( {label,attendState} ) => (
   <View style={styles.footer}>
     <View style={[{flexDirection:'row',height:70} ,styles.centerAlign]}>
       <Image source={check_icon}/>
-      <Image source={clock_icon} style={{width:15,height:15}}/>    
+      <Image source={clock_icon} style={{width:15,height:15}}/>
       <Text style={styles.footerText}>{label}</Text>
     </View>
     <View style={{flexDirection:'row'}}>
@@ -45,7 +45,7 @@ export const Contents = ({onPressStartTime, onPressExitTime, classList, classTim
   
   var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
 
-  return (
+  return (    
     <View style={styles.contents}>
       <StyledText >출석 체크</StyledText>
       <StyledClassList>{(classList)?classList.c_name:'수강중인 수업이 없습니다.'}</StyledClassList>
@@ -66,8 +66,8 @@ export const Contents = ({onPressStartTime, onPressExitTime, classList, classTim
       <SafeAreaView style={[styles.mySafeArea,styles.myScrollView]}>        
           {(attendList)?<><FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/></>:<><Text>{'...'}</Text></>}
           {/* <FlatList style={{marginBottom:10}} data={attendList} keyExtractor={v=>v.id} renderItem={renderItem}/> */}
-      </SafeAreaView>
-    </View>
+      </SafeAreaView>      
+    </View>    
   );
 };
 
