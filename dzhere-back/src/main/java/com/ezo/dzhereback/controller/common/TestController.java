@@ -1,11 +1,11 @@
-package com.ezo.dzhereback.controller.user;
+package com.ezo.dzhereback.controller.common;
 
 import com.ezo.dzhereback.domain.Attend;
 import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.dto.TestDto;
 import com.ezo.dzhereback.dto.UserTestDto;
-import com.ezo.dzhereback.service.TestService;
+import com.ezo.dzhereback.service.common.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

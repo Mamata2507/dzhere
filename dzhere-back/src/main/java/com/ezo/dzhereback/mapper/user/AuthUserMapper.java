@@ -1,4 +1,4 @@
-package com.ezo.dzhereback.mapper;
+package com.ezo.dzhereback.mapper.user;
 
 import com.ezo.dzhereback.domain.Member;
 import org.apache.ibatis.annotations.Mapper;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
-public interface AuthMapper {
+public interface AuthUserMapper {
     @Update("update User set u_pw=#{member.u_pw}, u_email=#{member.u_email}, u_accept=1 where u_phone=#{member.u_phone}")
     int join(@Param("member") Member member);
 

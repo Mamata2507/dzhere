@@ -1,7 +1,7 @@
-package com.ezo.dzhereback.service;
+package com.ezo.dzhereback.service.user;
 
 import com.ezo.dzhereback.domain.Member;
-import com.ezo.dzhereback.mapper.AuthMapper;
+import com.ezo.dzhereback.mapper.user.AuthUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,35 +11,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class AuthService {
-    private final AuthMapper authMapper;
+public class AuthUserService {
+    private final AuthUserMapper authUserMapper;
 
     @Autowired
-    public AuthService(AuthMapper authMapper) {
-        this.authMapper = authMapper;
+    public AuthUserService(AuthUserMapper authUserMapper) {
+        this.authUserMapper = authUserMapper;
     }
 
     public int join(final Member member) {
         final String u_phone = member.getU_phone();
 
-        if (!authMapper.existsByPhone(u_phone))
+        if (!authUserMapper.existsByPhone(u_phone))
             throw new RuntimeException("가입 불가 : 관리자가 등록하지 않은 사용자,410");
-        else if (authMapper.findAcceptByPhone(u_phone) == 1) {
+        else if (authUserMapper.findAcceptByPhone(u_phone) == 1) {
             throw new RuntimeException("가입 불가 : 이미 가입한 회원,409");
         }
         else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             member.setU_pw(passwordEncoder.encode(member.getU_pw()));
-            return authMapper.join(member);
+            return authUserMapper.join(member);
         }
     }
 
     public Member findRegisteredMemberByPhone(String u_phone) {
-        return authMapper.findRegisteredMemberByPhone(u_phone);
+        return authUserMapper.findRegisteredMemberByPhone(u_phone);
     }
 
     public Member getByCredentials(final String u_phone, final String u_pw, final PasswordEncoder passwordEncoder) {
-        final Member originalMember = authMapper.findByPhone(u_phone);
+        final Member originalMember = authUserMapper.findByPhone(u_phone);
 
         // 존재하는 아이디인지 확인
         if (originalMember != null)

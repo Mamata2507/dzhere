@@ -1,4 +1,4 @@
-package com.ezo.dzhereback.mapper;
+package com.ezo.dzhereback.mapper.user;
 
 import com.ezo.dzhereback.domain.AttendList;
 import com.ezo.dzhereback.domain.LoadAttendCnt;
@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 @Mapper
-public interface CheckMapper {
+public interface CheckUserMapper {
     @Select("select u_idx from User where u_phone = #{u_phone}")
     int getUidx(String u_phone);
 

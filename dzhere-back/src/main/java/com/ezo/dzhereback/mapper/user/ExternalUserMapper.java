@@ -1,4 +1,4 @@
-package com.ezo.dzhereback.mapper;
+package com.ezo.dzhereback.mapper.user;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.ezo.dzhereback.domain.*;
 import com.ezo.dzhereback.dto.ExternalSelectDto;
 
 @Mapper
-public interface ExternalMapper {
+public interface ExternalUserMapper {
 	// u_idx, c_idx 얻기
 	@Select("select u_idx, c_idx from User where u_phone=#{u_phone}")
 	Member findUser(@Param("u_phone") final String u_phone);

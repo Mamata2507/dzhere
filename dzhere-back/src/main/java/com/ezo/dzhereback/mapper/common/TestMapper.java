@@ -1,4 +1,4 @@
-package com.ezo.dzhereback.mapper;
+package com.ezo.dzhereback.mapper.common;
 
 import com.ezo.dzhereback.domain.Attend;
 import com.ezo.dzhereback.domain.Member;

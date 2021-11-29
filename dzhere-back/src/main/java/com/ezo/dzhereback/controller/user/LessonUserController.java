@@ -2,7 +2,7 @@ package com.ezo.dzhereback.controller.user;
 
 import com.ezo.dzhereback.domain.Lesson;
 import com.ezo.dzhereback.domain.Lessontime;
-import com.ezo.dzhereback.service.LessonService;
+import com.ezo.dzhereback.service.user.LessonUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,24 +16,24 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @Slf4j
-public class LessonController {
-    private final LessonService lessonService;
+public class LessonUserController {
+    private final LessonUserService lessonUserService;
     @Autowired
-    public LessonController(LessonService lessonService){
-        this.lessonService = lessonService;
+    public LessonUserController(LessonUserService lessonUserService){
+        this.lessonUserService = lessonUserService;
     }
     Iterator iterator;
 
     @GetMapping("/m/user/class")
     public Lesson AllLesson(@RequestParam("u_phone") String u_phone) {
-        int c_idx = lessonService.getCidx(u_phone);
-        return lessonService.getLesson(c_idx);
+        int c_idx = lessonUserService.getCidx(u_phone);
+        return lessonUserService.getLesson(c_idx);
     }
 
     @GetMapping("/m/user/class/time")
     public List<Lessontime> AllLessonTime(@RequestParam("u_phone") String u_phone) {
-        int c_idx = lessonService.getCidx(u_phone);
-        System.out.println(lessonService.getAllLessonTime(c_idx));
-        return lessonService.getAllLessonTime(c_idx);
+        int c_idx = lessonUserService.getCidx(u_phone);
+        System.out.println(lessonUserService.getAllLessonTime(c_idx));
+        return lessonUserService.getAllLessonTime(c_idx);
     }
 }

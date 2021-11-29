@@ -1,8 +1,8 @@
-package com.ezo.dzhereback.service;
+package com.ezo.dzhereback.service.common;
 
 import com.ezo.dzhereback.domain.Attend;
 import com.ezo.dzhereback.domain.Member;
-import com.ezo.dzhereback.mapper.TestMapper;
+import com.ezo.dzhereback.mapper.common.TestMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

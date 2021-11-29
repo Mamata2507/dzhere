@@ -1,4 +1,4 @@
-package com.ezo.dzhereback.mapper;
+package com.ezo.dzhereback.mapper.user;
 
 import com.ezo.dzhereback.domain.Lesson;
 import com.ezo.dzhereback.domain.Lessontime;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface LessonMapper {
+public interface LessonUserMapper {
     @Select("SELECT * FROM Class")
     List<Lesson> getLessonList();
 
