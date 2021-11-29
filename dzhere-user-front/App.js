@@ -18,14 +18,23 @@ return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (retu
 import React from "react";
 import Apps from "./src/App";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./src/modules/index";
+import rootReducer, {rootSaga} from "./src/modules/index";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
+const sagaMiddleware = createSagaMiddleware();
 const logger = createLogger();
-const store = createStore(rootReducer, composeWithDevTools(), applyMiddleware(logger, ReduxThunk));
+const store = createStore(
+  rootReducer, 
+  composeWithDevTools(), 
+  applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+);
+
+// saga실행
+sagaMiddleware.run(rootSaga);
 
 const App = () => {
   console.log("root App");

@@ -4,8 +4,6 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
-import CustomTextInput from '../auth/CustomTextInput'
-import ErrorMessage from "../auth/ErrorMessage";
 
 export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, onChangePwCk2, onPress }) => {
 
@@ -15,53 +13,36 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
       <View style={[styles.container, {height: 340, backgroundColor: '#CEEDFF', marginTop: 50}]}>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <CustomTextInput
-            name="currentPassword"
-            value={currentPassword}
-            onChangeText={onChangeText}
-            placeholder="기존 비밀번호"
-            maxLength={16}
-            keyboardType="default"
-            secureTextEntry={true}
-            style={styles.myInfoText}
+          <TextInput
+          secureTextEntry={true}
+          style={styles.myInfoText}
+          onChangeText={onChangePwCk1}
+          value={pwCk1}
+          placeholder="기존 비밀번호"
+          keyboardType="numeric"
           />
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-            {error1 && <ErrorMessage>{error1}</ErrorMessage>}
-        </View>
-
-        <View style={styles.myInfo}>
-          <IconButton type={images.email}/>
-          <CustomTextInput
-            name="newPassword"
-            value={newPassword}
-            onChangeText={onChangeText}
-            placeholder="새 비밀번호"
-            maxLength={16}
-            keyboardType="default"
-            secureTextEntry={true}
-            style={styles.myInfoText}
-          />
-        </View>
-        <View style={{ flexDirection: "row" }}>
-            {error2 && <ErrorMessage>{error2}</ErrorMessage>}
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <CustomTextInput
-            name="passwordConfirm"
-            value={passwordConfirm}
-            onChangeText={onChangeText}
-            placeholder="비밀번호 확인"
-            maxLength={16}
-            keyboardType="default"
-            secureTextEntry={true}
-            style={styles.myInfoText}
+          <TextInput
+          secureTextEntry={true}
+          style={styles.myInfoText}
+          onChangeText={onChangeNewPw}
+          value={newPw}
+          placeholder="새 비밀번호"
+          keyboardType="numeric"
           />
         </View>
-        <View style={{ flexDirection: "row" }}>
-            {error3 && <ErrorMessage>{error3}</ErrorMessage>}
+        <View style={styles.myInfo}>
+          <IconButton type={images.email}/>
+          <TextInput
+          secureTextEntry={true}
+          style={styles.myInfoText}
+          onChangeText={onChangePwCk2}
+          value={pwCk2}
+          placeholder="비밀번호 확인"
+          keyboardType="numeric"
+          />
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity

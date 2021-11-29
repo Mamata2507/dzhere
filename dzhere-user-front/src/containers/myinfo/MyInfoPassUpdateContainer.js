@@ -4,75 +4,133 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Platform } from 'react-native';
 import { getPw, updatePw } from '../../modules/myinfo/myInfo'
 import { useNavigation } from '@react-navigation/native'
+import { changeField } from '../../modules/myinfo/myInfo';
 
 const MyInfoPassUpdateContainer = () => {
 
-  const navigation = useNavigation();
+  const [error1, setError1] = useState(null);
+  const [error2, setError2] = useState(null);
+  const [error3, setError3] = useState(null);
+  const [passwordTemp, setPasswordTemp] = useState('');
 
   const dispatch = useDispatch();
 
-  const { pw, phone } = useSelector(({ myinfo, auth }) => ({
-    pw: myinfo.pw,
-    phone: auth.userInfo.userPhone
+  const { phone, myInfoError } = useSelector(({ auth, myinfo }) => ({
+    phone: auth.userInfo.userPhone,
+    myInfoError: myinfo.myInfoError
   }));
 
-  console.log('패스워드==============');
-  console.log(pw);
+  // TextInput 값 변경 이벤트 핸들러
+  const onChangeText = e => {
+    console.log('onChange : ', e);
+    const { value, name } = e;
+    if(name === 'currentPassword' || name === 'newPassword'){
+      let regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
+      console.log('password 입력 : ', value);
+      dispatch(
+        changeField({
+          key: name,
+          value: value,
+        })
+      );
+      setPasswordTemp(value);
 
-  // 기존 비밀번호 체크
-  const [pwCk1, onChangePwCk1] = React.useState('');
-  // 새로운 비밀번호
-  const [newPw, onChangeNewPw] = React.useState('');
-  // 비밀번호 확인
-  const [pwCk2, onChangePwCk2] = React.useState('');
-
-  useEffect(() => {
-    dispatch(getPw(phone));
-  }, []);
-  console.log(pw);
-
-  function onPress(){
-    if (Platform.OS === 'web') {
-      if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
-        alert('빈 항목이 있습니다.');
-      } else if(pw && pwCk1 !== pw.u_pw){
-        alert('기존 비밀번호 정보가 틀립니다.');
-      } else if(newPw !== pwCk2){
-        alert('비밀번호 확인 정보가 틀립니다.');
-      } else {
-        dispatch(updatePw({phone, newPw}));
-        alert('비밀번호가 성공적으로 변경되었습니다.');
-        setTimeout(()=>{
-          navigation.goBack()
-        }, 800);
+      if(value.length>0 && false === regex.test(value)){
+        setError1('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+        console.log('비밀번호 유효성 체크(error) : ', error1);
+      }else{
+          setError2(null);
       }
-    } else {
-      if(pwCk1 === '' || newPw === '' || pwCk2 === ''){
-        Alert.alert('빈 항목이 있습니다.');
-      } else if(pw && pwCk1 !== pw.u_pw){
-        Alert.alert('기존 비밀번호 정보가 틀립니다.');
-      } else if(newPw !== pwCk2){
-        Alert.alert('비밀번호 확인 정보가 틀립니다.');
-      } else {
-        dispatch(updatePw({phone, newPw}));
-        Alert.alert('비밀번호가 성공적으로 변경되었습니다.');
-        setTimeout(()=>{
-          navigation.goBack()
-        }, 800);
+    }
+    if(name === 'passwordConfirm'){
+      console.log('passwordConfirm 입력 : ', value);
+      dispatch(
+          changeField({
+              key: name,
+              value: value,
+          })
+      );
+      if(passwordTemp.length>0 && value.length>0 && passwordTemp !== value){
+          setError2('비밀번호가 일치하지 않습니다.');
+          console.log('비밀번호 확인 유효성 체크(error2) : ', error2);
+      }
+      else{
+          setError2(null);
       }
     }
   }
+
+  // 버튼 onPress 이벤트 핸들러
+  const onPress = e => {
+    e.preventDefault();
+    // currentPassword, newPassword, passwordConfirm
+
+    // 하나라도 비어 있다면
+    if((currentPassword.length === 0 || newPassword === 0 || passwordConfirm === 0)){
+      let arrayError = [];
+      if (currentPassword.length === 0) arrayError.push('기존 비밀번호');
+      else if (arrayError.includes('기존 비밀번호')){
+        arrayError.splice(arrayError.indexOf('기존 비밀번호'), 1);
+      }
+      if (newPassword.length === 0) arrayError.push('새 비밀번호');
+      else if (arrayError.includes('새 비밀번호')){
+        arrayError.splice(arrayError.indexOf('새 비밀번호'), 1);
+      }
+      if (passwordConfirm.length === 0) arrayError.push('새 비밀번호');
+      else if (arrayError.includes('비밀번호 확인')){
+        arrayError.splice(arrayError.indexOf('비밀번호 확인'), 1);
+      }
+    }
+
+    const strError = '필수항목 미입력\n: '+arrayError.toString();
+
+    setError1(null);
+    setError2(null);
+    setError3(strError);
+    console.log('미입력 유효성 체크(error3) : ', error3);
+  }
+
+  // 비밀번호 불일치
+  if(newPassword.length > 0 && passwordConfirm.length > 0 && newPassword !== passwordConfirm){
+    dispatch(changeField({ key: 'newPassword', value: '' }));
+    dispatch(changeField({ key: 'passwordConfirm', value: '' }));
+    
+    // setError1(null);
+    setError1(null);
+    setError2(null);
+
+    console.log('비밀번호가 일치하지 않습니다.');
+    setError3('비밀번호가 일치하지 않습니다.');
+
+    return;    
+  }
+
+  // 200번줄부터 시작
+  // 1. 기존 비번 동일한가? 암호화, 복호화?
+  // 2. 새로운 비번으로 업데이트
+  
+  // if(error2 === null && error3 === null && error4 === null){
+  //   apiRegister({userPhone, password, userEmail})
+  //       .then(async (res) => {
+  //           if(res.result) {
+  //               console.log("==================apiRegister.res.result==================", res.userInfo);
+  //               dispatch(register(res.userInfo));
+  //           }
+  //           else{
+  //               console.log('apiRegister.res.result is false, error is : ', res.error);
+  //               dispatch(registerError(res.error));
+  //           }
+  //       })
+  //       .catch((e) => {
+  //           console.log("apiRegister.catch - e:", e);
+  //       });
+  // }
+  
+
   
   return (
-      // Login -> 컨테이너의 자식 컴포넌트
       <Contents
-        pwCk1={pwCk1}
-        onChangePwCk1={onChangePwCk1}
-        newPw={newPw}
-        onChangeNewPw={onChangeNewPw}
-        pwCk2={pwCk2}
-        onChangePwCk2={onChangePwCk2}
-        onPress={onPress}
+
       />
   );
 };
