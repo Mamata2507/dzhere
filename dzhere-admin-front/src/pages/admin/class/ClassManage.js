@@ -1,19 +1,15 @@
 import * as React from "react";
-import ClassManageContainer from "../../../containers/admin/class/class_manage/ClassManageContainer";
+import { Platform } from "react-native";
+import ClassManageAndroidContainer from "../../../containers/admin/class/class_manage/ClassManageAndroidContainer";
+import ClassManageWebContainer from "../../../containers/admin/class/class_manage/ClassManageWebContainer";
 
 const ClassManagePage = () => {
-  return (
-      <ClassManageContainer />
-  );
+  return Platform.OS === "android" ? (
+      <ClassManageAndroidContainer
+      />
+    ) : (
+      <ClassManageWebContainer/>
+    );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
 
 export default ClassManagePage;

@@ -1,34 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getClasstimeList } from '../../../../lib/api/class/course';
-import { getClasstime } from '../../../../modules/admin/class/course';
-import ClassManageAndroid from '../../../../components/admin/class/class_manage/ClassManageAndroid';
+// import * as React from "react";
+// import { Platform } from "react-native";
+// import ClassManageAndroid from "./ClassManageAndroidContainer";
+// import ClassManageWeb from "./ClassManageWebContainer";
 
-const ClassManageContainer = () => {
-  const dispatch = useDispatch();
-  const [classtimeList, setClasstimeList] = useState(null); 
-  const agency = useSelector(({ classes }) => classes.agency);
-  
-  console.log(agency);
-  async function classtimeListApi() {
-    console.log('강의 리스트 불러오기');
-    const data = await getClasstimeList({ ag_idx: agency.ag_idx });
-    console.log(data);
-    setClasstimeList(data);
-    dispatch(getClasstime(classtimeList));
-  }
+// const ClassManagePage = () => {
+//   return Platform.OS === "android" ? (
+//       <ClassManageAndroidContainer
+//       />
+//     ) : (
+//       <ClassManageWebContainer/>
+//     );
+// };
 
-  useEffect(() => {
-    classtimeListApi();
-    console.log(classtimeList);
-  }, []);
-
-  return (
-      <ClassManageAndroid
-      agency={agency.ag_name}
-      classList={classtimeList}
-      />
-  );
-};
-
-export default ClassManageContainer;
+// export default ClassManagePage;

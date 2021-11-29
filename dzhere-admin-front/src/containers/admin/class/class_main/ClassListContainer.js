@@ -49,11 +49,11 @@ const ClassListContainer = () => {
     classListApi();
   }, []);
 
-  // useEffect(()=>{
-  //   if(isFocused){
-  //     setClassList(clist);
-  //   }
-  // },[classList])
+  useEffect(()=>{
+    if(isFocused){
+      classListApi();
+    }
+  },[isFocused])
 
   return (
     <ClassListComponent

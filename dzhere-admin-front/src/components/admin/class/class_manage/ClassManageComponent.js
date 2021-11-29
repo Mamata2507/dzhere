@@ -6,8 +6,6 @@
 // const ClassManageComponent = () => {
 //   return Platform.OS === "android" ? (
 //     <ClassManageAndroid
-//     agency={agency}
-//     classList={classList}
 //     />
 //   ) : (
 //     <ClassManageWeb/>

@@ -43,6 +43,51 @@ public class ClassService {
 		return classMapper.selectClassInternalList(userdto);
 	}
 	
+	public void addClass(ClassInfoDto classinfodto) {
+		classMapper.addClass(classinfodto);
+	}
+//	
+	public void deleteClassTime(int c_idx) {
+		classMapper.deleteClassTime(c_idx);
+	}
+	
+	public void deleteClassName(int c_idx) {
+		classMapper.deleteClassName(c_idx);
+	}
+	
+	public void deleteClasslocation(int c_idx) {
+		classMapper.deleteClasslocation(c_idx);
+	}
+	
+	public void deleteClassInternal(int c_idx) {
+		classMapper.deleteClassInternal(c_idx);
+	}
+//	public void addClass(ClasstimeDto classtimedto) {
+//		classMapper.addClass(classtimedto);
+//	}
+	
+	public int selectClassId(ClassInfoDto classinfodto) {
+		return classMapper.selectClassId(classinfodto);
+	}
+//	public int selectClassId(ClasstimeDto classtimedto) {
+//		return classMapper.selectClassId(classtimedto);
+//	}
+	
+	public void addClasstime(ClasstimeDto classtimedto) {
+		classMapper.addClasstime(classtimedto);
+	}
+
+	public void addClasslocation(int c_idx) {
+		classMapper.addClasslocation(c_idx);
+	}
+	
+	public void addClassLocation(InternalDto internalDto) {
+		classMapper.addClassLocation(internalDto);
+	}
+	
+	public void addClassInternal(InternalDto internalDto) {
+		classMapper.addClassInternal(internalDto);
+	}
 //	public void removeExternalId(External external) {
 //		externalMapper.removeExternalId(external);
 //	}

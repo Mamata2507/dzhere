@@ -21,7 +21,7 @@ const initialState = {
     ag_idx: 0,
     ag_name: "",
   },
-  classid: 0,
+  classid: null,
   checkid: false,
   itemId: {
     c_idx: 0,

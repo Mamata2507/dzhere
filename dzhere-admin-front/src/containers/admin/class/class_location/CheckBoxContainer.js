@@ -30,6 +30,7 @@ const CheckBoxIcon = ({ item, style }) => {
 
   useEffect(() => {
     if (isFocused) {
+      console.log("재접근");
       setSelection(false);
       dispatch(setCheck(false));
       dispatch(setValue(null));

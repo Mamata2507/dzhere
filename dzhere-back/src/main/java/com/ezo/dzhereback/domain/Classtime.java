@@ -20,10 +20,9 @@ public class Classtime {
     private String ct_break_start;
     private String ct_break_end;
     private int c_idx;
-    private String c_name;
 
     @Builder
-    public Classtime(int ct_idx, String ct_day, String ct_start_time, String ct_end_time, String ct_attend_starttime,String ct_attend_endtime, String ct_start_date, String ct_end_date, String ct_break_start, String ct_break_end, int c_idx, String c_name) {
+    public Classtime(int ct_idx, String ct_day, String ct_start_time, String ct_end_time, String ct_attend_starttime,String ct_attend_endtime, String ct_start_date, String ct_end_date, String ct_break_start, String ct_break_end, int c_idx) {
         this.ct_idx = ct_idx;
         this.ct_day = ct_day;
         this.ct_start_time = ct_start_time;
@@ -35,6 +34,5 @@ public class Classtime {
         this.ct_break_start = ct_break_start;
         this.ct_break_end = ct_break_end;
         this.c_idx = c_idx;
-        this.c_name = c_name; // 강의명
     }
 }

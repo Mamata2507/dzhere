@@ -32,6 +32,44 @@ public interface ClassListMapper {
 	
 	@Select("select * from Internal where c_idx=#{user.c_idx}")
 	List<InternalDto> selectClassInternalList(@Param("user") final UserDto userDto);
+	
+	
+//	@Insert("insert into Class(c_name, ag_idx) values (#{class.c_name}, #{class.ag_idx})")
+//	void addClass(@Param("class") final ClasstimeDto classtimeDto);
+	
+//	@Select("select c_idx from Class where c_name=#{class.c_name}")
+//	int selectClassId(@Param("class") final ClasstimeDto classtimeDto);
+	
+	@Insert("insert into Class(c_name, ag_idx) values (#{class.c_name}, #{class.ag_idx})")
+	void addClass(@Param("class") final ClassInfoDto classinfoDto);
+	
+	@Select("select c_idx from Class where c_name=#{class.c_name}")
+	int selectClassId(@Param("class") final ClassInfoDto classinfoDto);
+	
+	@Insert("insert into Classtime(ct_day, ct_start_time, ct_end_time, ct_attend_starttime, ct_attend_endtime, ct_start_date, ct_end_date, c_idx) values (#{class.ct_day}, #{class.ct_start_time}, #{class.ct_end_time}, #{class.ct_attend_starttime}, #{class.ct_attend_endtime}, #{class.ct_start_date},  #{class.ct_end_date}, #{class.c_idx})")
+	void addClasstime(@Param("class") final ClasstimeDto classtimeDto);
+	
+	@Insert("insert into Classlocation(c_idx) values(#{c_idx})")
+	void addClasslocation(@Param("c_idx") final int c_idx);
+	
+	@Delete("delete from Classtime where c_idx=#{c_idx}")
+	void deleteClassTime(@Param("c_idx") final int c_idx);
+	
+	@Delete("delete from Class where c_idx=#{c_idx}")
+	void deleteClassName(@Param("c_idx") final int c_idx);
+	
+	@Delete("delete from Classlocation where c_idx=#{c_idx}")
+	void deleteClasslocation(@Param("c_idx") final int c_idx);
+	
+	@Delete("delete from Internal where c_idx=#{c_idx}")
+	void deleteClassInternal(@Param("c_idx") final int c_idx);
+	
+	@Update("update Classlocation set cl_name=#{internal.cl_name} where c_idx=#{internal.c_idx}")
+	void addClassLocation(@Param("internal") final InternalDto internalDto);
+	
+	@Insert("insert into Internal(i_name, i_ssid, i_bssid, ag_idx, c_idx) values(#{i.i_name}, #{i.i_ssid}, #{i.i_bssid}, #{i.ag_idx}, #{i.c_idx})")
+	void addClassInternal(@Param("i") final InternalDto internalDto);
+	
 	//	// 소속 기관이 연 강의 정보(classtime) 리스트
 	//	@Select("select * from Classtime where c_idx in (select c_idx from Class where ag_idx=#{user.ag_idx})")
 	//	List<ClasstimeDto> selectClassTimeList(@Param("user") final UserDto userDto);

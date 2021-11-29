@@ -84,6 +84,70 @@ public class ClassController {
 		System.out.println(classinternalList);
 		return new Result(classinternalList);
 	}
+	
+//
+	// 강의명(Class) 등록
+	@PostMapping("/api/class/add")
+	public int addClass(@RequestBody ClassInfoDto classinfoDto){  //ag_idx
+		classService.addClass(classinfoDto);
+		int c_idx = classService.selectClassId(classinfoDto);
+		System.out.println(c_idx);
+		return c_idx;
+	}
+	
+	//강의(Classtime) 등록
+	@PostMapping("/api/class/time/add")
+	public Result addClasstime(@RequestBody ClasstimeDto classtimeDto, UserDto userDto){  //ag_idx
+		userDto.setAg_idx(classtimeDto.getAg_idx());
+		System.out.println(userDto.getAg_idx());
+//		classService.addClass(classtimeDto);
+//		int c_idx = classService.selectClassId(classtimeDto);
+//		System.out.println(c_idx);
+		classService.addClasstime(classtimeDto);
+		classService.addClasslocation(classtimeDto.getC_idx());
+		List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userDto);
+		System.out.println(classtimeList);
+		return new Result(classtimeList);
+	}
+	
+	//강의 삭제
+		@PostMapping("/api/class/delete")
+		public Result addClasstime(@RequestBody UserDto userDto, ClasstimeDto classtimeDto){  //ag_idx
+			classService.deleteClassTime(userDto.getC_idx());
+			classService.deleteClasslocation(userDto.getC_idx());
+			classService.deleteClassInternal(userDto.getC_idx());
+			classService.deleteClassName(userDto.getC_idx());
+			List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userDto);
+			System.out.println(classtimeList);
+			return new Result(classtimeList);
+		}
+		
+	// 강의 장소 등록
+		@PostMapping("/api/class/location/add")
+		public Result addClassLocation(@RequestBody InternalDto internalDto, UserDto userDto){  //ag_idx
+			userDto.setAg_idx(internalDto.getAg_idx());
+			classService.addClassInternal(internalDto);
+			System.out.println(internalDto.getAg_idx());
+			System.out.println(internalDto.getC_idx());
+			classService.addClassLocation(internalDto);
+			List<ClasslocationDto> classlocationList = classService.selectClassLocationList(userDto);
+			System.out.println(classlocationList);
+			return new Result(classlocationList);
+		}
+	
+//	//강의(Classtime) 등록
+//	@PostMapping("/api/class/time/add")
+//	public Result addClasstime(@RequestBody ClasstimeDto classtimeDto){  //ag_idx
+//		classService.addClass(classtimeDto);
+//		int c_idx = classService.selectClassId(classtimeDto);
+//		System.out.println(c_idx);
+//		classService.addClasstime(classtimeDto, c_idx);
+//		UserDto userdto = null;
+//		userdto.setAg_idx(classtimeDto.getAg_idx());
+//		List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userdto);
+//		return new Result(classtimeList);
+//	}
+	
 
 //	
 //	@PostMapping("/api/external/delete")
