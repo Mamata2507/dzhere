@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView } from 'react-native';
-import { ButtonView, StyledButtons, StyledSelect, StyledText, StyledClassList } from './CheckStyledLayout';
+import { StyleSheet, View, Text, Image, FlatList, AsyncStorage, ScrollView, Button, TouchableOpacity, Alert } from 'react-native';
+import { ButtonView, StyledButtons, StyledSelect, StyledText, StyledClassList, StyledRefreshButtons } from './CheckStyledLayout';
 import moment from 'moment';
 import 'moment/locale/ko';  // 자동으로 한국시간을 가져온다. 하지만 명확히 하기 위해 import
 
@@ -12,15 +12,23 @@ import exit_icon from '../../../assets/check/exit.png';
 import exit_disable_icon from '../../../assets/check/exit_gray.png';
 import clock_icon from '../../../assets/check/clock.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import refresh_icon from '../../../assets/check/refresh.png';
 
-export const Header = () => {
+export const Header = ({onRefresh}) => {
   return (
+    <>    
     <View style={styles.container}>
+      <View style={{alignSelf:'flex-end', marginRight:15}}>                
+        <TouchableOpacity onPress={onRefresh}>
+          <Image source={refresh_icon} />
+        </TouchableOpacity>
+      </View>
       <Image
         style={styles.headerImage}
         source={logo}
       />
     </View>
+    </>
   );
 };
 

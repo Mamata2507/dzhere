@@ -4,6 +4,9 @@ import createRequestSaga, {createRequestActionTypes} from '../../lib/api/createR
 import * as checkAPI from '../../lib/api/check/check';
 
 // Actions
+// Refresh
+const REFRESH = 'check/REFRESH';
+const REFRESH_RESET = 'check/REFRESH_RESET';
 // 수업
 const [CLASS_LOAD, CLASS_LOAD_SUCCESS, CLASS_LOAD_FAILURE] = createRequestActionTypes('class/CLASS_LOAD');
 const [CLASS_TIME_LOAD, CLASS_TIME_LOAD_SUCCESS, CLASS_TIME_LOAD_FAILURE] = createRequestActionTypes('class/CLASS_TIME_LOAD');
@@ -18,7 +21,10 @@ const [TODAY_ATTEND_LOAD, TODAY_ATTEND_LOAD_SUCCESS, TODAY_ATTEND_LOAD_FAILURE] 
 // 장소 확인
 const [CHECK_WIFI, CHECK_WIFI_SUCCESS, CHECK_WIFI_FAILURE] = createRequestActionTypes('check/CHECK_WIFI');
 const RESET_CHECK_WIFI = 'check/RESET_CHECK_WIFI';
+
 // Reducers
+export const refreshCheckList = createAction(REFRESH);
+export const refreshResetCheckList = createAction(REFRESH_RESET);
 // 수업
 export const loadClassList = createAction(CLASS_LOAD, u_phone=>u_phone);
 export const loadClassTimeList = createAction(CLASS_TIME_LOAD, u_phone=>u_phone);
@@ -58,6 +64,7 @@ export function* checkSaga() {
 }
 
 const initState = {
+    Refresh : false,
     wifiInfo : {
         connect: '',
         ssid: '',
@@ -139,6 +146,14 @@ export const check = handleActions(
         [RESET_CHECK_WIFI]: (state)=> ({
             ...state,
             checkWifiInfo: '',
-        })
+        }),
+        [REFRESH]: (state)=> ({
+            ...state,
+            Refresh: true,
+        }),
+        [REFRESH_RESET]: (state)=> ({
+            ...state,
+            Refresh: false,
+        }),
     },initState
 )
