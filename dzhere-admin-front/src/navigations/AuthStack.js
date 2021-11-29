@@ -3,6 +3,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AdminLoginPage from '../pages/auth/AdminLoginPage'
 import AdminFindPasswordPage from "../pages/auth/AdminFindPasswordPage";
+import AdminRegisterPage from "../pages/auth/AdminRegisterPage";
 import AdminDrawer from "./AdminDrawer";
 
 const Stack = createStackNavigator();
@@ -24,6 +25,13 @@ const AuthStack = () => {
       <Stack.Screen
         name="AdminFindPasswordPage"
         component={AdminFindPasswordPage}
+        options={{
+          title: "", //Set Header Title
+        }}
+      />
+      <Stack.Screen
+        name="AdminRegisterPage"
+        component={AdminRegisterPage}
         options={{
           title: "", //Set Header Title
         }}

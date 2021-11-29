@@ -6,7 +6,7 @@ export const apiLogin = ({ userPhone, password }) => {
   console.log('요청 입력 휴대폰 번호 :', userPhone);
   console.log('요청 입력 비밀번호', password);
 
-  return client.post('/api/user/login', { userPhone, password })
+  return client.post('/api/admin/login', { userPhone, password })
   .then(res => {
     console.log('axios 로그인 요청 성공 정보 : \n', res.data);
     return {
@@ -29,7 +29,7 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
   console.log('요청 입력 휴대폰 번호 :', userPhone);
   console.log('요청 입력 비밀번호', password);
 
-  return client.post('/api/user/register', { userPhone, password, userEmail })
+  return client.post('/api/admin/register', { userPhone, password, userEmail })
   .then(res => {
     console.log('axios 회원가입 요청 성공 정보 : \n', res.data);
     return {
@@ -69,5 +69,5 @@ export const apiLogout = () => {
 
 // 비밀번호 찾기
 export const findPassword = ({userEmail}) =>
-  client.post('/api/user/find-password', {userEmail, });
+  client.post('/api/admin/find-password', {userEmail, });
 

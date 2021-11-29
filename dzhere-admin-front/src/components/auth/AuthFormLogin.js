@@ -54,17 +54,17 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
             <Text style={styles.text}>로그인</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => navigation.navigate("UserRegisterPage")}
+            style={styles.signupBtn}
+            onPress={() => navigation.navigate("AdminRegisterPage")}
           >
             <Text style={styles.text}>회원가입</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.signupBtn}
             onPress={() => client.get("api/user/test")}
           >
             <Text style={styles.text}>테스트</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </>
     );

@@ -1,9 +1,11 @@
 package com.ezo.dzhereback.controller.admin;
 
 import com.ezo.dzhereback.domain.Member;
+import com.ezo.dzhereback.dto.AuthAdminDto;
 import com.ezo.dzhereback.dto.AuthDto;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.jwt.TokenProvider;
+import com.ezo.dzhereback.service.admin.AuthAdminService;
 import com.ezo.dzhereback.service.user.AuthUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @Slf4j
 public class AuthAdminController {
-    private final AuthUserService authUserService;
+    private final AuthAdminService authAdminService;
     private final TokenProvider tokenProvider;
 
     @Autowired
-    public AuthAdminController(AuthUserService authUserService, TokenProvider tokenProvider) {
-        this.authUserService = authUserService;
+    public AuthAdminController(AuthAdminService authAdminService, TokenProvider tokenProvider) {
+        this.authAdminService = authAdminService;
         this.tokenProvider = tokenProvider;
     }
 
@@ -35,57 +37,63 @@ public class AuthAdminController {
 
     // 회원가입
     @PostMapping("/api/admin/register")
-    public ResponseEntity<?> registerMember(@RequestBody AuthDto authDto) {
+    public ResponseEntity<?> registerAdmin(@RequestBody AuthAdminDto authAdminDto) {
         // 관리자는 사전에 사용자 정보로 전화번호, 이름, auth_role, 강의, 소속 등록
         // 사용자는 회원 가입 시 전화번호, 패스워드, 이메일 입력
         try {
             System.out.println("post : register");
-            System.out.println(authDto.toString());
+            System.out.println(authAdminDto.toString());
 
             // 회원 가입할 사용자 객체 생성
             Member member = Member.builder()
-                    .u_phone(authDto.getUserPhone())
-                    .u_pw(authDto.getPassword())
-                    .u_email(authDto.getUserEmail())
+                    .u_phone(authAdminDto.getUserPhone())
+                    .u_pw(authAdminDto.getPassword())
+                    .u_email(authAdminDto.getUserEmail())
+                    .u_name(authAdminDto.getUserName())
+                    .c_idx(authAdminDto.getC_idx())
+                    .ag_idx(authAdminDto.getAg_idx())
                     .build();
             System.out.println(member.toString());
 
-            authUserService.join(member);
-            Member registeredMember = authUserService.findRegisteredMemberByPhone(member.getU_phone());
-            AuthDto responseMemberDto = AuthDto.builder()
+            authAdminService.join(member);
+            Member registeredMember = authAdminService.findRegisteredAdminByPhone(member.getU_phone());
+            AuthAdminDto responseAdminDto = AuthAdminDto.builder()
                     .u_idx(registeredMember.getU_idx())
                     .userPhone(registeredMember.getU_phone())
                     .userEmail(registeredMember.getU_email())
+                    .userName(registeredMember.getU_name())
+                    .c_idx(registeredMember.getC_idx())
+                    .ag_idx(registeredMember.getAg_idx())
                     .build();
-            return ResponseEntity.ok().body(responseMemberDto);
+            return ResponseEntity.ok().body(responseAdminDto);
         } catch (Exception e) {
-            if (e.getMessage().equals("가입 불가 : 이미 가입한 회원,409"))
-                return ResponseEntity.status(409).body(new Result<String>("가입 불가 : 이미 가입한 회원"));
-            else if (e.getMessage().equals("가입 불가 : 관리자가 등록하지 않은 사용자,410"))
-                return ResponseEntity.status(410).body(new Result<String>("가입 불가 : 관리자가 등록하지 않은 사용자"));
-            else return ResponseEntity.status(500).body(new Result<String>(e.getMessage()));
+            log.error(e.getMessage());
+            return ResponseEntity.status(444).body(new Result<String>("가입에러"));
         }
     }
 
     // 로그인
     @PostMapping("/api/admin/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthDto authDto) {
-        log.info(String.valueOf(authDto));
+    public ResponseEntity<?> authenticate(@RequestBody AuthAdminDto authAdminDto) {
+        log.info(String.valueOf(authAdminDto));
         try {
-            Member member = authUserService.getByCredentials(
-                    authDto.getUserPhone(),
-                    authDto.getPassword(),
+            Member member = authAdminService.getByCredentials(
+                    authAdminDto.getUserPhone(),
+                    authAdminDto.getPassword(),
                     passwordEncoder
             );
 
             final String token = tokenProvider.create(member);
-            final AuthDto responseAuthDto = AuthDto.builder()
+            final AuthAdminDto responseAuthAdminDto = AuthAdminDto.builder()
                     .token(token)
                     .u_idx(member.getU_idx())
                     .userPhone(member.getU_phone())
                     .userEmail(member.getU_email())
+                    .userName(member.getU_name())
+                    .c_idx(member.getC_idx())
+                    .ag_idx(member.getAg_idx())
                     .build();
-            return ResponseEntity.ok().body(responseAuthDto);
+            return ResponseEntity.ok().body(responseAuthAdminDto);
         } catch (Exception e) {
             if (e.getMessage().equals("잘못된 비밀번호,401"))
                 return ResponseEntity.status(401).body(new Result<String>("잘못된 비밀번호"));
