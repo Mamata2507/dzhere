@@ -18,24 +18,16 @@ return 의 경우 Component 에 state 를 전달하는 방식으로 처리 (retu
 import React from "react";
 import Apps from "./src/App";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer, {rootSaga} from "./src/modules/index";
+import rootReducer, { rootSaga } from "./src/modules/index";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import ReduxThunk from 'redux-thunk';
-import createSagaMiddleware from 'redux-saga';
+import ReduxThunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  rootReducer, 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  applyMiddleware(logger, ReduxThunk, sagaMiddleware)
-=======
+  rootReducer,
   applyMiddleware(ReduxThunk, sagaMiddleware)
->>>>>>> 625e7ac4bb41dd28b7e9e49badccd96b8c38d036
-=======
-  applyMiddleware(ReduxThunk, sagaMiddleware)
->>>>>>> 625e7ac4bb41dd28b7e9e49badccd96b8c38d036
 );
 
 // saga실행
