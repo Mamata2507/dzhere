@@ -28,7 +28,8 @@ public interface CheckUserMapper {
             "where a_today_date = #{attendDate} and u_idx = #{u_idx}")
     int insertCheckLeave(String attendDate,String attendTime, int u_idx);
 
-    @Update("update Attend set a_exit_time = #{attendTime} where a_today_date = #{attendDate} and u_idx = #{u_idx}")
+    @Update("update Attend set a_exit_time = #{attendTime}, a_result_time = timediff(DATE_FORMAT(now(),'%H:%i:%m'), DATE_FORMAT(a_attend_time,'%H:%i:%m'))\n" +
+            "where a_today_date = #{attendDate} and u_idx = #{u_idx}")
     int insertCheckExit(String attendDate,String attendTime, int u_idx);
 
     @Select("select sum(a_leave) as 'a_leave_cnt', sum(a_late_status) as 'a_late_status_cnt', \n" +
