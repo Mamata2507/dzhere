@@ -51,17 +51,6 @@ public class MyInfoController {
 		System.out.println("로컬이메일---->"+u_email);
 		int updateResult = myInfoService.updateEmail(u_phone, u_email);
 		return new Result(updateResult);
-//		if(updateResult>0) {
-//			Member email = myInfoService.getEmail(u_phone);
-//			MyInfoDto result = MyInfoDto.builder()
-//					.u_phone(email.getU_phone())
-//					.u_email(email.getU_email())
-//					.build();
-//			return new Result(result);
-//		} else {
-//			System.out.println("업데이트 실패");
-//			return new Result(null);
-//		}
 	}
 	
 	@PostMapping("/api/checkPw")

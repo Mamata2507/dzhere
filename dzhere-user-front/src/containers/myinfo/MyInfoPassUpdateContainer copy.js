@@ -33,6 +33,22 @@ const MyInfoPassUpdateContainer = () => {
   console.log('비밀번호 확인'+passwordConfirm);
   
   function onPress(){
+    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
+  
+    if(newPassword.length > 0 && regex.test(newPassword) === false ){
+      setNewPasswordError('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.')
+      console.log('비밀번호 유효성 체크(새 비밀번호) : ', newPasswordError);
+    } else {
+      setNewPasswordError('');
+    }
+  
+    if(passwordConfirm.length > 0 && passwordConfirm !== newPassword){
+      setPasswordConfirmError('비밀번호가 일치하지 않습니다')
+      console.log('비밀번호 확인 유효성 체크(비밀번호 확인) : ', passwordConfirmError);
+    } else {
+      setPasswordConfirmError('');
+    }
+
     if(currentPassword === '' || newPassword === '' || passwordConfirm === ''){
       setEmptyError('빈 항목이 있습니다.')
     } else {
@@ -76,7 +92,17 @@ const MyInfoPassUpdateContainer = () => {
       setPasswordConfirmError('');
     }
 
+    if(currentPassword === '' || newPassword === '' || passwordConfirm === ''){
+      setEmptyError('빈 항목이 있습니다.')
+    } else {
+      setEmptyError('');
+    }
 
+    if(edit === true){
+      setCheckError2('기존 비밀번호를 확인해주세요.')
+    } else {
+      setCheckError2('');
+    }
 
   }, [newPassword, passwordConfirm, currentPassword, edit]);
 

@@ -18,35 +18,48 @@ const MyInfoEmailUpdateContainer = () => {
   }));
 
   const [newEmail, onChangeNewEmail] = React.useState('');
+  const [error, setError] = React.useState('');
+  const regex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,3})$/i;;
 
   useEffect(() => {
     dispatch(getEmail(phone));
   }, []);
 
-  function onPress(){
-      if (Platform.OS === 'web') {
-        if(newEmail === ''){
-          alert('빈 항목이 있습니다.');
-        } else {
-          dispatch(updateEmail({phone, newEmail}));
-          alert('이메일이 성공적으로 변경되었습니다.');
-          onChangeNewEmail('');
-          setTimeout(()=>{
-            navigation.goBack()
-          }, 500);
-        }
+  useEffect(() => {
+    if(newEmail.length>0 && false === regex.test(newEmail)){
+      setError('이메일을 정확히 입력해주세요.');
     } else {
-        if(newEmail === ''){
-          Alert.alert('빈 항목이 있습니다.');
-        } else {
-          dispatch(updateEmail({phone, newEmail}));
-          Alert.alert('이메일이 성공적으로 변경되었습니다.');
-          onChangeNewEmail('');
-          setTimeout(()=>{
-            navigation.goBack()
-          }, 500);
-        }
+      setError('');
     }
+  }, [newEmail]);
+
+  function onPress(){
+    if(error === ''){
+      if (Platform.OS === 'web') {
+          if(newEmail === ''){
+            alert('빈 항목이 있습니다.');
+          } else {
+            dispatch(updateEmail({phone, newEmail}));
+            alert('이메일이 성공적으로 변경되었습니다.');
+            onChangeNewEmail('');
+            setTimeout(()=>{
+              navigation.goBack()
+            }, 500);
+          }
+      } else {
+          if(newEmail === ''){
+            Alert.alert('빈 항목이 있습니다.');
+          } else {
+            dispatch(updateEmail({phone, newEmail}));
+            Alert.alert('이메일이 성공적으로 변경되었습니다.');
+            onChangeNewEmail('');
+            setTimeout(()=>{
+              navigation.goBack()
+            }, 500);
+          }
+      }
+    }
+
   }
   
   return (
@@ -57,6 +70,7 @@ const MyInfoEmailUpdateContainer = () => {
         onPress={onPress}
         newEmail={newEmail}
         onChangeNewEmail={onChangeNewEmail}
+        error={error}
       />
   );
 };
