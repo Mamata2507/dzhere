@@ -67,6 +67,10 @@ public class ClassService {
 		classMapper.deleteClassInternal(c_idx);
 	}
 	
+	
+	public void deleteExternalList(int e_idx) {
+		classMapper.deleteExternalList(e_idx);
+	}
 	public void updateClassInternal(InternalDto internalDto) {
 		classMapper.updateClassInternal(internalDto);
 	}
@@ -77,6 +81,10 @@ public class ClassService {
 //	public void addClass(ClasstimeDto classtimedto) {
 //		classMapper.addClass(classtimedto);
 //	}
+	
+	public void updateClasstime(ClasstimeDto classtimeDto) {
+		classMapper.updateClasstime(classtimeDto);
+	}
 	
 	public int selectClassId(ClassInfoDto classinfodto) {
 		return classMapper.selectClassId(classinfodto);

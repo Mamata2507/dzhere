@@ -86,7 +86,7 @@ public class ClassController {
 	}
 	
 	
-	//기관의 강의 내부장소 정보 리스트 호출
+	//기관의 강의 내부장소 정보 리스트 업데이트
 		@PostMapping("/api/class/internal/update")
 		public Result updateClassInternal(@RequestBody InternalDto internalDto, UserDto userDto){  //ag_idx
 			classService.updateClassInternal(internalDto);
@@ -129,6 +129,21 @@ public class ClassController {
 		return new Result(classtimeList);
 	}
 	
+	
+	// 강의(classtime) 수정하기
+	@PostMapping("/api/class/time/update")
+	public Result updateClasstime(@RequestBody ClasstimeDto classtimeDto, UserDto userDto){  //ag_idx
+		userDto.setAg_idx(classtimeDto.getAg_idx());
+		userDto.setC_idx(classtimeDto.getC_idx());
+		System.out.println(userDto.getAg_idx());
+		//classtime 업데이트
+		classService.updateClasstime(classtimeDto);
+		List<ClasstimeDto> classtimeList = classService.selectClassTimeList(userDto);
+		System.out.println(classtimeList);
+		return new Result(classtimeList);
+	}
+	
+	
 	//강의 삭제
 		@PostMapping("/api/class/delete")
 		public Result addClasstime(@RequestBody UserDto userDto, ClasstimeDto classtimeDto){  //ag_idx
@@ -141,6 +156,19 @@ public class ClassController {
 			return new Result(classtimeList);
 		}
 		
+
+		//기관의 강의 외부장소 삭제
+		@PostMapping("/api/admin/external/delete")
+		public Result deleteExternalList(@RequestBody ExternalDto externalDto, UserDto userDto){  // u_name, c_idx
+			classService.deleteExternalList(externalDto.getE_idx());
+			userDto.setU_name(externalDto.getU_name());
+			userDto.setC_idx(externalDto.getC_idx());
+			userDto.setAg_idx(externalDto.getAg_idx());
+			List<ExternalDto> classexternalList = classService.selectClassExternalList(userDto);
+			System.out.println(classexternalList);
+			return new Result(classexternalList);
+		}
+		
 	// 강의 장소 등록
 		@PostMapping("/api/class/location/add")
 		public Result addClassLocation(@RequestBody InternalDto internalDto, UserDto userDto){  //ag_idx
@@ -149,9 +177,10 @@ public class ClassController {
 			System.out.println(internalDto.getAg_idx());
 			System.out.println(internalDto.getC_idx());
 			classService.addClassLocation(internalDto);
-			List<ClasslocationDto> classlocationList = classService.selectClassLocationList(userDto);
-			System.out.println(classlocationList);
-			return new Result(classlocationList);
+			List<InternalDto> selectClassInternalList = classService.selectClassInternalList(userDto);
+//			List<ClasslocationDto> classlocationList = classService.selectClassLocationList(userDto);
+			System.out.println(selectClassInternalList);
+			return new Result(selectClassInternalList);
 		}
 	
 //	//강의(Classtime) 등록
@@ -167,19 +196,4 @@ public class ClassController {
 //		return new Result(classtimeList);
 //	}
 	
-
-//	
-//	@PostMapping("/api/external/delete")
-//	public String removeExternalId(@RequestBody ExternalDto externalDto, External external){
-//		String u_phone = externalDto.getU_phone();
-//		int e_idx = externalDto.getE_idx();
-//		User user = externalService.findUser(u_phone); //u_id, c_id 저장
-//		external.setC_idx(user.getC_idx());
-//		external.setU_idx(user.getU_idx());
-//		external.setE_idx(e_idx);
-//		externalService.removeExternalId(external);
-//		return "Ok";
-//	}
-//	
-
 }

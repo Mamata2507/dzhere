@@ -10,6 +10,8 @@ const SET_VALUE = "class/SET_VALUE";
 const GET_CLASSLOCATION = "class/GET_CLASSLOCATION";
 const SELECT_CLASS = "class/SELECT_CLASS";
 const SELECT_EXTERNAL = "class/SELECT_EXTERNAL";
+const GET_VISIBLE = "class/GET_VISIBLE";
+const SET_NAME = "class/SET_NAME";
 
 const initialState = {
   stlist: [],
@@ -28,9 +30,11 @@ const initialState = {
     c_name: "",
     ag_idx: 0,
   },
+  name: null,
   loclist: [],
   externalist: [],
   selectClass: 0,
+  visible: false,
   selectStudent: '',
 };
 
@@ -41,12 +45,14 @@ export const setAgency = createAction(SET_AGENCY, (agency) => agency);
 export const setClassId = createAction(SET_CLASSID, (itemId) => itemId);
 export const setCheck = createAction(SET_CHECK, (checkid) => checkid);
 export const setValue = createAction(SET_VALUE, (classid) => classid);
+export const IsVisible = createAction(GET_VISIBLE, (visible) => visible);
 export const getClasslocation = createAction(
   GET_CLASSLOCATION,
   (loclist) => loclist
 );
 export const setSelectClass = createAction(SELECT_CLASS, (selectClass) => selectClass);
 export const setExternal = createAction(SELECT_EXTERNAL, (externalist) => externalist);
+export const setUserName = createAction(SET_NAME, (name) => name);
 
 const classes = handleActions(
   {
@@ -89,6 +95,14 @@ const classes = handleActions(
     [SELECT_EXTERNAL]: (state, { payload: externalist }) => ({
       ...state,
       externalist,
+    }),
+    [GET_VISIBLE]: (state, { payload: visible }) => ({
+      ...state,
+      visible,
+    }),
+    [SET_NAME]: (state, { payload: name }) => ({
+      ...state,
+      name,
     }),
   },
   initialState

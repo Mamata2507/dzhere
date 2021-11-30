@@ -8,8 +8,9 @@ const CheckBoxIcon = ({ item, style }) => {
   const dispatch = useDispatch();
   const [isSelected, setSelection] = useState(false);
   const checkId = useSelector(({ classes }) => classes.checkid);
+  const visible = useSelector(({classes}) => classes.visible);
   const isFocused = useIsFocused();
-  const onValueChange = useCallback(() => {
+  const onValueChange = () => {
     // 어떤 버튼도 선택하지 않았을 때
     if (!checkId) {
       setSelection(true);
@@ -26,7 +27,7 @@ const CheckBoxIcon = ({ item, style }) => {
     // dispatch(setCheck(true));
     // isSelected && dispatch(setValue(item.c_idx));
     // console.log("후: ", isSelected, checkId, item.c_idx, valueId);
-  }, [isSelected]);
+  };
 
   useEffect(() => {
     if (isFocused) {
@@ -37,6 +38,12 @@ const CheckBoxIcon = ({ item, style }) => {
       console.log(isSelected, checkId);
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    setSelection(false);
+    dispatch(setCheck(false));
+    // dispatch(setValue(null));
+}, [visible]);
 
   return (
     <Checkbox

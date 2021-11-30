@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/core";
+import { Platform, Alert } from "react-native";
 import {
   getClasslocationList,
   setClassName,
@@ -11,6 +12,7 @@ import {
   getClasslocation,
   setCheck,
   setValue,
+  IsVisible
 } from "../../../../modules/admin/class/course";
 import ClassLocationComponent from "../../../../components/admin/class/class_location/ClassLocationComponent";
 
@@ -87,27 +89,12 @@ const ClassLocationContainer = () => {
     setClasslcoationList(data);
     dispatch(getClasslocation(classlocationList));
     dispatch(setCheck(false));
-    setOldBssid("");
-    setOldSsid("");
-    setOldLocation("");
-    setOldType("");
-    setUpdate(false);
   }
   useEffect(() => {
     classlocationListApi();
     console.log(classlocationList);
     dispatch(setCheck(false));
   }, []);
-
-  // useEffect(() => {
-  //     // classlocationListApi();
-  //     dispatch(setCheck(false));
-  //     // dispatch(setValue(0))
-  //     // setBssid("");
-  //     // setSsid("");
-  //     // setLocation("");
-  //     // setType("");
-  // }, [visible]);
 
   useEffect(() => {
     if (isFocused) {
@@ -122,10 +109,6 @@ const ClassLocationContainer = () => {
     setSsid("");
     setLocation("");
     setType("");
-    // setOldBssid("");
-    // setOldSsid("");
-    // setOldLocation("");
-    // setOldType("");
     // setUpdate(false);
   }, [visible]);
 
@@ -133,12 +116,27 @@ const ClassLocationContainer = () => {
   const onModalShow = () => {
     console.log(classId);
     const data = classlocationList.filter((item) => item.c_idx == classId);
-    setClassname(data[0].c_name);
-    console.log(classlocationList);
-    console.log(data);
-    console.log("data", data[0].c_name);
-    console.log("name", classname);
-    setVisible(true);
+    if(classId == null){
+      Platform.OS === "android"
+      ? Alert.alert(
+          "등록할 강의를 선택해주세요."
+        )
+      : alert(
+        "등록할 강의를 선택해주세요."
+        );
+    }
+    else if (data[0].i_name !== "") {
+      Platform.OS === "android"
+        ? Alert.alert("해당 강의에는 장소가 이미 등록되어 있습니다.")
+        : alert("해당 강의에는 장소가 이미 등록되어 있습니다.");
+    } else {
+      setClassname(data[0].c_name);
+      console.log(classlocationList);
+      console.log(data);
+      console.log("data", data[0].c_name);
+      console.log("name", classname);
+      setVisible(true);
+    }
   };
 
   const onSubmit = () => {
@@ -146,18 +144,31 @@ const ClassLocationContainer = () => {
       alert("강의 장소 입력해주세요.");
     } else {
       classlocationAddApi();
-      alert("강의 장소를 등록하시겠습니까?");
+      dispatch(IsVisible(true));
+      Platform.OS === "android"
+        ? Alert.alert("강의 장소가 등록되었습니다.")
+        : alert("강의 장소가 등록되었습니다.");
       setVisible(false);
     }
   };
 
   const onChangeSubmit = () => {
     classlocationUpdateApi();
-    alert("강의 장소를 수정하시겠습니까?");
+    dispatch(IsVisible(true));
+    Platform.OS === "android"
+      ? Alert.alert("강의 장소가 수정되었습니다.")
+      : alert("강의 장소를 수정하시겠습니까?");
     setVisible(false);
+    setCheck(false);
+    setUpdate(false);
+    setOldBssid("");
+    setOldSsid("");
+    setOldLocation("");
+    setOldType("");
   };
 
   const hideModalShow = () => {
+    dispatch(IsVisible(false));
     setVisible(false);
   };
 
@@ -195,16 +206,35 @@ const ClassLocationContainer = () => {
 
   const onUpdate = () => {
     const data = classlocationList.filter((item) => item.c_idx == classId);
-    setUpdate(true);
-    setClassname(data[0].c_name);
-    console.log(data[0].c_name);
-    setOldBssid(data[0].i_bssid);
-    setOldSsid(data[0].i_ssid);
-    setOldLocation(data[0].i_name);
-    setOldType("wifi");
-    // alert('수정하시겠습니까?');
-    setVisible(true);
-    console.log(classname, bssid, ssid, location, type);
+    if(classId == null){
+      Platform.OS === "android"
+      ? Alert.alert(
+          "수정할 강의를 선택해주세요."
+        )
+      : alert(
+        "수정할 강의를 선택해주세요."
+        );
+    }
+    else if (data[0].i_name === "") {
+      Platform.OS === "android"
+        ? Alert.alert(
+            "해당 강의에 등록된 장소가 없습니다.\n장소를 먼저 등록해주세요."
+          )
+        : alert(
+            "해당 강의에 등록된 장소가 없습니다. 장소를 먼저 등록해주세요."
+          );
+    } else {
+      setUpdate(true);
+      setClassname(data[0].c_name);
+      console.log(data[0].c_name);
+      setOldBssid(data[0].i_bssid);
+      setOldSsid(data[0].i_ssid);
+      setOldLocation(data[0].i_name);
+      setOldType("wifi");
+      // alert('수정하시겠습니까?');
+      setVisible(true);
+      console.log(classname, bssid, ssid, location, type);
+    }
   };
 
   return (

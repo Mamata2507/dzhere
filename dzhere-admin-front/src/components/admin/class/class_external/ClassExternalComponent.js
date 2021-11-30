@@ -10,7 +10,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import CheckBoxIcon from "../../../../containers/admin/class/class_manage/CheckBoxContainer";
+import CheckBoxIcon from "../../../../containers/admin/class/class_external/CheckBoxContainer";
 import { DataTable } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import PickerBox from "../../../../containers/admin/class/class_external/PickerBoxContainer";
@@ -21,6 +21,7 @@ const ClassExternalComponent = ({
   externalist,
   onSearch,
   onChangeText,
+  onDelete,
   name,
   click,
   NameRef,
@@ -46,7 +47,7 @@ const ClassExternalComponent = ({
           <TextInput
             style={styles.inputText}
             onChangeText={onChangeText}
-            value={name === null ? "" : name}
+            value={name == null ? "" : name}
             ref={NameRef}
             placeholder="수강생 이름을 입력해주세요."
           />
@@ -112,13 +113,14 @@ const ClassExternalComponent = ({
                         <TouchableOpacity
                           style={{ margin: 5 }}
                           onPress={() => {}}
+                          disabled={item.e_accept === 0 ? false : true}
                         >
                           {item.e_accept === 0 ? (
-                            <Text style={({ color: "red" }, styles.btnText)}>
+                            <Text style={[{ color: "red" }, styles.btnText]}>
                               승인 대기
                             </Text>
                           ) : (
-                            <Text style={({ color: "black" }, styles.btnText)}>
+                            <Text style={[{ color: "black" }, styles.btnText]}>
                               승인완료
                             </Text>
                           )}
@@ -158,8 +160,9 @@ const ClassExternalComponent = ({
                   )}
                 </DataTable.Row>
               ))}
-            {click !== null && name !== null && <Text>{click}</Text>}
+            {click !== null && name !== null && <Text style={{fontSize: Platform.OS==='android'? 15 : 20}}>{click}</Text>}
           </ScrollView>
+          
         </DataTable>
         {/* <Modal
           animationType="slide"
@@ -170,15 +173,15 @@ const ClassExternalComponent = ({
           }}
         /> */}
         <View style={styles.btnContainer2}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.btn, { margin: 5 }]}
             onPress={() => {}}
           >
             <Text style={styles.btnText}>수정</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={[styles.btn, { margin: 5 }]}
-            onPress={() => {}}
+            onPress={onDelete}
           >
             <Text style={styles.btnText}>삭제</Text>
           </TouchableOpacity>

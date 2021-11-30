@@ -12,9 +12,8 @@ import {
 import CheckBoxIcon from "../../../../containers/admin/class/class_manage/CheckBoxContainer";
 import { DataTable, Modal, Portal, Provider } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
-// import DateTimePicker from "@react-native-community/datetimepicker";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "./react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import styled from "styled-components";
 import mon from "../../../../../assets/class/mon_none.png";
@@ -39,19 +38,33 @@ const ClassManageWeb = ({
   agency,
   classList,
   onChangeText,
+  onChangeOldText,
   classname,
+  oldClassname,
   onChangeStartDate,
   onChangeEndDate,
   onChangeStartTime,
   onChangeEndTime,
   onChangeStartCheckTime,
   onChangeEndCheckTime,
+  onChangeBreakStartTime,
+  onChangeBreakEndTime,
   startDate,
   endDate,
   startTime,
   endTime,
   checkstartTime,
   checkendTime,
+  breakStartTime,
+  breakEndTime,
+  oldStartDate,
+  oldEndDate,
+  oldStartTime,
+  oldEndTime,
+  oldCheckStartTime,
+  oldCheckEndTime,
+  oldBreakStartTime,
+  oldBreakEndTime,
   onDelete,
   onSelectMonDay,
   onSelectTusDay,
@@ -60,6 +73,13 @@ const ClassManageWeb = ({
   onSelectFriDay,
   onSelectSatDay,
   onSelectSunDay,
+  onSelectOldMonDay,
+  onSelectOldTusDay,
+  onSelectOldWedDay,
+  onSelectOldThrDay,
+  onSelectOldFriDay,
+  onSelectOldSatDay,
+  onSelectOldSunDay,
   monday,
   tuesday,
   wednesday,
@@ -67,12 +87,26 @@ const ClassManageWeb = ({
   friday,
   saturday,
   sunday,
+  oldmonday,
+  oldtuesday,
+  oldwednesday,
+  oldthursday,
+  oldfriday,
+  oldsaturday,
+  oldsunday,
   onUpdate,
   update,
-  updateList
+  updateList,
+  onChangeOldStartDate,
+  onChangeOldEndDate,
+  onChangeOldStartTime,
+  onChangeOldEndTime,
+  onChangeOldStartCheckTime,
+  onChangeOldEndCheckTime,
+  onChangeOldBreakStartTime,
+  onChangeOldBreakEndTime,
+  onUpdateSubmit,
 }) => {
-  console.log("visible: ", visible);
-  console.log(classname);
   return (
     <Provider>
       <View style={styles.container}>
@@ -88,14 +122,14 @@ const ClassManageWeb = ({
             </View>
             <View style={styles.picker}>
               <Text style={({ width: "10%" }, styles.text)}>강의명</Text>
-              <TextInput style={[styles.pickerText, {width: "40%"}]}
-              value={classname}
-              onChangeText={onChangeText}
-              maxLength={20}
+              <TextInput
+                style={[styles.pickerText, { width: "40%" }]}
+                value={classname}
+                onChangeText={onChangeText}
+                maxLength={20}
               />
-             
             </View>
-          
+
             <View style={styles.picker}>
               <Text style={({ width: "10%" }, styles.text)}>수강기간</Text>
               <CustomDatePicker
@@ -213,6 +247,42 @@ const ClassManageWeb = ({
                 withPortal
                 portalId="end-time"
               />
+              <Text style={styles.text}>휴게(점심)시간</Text>
+              <CustomDatePicker
+                selected={breakStartTime}
+                placeholderText="시작시간"
+                onChange={onChangeBreakStartTime}
+                showPopperArrow={false}
+                showTimeSelect
+                showTimeSelectOnly
+                // startDate={startTime}
+                disabledKeyboardNavigation
+                timeIntervals={15}
+                timeFormat="HH:mm"
+                dateFormat="h:mm aa"
+                timeCaption="time"
+                withPortal
+                portalId="start-break-time"
+              />
+              <Text> ~ </Text>
+              <CustomDatePicker
+                selected={breakEndTime}
+                onChange={onChangeBreakEndTime}
+                placeholderText="종료시간"
+                showPopperArrow={false}
+                showTimeSelect
+                showTimeSelectOnly
+                // startDate={startTime}
+                disabledKeyboardNavigation
+                timeIntervals={15}
+                timeFormat="HH:mm"
+                dateFormat="h:mm aa"
+                timeCaption="time"
+                withPortal
+                portalId="end-break-time"
+              />
+            </View>
+            <View style={({ width: "10%" }, styles.picker)}>
               <Text style={({ width: "15%" }, styles.text)}>
                 출석 인정 시간
               </Text>
@@ -248,35 +318,6 @@ const ClassManageWeb = ({
                 portalId="check-end-time"
               />
             </View>
-            {/* <View style={styles.picker}>
-              <Text style={styles.text}>출석 인정 시간</Text>
-              <CustomDatePicker
-                selected={checkstartTime}
-                onChange={onChangeStartCheckTime}
-                placeholderText="출석 인증 시작 시간을 선택해주세요"
-                showTimeSelect
-                showTimeSelectOnly
-                startDate={startTime}
-                timeIntervals={15}
-                dateFormat="hh:mm aa"
-                withPortal
-                portalId="check-start-time"
-              />
-              <Text> ~ </Text>
-              <CustomDatePicker
-                selected={checkendTime}
-                onChange={onChangeEndCheckTime}
-                placeholderText="출석 인증 종료 시간을 선택해주세요"
-                showTimeSelect
-                showTimeSelectOnly
-                startDate={startTime}
-                timeIntervals={15}
-                dateFormat="hh:mm aa"
-                withPortal
-                portalId="check-end-time"
-              />
-            </View> */}
-
             <TouchableOpacity
               style={[
                 styles.btn,
@@ -288,6 +329,232 @@ const ClassManageWeb = ({
             </TouchableOpacity>
           </Modal>
         </Portal>
+
+        {update && (
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModalShow}
+              contentContainerStyle={styles.modal}
+            >
+              <Text style={styles.modalText}>강의 등록</Text>
+              <View style={styles.lineContainer}>
+                <View style={styles.line} />
+              </View>
+              <View style={styles.picker}>
+                <Text style={({ width: "15%" }, styles.text)}>강의명</Text>
+               <Text
+                  style={{
+                    fontSize: 15,
+                    alignItems: "center",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  {oldClassname}
+                </Text>
+              </View>
+
+              <View style={styles.picker}>
+                <Text style={[{ width: "10%" }, styles.text]}>수강기간</Text>
+                <CustomDatePicker
+                  locale={ko}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="교육시작일"
+                  showPopperArrow={false}
+                  selected={oldStartDate}
+                  onChange={onChangeOldStartDate}
+                  // selectsStart
+                  // startDate={new Date()}
+                  // endDate={endDate}
+                  minDate={new Date()}
+                  showMonthDropdown={true}
+                  disabledKeyboardNavigation
+                  withPortal
+                  portalId="start-date"
+                />
+                <Text> ~ </Text>
+                <CustomDatePicker
+                  locale={ko}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="교육종료일"
+                  showPopperArrow={false}
+                  selected={oldEndDate}
+                  onChange={onChangeOldEndDate}
+                  // selectsEnd
+                  // startDate={startDate}
+                  endDate={oldEndDate}
+                  minDate={oldStartDate}
+                  showMonthDropdown={true}
+                  disabledKeyboardNavigation
+                  withPortal
+                  portalId="end-date"
+                />
+
+                <Text style={styles.text}>수강요일</Text>
+                <TouchableOpacity onPress={onSelectOldMonDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 5 }}
+                    source={!oldmonday ? mon : Colormon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldTusDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldtuesday ? tus : Colortus}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldWedDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldwednesday ? wed : Colorwed}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldThrDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldthursday ? thr : Colorthr}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldFriDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldfriday ? fri : Colorfri}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldSatDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldsaturday ? sat : Colorsat}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onSelectOldSunDay}>
+                  <Image
+                    style={{ width: 25, height: 25, margin: 3 }}
+                    source={!oldsunday ? sun : Colorsun}
+                  />
+                </TouchableOpacity>
+                {/* <Text>{days}</Text> */}
+              </View>
+
+              <View style={({ width: "10%" }, styles.picker)}>
+                <Text style={styles.text}>교육시간</Text>
+                <CustomDatePicker
+                  selected={oldStartTime}
+                  placeholderText="시작시간"
+                  onChange={onChangeOldStartTime}
+                  showPopperArrow={false}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="start-time"
+                />
+                <Text> ~ </Text>
+                <CustomDatePicker
+                  selected={oldEndTime}
+                  onChange={onChangeOldEndTime}
+                  placeholderText="종료시간"
+                  showPopperArrow={false}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="end-time"
+                />
+                <Text style={styles.text}>휴게(점심)시간</Text>
+                <CustomDatePicker
+                  selected={oldBreakStartTime}
+                  placeholderText="시작시간"
+                  onChange={onChangeOldBreakStartTime}
+                  showPopperArrow={false}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="start-break-time"
+                />
+                <Text> ~ </Text>
+                <CustomDatePicker
+                  selected={oldBreakEndTime}
+                  onChange={onChangeOldBreakEndTime}
+                  placeholderText="종료시간"
+                  showPopperArrow={false}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="end-break-time"
+                />
+              </View>
+              <View style={({ width: "10%" }, styles.picker)}>
+                <Text style={({ width: "15%" }, styles.text)}>
+                  출석 인정 시간
+                </Text>
+                <CustomDatePicker
+                  selected={oldCheckStartTime}
+                  onChange={onChangeOldStartCheckTime}
+                  placeholderText="시작시간"
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="check-start-time"
+                />
+                <Text> ~ </Text>
+                <CustomDatePicker
+                  selected={oldCheckEndTime}
+                  onChange={onChangeOldEndCheckTime}
+                  placeholderText="종료시간"
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // startDate={startTime}
+                  disabledKeyboardNavigation
+                  timeIntervals={15}
+                  timeFormat="HH:mm"
+                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  withPortal
+                  portalId="check-end-time"
+                />
+              </View>
+              <TouchableOpacity
+                style={[
+                  styles.btn,
+                  { marginTop: 15, alignSelf: "center", width: "20%" },
+                ]}
+                onPress={onUpdateSubmit}
+              >
+                <Text style={styles.btnText}>등록</Text>
+              </TouchableOpacity>
+            </Modal>
+          </Portal>
+        )}
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View style={[styles.picker]}>
             <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
@@ -300,22 +567,21 @@ const ClassManageWeb = ({
         </View>
 
         <View style={styles.content}>
-        <ScrollView>
-          <DataTable>
-            <DataTable.Header>
-              {/* <DataTable.Title></DataTable.Title> */}
-              <DataTable.Title style={{ marginLeft: "10%" }}>
-                강의명
-              </DataTable.Title>
-              <DataTable.Title style={{ marginLeft: "10%" }}>
-                수강기간
-              </DataTable.Title>
-              <DataTable.Title style={{ marginLeft: "10%" }}>
-                수강요일 및 시간
-              </DataTable.Title>
-            </DataTable.Header>
+          <ScrollView>
+            <DataTable>
+              <DataTable.Header>
+                {/* <DataTable.Title></DataTable.Title> */}
+                <DataTable.Title style={{ marginLeft: "10%" }}>
+                  강의명
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "10%" }}>
+                  수강기간
+                </DataTable.Title>
+                <DataTable.Title style={{ marginLeft: "10%" }}>
+                  수강요일 및 시간
+                </DataTable.Title>
+              </DataTable.Header>
 
-            
               {classList ? (
                 classList.map((item) => (
                   <DataTable.Row key={item.c_idx}>
@@ -332,8 +598,8 @@ const ClassManageWeb = ({
               ) : (
                 <Text>리스트를 가져오는 중입니다.</Text>
               )}
-          
-            {/* <DataTable.Pagination
+
+              {/* <DataTable.Pagination
             page={page}
             numberOfPages={3}
             onPageChange={(page) => setPage(page)}
@@ -344,7 +610,7 @@ const ClassManageWeb = ({
             showFastPagination
             optionsLabel={"Rows per page"}
           /> */}
-          </DataTable>
+            </DataTable>
           </ScrollView>
 
           <View style={styles.btnContainer2}>
@@ -356,7 +622,7 @@ const ClassManageWeb = ({
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
-              onPress={()=>{}}
+              onPress={onUpdate}
             >
               <Text style={styles.btnText}>수정</Text>
             </TouchableOpacity>
@@ -456,19 +722,20 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     alignSelf: "center",
-    marginRight: Platform.OS === "android" ? "5%" : "5%",
-    margin: Platform.OS === "android" ? 3 : 5,
-    width: Platform.OS === "android" ? 15 : 18,
-    height: Platform.OS === "android" ? 15 : 18,
+    marginRight: "5%",
+    margin: 5,
+    width: 18,
+    height: 18,
     borderColor: "#004cff",
   },
   modal: {
     backgroundColor: "#CEEDFF",
     padding: "5%",
     margin: "10%",
-    height: Platform.OS === "android" ? "65%" : "80%",
-    width: Platform.OS === "android" ? auto : "70%",
+    height: "70%",
+    width: "60%",
     alignSelf: "center",
+    borderRadius: 35,
   },
   modalText: {
     fontSize: 18,

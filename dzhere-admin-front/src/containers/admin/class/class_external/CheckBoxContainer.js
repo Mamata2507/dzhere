@@ -10,13 +10,12 @@ const CheckBoxIcon = ({ item, style }) => {
   const checkId = useSelector(({ classes }) => classes.checkid);
   const visible = useSelector(({classes}) => classes.visible);
   const isFocused = useIsFocused();
-
   const onValueChange = () => {
     // 어떤 버튼도 선택하지 않았을 때
     if (!checkId) {
       setSelection(true);
       dispatch(setCheck(true));
-      dispatch(setValue(item.c_idx));
+      dispatch(setValue(item.e_idx));
     }
     // 버튼이 선택되어 있을 때
     else {
@@ -31,18 +30,20 @@ const CheckBoxIcon = ({ item, style }) => {
   };
 
   useEffect(() => {
+    if (isFocused) {
+      console.log("재접근");
       setSelection(false);
       dispatch(setCheck(false));
       dispatch(setValue(null));
+      console.log(isSelected, checkId);
+    }
   }, [isFocused]);
 
   useEffect(() => {
-    if(visible){
-      setSelection(false);
-      dispatch(setCheck(false));
-      dispatch(setValue(null));
-    }
-  }, [visible]);
+    setSelection(false);
+    dispatch(setCheck(false));
+    // dispatch(setValue(null));
+}, [visible]);
 
   return (
     <Checkbox

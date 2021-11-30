@@ -7,6 +7,8 @@ import { useIsFocused } from "@react-navigation/core";
 const PickerBoxContainer = ({ style }) => {
   const dispatch = useDispatch();
   const classList = useSelector(({ classes }) => classes.clist);
+  const externalist = useSelector(({ classes }) => classes.externalist);
+  const username = useSelector(({ classes }) => classes.name);
   // console.log(classList);
   const [selectedValue, setSelectedValue] = useState(0);
   const isFocused = useIsFocused();
@@ -20,6 +22,12 @@ const PickerBoxContainer = ({ style }) => {
     return () => setSelectedValue(0);
   }, [isFocused]);
 
+  useEffect(() => {
+    if (externalist.length == 0 && username == null) {
+      setSelectedValue(0);
+    }
+  }, [externalist]);
+  
   return (
     <Picker
       selectedValue={selectedValue}
@@ -28,7 +36,7 @@ const PickerBoxContainer = ({ style }) => {
     >
       <Picker.Item label="강의선택" value={0} />
       {classList.map((item) => (
-          <Picker.Item key={item.c_idx} label={item.c_name} value={item.c_idx} />
+        <Picker.Item key={item.c_idx} label={item.c_name} value={item.c_idx} />
       ))}
     </Picker>
   );

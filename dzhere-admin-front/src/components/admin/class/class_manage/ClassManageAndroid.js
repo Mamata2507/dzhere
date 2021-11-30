@@ -7,50 +7,136 @@ import {
   Text,
   ScrollView,
   Alert,
+  Image,
 } from "react-native";
 import CheckBoxIcon from "../../../../containers/admin/class/class_manage/CheckBoxContainer";
 import { DataTable, Modal, Portal, Provider } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
-import DateTimePicker from "@react-native-community/datetimepicker";
-
+// import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import mon from "../../../../../assets/class/mon_none.png";
+import Colormon from "../../../../../assets/class/mon_selected.png";
+import tus from "../../../../../assets/class/tus_none.png";
+import Colortus from "../../../../../assets/class/tus_selected.png";
+import wed from "../../../../../assets/class/wed_none.png";
+import Colorwed from "../../../../../assets/class/wed_selected.png";
+import thr from "../../../../../assets/class/thr_none.png";
+import Colorthr from "../../../../../assets/class/thr_selected.png";
+import fri from "../../../../../assets/class/fri_none.png";
+import Colorfri from "../../../../../assets/class/fri_selected.png";
+import sat from "../../../../../assets/class/sat_none.png";
+import Colorsat from "../../../../../assets/class/sat_selected.png";
+import sun from "../../../../../assets/class/sun_none.png";
+import Colorsun from "../../../../../assets/class/sun_selected.png";
 const ClassManageAndroid = ({
   onModalShow,
   visible,
   onSubmit,
+  hideModalShow,
   agency,
   classList,
   onChangeText,
-  value,
+  onChangeOldText,
+  classname,
+  oldClassname,
+  onChangeStartDate,
+  onChangeEndDate,
+  onChangeStartTime,
+  onChangeEndTime,
+  onChangeStartCheckTime,
+  onChangeEndCheckTime,
+  onChangeStartBreakTime,
+  onChangeEndBreakTime,
+  startDate,
+  endDate,
+  startTime,
+  endTime,
+  checkstartTime,
+  checkendTime,
+  endBreakTime,
+  startBreakTime,
+  oldStartDate,
+  oldEndDate,
+  oldStartTime,
+  oldEndTime,
+  oldCheckStartTime,
+  oldCheckEndTime,
+  oldStartBreakTime,
+  oldEndBreakTime,
+  onDelete,
+  onSelectMonDay,
+  onSelectTusDay,
+  onSelectWedDay,
+  onSelectThrDay,
+  onSelectFriDay,
+  onSelectSatDay,
+  onSelectSunDay,
+  onSelectOldMonDay,
+  onSelectOldTusDay,
+  onSelectOldWedDay,
+  onSelectOldThrDay,
+  onSelectOldFriDay,
+  onSelectOldSatDay,
+  onSelectOldSunDay,
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday,
+  oldmonday,
+  oldtuesday,
+  oldwednesday,
+  oldthursday,
+  oldfriday,
+  oldsaturday,
+  oldsunday,
+  onUpdate,
+  update,
+  updateList,
+  onChangeOldStartDate,
+  onChangeOldEndDate,
+  onChangeOldStartTime,
+  onChangeOldEndTime,
+  onChangeOldStartCheckTime,
+  onChangeOldEndCheckTime,
+  onChangeOldStartBreakTime,
+  onChangeOldEndBreakTime,
+  onUpdateSubmit,
+  // onChange,
+  showStartDatepicker,
+  showEndDatepicker,
+  showStartTimepicker,
+  showEndTimepicker,
+  showStartChcekTimepicker,
+  showEndChcekTimepicker,
+  showStartBreakTimepicker,
+  showEndBreakTimepicker,
+  startDateShow,
+  endDateShow,
+  startTimeShow,
+  endTimeShow,
+  startCheckTimeShow,
+  endCheckTimeShow,
+  startBreakTimeShow,
+  endBreakTimeShow,
+  hideStartDatepicker,
+  hideEndDatepicker,
+  hideStartTimepicker,
+  hideEndTimepicker,
+  hideStartCheckTimepicker,
+  hideEndCheckTimepicker,
+  hideStartBreakTimepicker,
+  hideEndBreakTimepicker,
 }) => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState(false);
-  // const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    // setShow(Platform.OS === 'web');
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    // setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode("date");
-  };
-
-  const showTimepicker = () => {
-    showMode("time");
-  };
   return (
     <Provider>
       <View style={styles.container}>
         <Portal>
           <Modal
             visible={visible}
-            onDismiss={onSubmit}
+            onDismiss={hideModalShow}
             contentContainerStyle={styles.modal}
           >
             <Text style={styles.modalText}>강의 등록</Text>
@@ -58,37 +144,226 @@ const ClassManageAndroid = ({
               <View style={styles.line} />
             </View>
             <View style={styles.picker}>
-              <Text style={styles.text}>강의명</Text>
+              <Text style={({ width: "10%" }, styles.text)}>강의명</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 3 }]}
+                style={{
+                  fontSize: 14,
+                  alignItems: "center",
+                  color: "#000000",
+                  width: "100%",
+                  padding: 5,
+                }}
                 onChangeText={onChangeText}
-                value={value}
-                placeholder="강의명을 입력하세요"
-                keyboardType="default"
+                value={classname}
               />
             </View>
             <View style={styles.picker}>
-              <Text style={styles.text}>수강기간</Text>
-              <TouchableOpacity onPress={showDatepicker}>
-                <Text>날짜를 입력하세요</Text>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  mode={mode}
-                  is24Hour={true}
-                  onChange={onChange}
+              <Text style={[{ width: "25%" }, styles.text]}>수강기간</Text>
+              <TouchableOpacity onPress={showStartDatepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="교육 시작일"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={startDate}
+                />
+               <DateTimePickerModal
+               isVisible={startDateShow}
+               mode="date"
+               minimumDate={new Date()}
+               onConfirm={onChangeStartDate}
+               onCancel={hideStartDatepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndDatepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="교육 종료일"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={endDate}
+                />
+               <DateTimePickerModal
+               isVisible={endDateShow}
+               mode="date"
+               minimumDate={new Date()}
+               onConfirm={onChangeEndDate}
+               onCancel={hideEndDatepicker}
+             />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={[{ marginTop: 10, marginBottom: 8 }, styles.text]}>
+              수강요일
+            </Text>
+            <View
+              style={{
+                height: 35,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity onPress={onSelectMonDay}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={!monday ? mon : Colormon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectTusDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!tuesday ? tus : Colortus}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectWedDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!wednesday ? wed : Colorwed}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectThrDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!thursday ? thr : Colorthr}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectFriDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!friday ? fri : Colorfri}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectSatDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!saturday ? sat : Colorsat}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectSunDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!sunday ? sun : Colorsun}
                 />
               </TouchableOpacity>
             </View>
             <View style={styles.picker}>
-              <Text style={styles.text}>수강요일 및 시간</Text>
+              <Text style={[{ width: "35%" }, styles.text]}>교육시간</Text>
+              <TouchableOpacity onPress={showStartTimepicker}>
               <TextInput
-                style={[styles.pickerText, { flex: 3 }]}
-                // onChangeText={onChangeUname}
-                // value={uName}
-                placeholder="수강생명을 입력하세요"
-                keyboardType="default"
-              />
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={startTime}
+                />
+               <DateTimePickerModal
+               isVisible={startTimeShow}
+               mode="time"
+               onConfirm={onChangeStartTime}
+               onCancel={hideStartTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={endTime}
+                />
+               <DateTimePickerModal
+               isVisible={endTimeShow}
+               mode="time"
+               onConfirm={onChangeEndTime}
+               onCancel={hideEndTimepicker}
+             />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "35%" }, styles.text]}>휴게(점심)시간</Text>
+              <TouchableOpacity onPress={showStartBreakTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={startBreakTime}
+                />
+               <DateTimePickerModal
+               isVisible={startBreakTimeShow}
+               mode="time"
+               onConfirm={onChangeStartBreakTime}
+               onCancel={hideStartBreakTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndBreakTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={endBreakTime}
+                />
+               <DateTimePickerModal
+               isVisible={endBreakTimeShow}
+               mode="time"
+               onConfirm={onChangeEndBreakTime}
+               onCancel={hideEndBreakTimepicker}
+             />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "35%" }, styles.text]}>출석인정시간</Text>
+              <TouchableOpacity onPress={showStartChcekTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={checkstartTime}
+                />
+               <DateTimePickerModal
+               isVisible={startCheckTimeShow}
+               mode="time"
+               onConfirm={onChangeStartCheckTime}
+               onCancel={hideStartCheckTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndChcekTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={checkendTime}
+                />
+               <DateTimePickerModal
+               isVisible={endCheckTimeShow}
+               mode="time"
+               onConfirm={onChangeEndCheckTime}
+               onCancel={hideEndCheckTimepicker}
+             />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={[
@@ -101,6 +376,254 @@ const ClassManageAndroid = ({
             </TouchableOpacity>
           </Modal>
         </Portal>
+
+        {/* 업데이트 부분 */}
+
+        {update && 
+          <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={hideModalShow}
+            contentContainerStyle={styles.modal}
+          >
+            <Text style={styles.modalText}>강의 등록</Text>
+            <View style={styles.lineContainer}>
+              <View style={styles.line} />
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "25%" }, styles.text]}>강의명</Text>
+              <Text
+                  style={{
+                    fontSize: 15,
+                    alignItems: "center",
+                    color: "black",
+                    width: "100%",
+                    padding: 5,
+                  }}
+                >
+                  {oldClassname}
+                </Text>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "25%" }, styles.text]}>수강기간</Text>
+              <TouchableOpacity onPress={showStartDatepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="교육 시작일"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldStartDate}
+                />
+               <DateTimePickerModal
+               isVisible={startDateShow}
+               mode="date"
+               minimumDate={new Date()}
+               onConfirm={onChangeOldStartDate}
+               onCancel={hideStartDatepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndDatepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="교육 종료일"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldEndDate}
+                />
+               <DateTimePickerModal
+               isVisible={endDateShow}
+               mode="date"
+               minimumDate={new Date()}
+               onConfirm={onChangeOldEndDate}
+               onCancel={hideEndDatepicker}
+             />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={[{ marginTop: 10, marginBottom: 8 }, styles.text]}>
+              수강요일
+            </Text>
+            <View
+              style={{
+                height: 35,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity onPress={onSelectOldMonDay}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={!oldmonday ? mon : Colormon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldTusDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldtuesday ? tus : Colortus}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldWedDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldwednesday ? wed : Colorwed}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldThrDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldthursday ? thr : Colorthr}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldFriDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldfriday ? fri : Colorfri}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldSatDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldsaturday ? sat : Colorsat}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onSelectOldSunDay}>
+                <Image
+                  style={{ width: 35, height: 35, margin: 1 }}
+                  source={!oldsunday ? sun : Colorsun}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "35%" }, styles.text]}>교육시간</Text>
+              <TouchableOpacity onPress={showStartTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldStartTime}
+                />
+               <DateTimePickerModal
+               isVisible={startTimeShow}
+               mode="time"
+               onConfirm={onChangeOldStartTime}
+               onCancel={hideStartTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldEndTime}
+                />
+               <DateTimePickerModal
+               isVisible={endTimeShow}
+               mode="time"
+               onConfirm={onChangeOldEndTime}
+               onCancel={hideEndTimepicker}
+             />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "35%" }, styles.text]}>휴게(점심)시간</Text>
+              <TouchableOpacity onPress={showStartBreakTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldStartBreakTime}
+                />
+               <DateTimePickerModal
+               isVisible={startBreakTimeShow}
+               mode="time"
+               onConfirm={onChangeOldStartBreakTime}
+               onCancel={hideStartBreakTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndBreakTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldEndBreakTime}
+                />
+               <DateTimePickerModal
+               isVisible={endBreakTimeShow}
+               mode="time"
+               onConfirm={onChangeOldEndBreakTime}
+               onCancel={hideEndBreakTimepicker}
+             />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.picker}>
+              <Text style={[{ width: "35%" }, styles.text]}>출석인정시간</Text>
+              <TouchableOpacity onPress={showStartChcekTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="시작시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldCheckStartTime}
+                />
+               <DateTimePickerModal
+               isVisible={startCheckTimeShow}
+               mode="time"
+               onConfirm={onChangeOldStartCheckTime}
+               onCancel={hideStartCheckTimepicker}
+             />
+              </TouchableOpacity>
+              <Text> ~ </Text>
+              <TouchableOpacity onPress={showEndChcekTimepicker}>
+              <TextInput
+                    pointerEvents="none"
+                    style={styles.textInput}
+                    placeholder="종료시간"
+                    placeholderTextColor='#000000'
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    value={oldCheckEndTime}
+                />
+               <DateTimePickerModal
+               isVisible={endCheckTimeShow}
+               mode="time"
+               onConfirm={onChangeOldEndCheckTime}
+               onCancel={hideEndCheckTimepicker}
+             />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                { marginTop: 15, alignSelf: "center", width: "20%" },
+              ]}
+              onPress={onUpdateSubmit}
+            >
+              <Text style={styles.btnText}>등록</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+        }
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View style={[styles.picker]}>
             <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
@@ -113,79 +636,31 @@ const ClassManageAndroid = ({
         </View>
 
         <View style={styles.content}>
-          <DataTable>
-            <DataTable.Header>
-              {Platform.OS === "android" ? (
-                <>
-                  {/* <DataTable.Title></DataTable.Title> */}
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
-                    강의명
-                  </DataTable.Title>
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
-                    수강기간
-                  </DataTable.Title>
-                </>
-              ) : (
-                <>
-                  {/* <DataTable.Title></DataTable.Title> */}
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
-                    강의명
-                  </DataTable.Title>
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
-                    수강기간
-                  </DataTable.Title>
-                  <DataTable.Title style={{ marginLeft: "10%" }}>
-                    수강요일 및 시간
-                  </DataTable.Title>
-                </>
-              )}
-            </DataTable.Header>
+          <ScrollView>
+            <DataTable>
+              <DataTable.Header>
+                {/* <DataTable.Title></DataTable.Title> */}
+                <DataTable.Title style={{ marginLeft: "12%" }}>
+                  강의명
+                </DataTable.Title>
+                <DataTable.Title>수강기간</DataTable.Title>
+              </DataTable.Header>
 
-            <ScrollView>
               {classList ? (
                 classList.map((item) => (
                   <DataTable.Row key={item.c_idx}>
-                    {Platform.OS === "android" ? (
-                      <>
-                        <CheckBoxIcon item={item} style={styles.checkbox} />
-                        <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                        <DataTable.Cell>
-                          {item.ct_start_date}
-                          {item.ct_end_date}
-                        </DataTable.Cell>
-                      </>
-                    ) : (
-                      <>
-                        <CheckBoxIcon item={item} style={styles.checkbox} />
-                        <DataTable.Cell>{item.c_name}</DataTable.Cell>
-                        <DataTable.Cell>
-                          {item.ct_start_date} ~ {item.ct_end_date}
-                        </DataTable.Cell>
-                        <DataTable.Cell>
-                          {item.ct_day} / {item.ct_start_time} ~{" "}
-                          {item.ct_end_time}
-                        </DataTable.Cell>
-                      </>
-                    )}
+                    <CheckBoxIcon item={item} style={styles.checkbox} />
+                    <DataTable.Cell>{item.c_name}</DataTable.Cell>
+                    <DataTable.Cell>
+                      {item.ct_start_date}~{item.ct_end_date}
+                    </DataTable.Cell>
                   </DataTable.Row>
                 ))
               ) : (
                 <Text>리스트를 가져오는 중입니다.</Text>
               )}
-            </ScrollView>
-            {/* <DataTable.Pagination
-            page={page}
-            numberOfPages={3}
-            onPageChange={(page) => setPage(page)}
-            label="1-2 of 6"
-            optionsPerPage={optionsPerPage}
-            itemsPerPage={itemsPerPage}
-            setItemsPerPage={setItemsPerPage}
-            showFastPagination
-            optionsLabel={"Rows per page"}
-          /> */}
-          </DataTable>
-
+            </DataTable>
+          </ScrollView>
           <View style={styles.btnContainer2}>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
@@ -195,13 +670,13 @@ const ClassManageAndroid = ({
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
-              onPress={() => {}}
+              onPress={onUpdate}
             >
               <Text style={styles.btnText}>수정</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
-              onPress={() => {}}
+              onPress={onDelete}
             >
               <Text style={styles.btnText}>삭제</Text>
             </TouchableOpacity>
@@ -214,7 +689,7 @@ const ClassManageAndroid = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: Platform.OS === "android" ? 15 : "20%",
+    paddingHorizontal: 15,
     justifyContent: "center",
     flex: 1,
   },
@@ -225,7 +700,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginLeft: 0,
     // justifyContent: "center",
-    height: "55%",
+    height: "60%",
   },
   header: {
     // height: "10%",
@@ -243,8 +718,7 @@ const styles = StyleSheet.create({
     borderColor: "#99c0d6",
   },
   text: {
-    // flex: 2,
-    marginRight: 10,
+    marginLeft: 5,
     fontSize: 16,
     fontWeight: "bold",
     color: "#000000",
@@ -260,7 +734,7 @@ const styles = StyleSheet.create({
   },
   btnContainer2: {
     flexDirection: "row",
-    margin: Platform.OS === "android" ? 5 : 10,
+    margin: 5,
     alignSelf: "flex-end",
   },
   btn: {
@@ -284,19 +758,20 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     alignSelf: "center",
-    marginRight: Platform.OS === "android" ? "5%" : "5%",
-    margin: Platform.OS === "android" ? 3 : 5,
-    width: Platform.OS === "android" ? 15 : 18,
-    height: Platform.OS === "android" ? 15 : 18,
+    marginRight: "5%",
+    margin: 3,
+    width: 20,
+    height: 20,
     borderColor: "#004cff",
   },
   modal: {
     backgroundColor: "#CEEDFF",
     padding: "5%",
     margin: "10%",
-    height: Platform.OS === "android" ? "65%" : "80%",
-    width: Platform.OS === "android" ? auto : "70%",
+    height: "60%",
+    width: "80%",
     alignSelf: "center",
+    borderRadius: 25,
   },
   modalText: {
     fontSize: 18,
@@ -316,71 +791,13 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 16,
-    color: "#000000",
-    height: 50,
-    width: 300,
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
+    color: "black",
+    height: 35,
+    borderRadius: 20,
+    padding: 5,
+    alignContent: "center",
+    textAlign: "center",
   },
 });
-
-Date.prototype.format = function (f) {
-  if (!this.valueOf()) return " ";
-
-  var weekName = [
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일",
-  ];
-  var d = this;
-
-  return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function ($1) {
-    switch ($1) {
-      case "yyyy":
-        return d.getFullYear();
-      case "yy":
-        return (d.getFullYear() % 1000).zf(2);
-      case "MM":
-        return (d.getMonth() + 1).zf(2);
-      case "dd":
-        return d.getDate().zf(2);
-      case "E":
-        return weekName[d.getDay()];
-      case "HH":
-        return d.getHours().zf(2);
-      case "hh":
-        return ((h = d.getHours() % 12) ? h : 12).zf(2);
-      case "mm":
-        return d.getMinutes().zf(2);
-      case "ss":
-        return d.getSeconds().zf(2);
-      case "a/p":
-        return d.getHours() < 12 ? "오전" : "오후";
-      default:
-        return $1;
-    }
-  });
-};
-
-String.prototype.string = function (len) {
-  var s = "",
-    i = 0;
-  while (i++ < len) {
-    s += this;
-  }
-  return s;
-};
-String.prototype.zf = function (len) {
-  return "0".string(len - this.length) + this;
-};
-Number.prototype.zf = function (len) {
-  return this.toString().zf(len);
-};
 
 export default ClassManageAndroid;

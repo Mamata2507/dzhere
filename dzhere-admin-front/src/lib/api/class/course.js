@@ -10,7 +10,6 @@ export const getClassList = (data) => {
       u_phone: data.u_phone,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -26,7 +25,6 @@ export const getClasstimeList = (data) => {
       ag_idx: data.ag_idx,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -42,7 +40,6 @@ export const getClasslocationList = (data) => {
       ag_idx: data.ag_idx,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -61,7 +58,6 @@ export const getExternalList = (data) => {
       ag_idx: data.ag_idx,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -77,7 +73,6 @@ export const getAdmin = (data) => {
       u_phone: data.u_phone,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -94,7 +89,6 @@ export const getStudentList = (data) => {
       ag_idx: data.ag_idx,
     })
     .then(function (response) {
-      console.log(response.data.data);
       return response.data.data;
     })
     .catch(function (error) {
@@ -119,7 +113,6 @@ export const setClassName = (data) => {
     }
    )
     .then(function (response) {
-      console.log(response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -139,6 +132,8 @@ export const setClasstime = (data) => {
       ct_attend_endtime: data.check_end_time,
       ct_start_date: data.start_date,
       ct_end_date: data.end_date,
+      ct_break_start: data.break_start,
+      ct_break_end: data.break_end,
       c_idx: data.c_idx,
       ag_idx: data.ag_idx,
       // c_name: data.c_name,
@@ -182,7 +177,6 @@ export const setClassLocUpdate = (data) => {
       i_ssid: data.i_ssid,
       i_bssid: data.i_bssid,
       ag_idx: data.ag_idx,
-      // c_name: data.c_name,
     })
     .then(function (response) {
       return response.data.data;
@@ -193,8 +187,8 @@ export const setClassLocUpdate = (data) => {
 };
 
 
-// 강의 수정하기
-export const updateClass = (data) => {
+// 강의(classtime) 수정하기
+export const updateClasstime = (data) => {
   console.log("강의(classtime) 수정 API 호출");
   return client
     .post("/api/class/time/update", {
@@ -205,9 +199,10 @@ export const updateClass = (data) => {
       ct_attend_endtime: data.check_end_time,
       ct_start_date: data.start_date,
       ct_end_date: data.end_date,
+      ct_break_start: data.break_start,
+      ct_break_end: data.break_end,
       c_idx: data.c_idx,
       ag_idx: data.ag_idx,
-      // c_name: data.c_name,
     })
     .then(function (response) {
       return response.data.data;
@@ -233,7 +228,31 @@ export const deleteClass = (data) => {
     }
    )
     .then(function (response) {
-      console.log(response.data.data);
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+
+// 외부장소 삭제하기
+export const deleteExternal = (data) => {
+  console.log("외부장소 삭제 API 호출");
+  return client
+    .post("/api/admin/external/delete", {
+      e_idx: data.e_idx,
+      c_idx: data.c_idx,
+      ag_idx: data.ag_idx,
+      u_name: data.u_name,
+    },
+    {
+      headers:{
+          "Access-Control-Allow-Origin": "*",
+      }
+    }
+   )
+    .then(function (response) {
       return response.data.data;
     })
     .catch(function (error) {

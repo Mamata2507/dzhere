@@ -40,6 +40,10 @@ public interface ClassListMapper {
 	@Update("update Classlocation set cl_name=#{internal.i_name} where c_idx=#{internal.c_idx}")
 	void updateClassLocation(@Param("internal") final InternalDto internalDto);
 	
+	@Update("update Classtime set ct_day=#{ct.ct_day}, ct_start_time=#{ct.ct_start_time}, ct_end_time=#{ct.ct_end_time}, ct_attend_starttime=#{ct.ct_attend_starttime}, ct_attend_endtime=#{ct.ct_attend_endtime}, ct_start_date=#{ct.ct_start_date}, ct_end_date=#{ct.ct_end_date}, ct_break_start=#{ct.ct_break_start},  ct_break_end=#{ct.ct_break_end} where c_idx=#{ct.c_idx}")
+	void updateClasstime(@Param("ct") final ClasstimeDto classtimeDto);
+	
+	
 //	@Insert("insert into Class(c_name, ag_idx) values (#{class.c_name}, #{class.ag_idx})")
 //	void addClass(@Param("class") final ClasstimeDto classtimeDto);
 	
@@ -52,7 +56,7 @@ public interface ClassListMapper {
 	@Select("select c_idx from Class where c_name=#{class.c_name}")
 	int selectClassId(@Param("class") final ClassInfoDto classinfoDto);
 	
-	@Insert("insert into Classtime(ct_day, ct_start_time, ct_end_time, ct_attend_starttime, ct_attend_endtime, ct_start_date, ct_end_date, c_idx) values (#{class.ct_day}, #{class.ct_start_time}, #{class.ct_end_time}, #{class.ct_attend_starttime}, #{class.ct_attend_endtime}, #{class.ct_start_date},  #{class.ct_end_date}, #{class.c_idx})")
+	@Insert("insert into Classtime(ct_day, ct_start_time, ct_end_time, ct_attend_starttime, ct_attend_endtime, ct_start_date, ct_end_date, ct_break_start, ct_break_end, c_idx) values (#{class.ct_day}, #{class.ct_start_time}, #{class.ct_end_time}, #{class.ct_attend_starttime}, #{class.ct_attend_endtime}, #{class.ct_start_date},  #{class.ct_end_date}, #{class.ct_break_start}, #{class.ct_break_end}, #{class.c_idx})")
 	void addClasstime(@Param("class") final ClasstimeDto classtimeDto);
 	
 	@Insert("insert into Classlocation(c_idx) values(#{c_idx})")
@@ -69,6 +73,9 @@ public interface ClassListMapper {
 	
 	@Delete("delete from Internal where c_idx=#{c_idx}")
 	void deleteClassInternal(@Param("c_idx") final int c_idx);
+	
+	@Delete("delete from External where e_idx=#{e_idx}")
+	void deleteExternalList(@Param("e_idx") final int e_idx);
 	
 	@Update("update Classlocation set cl_name=#{i.i_name} where c_idx=#{i.c_idx}")
 	void addClassLocation(@Param("i") final InternalDto internalDto);
