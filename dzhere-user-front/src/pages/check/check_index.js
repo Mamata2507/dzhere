@@ -115,11 +115,9 @@ const check_index = ({ navigation, route }) => {
     //     </Text>
     //   </View>
     // </SafeAreaView>
-
     <View style={{ flex: 1,  backgroundColor: 'white' }}>
       <CheckHeaderContainer/>
       <CheckContainer/>
-
       {/* <Footer/> */}
       <View>
         <TouchableOpacity

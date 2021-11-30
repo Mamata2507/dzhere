@@ -1,20 +1,15 @@
 package com.ezo.dzhereback.config;
 
 import com.ezo.dzhereback.jwt.JwtAuthenticationFilter;
-import com.ezo.dzhereback.service.AuthService;
+import com.ezo.dzhereback.service.user.AuthUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CorsFilter;
 
@@ -22,12 +17,12 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final AuthService authService;
+    private final AuthUserService authUserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    public SecurityConfig(AuthService authService, JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.authService = authService;
+    public SecurityConfig(AuthUserService authUserService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.authUserService = authUserService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 

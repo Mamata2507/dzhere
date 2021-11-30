@@ -2,7 +2,7 @@ import axios from "axios";
 
 const client = axios.create();
 
-client.defaults.baseURL = 'http://218.159.169.74:8080/';
+client.defaults.baseURL = "http://192.168.0.197:8080/";
 client.defaults.timeout = 3000;
 
 /*

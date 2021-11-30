@@ -2,7 +2,7 @@ package com.ezo.dzhereback.jwt;
 
 import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.domain.Role;
-import com.ezo.dzhereback.mapper.AuthMapper;
+import com.ezo.dzhereback.mapper.user.AuthUserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,15 +20,15 @@ public class TokenProvider {
 
     private static final String SECRET_KEY = "ZG91em9uZS1lem8tZmluYWwtcHJvamVjdC1hdHRlbmQtbWFuYWdlbWVudC1zeXN0ZW0K";
 
-    private final AuthMapper authMapper;
+    private final AuthUserMapper authUserMapper;
 
     @Autowired
-    public TokenProvider(AuthMapper authMapper) {
-        this.authMapper = authMapper;
+    public TokenProvider(AuthUserMapper authUserMapper) {
+        this.authUserMapper = authUserMapper;
     }
 
     public String create(Member member){
-        String u_auth = (authMapper.findAuthByPhone(member.getU_phone()) == 0) ? Role.ADMIN.getValue() : (authMapper.findAuthByPhone(member.getU_phone()) == 1) ? Role.STUDENT.getValue() : Role.TEACHER.getValue();
+        String u_auth = (authUserMapper.findAuthByPhone(member.getU_phone()) == 0) ? Role.ADMIN.getValue() : (authUserMapper.findAuthByPhone(member.getU_phone()) == 1) ? Role.STUDENT.getValue() : Role.TEACHER.getValue();
         log.info("생성 토큰에 넣을 u_auth : " + u_auth);
         Date expiryDate = Date.from(
                 Instant.now().plus(30, ChronoUnit.DAYS));
