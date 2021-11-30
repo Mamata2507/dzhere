@@ -12,7 +12,7 @@ const CheckBoxIcon = ({ item, style }) => {
     // 어떤 버튼도 선택하지 않았을 때
     if(!checkId){
       setSelection(true);
-      dispatch(setCheck(true));      
+      dispatch(setCheck(true));   
       // console.log(item);      
       dispatch(setValue(item));
     }

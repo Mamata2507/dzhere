@@ -35,6 +35,10 @@ export const StudentListAndroid = ({
   onChangeUphone,
   showModalUpdate,
   onDelete,
+  selectedClassAdd,
+  setSelectedClassAdd,
+  onCheck,
+  checkuid,
 }) => {
   // 버튼 이벤트
   const onPress = () => {
@@ -82,12 +86,13 @@ export const StudentListAndroid = ({
             <View style={styles.picker}>
               <Text style={styles.text}>강의명</Text>
               <Picker
-                selectedValue={selectedClass}
+                selectedValue={selectedClassAdd}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedClass(itemValue)
+                  setSelectedClassAdd(itemValue)
                 }
-                style={[styles.pickerText, { flex: 4 }]}
+                style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
+                <Picker.Item label="강의명을 선택하세요" value="0" />
                 {classList.map((c) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} />
                 ))}
@@ -106,12 +111,19 @@ export const StudentListAndroid = ({
             <View style={styles.picker}>
               <Text style={styles.text}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 3 }]}
+                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
                 keyboardType="default"
+                editable={checkuid}
               />
+               <TouchableOpacity
+                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
+                onPress={onCheck}
+                >
+                <Text style={styles.btnText}>확인</Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={[

@@ -4,13 +4,14 @@ import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Class;
 import com.ezo.dzhereback.domain.User;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
-public interface StudentMapper {
+public interface StudentAdminMapper {
 	@Select("select a.ag_name, a.ag_idx from User u join Agency a on u.ag_idx = a.ag_idx where u.u_phone='${u_phone}'")
     Agency getAgName(String u_phone);
 	
@@ -26,4 +27,9 @@ public interface StudentMapper {
 	@Delete("delete from User where u_idx='${u_idx}'")
 	int deleteUser(int u_idx);
 	
+	@Insert("insert into User(u_phone, u_name, ag_idx, c_idx, u_auth) values ('${u_phone}', '${u_name}', '${ag_idx}', '${c_idx}', 1);")
+	int insertUser(int ag_idx, int c_idx, String u_name, String u_phone);
+	
+	@Select("select count(*) from User where u_phone='${u_phone}';")
+	int countUser(String u_phone);
 }

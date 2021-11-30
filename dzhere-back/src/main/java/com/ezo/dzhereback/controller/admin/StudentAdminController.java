@@ -5,7 +5,7 @@ import com.ezo.dzhereback.domain.Class;
 import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.dto.StudentDto;
-import com.ezo.dzhereback.service.admin.StudentService;
+import com.ezo.dzhereback.service.admin.StudentAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @Slf4j
-public class StudentController {
-	private final StudentService studentService;
+public class StudentAdminController {
+	private final StudentAdminService studentService;
 	
 	@Autowired
-	public StudentController(StudentService studentService) {
+	public StudentAdminController(StudentAdminService studentService) {
 		this.studentService = studentService;
 	}
 	
@@ -63,20 +63,39 @@ public class StudentController {
 		System.out.println("<<<<<< userDelete 컨트롤러 완료 >>>>>>"+deleteResult);
 		return new Result(deleteResult);
 	}
-//	@GetMapping("/api/getStudentList")
-//	public Result getStudentList(@RequestParam("ag_idx") String ag_idx,
-//			@RequestParam("c_idx") String c_idx) {
-//		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
-//		List<User> studentList = studentService.getStudentList(Integer.parseInt(c_idx), Integer.parseInt(ag_idx));
-//		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
-//		return new Result(studentList);
-//	}
-//	@GetMapping("/api/getStudentList/{ag_idx}/{c_idx}")
-//	public Result getStudentList(@PathVariable("ag_idx") String ag_idx,
-//			@PathVariable("c_idx") String c_idx) {
-//		System.out.println("<<<<<< studentList 컨트롤러 시작 >>>>>>");
-//		List<User> studentList = studentService.getStudentList(Integer.parseInt(c_idx), Integer.parseInt(ag_idx));
-//		System.out.println("<<<<<< studentList 컨트롤러 완료 >>>>>>"+studentList);
-//		return new Result(studentList);
-//	}
+	
+	@PostMapping("/api/insertUser")
+	public Result insertUser(@RequestBody StudentDto studentDto) {
+		System.out.println("<<<<<< insertUser 컨트롤러 시작 >>>>>>");
+		System.out.println(studentDto.getAg_idx()+" "+studentDto.getC_idx()+" "+studentDto.getU_name()+" "+studentDto.getU_phone());
+		int countUser = studentService.countUser(studentDto.getU_phone());
+		if(countUser > 0) {
+			System.out.println("if"+countUser);
+			return new Result(-1);
+		} else {
+			int insertUser = studentService.insertUser(
+					studentDto.getAg_idx(), 
+					studentDto.getC_idx(), 
+					studentDto.getU_name(), 
+					studentDto.getU_phone()
+					);
+			System.out.println("else"+insertUser);
+			return new Result(insertUser);
+		}
+	}
+	
+	@GetMapping("/api/countUser/{u_phone}")
+	public Result countUser(@PathVariable("u_phone") String u_phone) {
+		System.out.println("<<<<<< countUser 컨트롤러 시작 >>>>>>");
+		int countUser = studentService.countUser(u_phone);
+		Boolean result = true;
+		if(countUser < 1) {
+			result = false; // 동일한 핸드폰 X, 사용가능
+		} else {
+			result = true; // 동일한 핸드폰 O, 사용불가
+		}
+		System.out.println("<<<<<< countUser 컨트롤러 완료 >>>>>>"+result);
+		return new Result(result);
+	} 
+
 }

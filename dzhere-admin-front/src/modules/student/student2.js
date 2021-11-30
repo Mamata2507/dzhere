@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
-import * as api from '../../lib/api/student/student'
-import createRequestThunk from '../../lib/api/student/createRequestThunk'
+import * as api from '../../../lib/api/student/student'
+import createRequestThunk from '../../../lib/api/student/createRequestThunk'
 
 // 액션 타입 선언
 // 한 요청당 세 개를 만들어야 한다.
@@ -25,14 +25,9 @@ const DELETE_USER = 'student/DELETE_USER'
 const DELETE_USER_SUCCESS = 'student/DELETE_USER_SUCCESS'
 const DELETE_USER_FAILURE = 'student/DELETE_USER_FAILURE'
 
-const INSERT_USER = 'student/INSERT_USER'
-const INSERT_USER_SUCCESS = 'student/INSERT_USER_SUCCESS'
-const INSERT_USER_FAILURE = 'student/INSERT_USER_FAILURE'
-
-const COUNT_USER = 'student/COUNT_USER'
-const COUNT_USER_SUCCESS = 'student/COUNT_USER_SUCCESS'
-const COUNT_USER_FAILURE = 'student/COUNT_USER_FAILURE'
-
+const ADD_USER = 'student/ADD_USER'
+const ADD_USER_SUCCESS = 'student/ADD_USER_SUCCESS'
+const ADD_USER_FAILURE = 'student/ADD_USER_FAILURE'
 
 // thunk 함수 생성
 // thunk 함수 내부에서는 시작할 때, 성공했을 때, 실패했을 때 다른 액션을 디스패치한다.
@@ -44,8 +39,7 @@ export const setFilterList = createAction(SET_FILTER_LIST, filterList => filterL
 export const setCheck = createAction(SET_CHECK, checkid => checkid);
 export const setValue = createAction(SET_VALUE, uid => uid);
 export const deleteUser = createRequestThunk(DELETE_USER, api.deleteUser);
-export const countUser = createRequestThunk(COUNT_USER, api.countUser);
-export const insertUser = createRequestThunk(INSERT_USER, api.insertUser);
+export const addUser = createRequestThunk(ADD_USER, api.addUser);
   
 // 초기 상태를 선언한다
 // 요청의 로딩 중 상태는 loading이라는 객체에서 관리한다.
@@ -58,9 +52,6 @@ const initialState = {
   loadingFilterList: true,
   uid: 0,
   checkid: false,
-  checkuid:true,
-  
-  // insertResult: 0,
 };
 
 const student = handleActions(
@@ -103,19 +94,12 @@ const student = handleActions(
       ...state,
     }),
     [DELETE_USER_FAILURE]: (state, action) => ({
+      ...state
+    }),
+    [ADD_USER_SUCCESS]: (state, action) => ({
       ...state,
     }),
-    [COUNT_USER_SUCCESS]: (state, action) => ({
-      ...state,
-      checkuid: action.payload,
-    }),
-    [COUNT_USER_FAILURE]: (state, action) => ({
-      ...state,
-    }),
-    [INSERT_USER_SUCCESS]: (state, action) => ({
-      ...state,
-    }),
-    [INSERT_USER_FAILURE]: (state, action) => ({
+    [ADD_USER_FAILURE]: (state, action) => ({
       ...state
     }),
   },
