@@ -28,7 +28,11 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer, 
 <<<<<<< HEAD
+<<<<<<< HEAD
   applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+=======
+  applyMiddleware(ReduxThunk, sagaMiddleware)
+>>>>>>> 625e7ac4bb41dd28b7e9e49badccd96b8c38d036
 =======
   applyMiddleware(ReduxThunk, sagaMiddleware)
 >>>>>>> 625e7ac4bb41dd28b7e9e49badccd96b8c38d036
