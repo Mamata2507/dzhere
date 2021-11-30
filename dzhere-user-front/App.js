@@ -21,15 +21,17 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer, {rootSaga} from "./src/modules/index";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware();
-const logger = createLogger();
 const store = createStore(
   rootReducer, 
+<<<<<<< HEAD
   applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+=======
+  applyMiddleware(ReduxThunk, sagaMiddleware)
+>>>>>>> 625e7ac4bb41dd28b7e9e49badccd96b8c38d036
 );
 
 // saga실행

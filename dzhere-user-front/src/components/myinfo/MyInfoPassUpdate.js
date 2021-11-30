@@ -4,39 +4,54 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
-import CustomTextInput from '../auth/CustomTextInput'
-import ErrorMessage from "../auth/ErrorMessage";
 
-export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, onChangePwCk2, onPress }) => {
+export const Contents = ({ currentPassword, setCurrentPassword, newPassword, 
+                           setNewPassword, passwordConfirm, setPasswordConfirm,
+                           newPasswordError, passwordConfirmError,
+                           onPress, emptyError, checkError1, onCheck, loadingCheck,
+                           checkError2, edit}) => {
 
     const navigation = useNavigation();
 
     return (
-      <View style={[styles.container, {height: 340, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+      <View style={[styles.container, {height: 380, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+        <Text>{newPasswordError}</Text>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <CustomTextInput
-            name="currentPassword"
+          <TextInput
             value={currentPassword}
-            onChangeText={onChangeText}
+            onChangeText={setCurrentPassword}
             placeholder="기존 비밀번호"
             maxLength={16}
             keyboardType="default"
             secureTextEntry={true}
             style={styles.myInfoText}
+            editable={edit}
           />
+                <TouchableOpacity
+                style={[styles.btn, {marginTop: 15, alignSelf: 'center', width: '20%'}]}
+                onPress={onCheck}
+                >
+                <Text style={styles.btnText}>확인</Text>
+              </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: "row" }}>
-            {error1 && <ErrorMessage>{error1}</ErrorMessage>}
+            <Text style={styles.error}>
+              {loadingCheck && ''}
+              {!loadingCheck && ''}
+            </Text>
+            <Text style={styles.error}>
+              {edit && checkError2}
+              {!edit && checkError1}
+            </Text>
         </View>
 
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <CustomTextInput
-            name="newPassword"
+          <TextInput
             value={newPassword}
-            onChangeText={onChangeText}
+            onChangeText={setNewPassword}
             placeholder="새 비밀번호"
             maxLength={16}
             keyboardType="default"
@@ -45,14 +60,13 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
           />
         </View>
         <View style={{ flexDirection: "row" }}>
-            {error2 && <ErrorMessage>{error2}</ErrorMessage>}
+            <Text style={styles.error}>{newPasswordError}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
-          <CustomTextInput
-            name="passwordConfirm"
+          <TextInput
             value={passwordConfirm}
-            onChangeText={onChangeText}
+            onChangeText={setPasswordConfirm}
             placeholder="비밀번호 확인"
             maxLength={16}
             keyboardType="default"
@@ -61,7 +75,8 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
           />
         </View>
         <View style={{ flexDirection: "row" }}>
-            {error3 && <ErrorMessage>{error3}</ErrorMessage>}
+            <Text style={styles.error}>{passwordConfirmError}</Text>
+            <Text style={styles.error}>{emptyError}</Text>
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -108,11 +123,20 @@ export const Contents = ({ pwCk1, onChangePwCk1, newPw, onChangeNewPw, pwCk2, on
       margin: 10,
       alignItems: "center",
       paddingVertical: 8,
-      padding: 10,
     },
     text: {
       color: "white",
       fontWeight: "bold",
       margin: 10,
+    },
+    error: {
+      color: "red",
+      marginLeft: '5%',
+    },
+    btnText: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: 'white',
+      textAlignVertical: "center",
     },
   });

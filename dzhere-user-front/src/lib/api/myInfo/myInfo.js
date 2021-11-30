@@ -6,8 +6,8 @@ export const getEmail = phone =>
 export const updateEmail = ({phone, newEmail}) => 
     client.post(`/api/updateEmail/${phone}/${newEmail}`);
 
-export const getPw = phone => 
-    client.get(`/api/getPw/${phone}`);
+export const checkPw = ({currentPassword, phone}) => 
+    client.post('/api/checkPw', {u_pw: currentPassword, u_phone: phone});
 
-export const updatePw = ({phone, newPw}) => 
-    client.post(`/api/updatePw/${phone}/${newPw}`);
+export const updatePw = ({newPassword, phone}) => 
+    client.post('/api/updatePw', {u_pw: newPassword, u_phone: phone});

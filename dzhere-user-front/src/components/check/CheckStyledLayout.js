@@ -88,6 +88,14 @@ export const StyledButtons = props => {
   )
 }
 
+export const StyledRefreshButtons = props => {
+  return(
+    <ButtonContainer onPress={props.onPress}>
+      <Image source={props.source}/>
+    </ButtonContainer>
+  )
+}
+
 const StyledPicker = styled.Picker`
   ${centerAlign}
   width: 70%;

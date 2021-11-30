@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useReducer } from 'react'
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Netinfo from '@react-native-community/netinfo';
 import * as Location from 'expo-location';
-import { Contents } from '../../components/check/CheckLayout';
-import { loadClassList, loadClassTimeList, checkInsert, checkLeaveInsert, checkExitInsert, checkWifi, initCheckWifiInfo, checkLoadTodayAttendList } from '../../modules/check/check';
+import { Contents, Header } from '../../components/check/CheckLayout';
+import { loadClassList, loadClassTimeList, checkInsert, checkLeaveInsert, checkExitInsert, 
+    checkWifi, initCheckWifiInfo, checkLoadTodayAttendList, refreshCheckList, refreshResetCheckList } from '../../modules/check/check';
 import { AsyncStorage, Platform, Alert } from 'react-native';
+import CheckHeaderContainer from './CheckHeaderContainer';
 
 // wifi 정보 저장용 state
 let wifiInfo = {};
@@ -22,7 +24,8 @@ const CheckContainer = () => {
     const [exitBtnDisable, setExitBtnDisable] = useState(true);
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const {classTime,classList,result,checkWifiInfo,todayAttendList,classLoadError,classTimeLoadError,attendError,checkWifiError,todayAttendListError} = useSelector(({ check }) =>({
+    const {Refresh,classTime,classList,result,checkWifiInfo,todayAttendList,classLoadError,classTimeLoadError,attendError,checkWifiError,todayAttendListError} = useSelector(({ check }) =>({
+        Refresh : check.Refresh,
         classTime : check.classTime,
         classList : check.classList,
         result: check.result,
@@ -41,13 +44,10 @@ const CheckContainer = () => {
     const [attendList, setAttendList] = useState([]);    
 
     const startPermissionWifi = async ()=> {
-        const u_phone = temp_uphone; 
-        console.log(222);
-        if(Location.requestForegroundPermissionsAsync()){
-            console.log(333);
+        const u_phone = temp_uphone;         
+        if(Location.requestForegroundPermissionsAsync()){        
             try{
-                await Netinfo.fetch('wifi').then(connectInfo=>{
-                    console.log(444);                        
+                await Netinfo.fetch('wifi').then(connectInfo=>{                    
                     wifiInfo = {                    
                         connect: connectInfo.isConnected,
                         ssid: connectInfo.details.ssid,
@@ -63,12 +63,10 @@ const CheckContainer = () => {
         }
     }
 
-    const startWifi = async () => {
-        console.log(111);
+    const startWifi = async () => {        
         await startPermissionWifi();
         // wifi 연결 되어 있는지 확인 
-        if((wifiInfo)&&wifiInfo.connect){                        
-            console.log(555);
+        if((wifiInfo)&&wifiInfo.connect){                                    
             console.log(wifiInfo);
             dispatch(checkWifi(wifiInfo));
             return true;
@@ -184,9 +182,9 @@ const CheckContainer = () => {
     },[todayAttendList])        
 
     // useEffect(()=>{
-    //     loadCheckList();
-    //     // console.log(attendList);
-    // },[])
+    //     refreshResetCheckList();
+    //     console.log('Refresh  ',Refresh);
+    // },[Refresh])
     
     useEffect(()=>{        
         console.log(btnClick,first,checkWifiInfo);
@@ -215,7 +213,7 @@ const CheckContainer = () => {
         dispatch(loadClassList(u_phone));
         // class time load
         setTimeout(() => {
-            (u_phone) && dispatch(loadClassTimeList(u_phone));
+            (u_phone) && dispatch(loadClassTimeList(u_phone));            
         }, 10);
     },[])    
 
@@ -255,7 +253,16 @@ const CheckContainer = () => {
         }
     },[error])
 
+    useEffect(()=>{        
+        if(Refresh){
+            (phone) && dispatch(loadClassTimeList(phone));
+            dispatch(refreshResetCheckList());
+            setFirt(true);
+        }        
+    },[Refresh])
+
     return (
+        <>        
         <Contents            
             onPressStartTime = {onPressStartTime}
             onPressLeaveTime = {onPressLeaveTime}
@@ -266,7 +273,8 @@ const CheckContainer = () => {
             attendList = {attendList}
             btnDisable = {btnDisable}
             exitBtnDisable = {exitBtnDisable}
-        />
+        />        
+        </>
     );
 }
 

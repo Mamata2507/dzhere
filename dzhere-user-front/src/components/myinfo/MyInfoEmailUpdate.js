@@ -5,7 +5,7 @@ import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
-export const Contents = ({ email, onPress, newEmail, onChangeNewEmail }) => {
+export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail }) => {
 
     const navigation = useNavigation();
 
@@ -14,7 +14,8 @@ export const Contents = ({ email, onPress, newEmail, onChangeNewEmail }) => {
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <Text style={styles.myInfoText}>
-            {email}
+          {loadingEmail && '로딩 중..'}
+          {!loadingEmail && email && `${email.u_email}`}
         </Text>
         </View>
         <View style={styles.myInfo}>
@@ -24,7 +25,7 @@ export const Contents = ({ email, onPress, newEmail, onChangeNewEmail }) => {
           onChangeText={onChangeNewEmail}
           value={newEmail}
           placeholder="이메일 변경"
-          keyboardType="numeric"
+          keyboardType="default"
           />
         </View>
         <View style={styles.btnContainer}>
