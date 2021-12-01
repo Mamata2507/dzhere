@@ -90,9 +90,9 @@ public class StudentAdminController {
 		int countUser = studentService.countUser(u_phone);
 		Boolean result = true;
 		if(countUser < 1) {
-			result = false; // 동일한 핸드폰 X, 사용가능
+			result = true; // 동일한 핸드폰 X, 사용가능
 		} else {
-			result = true; // 동일한 핸드폰 O, 사용불가
+			result = false; // 동일한 핸드폰 O, 사용불가
 		}
 		System.out.println("<<<<<< countUser 컨트롤러 완료 >>>>>>"+result);
 		return new Result(result);

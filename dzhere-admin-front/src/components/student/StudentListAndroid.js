@@ -8,6 +8,8 @@ import {
   Picker,
   ScrollView,
   TextInput,
+  Keyboard,
+  KeyboardAvoidingView
 } from "react-native";
 import { Modal, Portal, Provider, DataTable } from "react-native-paper";
 import CheckBoxIcon from "../../containers/student/CheckBoxContainer";
@@ -39,15 +41,9 @@ export const StudentListAndroid = ({
   setSelectedClassAdd,
   onCheck,
   checkuid,
+  error,
+  loadingCheck,
 }) => {
-  // 버튼 이벤트
-  const onPress = () => {
-    Alert.alert(`${agName.ag_idx}`);
-    Alert.alert(`${agName.ag_name}`);
-  };
-
-  // Picker
-  const [selectedValue, setSelectedValue] = useState(0);
 
   // DataTable - Pagination
   const optionsPerPage = [2, 3, 4];
@@ -59,20 +55,10 @@ export const StudentListAndroid = ({
     setPage(0);
   }, [itemsPerPage]);
 
-  // CheckBox
-  const [isChecked, setChecked] = useState(false);
-  // const [agree, setAgree] = useState(false);
-  // <Button
-  // title="Sign Up"
-  // disabled={!agree}
-  // onPress={() => {
-  //   /* Do something */
-  // }}
-  // />
-
   return (
     <View style={styles.container}>
       <Provider>
+        {/* <<<<<<<<<<<<<<<<<< 등록 모달 시작 >>>>>>>>>>>>>>>>>>>>*/}
         <Portal>
           <Modal
             visible={visibleAdd}
@@ -83,6 +69,43 @@ export const StudentListAndroid = ({
             <View style={styles.lineContainer}>
               <View style={styles.line} />
             </View>
+
+            <View style={styles.picker}>
+              <Text style={styles.text}>전화번호</Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
+                onChangeText={onChangeUphone}
+                value={uPhone}
+                placeholder="전화번호를 입력하세요"
+                keyboardType="default"
+                editable={checkuid}
+                keyboardShouldPersistTaps='handled'
+              />
+               <TouchableOpacity
+                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
+                onPress={onCheck}
+                >
+                <Text style={styles.btnText}>확인</Text>
+              </TouchableOpacity>
+            </View>
+              <View style={{ flexDirection: "row" }}>
+                 <Text style={styles.error}>{!loadingCheck && error}</Text>
+              </View>
+
+            <View style={styles.picker}>
+              <Text style={styles.text}>수강생명</Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 3 }]}
+                onChangeText={onChangeUname}
+                value={uName}
+                placeholder="수강생명을 입력하세요"
+                keyboardType="default"
+              />
+            </View>
+            <View style={{ flexDirection: "row" }}>
+                 <Text></Text>
+            </View>
+
             <View style={styles.picker}>
               <Text style={styles.text}>강의명</Text>
               <Picker
@@ -98,32 +121,8 @@ export const StudentListAndroid = ({
                 ))}
               </Picker>
             </View>
-            <View style={styles.picker}>
-              <Text style={styles.text}>수강생명</Text>
-              <TextInput
-                style={[styles.pickerText, { flex: 3 }]}
-                onChangeText={onChangeUname}
-                value={uName}
-                placeholder="수강생명을 입력하세요"
-                keyboardType="default"
-              />
-            </View>
-            <View style={styles.picker}>
-              <Text style={styles.text}>전화번호</Text>
-              <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
-                onChangeText={onChangeUphone}
-                value={uPhone}
-                placeholder="전화번호를 입력하세요"
-                keyboardType="default"
-                editable={checkuid}
-              />
-               <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
-                onPress={onCheck}
-                >
-                <Text style={styles.btnText}>확인</Text>
-              </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+                 <Text></Text>
             </View>
             <TouchableOpacity
               style={[
@@ -136,7 +135,88 @@ export const StudentListAndroid = ({
             </TouchableOpacity>
           </Modal>
         </Portal>
+        {/* <<<<<<<<<<<<<<<<<< 등록 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
 
+        {/* <<<<<<<<<<<<<<<<<< 수정 모달 시작 >>>>>>>>>>>>>>>>>>>>*/}
+        {/* <Portal>
+          <Modal
+            visible={visibleUpdate}
+            onDismiss={hideModalUpdate}
+            contentContainerStyle={styles.modal}
+          >
+            <Text style={styles.modalText}>수강생 정보 수정</Text>
+            <View style={styles.lineContainer}>
+              <View style={styles.line} />
+            </View>
+
+            <View style={styles.picker}>
+              <Text style={styles.text}>전화번호</Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
+                onChangeText={onChangeUphone}
+                value={uPhone}
+                placeholder="전화번호를 입력하세요"
+                keyboardType="default"
+                editable={checkuid}
+                keyboardShouldPersistTaps='handled'
+              />
+               <TouchableOpacity
+                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
+                onPress={onCheck}
+                >
+                <Text style={styles.btnText}>확인</Text>
+              </TouchableOpacity>
+            </View>
+              <View style={{ flexDirection: "row" }}>
+                 <Text style={styles.error}>{!loadingCheck && error}</Text>
+              </View>
+
+            <View style={styles.picker}>
+              <Text style={styles.text}>수강생명</Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 3 }]}
+                onChangeText={onChangeUname}
+                value={uName}
+                placeholder="수강생명을 입력하세요"
+                keyboardType="default"
+              />
+            </View>
+            <View style={{ flexDirection: "row" }}>
+                 <Text></Text>
+            </View>
+
+            <View style={styles.picker}>
+              <Text style={styles.text}>강의명</Text>
+              <Picker
+                selectedValue={selectedClassAdd}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedClassAdd(itemValue)
+                }
+                style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
+              >
+                <Picker.Item label="강의명을 선택하세요" value="0" />
+                {classList.map((c) => (
+                  <Picker.Item label={c.c_name} value={c.c_idx} />
+                ))}
+              </Picker>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+                 <Text></Text>
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                { marginTop: 15, alignSelf: "center", width: "20%" },
+              ]}
+              onPress={onAdd}
+            >
+              <Text style={styles.btnText}>등록</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal> */}
+        {/* <<<<<<<<<<<<<<<<<< 수정 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
+
+        {/* <<<<<<<<<<<<<<<<<< 헤더 시작 >>>>>>>>>>>>>>>>>>>>*/}
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View>
             <View style={styles.picker}>
@@ -181,6 +261,9 @@ export const StudentListAndroid = ({
             </TouchableOpacity>
           </View>
         </View>
+        {/* <<<<<<<<<<<<<<<<<< 헤더 끝 >>>>>>>>>>>>>>>>>>>>*/}
+        
+        {/* <<<<<<<<<<<<<<<<<<  content 시작 >>>>>>>>>>>>>>>>>>>>*/}
         <View style={styles.content}>
           <DataTable>
             <DataTable.Header>
@@ -244,7 +327,9 @@ export const StudentListAndroid = ({
               optionsLabel={"Rows per page"}
             />
           </DataTable>
-
+           {/* <<<<<<<<<<<<<<<<<<  content 끝 >>>>>>>>>>>>>>>>>>>>*/}
+          
+           {/* <<<<<<<<<<<<<<<<<<  푸터 시작 >>>>>>>>>>>>>>>>>>>>*/}
           <View style={styles.btnContainer2}>
             <TouchableOpacity
               style={[styles.btn, { margin: 5 }]}
@@ -265,6 +350,7 @@ export const StudentListAndroid = ({
               <Text style={styles.btnText}>삭제</Text>
             </TouchableOpacity>
           </View>
+          {/* <<<<<<<<<<<<<<<<<<  푸터 끝 >>>>>>>>>>>>>>>>>>>>*/}
         </View>
       </Provider>
     </View>
@@ -349,7 +435,7 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#CEEDFF",
     padding: "5%",
-    height: "65%",
+    height: "75%",
   },
   modalText: {
     fontSize: 18,
@@ -359,6 +445,7 @@ const styles = StyleSheet.create({
   lineContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: '5%',
   },
   line: {
     flex: 1,
@@ -366,5 +453,9 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     marginTop: "5%",
     marginBottom: "5%",
+  },
+  error: {
+    color: "red",
+    marginLeft: '0.5%',
   },
 });

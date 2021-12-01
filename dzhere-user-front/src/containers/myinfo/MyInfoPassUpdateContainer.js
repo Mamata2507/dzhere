@@ -26,13 +26,13 @@ const MyInfoPassUpdateContainer = () => {
     check: myinfo.check,
     loadingCheck: loading['myinfo/CHECK_PW'],
   }));
+  const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
 
   console.log('기존 비밀번호'+currentPassword);
   console.log('새 비밀번호'+newPassword);
   console.log('비밀번호 확인'+passwordConfirm);
   
   function onPress(){
-    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?)(!@$%^&*-]).{8,16}$/;
   
     if(newPassword.length > 0 && regex.test(newPassword) === false ){
       setNewPasswordError('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.')

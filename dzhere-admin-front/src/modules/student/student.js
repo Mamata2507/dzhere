@@ -19,6 +19,7 @@ const GET_STUDENT_LIST_FAILURE = 'student/GET_STUDENT_LIST_FAILURE'
 const SET_FILTER_LIST = 'student/SET_FILTER_LIST'
 
 const SET_CHECK = 'student/SET_CHECK'
+const SET_CHECK_UID = 'student/SET_CHECK_UID'
 const SET_VALUE = 'student/SET_VALUE'
 
 const DELETE_USER = 'student/DELETE_USER'
@@ -58,9 +59,8 @@ const initialState = {
   loadingFilterList: true,
   uid: 0,
   checkid: false,
-  checkuid:true,
+  result:false,
   
-  // insertResult: 0,
 };
 
 const student = handleActions(
@@ -107,13 +107,14 @@ const student = handleActions(
     }),
     [COUNT_USER_SUCCESS]: (state, action) => ({
       ...state,
-      checkuid: action.payload,
+      result: action.payload,
     }),
     [COUNT_USER_FAILURE]: (state, action) => ({
       ...state,
     }),
     [INSERT_USER_SUCCESS]: (state, action) => ({
       ...state,
+      checkuid: true,
     }),
     [INSERT_USER_FAILURE]: (state, action) => ({
       ...state
