@@ -104,6 +104,7 @@ const StudentListContainer = () => {
     setCheckUid(true)
   }
 
+
   // 수정 모달 클릭 시
   const showModalUpdate = () => {
     if(uid === 0){

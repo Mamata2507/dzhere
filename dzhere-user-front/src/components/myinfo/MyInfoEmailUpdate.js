@@ -5,7 +5,7 @@ import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
-export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail }) => {
+export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEmail, error }) => {
 
     const navigation = useNavigation();
 
@@ -27,6 +27,11 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
           placeholder="이메일 변경"
           keyboardType="default"
           />
+        </View>
+        <View style={{ flexDirection: "row" }}>
+            <Text style={styles.error}>
+              {error}
+            </Text>
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -79,5 +84,9 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
       color: "white",
       fontWeight: "bold",
       margin: 10,
+    },
+    error: {
+      color: "red",
+      marginLeft: '5%',
     },
   });
