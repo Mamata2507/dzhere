@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Alert,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -160,7 +159,7 @@ export const StudentListAndroid = ({
               <TextInput
                 style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
                 onChangeText={onChangeUphone}
-                value={loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_phone}
+                value={uPhone}
                 placeholder="전화번호를 입력하세요"
                 keyboardType="default"
                 editable={checkuid}
@@ -182,7 +181,7 @@ export const StudentListAndroid = ({
               <TextInput
                 style={[styles.pickerText, { flex: 3 }]}
                 onChangeText={onChangeUname}
-                value={loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_name}
+                value={uName}
                 placeholder="수강생명을 입력하세요"
                 keyboardType="default"
               />
@@ -427,7 +426,7 @@ const styles = StyleSheet.create({
   miniPicker: {
     width: "35%",
     height: 30,
-    color: "#0044ff",
+    color: "#4400ff",
   },
   checkbox: {
     alignSelf: "center",

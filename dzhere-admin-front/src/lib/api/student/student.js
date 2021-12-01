@@ -15,8 +15,16 @@ export const deleteUser = uid =>
 export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone}) => 
     client.post(`/api/insertUser`, {ag_idx: agIdx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone})
 
-export const countUser = phone => 
-    client.get(`/api/countUser/${phone}`);
+export const countUser = phone => {
+    return client
+    .get(`/api/countUser/${phone}`)
+    .then(function (response){
+        return response.data.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
 
 export const getStudentInfo = uid => 
     client.get(`api/getStudentInfo/${uid}`)

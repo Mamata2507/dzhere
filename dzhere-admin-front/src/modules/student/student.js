@@ -19,7 +19,6 @@ const GET_STUDENT_LIST_FAILURE = 'student/GET_STUDENT_LIST_FAILURE'
 const SET_FILTER_LIST = 'student/SET_FILTER_LIST'
 
 const SET_CHECK = 'student/SET_CHECK'
-const SET_CHECK_UID = 'student/SET_CHECK_UID'
 const SET_VALUE = 'student/SET_VALUE'
 
 const DELETE_USER = 'student/DELETE_USER'
@@ -29,10 +28,6 @@ const DELETE_USER_FAILURE = 'student/DELETE_USER_FAILURE'
 const INSERT_USER = 'student/INSERT_USER'
 const INSERT_USER_SUCCESS = 'student/INSERT_USER_SUCCESS'
 const INSERT_USER_FAILURE = 'student/INSERT_USER_FAILURE'
-
-const COUNT_USER = 'student/COUNT_USER'
-const COUNT_USER_SUCCESS = 'student/COUNT_USER_SUCCESS'
-const COUNT_USER_FAILURE = 'student/COUNT_USER_FAILURE'
 
 const GET_STUDENT_INFO = 'student/GET_STUDENT_INFO'
 const GET_STUDENT_INFO_SUCCESS = 'student/GET_STUDENT_INFO_SUCCESS'
@@ -52,7 +47,6 @@ export const setFilterList = createAction(SET_FILTER_LIST, filterList => filterL
 export const setCheck = createAction(SET_CHECK, checkid => checkid);
 export const setValue = createAction(SET_VALUE, uid => uid);
 export const deleteUser = createRequestThunk(DELETE_USER, api.deleteUser);
-export const countUser = createRequestThunk(COUNT_USER, api.countUser);
 export const insertUser = createRequestThunk(INSERT_USER, api.insertUser);
 export const getStudentInfo = createRequestThunk(GET_STUDENT_INFO, api.getStudentInfo);
 export const updateUser = createRequestThunk(UPDATE_USER, api.updateUser);
@@ -114,13 +108,6 @@ const student = handleActions(
     [DELETE_USER_FAILURE]: (state, action) => ({
       ...state,
     }),
-    [COUNT_USER_SUCCESS]: (state, action) => ({
-      ...state,
-      result: action.payload,
-    }),
-    [COUNT_USER_FAILURE]: (state, action) => ({
-      ...state,
-    }),
     [INSERT_USER_SUCCESS]: (state, action) => ({
       ...state,
       checkuid: true,
@@ -138,7 +125,7 @@ const student = handleActions(
     [UPDATE_USER_SUCCESS]: (state, action) => ({
       ...state,
     }),
-    [UPDATE_USER_SUCCESS]: (state, action) => ({
+    [UPDATE_USER_FAILURE]: (state, action) => ({
       ...state
     }),
   },

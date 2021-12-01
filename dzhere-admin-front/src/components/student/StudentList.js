@@ -19,7 +19,7 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
                           setSelectedClassAdd,
                           selectedClassUpdate, 
                           setSelectedClassUpdate,
-                          onCheck, checkuid, error, loadingCheck,
+                          onCheck, check, error, loadingCheck,
                           studentInfo, loadingStudentInfo, onUpdate }) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
@@ -53,7 +53,7 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
     selectedClassUpdate={selectedClassUpdate}
     setSelectedClassUpdate={setSelectedClassUpdate}
     onCheck={onCheck}
-    checkuid={checkuid}
+    check={check}
     error={error}
     loadingCheck={loadingCheck}
     studentInfo={studentInfo}

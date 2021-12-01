@@ -8,13 +8,13 @@ import {
   getStudentList, 
   setFilterList, 
   deleteUser, 
-  countUser, 
   insertUser, 
   setCheck, 
   setValue, 
   getStudentInfo, 
   updateUser, 
 } from '../../modules/student/student'
+import { countUser } from '../../lib/api/student/student';
 
 const StudentListContainer = () => {
   
@@ -30,11 +30,11 @@ const StudentListContainer = () => {
   const [selectedClassAdd, setSelectedClassAdd] = useState(0);
   const [selectedClassUpdate, setSelectedClassUpdate] = useState(0);
   const [error, setError] = useState('');
-  const [checkuid, setCheckUid] = useState(true);
+  const [check, setCheck] = useState(true);
 
   const { agName, classList, studentList, loadingAgName, 
           loadingStudentList, filterList, loadingFilterList, 
-          uid, result, loadingCheck, studentInfo, loadingStudentInfo } = useSelector(({ student, loading }) => ({
+          uid, loadingCheck, studentInfo, loadingStudentInfo } = useSelector(({ student, loading }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
@@ -43,7 +43,6 @@ const StudentListContainer = () => {
     filterList: student.filterList,
     loadingFilterList: student.loadingFilterList,
     uid: student.uid, 
-    result: student.result,
     loadingCheck: loading['student/COUNT_USER'],
     studentInfo: student.studentInfo,
     loadingStudentInfo: loading['student/GET_STUDENT_INFO']
@@ -66,16 +65,6 @@ const StudentListContainer = () => {
         dispatch(setFilterList(tempArr))
       }
     },[selectedAccept])
-  
-  // 등록 모달 - 사용자가 핸드폰 입력 시
-  useEffect(() => {
-    if(false === regex.test(uPhone)){
-      setError('전화번호를 정확히 입력하세요');
-    } else {
-      setError('')
-      dispatch(countUser(uPhone));
-    }
-  }, [uPhone])
 
   // 체크 박스 선택 시
   useEffect(() => {
@@ -101,28 +90,18 @@ const StudentListContainer = () => {
     setSelectedClassAdd(0)
     onChangeUname('')
     onChangeUphone('')
-    setCheckUid(true)
+    setCheck(true)
   }
-
 
   // 수정 모달 클릭 시
   const showModalUpdate = () => {
     if(uid === 0){
       Alert.alert('수강생을 선택해주세요')
     } else {
-      // console.log('////////////////////////////////////////');
-      // console.log(studentInfo);
-      // onChangeUname(studentInfo.u_name);
-      // onChangeUphone(studentInfo.u_phone);
-      // setSelectedClassUpdate(studentInfo.c_idx);
-      // console.log(uName)
-      // console.log(uPhone)
-      // console.log(selectedClassUpdate)
-      // console.log('////////////////////////////////////////');
-      
+      onChangeUphone(loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_phone);
+      onChangeUname(loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_name);
       setVisibleUpdate(true);
       setError('');
-      // console.log(studentInfo);
     }
   }
   
@@ -133,32 +112,36 @@ const StudentListContainer = () => {
     setSelectedClassUpdate(0)
     onChangeUname('')
     onChangeUphone('')
-    setCheckUid(true)
+    setCheck(true)
   } 
 
-  // 등록 모달 -> 동일한 전화번호가 있는지 확인
-  const onCheck = () => {
-    if(uPhone === ''){
-      Alert.alert('전화번호를 입력하세요')
-    } else {
-          if(loadingCheck){console.log('로딩 중');} 
-          if(!loadingCheck && uPhone !== ''){
-            if(result === true){
-              Alert.alert('사용 가능한 전화번호입니다.')
-              setCheckUid(false)
-            } else {
-              Alert.alert('등록된 전화번호입니다.')
-            }
-          } 
-      }
-  } // 등록 모달(동일한 전화번호) 끝
-  
+  //동일한 전화번호가 있는지 확인
+    async function onCheck () {
+      if(uPhone === ''){
+        Alert.alert('전화번호를 입력하세요')
+      } else {
+        if(false === regex.test(uPhone)){
+          setError('전화번호를 정확히 입력하세요');
+        } else {
+          const check = await (countUser(uPhone));
+          if(check === true){
+            setError('')
+            setCheck(false)
+          } else {
+            Alert.alert('등록된 전화번호입니다.')
+          }
+        }          
+    } 
+  } // 동일한 전화번호 끝
+
   // 등록 모달 -> 사용자 등록
   const onAdd = () => {
     if(uName === ''|| uPhone === ''){
       Alert.alert('빈 항목이 있습니다.');
     } else if(selectedClassAdd === 0){
       Alert.alert('강의명을 선택하세요');
+    } else if(check === true) {
+      Alert.alert('전화번호 확인 버튼을 클릭하세요');
     } else {
       dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone}))
       Alert.alert(
@@ -175,7 +158,7 @@ const StudentListContainer = () => {
       );
     }
   } // 등록 모달(사용자 등록) 끝
-
+  
   // 수정 모달 -> 사용자 수정
   const onUpdate = () => {
     console.log('기관명'+agIdx);
@@ -246,6 +229,9 @@ const StudentListContainer = () => {
     }
   } // 유저 삭제 끝
 
+
+
+
   return (
       <Contents
          agName={agName}
@@ -280,7 +266,7 @@ const StudentListContainer = () => {
          onCheck={onCheck}
          error={error}
          loadingCheck={loadingCheck}
-         checkuid={checkuid}
+         check={check}
          studentInfo={studentInfo}
          loadingStudentInfo={loadingStudentInfo}
          onUpdate={onUpdate}
