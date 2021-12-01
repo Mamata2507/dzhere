@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "expo-checkbox";
 import { setCheck, setValue } from "../../../../modules/admin/class/course";
@@ -10,6 +10,7 @@ const CheckBoxIcon = ({ item, style }) => {
   const checkId = useSelector(({ classes }) => classes.checkid);
   const visible = useSelector(({classes}) => classes.visible);
   const isFocused = useIsFocused();
+
   const onValueChange = () => {
     // 어떤 버튼도 선택하지 않았을 때
     if (!checkId) {
@@ -23,27 +24,21 @@ const CheckBoxIcon = ({ item, style }) => {
       dispatch(setCheck(false));
       dispatch(setValue(null));
     }
-    // checkId && valueId === item.c_idx && dispatch(setCheck(false));
-    // dispatch(setCheck(true));
-    // isSelected && dispatch(setValue(item.c_idx));
-    // console.log("후: ", isSelected, checkId, item.c_idx, valueId);
   };
 
   useEffect(() => {
-    if (isFocused) {
-      console.log("재접근");
       setSelection(false);
       dispatch(setCheck(false));
       dispatch(setValue(null));
-      console.log(isSelected, checkId);
-    }
   }, [isFocused]);
 
   useEffect(() => {
-    setSelection(false);
-    dispatch(setCheck(false));
-    // dispatch(setValue(null));
-}, [visible]);
+    if(visible){
+      setSelection(false);
+      dispatch(setCheck(false));
+      dispatch(setValue(null));
+    }
+  }, [visible]);
 
   return (
     <Checkbox

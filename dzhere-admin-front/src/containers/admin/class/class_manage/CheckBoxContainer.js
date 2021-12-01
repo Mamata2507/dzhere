@@ -24,10 +24,6 @@ const CheckBoxIcon = ({ item, style }) => {
       dispatch(setCheck(false));
       dispatch(setValue(null));
     }
-    // checkId && valueId === item.c_idx && dispatch(setCheck(false));
-    // dispatch(setCheck(true));
-    // isSelected && dispatch(setValue(item.c_idx));
-    // console.log("후: ", isSelected, checkId, item.c_idx, valueId);
   };
 
   useEffect(() => {

@@ -8,7 +8,12 @@ import {
   deleteClass,
   updateClasstime,
 } from "../../../../lib/api/class/course";
-import { getClasstime, IsVisible, setCheck, setValue } from "../../../../modules/admin/class/course";
+import {
+  getClasstime,
+  IsVisible,
+  setCheck,
+  setValue,
+} from "../../../../modules/admin/class/course";
 import ClassManageAndroid from "../../../../components/admin/class/class_manage/ClassManageAndroid";
 import { useIsFocused } from "@react-navigation/core";
 
@@ -65,10 +70,12 @@ const ClassManageAndroidContainer = () => {
   const [oldfriday, setOldFri] = useState(false);
   const [oldsaturday, setOldSat] = useState(false);
   const [oldsunday, setOldSun] = useState(false);
-  const [updateList, setUpdateList] = useState(null);
+
   const isFocused = useIsFocused();
   const agency = useSelector(({ classes }) => classes.agency);
   const classId = useSelector(({ classes }) => classes.classid);
+
+  // ------------- API 코드
 
   async function classtimeListApi() {
     console.log("강의 리스트 불러오기");
@@ -130,10 +137,14 @@ const ClassManageAndroidContainer = () => {
     dispatch(setCheck(false));
   }
 
+  // ------------- UseEffect 관련 코드
+
+  // ------------- 처음 렌더링 시 classtime 리스트 가져오기
   useEffect(() => {
     classtimeListApi();
   }, []);
 
+  // ------------- 다시 현재 페이지에 왔을 때 classtime 리스트 가져오기
   useEffect(() => {
     if (isFocused) {
       classtimeListApi();
@@ -141,6 +152,7 @@ const ClassManageAndroidContainer = () => {
     }
   }, [isFocused]);
 
+  // ------------- 모달 열고 닫을 때마다 폼 리셋해주기
   useEffect(() => {
     setClassname("");
     setStartDate(null);
@@ -151,13 +163,6 @@ const ClassManageAndroidContainer = () => {
     setCheckEndTime(null);
     setStartBreakTime(null);
     setEndBreakTime(null);
-    // setOldClassname("");
-    // setOldStartDate(null);
-    // setOldEndDate(null);
-    // setOldStartTime(null);
-    // setOldEndTime(null);
-    // setOldCheckStartTime(null);
-    // setOldCheckEndTime(null);
     setMon(false);
     setTus(false);
     setWed(false);
@@ -165,39 +170,159 @@ const ClassManageAndroidContainer = () => {
     setFri(false);
     setSat(false);
     setSun(false);
-    // setOldMon(false);
-    // setOldTus(false);
-    // setOldWed(false);
-    // setOldThr(false);
-    // setOldFri(false);
-    // setOldSat(false);
-    // setOldSun(false);
-    // setOldDays("");
     setDays("");
   }, [visible]);
 
-  // 페이지에서 등록 버튼 누를 때
+  // ------------- 각종 이벤트
+
+  // ------------- 페이지에서 폼 띄우기 이벤트
   const onModalShow = () => {
     setVisible(true);
   };
 
-  // 모달 오픈 이벤트
+  // ------------- 페이지에서 폼 숨기기 이벤트
+  const hideModalShow = () => {
+    setVisible(false);
+    setUpdate(false);
+    setOldMon(false);
+    setOldTus(false);
+    setOldWed(false);
+    setOldThr(false);
+    setOldFri(false);
+    setOldSat(false);
+    setOldSun(false);
+    setOldDays("");
+    setOldClassname("");
+    setOldStartDate("");
+    setOldEndDate("");
+    setOldStartTime("");
+    setOldEndTime("");
+    setOldCheckStartTime("");
+    setOldCheckEndTime("");
+    setOldStartBreakTime("");
+    setOldEndBreakTime("");
+  };
+
+  // ------------- 삭제 버튼 이벤트
+  const onDelete = useCallback(() => {
+    if (classId === null) {
+      Alert.alert("삭제할 강의를 선택해주세요.");
+    } else {
+      Alert.alert("강의가 삭제되었습니다.");
+      classtimeDeleteApi();
+    }
+  });
+
+  // ------------- 모달에서 등록(submit) 버튼 누를 때
+  const onSubmit = () => {
+    if (
+      classname == "" ||
+      startDate == null ||
+      endDate == null ||
+      startTime == null ||
+      endTime == null ||
+      checkStartTime == null ||
+      checkEndTime == null ||
+      days == ""
+    ) {
+      Alert.alert("빈 항목이 있습니다.");
+    } else {
+      classAddApi();
+      Alert.alert("강의 등록이 완료되었습니다.");
+      setVisible(false);
+    }
+  };
+
+  // ------------- 페이지에서 수정 버튼 클릭하여 해당 강의의 정보 가져오는 이벤트
+  const onUpdate = () => {
+    if (classId == null || classId == 0) {
+      Alert.alert("수정할 강의를 선택해주세요.");
+    } else {
+      setUpdate(true);
+      setVisible(true);
+      const updateItem = classtimeList.filter((item) => item.c_idx == classId);
+      setOldClassname(updateItem[0].c_name);
+      setOldStartDate(updateItem[0].ct_start_date);
+      setOldEndDate(updateItem[0].ct_end_date);
+      const time1 = updateItem[0].ct_start_time.split(":");
+      setOldStartTime(
+        parseInt(time1[0]).toString() + ":" + parseInt(time1[1]).toString()
+      );
+      const time2 = updateItem[0].ct_end_time.split(":");
+      setOldEndTime(
+        parseInt(time2[0]).toString() + ":" + parseInt(time2[1]).toString()
+      );
+      const time3 = updateItem[0].ct_attend_starttime.split(":");
+      setOldCheckStartTime(
+        parseInt(time3[0]).toString() + ":" + parseInt(time3[1]).toString()
+      );
+      const time4 = updateItem[0].ct_attend_endtime.split(":");
+      setOldCheckEndTime(
+        parseInt(time4[0]).toString() + ":" + parseInt(time4[1]).toString()
+      );
+
+      if (updateItem[0].ct_break_start == null) {
+        setOldStartBreakTime(null);
+      } else {
+        const time5 = updateItem[0].ct_break_start.split(":");
+        setOldStartBreakTime(
+          parseInt(time5[0]).toString() + ":" + parseInt(time5[1]).toString()
+        );
+      }
+
+      if (updateItem[0].ct_break_end == null) {
+        setOldEndBreakTime(null);
+      } else {
+        const time6 = updateItem[0].ct_break_end.split(":");
+        setOldEndBreakTime(
+          parseInt(time6[0]).toString() + ":" + parseInt(time6[1]).toString()
+        );
+      }
+
+      setOldDays(updateItem[0].ct_day);
+      updateItem[0].ct_day.indexOf("월") !== -1 && setOldMon(true);
+      updateItem[0].ct_day.indexOf("화") !== -1 && setOldTus(true);
+      updateItem[0].ct_day.indexOf("수") !== -1 && setOldWed(true);
+      updateItem[0].ct_day.indexOf("목") !== -1 && setOldThr(true);
+      updateItem[0].ct_day.indexOf("금") !== -1 && setOldFri(true);
+      updateItem[0].ct_day.indexOf("토") !== -1 && setOldSat(true);
+      updateItem[0].ct_day.indexOf("일") !== -1 && setOldSun(true);
+    }
+  };
+
+  // -------------  수정 완료 시 이벤트
+  const onUpdateSubmit = () => {
+    classUpdateApi();
+    Alert.alert("수정이 완료되었습니다.");
+    dispatch(IsVisible(false));
+    // setVisible(false);
+    dispatch(setCheck(false));
+    dispatch(setValue(0));
+    hideModalShow();
+  };
+
+  // ------------- 폼 모달에서 달력 모달 띄우기 이벤트
 
   const showStartDatepicker = () => {
     setStartDateShow(true);
   };
+
   const showEndDatepicker = () => {
     setEndDateShow(true);
   };
+
   const showStartTimepicker = () => {
     setStartTimeShow(true);
   };
+
   const showEndTimepicker = () => {
     setEndTimeShow(true);
   };
+
   const showStartChcekTimepicker = () => {
     setStartCheckTimeShow(true);
   };
+
   const showEndChcekTimepicker = () => {
     setEndCheckTimeShow(true);
   };
@@ -205,20 +330,25 @@ const ClassManageAndroidContainer = () => {
   const showStartBreakTimepicker = () => {
     setStartBreakTimeShow(true);
   };
+
   const showEndBreakTimepicker = () => {
     setEndBreakTimeShow(true);
   };
 
-  // 모달 숨기기 이벤트
+  // ------------- 폼 모달에서 달력 모달 숨기기 이벤트
+
   const hideStartDatepicker = () => {
     setStartDateShow(false);
   };
+
   const hideEndDatepicker = () => {
     setEndDateShow(false);
   };
+
   const hideStartTimepicker = () => {
     setStartTimeShow(false);
   };
+
   const hideEndTimepicker = () => {
     setEndTimeShow(false);
   };
@@ -226,6 +356,7 @@ const ClassManageAndroidContainer = () => {
   const hideStartCheckTimepicker = () => {
     setStartCheckTimeShow(false);
   };
+
   const hideEndCheckTimepicker = () => {
     setEndCheckTimeShow(false);
   };
@@ -233,11 +364,17 @@ const ClassManageAndroidContainer = () => {
   const hideStartBreakTimepicker = () => {
     setStartBreakTimeShow(false);
   };
+
   const hideEndBreakTimepicker = () => {
     setEndBreakTimeShow(false);
   };
 
-  // 값 Change 이벤트
+  // ------------- 등록 폼 작성 이벤트
+
+  const onChangeText = (value) => {
+    setClassname(value);
+  };
+
   const onChangeStartDate = (date) => {
     const data =
       date.getFullYear().toString() +
@@ -289,20 +426,100 @@ const ClassManageAndroidContainer = () => {
   };
 
   const onChangeStartBreakTime = (time) => {
-    const data =
-      time.getHours().toString() + ":" + time.getMinutes().toString();
+    if (time == null) {
+      setStartBreakTime(null);
+    } else {
+      const data =
+        time.getHours().toString() + ":" + time.getMinutes().toString();
+      setStartBreakTime(data);
+    }
     hideStartBreakTimepicker();
-    setStartBreakTime(data);
   };
 
   const onChangeEndBreakTime = (time) => {
-    const data =
-      time.getHours().toString() + ":" + time.getMinutes().toString();
+    if (time == null) {
+      setEndBreakTime(null);
+    } else {
+      const data =
+        time.getHours().toString() + ":" + time.getMinutes().toString();
+      setEndBreakTime(data);
+    }
     hideEndBreakTimepicker();
-    setEndBreakTime(data);
   };
 
-  //----------- 수정 이벤트
+  // ------------- 요일 클릭 이벤트
+
+  const onSelectMonDay = () => {
+    if (!monday) {
+      setDays(days.concat("월"));
+      setMon(true);
+    } else {
+      setMon(false);
+      setDays(days.replace("월", ""));
+    }
+  };
+
+  const onSelectTusDay = () => {
+    if (!tuesday) {
+      setDays(days.concat("화"));
+      setTus(true);
+    } else {
+      setTus(false);
+      setDays(days.replace("화", ""));
+    }
+  };
+
+  const onSelectWedDay = () => {
+    if (!wednesday) {
+      setWed(true);
+      setDays(days.concat("수"));
+    } else {
+      setWed(false);
+      setDays(days.replace("수", ""));
+    }
+  };
+
+  const onSelectThrDay = () => {
+    if (!thursday) {
+      setThr(true);
+      setDays(days.concat("목"));
+    } else {
+      setThr(false);
+      setDays(days.replace("목", ""));
+    }
+  };
+
+  const onSelectFriDay = () => {
+    if (!friday) {
+      setFri(true);
+      setDays(days.concat("금"));
+    } else {
+      setFri(false);
+      setDays(days.replace("금", ""));
+    }
+  };
+
+  const onSelectSatDay = () => {
+    if (!saturday) {
+      setSat(true);
+      setDays(days.concat("토"));
+    } else {
+      setSat(false);
+      setDays(days.replace("토", ""));
+    }
+  };
+
+  const onSelectSunDay = () => {
+    if (!sunday) {
+      setSun(true);
+      setDays(days.concat("일"));
+    } else {
+      setSun(false);
+      setDays(days.replace("일", ""));
+    }
+  };
+
+  //------ 수정 폼 작성 이벤트
 
   const onChangeOldText = (value) => {
     setOldClassname(value);
@@ -374,140 +591,34 @@ const ClassManageAndroidContainer = () => {
 
   const onChangeOldStartBreakTime = (time) => {
     const currentTime = time || oldStartBreakTime;
-    const data =
-      currentTime.getHours().toString() +
-      ":" +
-      currentTime.getMinutes().toString();
-    setOldStartBreakTime(data);
+    if (time == null) {
+      setOldStartBreakTime(null);
+    } else {
+      const data =
+        currentTime.getHours().toString() +
+        ":" +
+        currentTime.getMinutes().toString();
+      setOldStartBreakTime(data);
+    }
     hideStartBreakTimepicker();
   };
 
   const onChangeOldEndBreakTime = (time) => {
     const currentTime = time || oldEndBreakTime;
-    const data =
-      currentTime.getHours().toString() +
-      ":" +
-      currentTime.getMinutes().toString();
-    setOldEndBreakTime(data);
+    if (time == null) {
+      setOldEndBreakTime(null);
+    } else {
+      const data =
+        currentTime.getHours().toString() +
+        ":" +
+        currentTime.getMinutes().toString();
+      setOldEndBreakTime(data);
+    }
     hideEndBreakTimepicker();
   };
 
-  // Form 모달 숨기기 이벤트
-  const hideModalShow = () => {
-    setVisible(false);
-    setUpdate(false);
-    setOldMon(false);
-    setOldTus(false);
-    setOldWed(false);
-    setOldThr(false);
-    setOldFri(false);
-    setOldSat(false);
-    setOldSun(false);
-    setOldDays("");
-    setOldClassname("");
-    setOldStartDate("");
-    setOldEndDate("");
-    setOldStartTime("");
-    setOldEndTime("");
-    setOldCheckStartTime("");
-    setOldCheckEndTime("");
-    setOldStartBreakTime("");
-    setOldEndBreakTime("");
-  };
+  // ------------- 수정 폼 요일 클릭 이벤트
 
-  // 모달에서 등록 버튼 누를 때
-  const onSubmit = () => {
-    classAddApi();
-    Alert.alert("강의 등록이 완료되었습니다.");
-    setVisible(false);
-  };
-
-  const onChangeText = (value) => {
-    setClassname(value);
-  };
-
-  // 페이지에서 삭제 버튼 누를 때
-  const onDelete = useCallback(() => {
-    if (classId === null) {
-      Alert.alert("삭제할 강의를 선택해주세요.");
-    } else {
-      Alert.alert("강의가 삭제되었습니다.");
-      classtimeDeleteApi();
-    }
-  });
-
-  // 요일 선택 이벤트
-  const onSelectMonDay = () => {
-    if (!monday) {
-      setDays(days.concat("월"));
-      setMon(true);
-    } else {
-      setMon(false);
-      setDays(days.replace("월", ""));
-    }
-  };
-
-  const onSelectTusDay = () => {
-    if (!tuesday) {
-      setDays(days.concat("화"));
-      setTus(true);
-    } else {
-      setTus(false);
-      setDays(days.replace("화", ""));
-    }
-  };
-
-  const onSelectWedDay = () => {
-    if (!wednesday) {
-      setWed(true);
-      setDays(days.concat("수"));
-    } else {
-      setWed(false);
-      setDays(days.replace("수", ""));
-    }
-  };
-
-  const onSelectThrDay = () => {
-    if (!thursday) {
-      setThr(true);
-      setDays(days.concat("목"));
-    } else {
-      setThr(false);
-      setDays(days.replace("목", ""));
-    }
-  };
-
-  const onSelectFriDay = () => {
-    if (!friday) {
-      setFri(true);
-      setDays(days.concat("금"));
-    } else {
-      setFri(false);
-      setDays(days.replace("금", ""));
-    }
-  };
-
-  const onSelectSatDay = () => {
-    if (!saturday) {
-      setSat(true);
-      setDays(days.concat("토"));
-    } else {
-      setSat(false);
-      setDays(days.replace("토", ""));
-    }
-  };
-
-  const onSelectSunDay = () => {
-    if (!sunday) {
-      setSun(true);
-      setDays(days.concat("일"));
-    } else {
-      setSun(false);
-      setDays(days.replace("일", ""));
-    }
-  };
-
-  // 수정 이벤트
   const onSelectOldMonDay = () => {
     if (!oldmonday) {
       setOldDays(olddays.concat("월"));
@@ -576,48 +687,6 @@ const ClassManageAndroidContainer = () => {
       setOldSun(false);
       setOldDays(olddays.replace("일", ""));
     }
-  };
-
-  const onUpdate = () => {
-    if (classId === null) {
-      Alert.alert("수정할 강의를 선택해주세요.");
-    } else {
-      setUpdate(true);
-      setVisible(true);
-      const updateItem = classtimeList.filter((item) => item.c_idx == classId);
-      setOldClassname(updateItem[0].c_name);
-      setOldStartDate(updateItem[0].ct_start_date);
-      setOldEndDate(updateItem[0].ct_end_date);
-      const time1 = updateItem[0].ct_start_time.split(":");
-      setOldStartTime(parseInt(time1[0]).toString() + ":" + parseInt(time1[1]).toString());
-      const time2 = updateItem[0].ct_end_time.split(":");
-      setOldEndTime(parseInt(time2[0]).toString() + ":" + parseInt(time2[1]).toString());
-      const time3 = updateItem[0].ct_attend_starttime.split(":");
-      setOldCheckStartTime(parseInt(time3[0]).toString() + ":" + parseInt(time3[1]).toString());
-      const time4 = updateItem[0].ct_attend_endtime.split(":");
-      setOldCheckEndTime(parseInt(time4[0]).toString() + ":" + parseInt(time4[1]).toString());
-      const time5 = updateItem[0].ct_break_start.split(":");
-      setOldStartBreakTime(parseInt(time5[0]).toString() + ":" + parseInt(time5[1]).toString());
-      const time6 = updateItem[0].ct_break_end.split(":");
-      setOldEndBreakTime(parseInt(time6[0]).toString() + ":" + parseInt(time6[1]).toString());
-      setOldDays(updateItem[0].ct_day);
-      updateItem[0].ct_day.indexOf("월") !== -1 && setOldMon(true);
-      updateItem[0].ct_day.indexOf("화") !== -1 && setOldTus(true);
-      updateItem[0].ct_day.indexOf("수") !== -1 && setOldWed(true);
-      updateItem[0].ct_day.indexOf("목") !== -1 && setOldThr(true);
-      updateItem[0].ct_day.indexOf("금") !== -1 && setOldFri(true);
-      updateItem[0].ct_day.indexOf("토") !== -1 && setOldSat(true);
-      updateItem[0].ct_day.indexOf("일") !== -1 && setOldSun(true);
-    }
-  };
-
-  const onUpdateSubmit = () => {
-    classUpdateApi();
-    Alert.alert("수정이 완료되었습니다.");
-    dispatch(IsVisible(false));
-    setVisible(false);
-    dispatch(setCheck(false));
-    dispatch(setValue(0));
   };
 
   return (

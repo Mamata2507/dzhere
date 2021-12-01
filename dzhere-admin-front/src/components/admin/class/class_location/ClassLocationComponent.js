@@ -65,7 +65,7 @@ const ClassLocationComponent = ({
                   fontSize: Platform.OS === "android" ? 14 : 16,
                   alignItems: "center",
                   color: "#000000",
-                  width: Platform.OS === "android" ? "100%" : "20%",
+                  width: Platform.OS === "android" ? "100%" : "40%",
                   padding: 5,
                 }}
               >
@@ -80,7 +80,7 @@ const ClassLocationComponent = ({
                   fontSize: Platform.OS === "android" ? 14 : 16,
                   alignItems: "center",
                   color: "#000000",
-                  width: Platform.OS === "android" ? "100%" : "20%",
+                  width: Platform.OS === "android" ? "100%" : "40%",
                   padding: 5,
                 }}
                 onChangeText={onChangeLocation}
@@ -95,9 +95,10 @@ const ClassLocationComponent = ({
               ) : (
                 <Text
                   style={{
-                    height: Platform.OS === "android" ? 15 : 35,
-                    margin: Platform.OS === "android" ? "20%" : "15%",
+                    // height: 35,
+                    margin: "11%",
                     fontWeight: "bold",
+                    // width: "20%",
                   }}
                 >
                   기기종류
@@ -132,7 +133,7 @@ const ClassLocationComponent = ({
                   textAlign: "center",
                   justifyContent: "center",
                   width: "15%",
-                  margin: "8%",
+                  margin: "6%",
                   padding: 5,
                   borderRadius: 20,
                 }}
@@ -197,9 +198,8 @@ const ClassLocationComponent = ({
                 <Text
                   style={{
                     fontSize: Platform.OS === "android" ? 14 : 16,
-                    alignItems: "center",
                     color: "#000000",
-                    width: Platform.OS === "android" ? "100%" : "20%",
+                    width: Platform.OS === "android" ? "100%" : "50%",
                     padding: 5,
                   }}
                 >

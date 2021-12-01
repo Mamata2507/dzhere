@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Pressable } from "react-native";
 import { getStudentList } from "../../../../lib/api/class/course";
 import { getStudent, setClassId } from "../../../../modules/admin/class/course";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const MoveStudentListContainer = ({ uniqueKey, item, styles }) => {
   const navigation = useNavigation();
@@ -22,9 +22,6 @@ const MoveStudentListContainer = ({ uniqueKey, item, styles }) => {
   };
 
   return (
-    //   <View style={styles.card} uniqueKey={item.c_idx} onTap={(onPress)}>
-    //   <Text style={styles.classname}>{item.c_name}</Text>
-    // </View>
     <View style={styles.card} uniqueKey={uniqueKey}>
       <Pressable onPress={onPress}>
         <Text style={styles.classname}>{item.c_name}</Text>
