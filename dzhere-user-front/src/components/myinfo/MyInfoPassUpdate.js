@@ -2,16 +2,13 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
-import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
 export const Contents = ({ currentPassword, setCurrentPassword, newPassword, 
                            setNewPassword, passwordConfirm, setPasswordConfirm,
                            newPasswordError, passwordConfirmError,
-                           onPress, emptyError, checkError1, onCheck, loadingCheck,
-                           checkError2, edit, check}) => {
-
-    const navigation = useNavigation();
+                           onPress, emptyError, checkError1, onCheck,
+                           checkError2, edit}) => {
 
     return (
       <View style={[styles.container, {height: 380, backgroundColor: '#CEEDFF', marginTop: 50}]}>
@@ -37,7 +34,7 @@ export const Contents = ({ currentPassword, setCurrentPassword, newPassword,
 
         <View style={{ flexDirection: "row" }}>
             <Text style={styles.error}>
-              {!loadingCheck && check===false && `${checkError1}`}
+              {`${checkError1}`}
             </Text>
         </View>
 

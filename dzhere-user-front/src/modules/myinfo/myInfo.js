@@ -12,11 +12,11 @@ const UPDATE_EMAIL = 'myinfo/UPDATE_EMAIL';
 const UPDATE_EMAIL_SUCCESS = 'myinfo/UPDATE_EMAIL_SUCCESS';
 const UPDATE_EMAIL_FAILURE = 'myinfo/UPDATE_EMAIL_FAILURE';
 
-const CHECK_PW = 'myinfo/CHECK_PW';
-const CHECK_PW_SUCCESS = 'myinfo/CHECK_PW_SUCCESS';
-const CHECK_PW_FAILURE = 'myinfo/CHECK_PW_FAILURE';
+// const CHECK_PW = 'myinfo/CHECK_PW';
+// const CHECK_PW_SUCCESS = 'myinfo/CHECK_PW_SUCCESS';
+// const CHECK_PW_FAILURE = 'myinfo/CHECK_PW_FAILURE';
 
-const SET_CHECK = 'myinfo/SET_CHECK';
+// const SET_CHECK = 'myinfo/SET_CHECK';
 
 const UPDATE_PW = 'myinfo/UPDATE_PW';
 const UPDATE_PW_SUCCESS = 'myinfo/UPDATE_PW_SUCCESS';
@@ -27,8 +27,8 @@ const UPDATE_PW_FAILURE = 'myinfo/UPDATE_PW_FAILURE';
 
 export const getEmail = createRequestThunk(GET_EMAIL, api.getEmail);
 export const updateEmail = createRequestThunk(UPDATE_EMAIL, api.updateEmail);
-export const checkPw = createRequestThunk(CHECK_PW, api.checkPw);
-export const setCheck = createAction(SET_CHECK, check => check);
+// export const checkPw = createRequestThunk(CHECK_PW, api.checkPw);
+// export const setCheck = createAction(SET_CHECK, check => check);
 export const updatePw = createRequestThunk(UPDATE_PW, api.updatePw);
 
 // 초기 상태를 선언한다
@@ -36,7 +36,7 @@ export const updatePw = createRequestThunk(UPDATE_PW, api.updatePw);
 
 const initialState = {
   email: null,
-  check: false,
+  // check: false,
 };
 
 const myinfo = handleActions(
@@ -55,17 +55,17 @@ const myinfo = handleActions(
     [UPDATE_EMAIL_FAILURE]: (state, action) => ({
       ...state
     }), 
-    [CHECK_PW_SUCCESS]: (state, action) => ({
-      ...state,
-      check: action.payload,
-    }),
-    [CHECK_PW_FAILURE]: (state, action) => ({
-      ...state,
-    }),
-    [SET_CHECK]: (state, { payload: check }) => ({
-      ...state,
-      check,
-    }),
+    // [CHECK_PW_SUCCESS]: (state, action) => ({
+    //   ...state,
+    //   check: action.payload,
+    // }),
+    // [CHECK_PW_FAILURE]: (state, action) => ({
+    //   ...state,
+    // }),
+    // [SET_CHECK]: (state, { payload: check }) => ({
+    //   ...state,
+    //   check,
+    // }),
     [UPDATE_PW_SUCCESS]: (state, action) => ({
       ...state,
       pw: action.payload

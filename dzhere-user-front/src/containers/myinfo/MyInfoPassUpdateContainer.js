@@ -2,7 +2,8 @@ import { Contents } from '../../components/myinfo/MyInfoPassUpdate'
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Platform } from 'react-native';
-import { checkPw, updatePw, setCheck } from '../../modules/myinfo/myInfo'
+import { updatePw } from '../../modules/myinfo/myInfo'
+import { checkPw } from '../../lib/api/myInfo/myInfo';
 import { useNavigation } from '@react-navigation/native'
 
 const MyInfoPassUpdateContainer = () => {
@@ -22,10 +23,8 @@ const MyInfoPassUpdateContainer = () => {
 
   const dispatch = useDispatch();
 
-  const { phone, check, loadingCheck } = useSelector(({ auth, myinfo, loading }) => ({
+  const { phone } = useSelector(({ auth }) => ({
     phone: auth.userInfo.userPhone,
-    check: myinfo.check,
-    loadingCheck: loading['myinfo/CHECK_PW'],
   }));
 
   console.log('기존 비밀번호'+currentPassword);
@@ -80,18 +79,17 @@ const MyInfoPassUpdateContainer = () => {
 
   }, [newPassword, passwordConfirm, currentPassword, edit]);
 
-  useEffect(() => {
-    dispatch(checkPw({currentPassword, phone}));
-    setCheck(check)
-  }, [currentPassword]);
-
-  const onCheck = () => {
-    if((currentPassword) && check === true){
-      setCheckError1('')
-      setEdit(false)
-    } 
-    else {
-      setCheckError1('비밀번호가 일치하지 않습니다')
+  async function onCheck () {
+    if(currentPassword === ''){
+      setCheckError1('비밀번호를 입력하세요')
+    } else {
+      const check = await checkPw({currentPassword, phone});
+      if(check === true){
+        setCheckError1('')
+        setEdit(false)
+      } else {
+        setCheckError1('비밀번호가 일치하지 않습니다')
+      }
     }
   }
 
@@ -110,10 +108,8 @@ const MyInfoPassUpdateContainer = () => {
         emptyError={emptyError}
         checkError1={checkError1}
         onCheck={onCheck}
-        loadingCheck={loadingCheck}
         checkError2={checkError2}
         edit={edit}
-        check={check}
       />
   );
 };
