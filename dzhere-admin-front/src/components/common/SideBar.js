@@ -13,7 +13,7 @@ import ClassExternal from '../../pages/class/ClassExternal'
 import StudentList from '../../pages/student/StudentList'
 import StudentAttend from '../../pages/student/StudentAttend'
 import StudentAttendClass from '../../pages/student/StudentAttendClass'
-import TeacherList from '../../pages/teacher/TeacherList'
+import TeacherList from '../../pages/teacher/TeacherListPage'
 import TeacherAttendClass from '../../pages/teacher/TeacherAttendClass'
 
 

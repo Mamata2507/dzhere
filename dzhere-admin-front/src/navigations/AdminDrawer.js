@@ -12,7 +12,9 @@ import { DrawerItem } from '@react-navigation/drawer';
 const AdminDrawer = () => {
     return (
       <Drawer.Navigator
-        drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+        drawerContent={(props) => <CustomSidebarMenu {...props} />}
+        initialRouteName="TeacherList"
+      >
         <Drawer.Screen
           name="ClassList"
           options={{ drawerLabel: '강의 목록' }}
