@@ -8,7 +8,7 @@ const StudentListContainer = () => {
   
   const dispatch = useDispatch();
 
-  const u_phone = '01023454710';
+  // const u_phone = '01023454710';
   
   const [selectedClass, setSelectedClass] = useState(0);
   const [selectedAccept, setSelectedAccept] = useState(2);
@@ -16,9 +16,9 @@ const StudentListContainer = () => {
   const [uName, onChangeUname] = useState('');
   const [uPhone, onChangeUphone] = useState('');
 
-  const { agName, classList, studentList, loadingAgName, 
+  const { userInfo, agName, classList, studentList, loadingAgName, 
           loadingStudentList, filterList, loadingFilterList,
-          uid, } = useSelector(({ student, loading }) => ({
+          uid, } = useSelector(({ student, loading, auth }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
@@ -27,11 +27,12 @@ const StudentListContainer = () => {
     filterList: student.filterList,
     loadingFilterList: student.loadingFilterList,
     uid: student.uid, 
+    userInfo: auth.userInfo,
   }))
 
   useEffect(() => {
-    dispatch(getAgName(u_phone));
-    dispatch(getClassList(u_phone));
+    dispatch(getAgName(userInfo.userPhone));
+    dispatch(getClassList(userInfo.userPhone));
   }, []);
 
   useEffect(() => {

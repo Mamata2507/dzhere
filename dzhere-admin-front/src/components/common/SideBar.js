@@ -36,7 +36,7 @@ export const NavigationDrawerStructure = (props) => {
         {/*Donute Button Image */}
         <Image
           source={menubar}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{ width: 30, height: 30, marginLeft: 20 }}
         />
       </TouchableOpacity>
     </View>

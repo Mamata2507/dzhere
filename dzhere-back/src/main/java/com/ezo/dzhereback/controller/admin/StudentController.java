@@ -1,7 +1,7 @@
 package com.ezo.dzhereback.controller.admin;
 
 import com.ezo.dzhereback.domain.Agency;
-import com.ezo.dzhereback.domain.Class;
+import com.ezo.dzhereback.domain.Lesson;
 import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.dto.StudentDto;
@@ -38,7 +38,7 @@ public class StudentController {
 	@GetMapping("/api/getClassList/{u_phone}")
 	public Result getClassList(@PathVariable("u_phone") String u_phone) {
 		System.out.println("<<<<<< getClassList 컨트롤러 시작 >>>>>>");
-		List<Class> classList = studentService.getClassList(u_phone);
+		List<Lesson> classList = studentService.getClassList(u_phone);
 		System.out.println("<<<<<< getClassList 컨트롤러 완료 >>>>>>"+classList);
 		return new Result(classList);
 	}
