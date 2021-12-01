@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -32,4 +33,11 @@ public interface StudentAdminMapper {
 	
 	@Select("select count(*) from User where u_phone='${u_phone}';")
 	int countUser(String u_phone);
+	
+	@Select("select u_phone, u_name, c_idx from User where u_idx='${u_idx}';")
+	User getStudentInfo(int u_idx);
+	
+	@Update("update User set u_phone='${u_phone}', u_name='${u_name}', c_idx='${c_idx}' where u_idx='${u_idx}';")
+	int updateUser(int u_idx, int c_idx, String u_name, String u_phone);
+	
 }

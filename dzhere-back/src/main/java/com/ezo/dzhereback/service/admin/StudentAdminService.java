@@ -32,5 +32,9 @@ public class StudentAdminService {
 	
 	public int countUser(String u_phone) {return studentMapper.countUser(u_phone);}
 	
+	public User getStudentInfo(int u_idx) {return studentMapper.getStudentInfo(u_idx);}
+	
+	public int updateUser(int u_idx, int c_idx, String u_name, String u_phone) {return studentMapper.updateUser(u_idx, c_idx, u_name, u_phone);}
+	
 	
 }

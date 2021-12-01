@@ -34,6 +34,13 @@ const COUNT_USER = 'student/COUNT_USER'
 const COUNT_USER_SUCCESS = 'student/COUNT_USER_SUCCESS'
 const COUNT_USER_FAILURE = 'student/COUNT_USER_FAILURE'
 
+const GET_STUDENT_INFO = 'student/GET_STUDENT_INFO'
+const GET_STUDENT_INFO_SUCCESS = 'student/GET_STUDENT_INFO_SUCCESS'
+const GET_STUDENT_INFO_FAILURE = 'student/GET_STUDENT_INFO_FAILURE'
+
+const UPDATE_USER = 'student/UPDATE_USER'
+const UPDATE_USER_SUCCESS = 'student/UPDATE_USER_SUCCESS'
+const UPDATE_USER_FAILURE = 'student/UPDATE_USER_FAILURE'
 
 // thunk 함수 생성
 // thunk 함수 내부에서는 시작할 때, 성공했을 때, 실패했을 때 다른 액션을 디스패치한다.
@@ -47,6 +54,8 @@ export const setValue = createAction(SET_VALUE, uid => uid);
 export const deleteUser = createRequestThunk(DELETE_USER, api.deleteUser);
 export const countUser = createRequestThunk(COUNT_USER, api.countUser);
 export const insertUser = createRequestThunk(INSERT_USER, api.insertUser);
+export const getStudentInfo = createRequestThunk(GET_STUDENT_INFO, api.getStudentInfo);
+export const updateUser = createRequestThunk(UPDATE_USER, api.updateUser);
   
 // 초기 상태를 선언한다
 // 요청의 로딩 중 상태는 loading이라는 객체에서 관리한다.
@@ -60,7 +69,7 @@ const initialState = {
   uid: 0,
   checkid: false,
   result:false,
-  
+  studentInfo: [],
 };
 
 const student = handleActions(
@@ -119,8 +128,21 @@ const student = handleActions(
     [INSERT_USER_FAILURE]: (state, action) => ({
       ...state
     }),
+    [GET_STUDENT_INFO_SUCCESS]: (state, action) => ({
+      ...state,
+      studentInfo: action.payload,
+    }),
+    [GET_STUDENT_INFO_FAILURE]: (state, action) => ({
+      ...state,
+    }),
+    [UPDATE_USER_SUCCESS]: (state, action) => ({
+      ...state,
+    }),
+    [UPDATE_USER_SUCCESS]: (state, action) => ({
+      ...state
+    }),
   },
   initialState
-);
+  );
 
 export default student;

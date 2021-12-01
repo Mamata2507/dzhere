@@ -8,8 +8,6 @@ import {
   Picker,
   ScrollView,
   TextInput,
-  Keyboard,
-  KeyboardAvoidingView
 } from "react-native";
 import { Modal, Portal, Provider, DataTable } from "react-native-paper";
 import CheckBoxIcon from "../../containers/student/CheckBoxContainer";
@@ -35,14 +33,21 @@ export const StudentListAndroid = ({
   onChangeUname,
   uPhone,
   onChangeUphone,
-  showModalUpdate,
   onDelete,
   selectedClassAdd,
   setSelectedClassAdd,
+  selectedClassUpdate,
+  setSelectedClassUpdate,
   onCheck,
   checkuid,
   error,
   loadingCheck,
+  showModalUpdate, 
+  visibleUpdate, 
+  hideModalUpdate,
+  studentInfo,
+  loadingStudentInfo,
+  onUpdate,
 }) => {
 
   // DataTable - Pagination
@@ -54,6 +59,7 @@ export const StudentListAndroid = ({
   React.useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
+
 
   return (
     <View style={styles.container}>
@@ -138,7 +144,7 @@ export const StudentListAndroid = ({
         {/* <<<<<<<<<<<<<<<<<< 등록 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
 
         {/* <<<<<<<<<<<<<<<<<< 수정 모달 시작 >>>>>>>>>>>>>>>>>>>>*/}
-        {/* <Portal>
+        <Portal>
           <Modal
             visible={visibleUpdate}
             onDismiss={hideModalUpdate}
@@ -154,7 +160,7 @@ export const StudentListAndroid = ({
               <TextInput
                 style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
                 onChangeText={onChangeUphone}
-                value={uPhone}
+                value={loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_phone}
                 placeholder="전화번호를 입력하세요"
                 keyboardType="default"
                 editable={checkuid}
@@ -176,7 +182,7 @@ export const StudentListAndroid = ({
               <TextInput
                 style={[styles.pickerText, { flex: 3 }]}
                 onChangeText={onChangeUname}
-                value={uName}
+                value={loadingStudentInfo && '로딩중...' || !loadingStudentInfo && studentInfo.u_name}
                 placeholder="수강생명을 입력하세요"
                 keyboardType="default"
               />
@@ -188,9 +194,9 @@ export const StudentListAndroid = ({
             <View style={styles.picker}>
               <Text style={styles.text}>강의명</Text>
               <Picker
-                selectedValue={selectedClassAdd}
+                selectedValue={selectedClassUpdate}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedClassAdd(itemValue)
+                  setSelectedClassUpdate(itemValue)
                 }
                 style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
@@ -208,15 +214,15 @@ export const StudentListAndroid = ({
                 styles.btn,
                 { marginTop: 15, alignSelf: "center", width: "20%" },
               ]}
-              onPress={onAdd}
+              onPress={onUpdate}
             >
               <Text style={styles.btnText}>등록</Text>
             </TouchableOpacity>
           </Modal>
-        </Portal> */}
+        </Portal>
         {/* <<<<<<<<<<<<<<<<<< 수정 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
 
-        {/* <<<<<<<<<<<<<<<<<< 헤더 시작 >>>>>>>>>>>>>>>>>>>>*/}
+        {/* <<<<<<<<<<<<<<<<<< 헤더 시작 >>>>>>>>>>>>>>>>>>>>>>*/}
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View>
             <View style={styles.picker}>
@@ -252,7 +258,7 @@ export const StudentListAndroid = ({
               }
               style={styles.miniPicker}
             >
-              <Picker.Item label="전체선택[승인]" value="2" />
+              <Picker.Item label="승인여부" value="2" />
               <Picker.Item label="승인" value="1" />
               <Picker.Item label="미승인" value="0" />
             </Picker>
@@ -419,9 +425,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   miniPicker: {
-    width: "46%",
+    width: "35%",
     height: 30,
-    color: "#004cff",
+    color: "#0044ff",
   },
   checkbox: {
     alignSelf: "center",

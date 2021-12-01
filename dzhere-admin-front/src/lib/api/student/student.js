@@ -18,3 +18,8 @@ export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone}) =>
 export const countUser = phone => 
     client.get(`/api/countUser/${phone}`);
 
+export const getStudentInfo = uid => 
+    client.get(`api/getStudentInfo/${uid}`)
+
+export const updateUser = ({selectedClassUpdate, uName, uPhone, uid}) => 
+    client.post(`/api/updateUser`, {c_idx: selectedClassUpdate, u_name: uName, u_phone: uPhone, u_idx: uid})

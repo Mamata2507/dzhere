@@ -6,10 +6,21 @@ import { StudentListWeb } from './StudentListWeb'
 export const Contents = ({agName, classList, selectedClass, setSelectedClass, 
                           onSearch, studentList, loadingAgName, loadingStudentList,
                           selectedAccept, setSelectedAccept, pickerActivity, filterList,
-                          loadingFilterList, showModalAdd, showModalUpdate, onDelete,
+                          loadingFilterList, 
+                          showModalAdd, 
+                          visibleAdd, 
+                          hideModalAdd, 
+                          showModalUpdate, 
+                          visibleUpdate, 
+                          hideModalUpdate, 
+                          onDelete,
                           uName, onChangeUname, uPhone, onChangeUphone, onAdd,
-                          visibleAdd, hideModalAdd, selectedClassAdd, setSelectedClassAdd,
-                          onCheck, checkuid, error, loadingCheck }) => {
+                          selectedClassAdd, 
+                          setSelectedClassAdd,
+                          selectedClassUpdate, 
+                          setSelectedClassUpdate,
+                          onCheck, checkuid, error, loadingCheck,
+                          studentInfo, loadingStudentInfo, onUpdate }) => {
   return (Platform.OS === "android") ? 
   <StudentListAndroid 
     agName={agName}
@@ -26,21 +37,28 @@ export const Contents = ({agName, classList, selectedClass, setSelectedClass,
     filterList={filterList}
     loadingFilterList={loadingFilterList}
     showModalAdd={showModalAdd}
-    visibleAdd={visibleAdd}
     hideModalAdd={hideModalAdd}
+    visibleAdd={visibleAdd}
+    showModalUpdate={showModalUpdate}
+    visibleUpdate={visibleUpdate}
+    hideModalUpdate={hideModalUpdate}
     uName={uName}
     onChangeUname={onChangeUname}
     uPhone={uPhone}
     onChangeUphone={onChangeUphone}
     onAdd={onAdd}
-    showModalUpdate={showModalUpdate}
     onDelete={onDelete}
     selectedClassAdd={selectedClassAdd}
     setSelectedClassAdd={setSelectedClassAdd}
+    selectedClassUpdate={selectedClassUpdate}
+    setSelectedClassUpdate={setSelectedClassUpdate}
     onCheck={onCheck}
     checkuid={checkuid}
     error={error}
     loadingCheck={loadingCheck}
+    studentInfo={studentInfo}
+    loadingStudentInfo={loadingStudentInfo}
+    onUpdate={onUpdate}
   /> 
   : 
   <StudentListWeb 

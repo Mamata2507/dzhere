@@ -3,6 +3,7 @@ package com.ezo.dzhereback.controller.admin;
 import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Class;
 import com.ezo.dzhereback.domain.User;
+import com.ezo.dzhereback.dto.MyInfoDto;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.dto.StudentDto;
 import com.ezo.dzhereback.service.admin.StudentAdminService;
@@ -68,20 +69,14 @@ public class StudentAdminController {
 	public Result insertUser(@RequestBody StudentDto studentDto) {
 		System.out.println("<<<<<< insertUser 컨트롤러 시작 >>>>>>");
 		System.out.println(studentDto.getAg_idx()+" "+studentDto.getC_idx()+" "+studentDto.getU_name()+" "+studentDto.getU_phone());
-		int countUser = studentService.countUser(studentDto.getU_phone());
-		if(countUser > 0) {
-			System.out.println("if"+countUser);
-			return new Result(-1);
-		} else {
-			int insertUser = studentService.insertUser(
-					studentDto.getAg_idx(), 
-					studentDto.getC_idx(), 
-					studentDto.getU_name(), 
-					studentDto.getU_phone()
-					);
-			System.out.println("else"+insertUser);
-			return new Result(insertUser);
-		}
+		int result = studentService.insertUser(
+				studentDto.getAg_idx(), 
+				studentDto.getC_idx(), 
+				studentDto.getU_name(), 
+				studentDto.getU_phone()
+				);
+		System.out.println("<<<<<< insertUser 컨트롤러 완료 >>>>>>"+result);
+		return new Result(result);
 	}
 	
 	@GetMapping("/api/countUser/{u_phone}")
@@ -97,5 +92,33 @@ public class StudentAdminController {
 		System.out.println("<<<<<< countUser 컨트롤러 완료 >>>>>>"+result);
 		return new Result(result);
 	} 
+	
+	@GetMapping("/api/getStudentInfo/{u_idx}")
+	public Result getStudentInfo(@PathVariable("u_idx") int u_idx) {
+		System.out.println(u_idx + "<<<<<< getStudentInfo 컨트롤러 시작 >>>>>>");
+		User getStudentInfo = studentService.getStudentInfo(u_idx);
+		StudentDto result = StudentDto.builder()
+				.u_phone(getStudentInfo.getU_phone())
+				.u_name(getStudentInfo.getU_name())
+				.c_idx(getStudentInfo.getC_idx())
+				.build();
+		System.out.println("완료"+result);
+		System.out.println(result + "<<<<<< getStudentInfo 컨트롤러 끝 >>>>>>");
+		return new Result(result);
+	}
+	
+	@PostMapping("/api/updateUser")
+	public Result updateUser(@RequestBody StudentDto studentDto) {
+		System.out.println("<<<<<< updateUser 컨트롤러 시작 >>>>>>");
+		System.out.println(studentDto.getU_idx()+" "+studentDto.getC_idx()+" "+studentDto.getU_name()+" "+studentDto.getU_phone());
+		int result = studentService.updateUser(
+				studentDto.getU_idx(),
+				studentDto.getC_idx(), 
+				studentDto.getU_name(), 
+				studentDto.getU_phone()
+				);
+		System.out.println("<<<<<< updateUser 컨트롤러 완료 >>>>>>"+result);
+		return new Result(result);
+	}
 
 }
