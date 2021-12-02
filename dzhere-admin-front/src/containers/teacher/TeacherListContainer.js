@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Contents } from '../../components/student/StudentList'
+import { Contents } from '../../components/teacher/TeacherList'
 import { 
   getAgName, 
   getClassList, 
@@ -17,7 +17,7 @@ import { countUser, getStudentInfo } from '../../lib/api/user/list';
 
 let selectedAccept = 2;
 
-const StudentListContainer = () => {
+const TeacherListContainer = () => {
 
   const dispatch = useDispatch();
   
@@ -294,4 +294,4 @@ const StudentListContainer = () => {
   );
 };
 
-export default StudentListContainer;
+export default TeacherListContainer;
