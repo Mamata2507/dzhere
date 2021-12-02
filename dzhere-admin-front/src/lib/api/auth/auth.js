@@ -1,7 +1,4 @@
-// import client from "../client";
-import axios from "axios";
-
-const client = axios.create();
+import client from "../client";
 
 // 로그인
 export const apiLogin = ({ userPhone, password }) => {
@@ -9,7 +6,7 @@ export const apiLogin = ({ userPhone, password }) => {
   console.log('요청 입력 휴대폰 번호 :', userPhone);
   console.log('요청 입력 비밀번호', password);
 
-  return client.post('http://192.168.0.112:8080/api/user/login', { userPhone, password })
+  return client.post('/login', { userPhone, password })
   .then(res => {
     console.log('axios 로그인 요청 성공 정보 : \n', res.data);
     return {
@@ -32,7 +29,7 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
   console.log('요청 입력 휴대폰 번호 :', userPhone);
   console.log('요청 입력 비밀번호', password);
 
-  return client.post('http://192.168.0.112:8080/api/user/register', { userPhone, password, userEmail })
+  return client.post('/register', { userPhone, password, userEmail })
   .then(res => {
     console.log('axios 회원가입 요청 성공 정보 : \n', res.data);
     return {
@@ -53,7 +50,7 @@ export const apiRegister = ({ userPhone, password, userEmail }) => {
 export const apiLogout = () => {
   console.log('로그아웃을 요청합니다.');
   console.log('요청 헤더 토큰 정보 : ', client.defaults.headers.common['Authorization']);
-  return client.post('http://192.168.0.112:8080/api/logout')
+  return client.post('../../api/logout')
   .then(res => {
     console.log('axios 로그아웃 요청 성공 정보 : \n', res.data);
     return {
@@ -72,5 +69,5 @@ export const apiLogout = () => {
 
 // 비밀번호 찾기
 export const findPassword = ({userEmail}) =>
-  client.post('http://192.168.0.112:8080/api/user/find-password', {userEmail, });
+  client.post('/api/admin/find-password', {userEmail, });
 

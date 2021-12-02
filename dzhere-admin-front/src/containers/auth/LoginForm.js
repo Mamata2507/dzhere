@@ -31,27 +31,13 @@ const LoginForm = ({ navigation, route }) => {
       console.log(e);
       const { value, name } = e;
 
-      if(name === 'userPhone'){
-        let regexpUserPhone = /^[0-9]{0,11}$/;
-        if (regexpUserPhone.test(value)) {
-          console.log("userPhone 입력 : ", value);
-          dispatch(
-            changeField({
-              form: "login",
-              key: name,
-              value: value,
-            })
-          );
-        } else console.log("userPhone - 숫자 아닌 값 입력 : ", value);
-      }
-      if(name === 'password')
-        dispatch(
-          changeField({
-            form: "login",
-            key: name,
-            value: value,
-          })
-        );
+      dispatch(
+        changeField({
+          form: "login",
+          key: name,
+          value: value,
+        })
+      );
     };
 
     // 로그인 버튼(onPress) 이벤트 핸들러
@@ -64,10 +50,10 @@ const LoginForm = ({ navigation, route }) => {
       });
 
       if (userPhone === "") {
-        setError("휴대폰 번호를 입력해주세요.");
+        setError("아이디를 입력해주세요.");
         return;
-      } else if (userPhone.length < 11) {
-        setError("휴대폰 번호가 올바르지 않습니다.");
+      } else if (userPhone.length < 6) {
+        setError("아이디가 올바르지 않습니다.");
         return;
       } else if (password === "") {
         setError("비밀번호를 입력해주세요.");
