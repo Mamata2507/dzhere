@@ -19,6 +19,10 @@ import { useIsFocused } from "@react-navigation/core";
 
 const ClassManageAndroidContainer = () => {
   const dispatch = useDispatch();
+  const [classSelect, setClassSelect] = useState(null);
+  // const [visible, setVisible] = useState(false);
+  const [click, setClick] = useState(null);
+  const [search, setOnSearch] = useState(false);
   const [startDateShow, setStartDateShow] = useState(false);
   const [endDateShow, setEndDateShow] = useState(false);
   const [endTimeShow, setEndTimeShow] = useState(false);
@@ -75,6 +79,8 @@ const ClassManageAndroidContainer = () => {
   const NameRef = useRef(null);
   const agency = useSelector(({ classes }) => classes.agency);
   const classId = useSelector(({ classes }) => classes.classid);
+  const selectClass = useSelector(({ classes }) => classes.selectClass);
+  const ctlist = useSelector(({ classes }) => classes.ctlist);
   
   // ------------- API 코드
 
@@ -104,7 +110,16 @@ const ClassManageAndroidContainer = () => {
       c_idx: data,
       ag_idx: agency.ag_idx,
     });
-    setClasstimeList(newData);
+    // setClasstimeList(newData);
+    // dispatch(getClasstime(newData));
+    if(selectClass ==0){
+      setClasstimeList(newData);
+      setClassSelect(newData)
+    }
+    else{
+      setClassSelect(newData.filter((item) => item.c_idx == selectClass));
+      setClasstimeList(newData);
+    }
     dispatch(getClasstime(newData));
     // dispatch(setCheck(false));
   }
@@ -124,18 +139,31 @@ const ClassManageAndroidContainer = () => {
       c_idx: classId,
       ag_idx: agency.ag_idx,
     });
+    setClassSelect(data.filter((item) => item.c_idx == classId));
     setClasstimeList(data);
+    setOnSearch(false);
+    setClick(null);
     dispatch(getClasstime(data));
-    // dispatch(setCheck(false));
     dispatch(IsVisible(true));
+    // setClasstimeList(data);
+    // dispatch(getClasstime(data));
+    // // dispatch(setCheck(false));
+    // dispatch(IsVisible(true));
   }
 
   async function classtimeDeleteApi() {
     console.log("강의 삭제");
     const data = await deleteClass({ ag_idx: agency.ag_idx, c_idx: classId });
     setClasstimeList(data);
-    dispatch(getClasstime(classtimeList));
+    dispatch(getClasstime(data));
     dispatch(setCheck(false));
+    dispatch(setSelectClass(0));
+    setOnSearch(false);
+    setClassSelect(null);
+    setClick(null);
+    // setClasstimeList(data);
+    // dispatch(getClasstime(classtimeList));
+    // dispatch(setCheck(false));
   }
 
   // ------------- UseEffect 관련 코드
@@ -148,8 +176,12 @@ const ClassManageAndroidContainer = () => {
   // ------------- 다시 현재 페이지에 왔을 때 classtime 리스트 가져오기
   useEffect(() => {
     if (isFocused) {
+      // classtimeListApi();
+      // dispatch(setCheck(false));
       classtimeListApi();
       dispatch(setCheck(false));
+      setOnSearch(false);
+      setClassSelect(null);
     }
   }, [isFocused]);
 
@@ -301,6 +333,26 @@ const ClassManageAndroidContainer = () => {
     dispatch(setValue(0));
     hideModalShow();
   };
+
+  function classSelectFunc() {
+    console.log("강의 검색");
+    if (selectClass == 0) {
+      setClassSelect(classtimeList);
+    } else {
+      setClassSelect(classtimeList.filter((item) => item.c_idx == selectClass));
+    }
+    selectClass >= 0 && classSelect != null && setClick(null);
+    // setClassSelect(data);
+    // dispatch(setCheck(false));
+    // dispatch(setValue(null));
+  }
+
+  // ------------- 검색 버튼 이벤트
+  const onSearch = () => {
+    setOnSearch(true);
+    classSelectFunc();
+  };
+
 
   // ------------- 폼 모달에서 달력 모달 띄우기 이벤트
 
@@ -699,6 +751,11 @@ const ClassManageAndroidContainer = () => {
       onModalShow={onModalShow}
       visible={visible}
       classId={classId}
+      onSearch={onSearch}
+      search={search}
+      click={click}
+      classSelect={classSelect}
+      pickerItem={selectClass}
       hideModalShow={hideModalShow}
       onSubmit={onSubmit}
       NameRef={NameRef}

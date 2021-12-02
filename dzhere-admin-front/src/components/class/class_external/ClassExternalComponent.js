@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
   header: {
     padding: "3%",
     margin: 5,
+    marginTop: Platform.OS === "android" ? "15%" : 0,
     borderRadius: 15,
   },
   picker: {

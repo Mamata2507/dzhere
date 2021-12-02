@@ -209,8 +209,10 @@ const ClassManageWebContainer = () => {
       c_idx: classId,
       ag_idx: agency.ag_idx,
     });
-    setClassSelect(data.filter((item) => item.c_idx == selectClass));
+    setClassSelect(data.filter((item) => item.c_idx == classId));
     setClasstimeList(data);
+    setOnSearch(false);
+    setClick(null);
     dispatch(getClasstime(data));
     dispatch(IsVisible(true));
     // dispatch(setSelectClass(0));

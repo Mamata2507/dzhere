@@ -11,6 +11,7 @@ import CheckBoxIcon from "../../../containers/class/class_manage/CheckBoxContain
 import { DataTable, Modal, Portal, Provider } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import PickerBox from "../../../containers/class/class_manage/PickerBoxContainer";
 import mon from "../../../../assets/class/mon_none.png";
 import Colormon from "../../../../assets/class/mon_selected.png";
 import tus from "../../../../assets/class/tus_none.png";
@@ -30,6 +31,11 @@ const ClassManageAndroid = ({
   onModalShow,
   visible,
   onSubmit,
+  onSearch,
+  classSelect,
+  pickerItem,
+  search,
+  click,
   classId,
   hideModalShow,
   NameRef,
@@ -733,7 +739,18 @@ const ClassManageAndroid = ({
               {agency}
             </Text>
           </View>
+          <View style={styles.picker}>
+            <Text style={[styles.text, { marginLeft: 15 }]}>강의명</Text>
+            <PickerBox style={styles} />
+          </View>
         </View>
+        <View style={styles.btnContainer2}>
+            <TouchableOpacity style={styles.btn} onPress={onSearch}>
+              <Text style={styles.btnText}>검색</Text>
+            </TouchableOpacity>
+          </View>
+
+        
 
         <View style={styles.content}>
           <ScrollView>
@@ -746,20 +763,38 @@ const ClassManageAndroid = ({
                 <DataTable.Title>수강기간</DataTable.Title>
               </DataTable.Header>
 
-              {classList ? (
+              {!search &&
+                click === null &&
+                classList &&
                 classList.map((item) => (
                   <DataTable.Row key={item.c_idx}>
                     <CheckBoxIcon item={item} style={styles.checkbox} />
                     <DataTable.Cell>{item.c_name}</DataTable.Cell>
                     <DataTable.Cell>
-                      {item.ct_start_date}~{item.ct_end_date}
+                      {item.ct_start_date} ~ {item.ct_end_date}
                     </DataTable.Cell>
                   </DataTable.Row>
-                ))
-              ) : (
+                ))}
+              {search &&
+                click === null &&
+                classSelect &&
+                classSelect.map((item) => (
+                  <DataTable.Row key={item.c_idx}>
+                    <CheckBoxIcon item={item} style={styles.checkbox} />
+                    <DataTable.Cell>{item.c_name}</DataTable.Cell>
+                    <DataTable.Cell>
+                      {item.ct_start_date} ~ {item.ct_end_date}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              {search && click === null && classSelect == null && (
+                <Text>리스트를 가져오는 중입니다.</Text>
+              )}
+              {!search && click === null && classList == null && (
                 <Text>리스트를 가져오는 중입니다.</Text>
               )}
             </DataTable>
+            {click !== null && <Text style={{ fontSize: 20 }}>{click}</Text>}
           </ScrollView>
           <View style={styles.btnContainer2}>
             {(classId == null || classId == 0) && (
@@ -813,6 +848,7 @@ const styles = StyleSheet.create({
     // height: "10%",
     padding: "3%",
     margin: 5,
+    marginTop: "15%",
     borderRadius: 15,
   },
   picker: {
@@ -831,9 +867,13 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   pickerText: {
-    fontSize: 25,
+    fontSize: 15,
+    width: "100%",
     alignItems: "center",
-    color: "#000000",
+    borderRadius: 20,
+    borderColor: "#99c0d6",
+    backgroundColor: "#00000000",
+    color: "black",
   },
   btnContainer: {
     flex: 1,
