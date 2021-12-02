@@ -70,7 +70,7 @@ export const StudentListAndroid = ({
             <View style={styles.picker}>
               <Text style={styles.text}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
+                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
@@ -149,7 +149,7 @@ export const StudentListAndroid = ({
             <View style={styles.picker}>
               <Text style={styles.text}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '5%' }]}
+                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
@@ -412,7 +412,12 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#CEEDFF",
     padding: "5%",
-    height: "75%",
+    margin: "10%",
+    height: 470,
+    width: 350,
+    alignSelf: "center",
+    position: "absolute",
+    borderRadius: 25,
   },
   modalText: {
     fontSize: 18,

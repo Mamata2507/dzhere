@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert, Keyboard } from 'react-native';
+import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../components/student/StudentList'
-import student, { 
+import { 
   getAgName, 
   getClassList, 
   getStudentList, 
@@ -43,7 +43,7 @@ const StudentListContainer = () => {
     loadingStudentList: loading['student/GET_STUDENT_LIST'],
     filterList: student.filterList,
     uid: student.uid, 
-    // userInfo: auth.userInfo,
+    userInfo: auth.userInfo,
     studentError: student.studentError,
   }))
 
@@ -70,7 +70,9 @@ const StudentListContainer = () => {
     if(selectedAccept === 2) {
       Alert.alert('승인 상태를 선택하세요')
     } else {
-      let tempArr = studentList.filter(item => {return item.u_accept == selectedAccept});
+      let studentList_ = studentList;
+      console.log(studentList_);
+      let tempArr = studentList_.filter(item => {return item.u_accept == selectedAccept});
       dispatch(setFilterList(tempArr))      
     }
   });
@@ -93,7 +95,6 @@ const StudentListContainer = () => {
   
   // 등록 모달 껐을 때 
   const hideModalAdd = () => {
-    Keyboard.dismiss()
     setVisibleAdd(false);
     setSelectedClassAdd(0)
     onChangeUname('')
@@ -117,18 +118,14 @@ const StudentListContainer = () => {
   
   // 수정 모달 껐을 때
   const hideModalUpdate = () => {
-    dispatch(getStudentList({agIdx, selectedClass}))
-    Keyboard.dismiss()
     setVisibleUpdate(false);
     setSelectedClassUpdate(0)
     onChangeUname('')
     onChangeUphone('')
     setPhoneCheck(true)
-    dispatch(setCheck(false))
-    dispatch(setValue(0))
   } 
 
-  //동일한 전화번호가 있는지 확인
+  // 동일한 전화번호가 있는지 확인
     async function onCheck () {
       if(uPhone === ''){
         Alert.alert('전화번호를 입력하세요')
@@ -206,6 +203,8 @@ const StudentListContainer = () => {
             { text: "확인", onPress: () => 
               {
                 dispatch(getStudentList({agIdx, selectedClass}))
+                dispatch(setCheck(false))
+                dispatch(setValue(0))
                 hideModalUpdate()
               }
             }
