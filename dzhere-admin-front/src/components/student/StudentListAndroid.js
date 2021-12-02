@@ -52,17 +52,6 @@ export const StudentListAndroid = ({
   pickerStatus,
 }) => {
 
-  // DataTable - Pagination
-  const optionsPerPage = [2, 3, 4];
-
-  const [page, setPage] = React.useState(0);
-  const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
-
-  React.useEffect(() => {
-    setPage(0);
-  }, [itemsPerPage]);
-
-  console.log('안드로이드'+selectedAccept);
 
 
   return (
@@ -125,7 +114,7 @@ export const StudentListAndroid = ({
                 }
                 style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
-                <Picker.Item label="강의명을 선택하세요" value="0" />
+                <Picker.Item label="강의명을 선택하세요" value="0" key='selectAdd' />
                 {classList.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
@@ -204,7 +193,7 @@ export const StudentListAndroid = ({
                 }
                 style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
-                <Picker.Item label="강의명을 선택하세요" value="0" />
+                <Picker.Item label="강의명을 선택하세요" value="0" key='selectUpdate'/>
                 {classList.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
@@ -248,43 +237,22 @@ export const StudentListAndroid = ({
               }
               style={styles.pickerText}
             >
-              <Picker.Item label="전체선택" value="0" />
+              <Picker.Item label="전체선택" value="0" key='selectHeader'/>
               {classList.map((c, i) => (
                 <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
               ))}
             </Picker>
           </View>
           <View style={styles.btnContainer}>
-            {/* <Picker
-              selectedValue={selectedAccept}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedAccept(itemValue)
-              }
-              style={styles.miniPicker}
-            > */}
             <Picker
             style={[styles.miniPicker]}
             onValueChange={handleSetAccept}
             enabled={pickerStatus}
             >
-              <Picker.Item label='승인여부' value='2' />
-              <Picker.Item label='승인' value='1' />
-              <Picker.Item label='미승인' value='0' />
+              <Picker.Item label='승인여부' value='2' key='accpet2'/>
+              <Picker.Item label='승인' value='1' key='accpet1'/>
+              <Picker.Item label='미승인' value='0' key='accpet0'/>
           </Picker>
-            {/* <Picker
-            // style={[styles.miniPicker]}
-            // selectedValue={selectedAccept}
-            onValueChange={() => {
-              // btnDisable
-                // ? setBtnDisable(() => false)
-                // : setBtnDisable(() => true);
-                handleSetAccept;
-            }}
-          >
-              <Picker.Item label="승인여부" value="2" key="accept"/>
-              <Picker.Item label="승인" value="1" key="accept" />
-              <Picker.Item label="미승인" value="0" key="accept" />
-            </Picker> */}
             <TouchableOpacity style={styles.btn} onPress={onSearch}>
               <Text style={styles.btnText}>검색</Text>
             </TouchableOpacity>
@@ -304,8 +272,8 @@ export const StudentListAndroid = ({
 
             {selectedAccept < 2 ? (
               <ScrollView>
-                {filterList.map((s) => (
-                    <DataTable.Row>
+                {filterList.map((s, i) => (
+                    <DataTable.Row key={i}>
                       <DataTable.Cell>
                         <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
                       </DataTable.Cell>
@@ -322,8 +290,8 @@ export const StudentListAndroid = ({
               <ScrollView>
                 <Text>{loadingStudentList && "로딩중..."}</Text>
                 {!loadingStudentList &&
-                  studentList.map((s) => (
-                    <DataTable.Row>
+                  studentList.map((s, i) => (
+                    <DataTable.Row key={i}>
                       <DataTable.Cell>
                         <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
                       </DataTable.Cell>
@@ -338,21 +306,7 @@ export const StudentListAndroid = ({
               </ScrollView>
             )}
 
-            <DataTable.Pagination
-              page={page}
-              numberOfPages={3}
-              highlightOnHover
-              pagination
-              paginationPerPage={5}
-              paginationRowsPerPageOptions={[5, 15, 25, 50]}
-              onPageChange={(page) => setPage(page)}
-              label="1-2 of 6"
-              optionsPerPage={optionsPerPage}
-              itemsPerPage={itemsPerPage}
-              setItemsPerPage={setItemsPerPage}
-              showFastPagination
-              optionsLabel={"Rows per page"}
-            />
+
           </DataTable>
            {/* <<<<<<<<<<<<<<<<<<  content 끝 >>>>>>>>>>>>>>>>>>>>*/}
           
