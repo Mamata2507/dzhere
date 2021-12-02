@@ -12,15 +12,14 @@ import {
   setValue, 
   setCheck, 
   updateUser, 
-} from '../../modules/student/student'
-import { countUser, getStudentInfo } from '../../lib/api/student/student';
+} from '../../modules/user/list'
+import { countUser, getStudentInfo } from '../../lib/api/user/list';
 
 let selectedAccept = 2;
 
 const StudentListContainer = () => {
 
   const dispatch = useDispatch();
-  const u_phone = '01023454710';
   
   const [selectedClass, setSelectedClass] = useState(0); // 헤더 - 강의 선택
   const [selectedClassAdd, setSelectedClassAdd] = useState(0); // 등록 모달 - 강의 선택
@@ -35,8 +34,8 @@ const StudentListContainer = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
   const { agName, classList, studentList, loadingAgName, 
-          loadingStudentList, filterList, uid, studentError }
-         = useSelector(({ student, loading }) => ({
+          loadingStudentList, filterList, uid, studentError, userInfo }
+         = useSelector(({ student, loading, auth }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
@@ -44,6 +43,7 @@ const StudentListContainer = () => {
     loadingStudentList: loading['student/GET_STUDENT_LIST'],
     filterList: student.filterList,
     uid: student.uid, 
+    userInfo: auth.userInfo,
     studentError: student.studentError,
   }))
 
@@ -57,8 +57,8 @@ const StudentListContainer = () => {
       console.log(studentError)
     } 
     if (!studentError) {
-      dispatch(getAgName(u_phone));
-      dispatch(getClassList(u_phone));
+      dispatch(getAgName(userInfo.userPhone));
+      dispatch(getClassList(userInfo.userPhone));
     }
   }, []);
 
@@ -73,7 +73,6 @@ const StudentListContainer = () => {
       dispatch(setFilterList(tempArr))      
     }
   });
-
 
   // 헤더 - 검색 버튼 클릭 시
   const onSearch = () => {
