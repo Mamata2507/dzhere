@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "expo-checkbox";
-import { setCheck, setValue } from '../../modules/student/student';
+import { setCheck, setValue } from '../../modules/user/list';
 
 const CheckBoxIcon = ({ item, style }) => {
   const dispatch = useDispatch();

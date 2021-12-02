@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Alert, Keyboard } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Contents } from '../../components/student/StudentList'
+import { Contents } from '../../components/teacher/TeacherList'
 import { 
   getAgName, 
   getClassList, 
@@ -12,12 +12,12 @@ import {
   setValue, 
   setCheck, 
   updateUser, 
-} from '../../modules/student/student'
-import { countUser, getStudentInfo } from '../../lib/api/student/student';
+} from '../../modules/user/list'
+import { countUser, getStudentInfo } from '../../lib/api/user/list'
 
 let selectedAccept = 2;
 
-const StudentListContainer = () => {
+const TeacherListContainer = () => {
 
   const dispatch = useDispatch();
   
@@ -35,16 +35,16 @@ const StudentListContainer = () => {
 
   const { userInfo, agName, classList, studentList, loadingAgName, 
           loadingStudentList, filterList, uid, studentError }
-         = useSelector(({ student, loading, auth }) => ({
-    agName: student.agName,
-    loadingAgName: loading['student/GET_AG_NAME'],
-    classList: student.classList,
-    studentList: student.studentList,
-    loadingStudentList: loading['student/GET_STUDENT_LIST'],
-    filterList: student.filterList,
-    uid: student.uid, 
+         = useSelector(({ list, loading, auth }) => ({
+    agName: list.agName,
+    loadingAgName: loading['list/GET_AG_NAME'],
+    classList: list.classList,
+    studentList: list.studentList,
+    loadingStudentList: loading['list/GET_STUDENT_LIST'],
+    filterList: list.filterList,
+    uid: list.uid, 
     userInfo: auth.userInfo,
-    studentError: student.studentError,
+    studentError: list.studentError,
   }))
 
   const agIdx = agName.ag_idx
@@ -298,4 +298,4 @@ const StudentListContainer = () => {
   );
 };
 
-export default StudentListContainer;
+export default TeacherListContainer;

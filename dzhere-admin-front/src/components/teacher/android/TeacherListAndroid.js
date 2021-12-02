@@ -9,9 +9,9 @@ import {
   TextInput,
 } from "react-native";
 import { Modal, Portal, Provider, DataTable } from "react-native-paper";
-import CheckBoxIcon from "../../containers/student/CheckBoxContainer";
+import CheckBoxIcon from '../../../containers/student/CheckBoxContainer'
 
-export const StudentListAndroid = ({
+export const TeacherListAndroid = ({
   // 처음 렌더링될 때 가져오기
   agName,
   loadingAgName,
@@ -327,7 +327,7 @@ export const StudentListAndroid = ({
               <Text style={styles.btnText}>삭제</Text>
             </TouchableOpacity>
           </View>
-          {/* <<<<<<<<<<<<<<<<<<  [ end start ] >>>>>>>>>>>>>>>>>>>>*/}
+          {/* <<<<<<<<<<<<<<<<<< [ footer end ] >>>>>>>>>>>>>>>>>>>>*/}
         </View>
       </Provider>
     </View>
