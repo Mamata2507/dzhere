@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Keyboard } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../components/student/StudentList'
 import { 
@@ -20,6 +20,7 @@ let selectedAccept = 2;
 const StudentListContainer = () => {
 
   const dispatch = useDispatch();
+  const u_phone = '01023454710';
   
   const [selectedClass, setSelectedClass] = useState(0); // 헤더 - 강의 선택
   const [selectedClassAdd, setSelectedClassAdd] = useState(0); // 등록 모달 - 강의 선택
@@ -33,9 +34,9 @@ const StudentListContainer = () => {
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const {agName, classList, studentList, loadingAgName, 
+  const { agName, classList, studentList, loadingAgName, 
           loadingStudentList, filterList, uid, studentError }
-         = useSelector(({ student, loading, auth }) => ({
+         = useSelector(({ student, loading }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
@@ -43,11 +44,8 @@ const StudentListContainer = () => {
     loadingStudentList: loading['student/GET_STUDENT_LIST'],
     filterList: student.filterList,
     uid: student.uid, 
-    userInfo: auth.userInfo,
     studentError: student.studentError,
   }))
-
-  const userInfo = useSelector(({auth})=>auth.userInfo);
 
   const agIdx = agName.ag_idx
   const regex = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
@@ -59,8 +57,8 @@ const StudentListContainer = () => {
       console.log(studentError)
     } 
     if (!studentError) {
-      dispatch(getAgName(userInfo.userPhone));
-      dispatch(getClassList(userInfo.userPhone));
+      dispatch(getAgName(u_phone));
+      dispatch(getClassList(u_phone));
     }
   }, []);
 
@@ -71,7 +69,6 @@ const StudentListContainer = () => {
       Alert.alert('승인 상태를 선택하세요')
     } else {
       let studentList_ = studentList;
-      console.log(studentList_);
       let tempArr = studentList_.filter(item => {return item.u_accept == selectedAccept});
       dispatch(setFilterList(tempArr))      
     }
@@ -118,6 +115,7 @@ const StudentListContainer = () => {
   
   // 수정 모달 껐을 때
   const hideModalUpdate = () => {
+    dispatch(getStudentList({agIdx, selectedClass}))
     setVisibleUpdate(false);
     setSelectedClassUpdate(0)
     onChangeUname('')
@@ -125,7 +123,7 @@ const StudentListContainer = () => {
     setPhoneCheck(true)
   } 
 
-  // 동일한 전화번호가 있는지 확인
+  //동일한 전화번호가 있는지 확인
     async function onCheck () {
       if(uPhone === ''){
         Alert.alert('전화번호를 입력하세요')
@@ -202,10 +200,9 @@ const StudentListContainer = () => {
           [{},
             { text: "확인", onPress: () => 
               {
-                dispatch(getStudentList({agIdx, selectedClass}))
+                hideModalUpdate()
                 dispatch(setCheck(false))
                 dispatch(setValue(0))
-                hideModalUpdate()
               }
             }
           ]
