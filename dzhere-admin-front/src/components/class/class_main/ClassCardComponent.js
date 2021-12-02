@@ -4,18 +4,13 @@ import SortableGridview from "react-native-sortable-gridview";
 import MoveStudentListContainer from "../../../containers/class/class_manage/MoveStudentListContainer";
 
 const ClassCardComponent = ({ classname, navigation }) => {
+  console.log("classname", classname);
   return (
     <>
       {Platform.OS === "android" ? (
         <SortableGridview
           data={classname}
           numPerRow={3}
-          onDragStart={() => {
-            console.log("CustomLayout onDragStart");
-          }}
-          onDragRelease={(data) => {
-            console.log("CustomLayout onDragRelease", data);
-          }}
           renderItem={(item, index) => {
             return (
               <MoveStudentListContainer
@@ -29,14 +24,8 @@ const ClassCardComponent = ({ classname, navigation }) => {
       ) : (
         <SortableGridview
           data={classname}
-          sensitivity={500} // default 150(miliseconds)
+          sensitivity={150} // default 150(miliseconds)
           numPerRow={4} 
-          onDragStart={() => {
-            console.log("CustomSensitivity onDragStart");
-          }}
-          onDragRelease={(data) => {
-            console.log("CustomSensitivity onDragRelease", data);
-          }}
           renderItem={(item, index) => {
             return (
               <MoveStudentListContainer
@@ -63,15 +52,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   classname: {
-    fontSize: Platform.OS === "android" ? 15 : 17,
+    fontSize: Platform.OS === "android" ? 13 : 15,
+    width: Platform.OS === "android" ? 80 : 150,
+    height: Platform.OS === "android" ? 30 : 30,
     fontWeight: "500",
     margin: Platform.OS === "android" ? 10 : 15,
     textAlign: "center",
+    alignSelf: "center"
   },
   divider: {
     height: 1,
     backgroundColor: "#A3A3A3",
-    alignSelf: "stretch",
     marginTop: Platform.OS === "android" ? 5 : 10,
     marginBottom: Platform.OS === "android" ? 5 : 10,
   },

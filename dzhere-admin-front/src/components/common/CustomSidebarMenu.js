@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   DrawerContentScrollView,
@@ -35,7 +35,8 @@ const CustomSidebarMenu = (props) => {
   const [labels, setLabel] = useState("");
   const [colors, setColors] = useState("#565966");
   const [weight, setWeight] = useState("300");
-
+  const agencyInfo = useSelector(({ classes }) => classes.agency);
+console.log(agencyInfo);
   const dispatch = useDispatch();
 
   const onPressMain = () => {
@@ -83,15 +84,17 @@ const CustomSidebarMenu = (props) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#CEEDFF", paddingRight: 40 }}
+      style={{ flex: 1, backgroundColor: "#CEEDFF"}}
     >
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
+      {agencyInfo.ag_name !== null && <Text style={styles.headName}>🌸 {agencyInfo.ag_name}님 환영합니다 🌸</Text>}
       <DrawerContentScrollView
         {...props}
         style={{
           padding: Platform.OS === "android" ? 5 : 10,
-          marginTop: Platform.OS === "android" ? 0 : 23,
+          marginTop: Platform.OS === "android" ? 0 : 10,
+          paddingRight: 40,
         }}
       >
         {/* <DrawerItemList {...props} /> */}
@@ -99,14 +102,16 @@ const CustomSidebarMenu = (props) => {
           <TouchableOpacity onPress={onPressMain}>
             <Text
               style={{
-                padding: 16,
+                paddingLeft: 14,
+                paddingBottom: 10,
+                paddingTop: Platform.OS === 'android' ? 0 : 15,
                 flexDirection: "row",
                 alignItems: "center",
                 fontWeight: "bold",
                 fontSize: 20,
               }}
             >
-              HOME
+            🏡 HOME
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressClass}>
@@ -353,7 +358,7 @@ const CustomSidebarMenu = (props) => {
           fontSize: 16,
           textAlign: "center",
           color: "grey",
-          marginBottom: Platform.OS === "android" ? 40 : 50,
+          marginBottom: Platform.OS === "android" ? 40 : 30,
         }}
       >
         더존HERE
@@ -367,7 +372,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 78,
     alignSelf: "center",
-    marginTop: Platform.OS === "android" ? 80 : 50,
+    marginTop: Platform.OS === "android" ? 70 : 30,
   },
   title: {
     padding: 16,
@@ -377,6 +382,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#505050",
   },
+  headName: {
+    alignSelf: "center",
+    marginTop: Platform.OS ==='android' ? "15%" : 35, 
+    fontSize: Platform.OS ==='android' ? 16 : 14,
+  }
 });
 
 export default CustomSidebarMenu;

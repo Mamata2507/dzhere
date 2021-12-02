@@ -159,14 +159,6 @@ const ClassExternalComponent = ({
           </ScrollView>
           
         </DataTable>
-        {/* <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        /> */}
         <View style={styles.btnContainer2}>
           {/* <TouchableOpacity
             style={[styles.btn, { margin: 5 }]}
@@ -256,6 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlignVertical: "center",
+    color: "white",
   },
   checkbox: {
     alignSelf: "center",

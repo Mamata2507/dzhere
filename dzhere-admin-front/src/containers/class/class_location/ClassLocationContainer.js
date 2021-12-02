@@ -21,12 +21,12 @@ const ClassLocationContainer = () => {
   const [classname, setClassname] = useState(null);
   const [visible, setVisible] = useState(false);
   const isFocused = useIsFocused();
-  const [type, setType] = useState("");
+  // const [type, setType] = useState("");
   const [ssid, setSsid] = useState("");
   const [bssid, setBssid] = useState("");
   const [location, setLocation] = useState("");
   const [updates, setUpdate] = useState(false);
-  const [oldtype, setOldType] = useState("");
+  // const [oldtype, setOldType] = useState("");
   const [oldssid, setOldSsid] = useState("");
   const [oldbssid, setOldBssid] = useState("");
   const [oldlocation, setOldLocation] = useState("");
@@ -86,7 +86,7 @@ const ClassLocationContainer = () => {
     setBssid("");
     setSsid("");
     setLocation("");
-    setType("");
+    // setType("");
     // setUpdate(false);
   }, [visible]);
 
@@ -134,7 +134,7 @@ const ClassLocationContainer = () => {
     setOldBssid("");
     setOldSsid("");
     setOldLocation("");
-    setOldType("");
+    // setOldType("");
     setVisible(false);
     dispatch(setCheck(false));
     dispatch(setValue(0));
@@ -145,9 +145,9 @@ const ClassLocationContainer = () => {
     setVisible(false);
   };
 
-  const onChangeType = (value) => {
-    setType(value);
-  };
+  // const onChangeType = (value) => {
+  //   setType(value);
+  // };
 
   const onChangeSsid = (value) => {
     setSsid(value);
@@ -161,9 +161,9 @@ const ClassLocationContainer = () => {
     setLocation(value);
   };
 
-  const onChangeOldType = (value) => {
-    setOldType(value);
-  };
+  // const onChangeOldType = (value) => {
+  //   setOldType(value);
+  // };
 
   const onChangeOldSsid = (value) => {
     setOldSsid(value);
@@ -197,7 +197,7 @@ const ClassLocationContainer = () => {
       setOldBssid(data[0].i_bssid);
       setOldSsid(data[0].i_ssid);
       setOldLocation(data[0].i_name);
-      setOldType("wifi");
+      // setOldType("wifi");
       setVisible(true);
     }
   };
@@ -209,11 +209,11 @@ const ClassLocationContainer = () => {
       classname={classname}
       onModalShow={onModalShow}
       hideModalShow={hideModalShow}
-      onChangeType={onChangeType}
+      // onChangeType={onChangeType}
       onChangeSsid={onChangeSsid}
       onChangeBssid={onChangeBssid}
       onChangeLocation={onChangeLocation}
-      onChangeOldType={onChangeOldType}
+      // onChangeOldType={onChangeOldType}
       onChangeOldSsid={onChangeOldSsid}
       onChangeOldBssid={onChangeOldBssid}
       onChangeOldLocation={onChangeOldLocation}
@@ -221,7 +221,7 @@ const ClassLocationContainer = () => {
       onChangeSubmit={onChangeSubmit}
       onUpdate={onUpdate}
       visible={visible}
-      type={type}
+      // type={type}
       ssid={ssid}
       bssid={bssid}
       location={location}
@@ -229,7 +229,7 @@ const ClassLocationContainer = () => {
       oldbssid={oldbssid}
       oldlocation={oldlocation}
       oldssid={oldssid}
-      oldtype={oldtype}
+      // oldtype={oldtype}
     />
   );
 };

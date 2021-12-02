@@ -12,11 +12,14 @@ const ClassListContainer = () => {
   const [agency, setAgencyInfo] = useState({});
   const [classList, setClassList] = useState(null);
   const clist = useSelector(({ classes }) => classes.clist);
+  const ctlist = useSelector(({ classes }) => classes.ctlist);
   const isFocused = useIsFocused();
   const { userInfo } = useSelector(({ auth }) => ({
     userInfo: auth.userInfo,
   }));
-  
+
+  console.log(userInfo);
+
   const calculate_today = () => {
     const now = new Date();
     const todayYear = now.getFullYear() + "년 ";
@@ -53,11 +56,14 @@ const ClassListContainer = () => {
     classListApi();
   }, []);
 
-  useEffect(()=>{
-    if(isFocused){
-      classListApi();
-    }
-  },[isFocused])
+  // useEffect(() => {
+  //    return () => setClassList(null);
+  // }, [isFocused]);
+
+  useEffect(() => {
+    setClassList(null);
+    classListApi();
+  }, [ctlist]);
 
   return (
     <ClassListComponent

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -12,6 +11,7 @@ import CheckBoxIcon from "../../../containers/class/class_manage/CheckBoxContain
 import { DataTable, Modal, Portal, Provider } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import DatePicker from "react-datepicker";
+import PickerBox from "../../../containers/class/class_manage/PickerBoxContainer";
 import "./react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import styled from "styled-components";
@@ -34,6 +34,11 @@ const ClassManageWeb = ({
   onModalShow,
   visible,
   onSubmit,
+  onSearch,
+  classSelect,
+  pickerItem,
+  search,
+  click,
   classId,
   hideModalShow,
   agency,
@@ -633,7 +638,16 @@ const ClassManageWeb = ({
               {agency}
             </Text>
           </View>
+          <View style={styles.picker}>
+            <Text style={[styles.text, { marginLeft: 15 }]}>강의명</Text>
+            <PickerBox style={styles} />
+          </View>
         </View>
+        <View style={styles.btnContainer2}>
+            <TouchableOpacity style={styles.btn} onPress={onSearch}>
+              <Text style={styles.btnText}>검색</Text>
+            </TouchableOpacity>
+          </View>
 
         <View style={styles.content}>
           <ScrollView>
@@ -650,7 +664,9 @@ const ClassManageWeb = ({
                 </DataTable.Title>
               </DataTable.Header>
 
-              {classList ? (
+              {!search &&
+                click === null &&
+                classList &&
                 classList.map((item) => (
                   <DataTable.Row key={item.c_idx}>
                     <CheckBoxIcon item={item} style={styles.checkbox} />
@@ -662,38 +678,73 @@ const ClassManageWeb = ({
                       {item.ct_day} / {item.ct_start_time} ~ {item.ct_end_time}
                     </DataTable.Cell>
                   </DataTable.Row>
-                ))
-              ) : (
+                ))}
+              {search &&
+                click === null &&
+                classSelect &&
+                classSelect.map((item) => (
+                  <DataTable.Row key={item.c_idx}>
+                    <CheckBoxIcon item={item} style={styles.checkbox} />
+                    <DataTable.Cell>{item.c_name}</DataTable.Cell>
+                    <DataTable.Cell>
+                      {item.ct_start_date} ~ {item.ct_end_date}
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                      {item.ct_day} / {item.ct_start_time} ~ {item.ct_end_time}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              {search && click === null && classSelect == null && (
+                <Text>리스트를 가져오는 중입니다.</Text>
+              )}
+              {!search && click === null && classList == null && (
                 <Text>리스트를 가져오는 중입니다.</Text>
               )}
             </DataTable>
+            {click !== null && <Text style={{ fontSize: 20 }}>{click}</Text>}
           </ScrollView>
 
           <View style={styles.btnContainer2}>
-            {(classId == null || classId == 0) &&
+            {/* {classId == null ||
+              classId == 0 && (
+                <TouchableOpacity
+                  style={[styles.btn, { margin: 5 }]}
+                  onPress={onModalShow}
+                >
+                  <Text style={styles.btnText}>등록</Text>
+                </TouchableOpacity>
+              )} */}
+            {search && pickerItem == 0 && (classId == null || classId == 0) && (
               <TouchableOpacity
                 style={[styles.btn, { margin: 5 }]}
                 onPress={onModalShow}
               >
                 <Text style={styles.btnText}>등록</Text>
               </TouchableOpacity>
-            }
-            {classId > 0 && 
-            <>
-            <TouchableOpacity
-              style={[styles.btn, { margin: 5 }]}
-              onPress={onUpdate}
-            >
-              <Text style={styles.btnText}>수정</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.btn, { margin: 5 }]}
-              onPress={onDelete}
-            >
-              <Text style={styles.btnText}>삭제</Text>
-            </TouchableOpacity>
-            </>
-            }
+            )}
+            
+            {(classId == null || classId == 0) && !search && <TouchableOpacity
+                style={[styles.btn, { margin: 5 }]}
+                onPress={onModalShow}
+              >
+                <Text style={styles.btnText}>등록</Text>
+              </TouchableOpacity> }
+            {(classId > 0 || pickerItem >= 0) && (
+              <>
+                <TouchableOpacity
+                  style={[styles.btn, { margin: 5 }]}
+                  onPress={onUpdate}
+                >
+                  <Text style={styles.btnText}>수정</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.btn, { margin: 5 }]}
+                  onPress={onDelete}
+                >
+                  <Text style={styles.btnText}>삭제</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </View>
@@ -735,7 +786,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 4,
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 8,
     borderColor: "#99c0d6",
   },
   text: {
@@ -745,9 +796,13 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   pickerText: {
-    fontSize: 16,
+    fontSize: 15,
+    width: "30%",
     alignItems: "center",
-    color: "#000000",
+    borderRadius: 20,
+    borderColor: "#99c0d6",
+    backgroundColor: "#00000000",
+    color: "black",
   },
   btnContainer: {
     flex: 1,

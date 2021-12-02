@@ -9,6 +9,7 @@ import {
 } from "../../../lib/api/class/course";
 import {
   getClasstime,
+  setSelectClass,
   IsVisible,
   setCheck,
   setValue,
@@ -19,7 +20,10 @@ import { useIsFocused } from "@react-navigation/core";
 const ClassManageWebContainer = () => {
   const dispatch = useDispatch();
   const [classtimeList, setClasstimeList] = useState(null);
+  const [classSelect, setClassSelect] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [click, setClick] = useState(null);
+  const [search, setOnSearch] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
@@ -60,7 +64,8 @@ const ClassManageWebContainer = () => {
   const isFocused = useIsFocused();
   const agency = useSelector(({ classes }) => classes.agency);
   const classId = useSelector(({ classes }) => classes.classid);
-
+  const selectClass = useSelector(({ classes }) => classes.selectClass);
+  const ctlist = useSelector(({ classes }) => classes.ctlist);
 
   // ------------- API 코드
 
@@ -115,7 +120,7 @@ const ClassManageWebContainer = () => {
         checkEndTime.getMinutes() +
         ":" +
         checkEndTime.getSeconds(),
-      break_start:
+        break_start:
         breakStartTime == null
           ? null
           : breakStartTime.getHours() +
@@ -134,7 +139,14 @@ const ClassManageWebContainer = () => {
       c_idx: data,
       ag_idx: agency.ag_idx,
     });
-    setClasstimeList(newData);
+    if(selectClass ==0){
+      setClasstimeList(newData);
+      setClassSelect(newData)
+    }
+    else{
+      setClassSelect(newData.filter((item) => item.c_idx == selectClass));
+      setClasstimeList(newData);
+    }
     dispatch(getClasstime(newData));
   }
 
@@ -197,18 +209,28 @@ const ClassManageWebContainer = () => {
       c_idx: classId,
       ag_idx: agency.ag_idx,
     });
+    setClassSelect(data.filter((item) => item.c_idx == selectClass));
     setClasstimeList(data);
     dispatch(getClasstime(data));
     dispatch(IsVisible(true));
+    // dispatch(setSelectClass(0));
+    // setOnSearch(false);
+    // setClassSelect(null);
+    // setClick(null);
   }
 
   async function classtimeDeleteApi() {
     console.log("강의 삭제");
-    const data = await deleteClass({ ag_idx: agency.ag_idx, c_idx: classId });
+    const data = await deleteClass({ ag_idx: agency.ag_idx, c_idx: classId});
     setClasstimeList(data);
-    dispatch(getClasstime(classtimeList));
+    dispatch(getClasstime(data));
     dispatch(setCheck(false));
+    dispatch(setSelectClass(0));
+    setOnSearch(false);
+    setClassSelect(null);
+    setClick(null);
   }
+  
 
   // ------------- UseEffect 관련 코드
 
@@ -222,6 +244,8 @@ const ClassManageWebContainer = () => {
     if (isFocused) {
       classtimeListApi();
       dispatch(setCheck(false));
+      setOnSearch(false);
+      setClassSelect(null);
     }
   }, [isFocused]);
 
@@ -245,7 +269,6 @@ const ClassManageWebContainer = () => {
     setSun(false);
     setDays("");
   }, [visible]);
-
 
   // ------------- 각종 이벤트
 
@@ -279,10 +302,18 @@ const ClassManageWebContainer = () => {
 
   // ------------- 모달에서 등록(submit) 버튼 누를 때
   const onSubmit = () => {
-    if(classname == "" || startDate == null || endDate == null || startTime == null || endTime == null || checkStartTime == null || checkEndTime == null || days == ""){
+    if (
+      classname == "" ||
+      startDate == null ||
+      endDate == null ||
+      startTime == null ||
+      endTime == null ||
+      checkStartTime == null ||
+      checkEndTime == null ||
+      days == ""
+    ) {
       alert("빈 항목이 있습니다.");
-    }
-    else{
+    } else {
       classAddApi();
       alert("강의가 등록되었습니다.");
       setVisible(false);
@@ -299,7 +330,25 @@ const ClassManageWebContainer = () => {
     }
   });
 
-  
+  function classSelectFunc() {
+    console.log("강의 검색");
+    if (selectClass == 0) {
+      setClassSelect(classtimeList);
+    } else {
+      setClassSelect(classtimeList.filter((item) => item.c_idx == selectClass));
+    }
+    selectClass >= 0 && classSelect != null && setClick(null);
+    // setClassSelect(data);
+    // dispatch(setCheck(false));
+    // dispatch(setValue(null));
+  }
+
+  // ------------- 검색 버튼 이벤트
+  const onSearch = () => {
+    setOnSearch(true);
+    classSelectFunc();
+  };
+
   // ------------- 페이지에서 수정 버튼 클릭하여 해당 강의의 정보 가져오는 이벤트
 
   const onUpdate = () => {
@@ -352,7 +401,6 @@ const ClassManageWebContainer = () => {
     }
   };
 
-
   // -------------  수정 완료 시 이벤트
 
   const onUpdateSubmit = () => {
@@ -381,7 +429,6 @@ const ClassManageWebContainer = () => {
     dispatch(setCheck(false));
     dispatch(setValue(0));
   };
-
 
   // ------------- 등록 폼 작성 이벤트
 
@@ -414,33 +461,14 @@ const ClassManageWebContainer = () => {
   };
 
   const onChangeBreakStartTime = (time) => {
-    if (time == null) {
-      setBreakStartTime(time);
-    } else {
-      const data =
-        breakStartTime.getHours() +
-        ":" +
-        breakStartTime.getMinutes() +
-        ":" +
-        breakStartTime.getSeconds();
-      setBreakStartTime(data);
-    }
+    setBreakStartTime(time);
+    console.log(breakStartTime);
   };
 
   const onChangeBreakEndTime = (time) => {
-    if (time == null) {
-      setBreakEndTime(time);
-    } else {
-      const data =
-        breakEndTime.getHours() +
-        ":" +
-        breakEndTime.getMinutes() +
-        ":" +
-        breakEndTime.getSeconds();
-      setBreakEndTime(data);
-    }
+    setBreakEndTime(time);
+    console.log(breakEndTime);
   };
-
 
   // ------------- 요일 클릭 이벤트
 
@@ -514,7 +542,6 @@ const ClassManageWebContainer = () => {
     }
   };
 
-
   //------ 수정 폼 작성 이벤트
 
   const onChangeOldStartDate = (date) => {
@@ -548,7 +575,6 @@ const ClassManageWebContainer = () => {
   const onChangeOldBreakEndTime = (time) => {
     setOldBreakEndTime(time);
   };
-
 
   // ------------- 수정 폼 요일 클릭 이벤트
 
@@ -629,6 +655,11 @@ const ClassManageWebContainer = () => {
       onModalShow={onModalShow}
       visible={visible}
       classId={classId}
+      onSearch={onSearch}
+      search={search}
+      click={click}
+      classSelect={classSelect}
+      pickerItem={selectClass}
       hideModalShow={hideModalShow}
       onSubmit={onSubmit}
       onChangeText={onChangeText}

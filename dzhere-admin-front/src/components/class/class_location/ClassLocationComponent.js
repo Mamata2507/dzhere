@@ -21,16 +21,16 @@ const ClassLocationComponent = ({
   onChangeSubmit,
   hideModalShow,
   visible,
-  onChangeType,
+  // onChangeType,
   onChangeSsid,
   onChangeBssid,
   onChangeLocation,
-  onChangeOldType,
+  // onChangeOldType,
   onChangeOldSsid,
   onChangeOldBssid,
   onChangeOldLocation,
   onUpdate,
-  type,
+  // type,
   ssid,
   bssid,
   location,
@@ -38,13 +38,8 @@ const ClassLocationComponent = ({
   oldbssid,
   oldlocation,
   oldssid,
-  oldtype,
+  // oldtype,
 }) => {
-  console.log(type);
-  console.log(ssid);
-  console.log(bssid);
-  console.log(location);
-  console.log(classname);
   return (
     <Provider>
       <View style={styles.container}>
@@ -128,20 +123,20 @@ const ClassLocationComponent = ({
                 <></>
               ) : (
                 <TextInput
-                  style={{
-                    fontSize: 16,
-                    alignItems: "center",
-                    backgroundColor: "white",
-                    textAlign: "center",
-                    justifyContent: "center",
-                    width: "15%",
-                    margin: "6%",
-                    padding: 5,
-                    borderRadius: 20,
-                  }}
-                  onChangeText={onChangeType}
-                  value={type}
-                />
+                style={{
+                  fontSize: 16,
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  width: "15%",
+                  margin: "8%",
+                  padding: 5,
+                  borderRadius: 20,
+                }}
+                editable={false}
+                value="wifi"
+              />
               )}
               <TextInput
                 style={{
@@ -322,8 +317,8 @@ const ClassLocationComponent = ({
                       padding: 5,
                       borderRadius: 20,
                     }}
-                    onChangeText={onChangeOldType}
-                    value={oldtype}
+                    editable={false}
+                    value="wifi"
                   />
                 )}
                 <TextInput
@@ -529,7 +524,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 4,
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 8,
     borderColor: "#99c0d6",
   },
   text: {
@@ -539,10 +534,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000000",
   },
-  pickerText: {
-    fontSize: 25,
+  inputText: {
+    fontSize: 15,
+    width: Platform.OS === "android" ? "90%" : "30%",
     alignItems: "center",
-    color: "#000000",
+    borderRadius: 50,
+    color: "black",
+    padding: 6,
+  },
+  pickerText: {
+    fontSize: 15,
+    width: Platform.OS === "android" ? "90%" : "30%",
+    alignItems: "center",
+    borderRadius: 20,
+    borderColor: "#99c0d6",
+    backgroundColor: "#00000000",
+    color: "black",
   },
   btnContainer: {
     flex: 1,
