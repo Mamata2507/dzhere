@@ -2,20 +2,16 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
-import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
 export const Contents = ({ currentPassword, setCurrentPassword, newPassword, 
                            setNewPassword, passwordConfirm, setPasswordConfirm,
                            newPasswordError, passwordConfirmError,
-                           onPress, emptyError, checkError1, onCheck, loadingCheck,
+                           onPress, emptyError, checkError1, onCheck,
                            checkError2, edit}) => {
-
-    const navigation = useNavigation();
 
     return (
       <View style={[styles.container, {height: 380, backgroundColor: '#CEEDFF', marginTop: 50}]}>
-        <Text>{newPasswordError}</Text>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <TextInput
@@ -38,12 +34,7 @@ export const Contents = ({ currentPassword, setCurrentPassword, newPassword,
 
         <View style={{ flexDirection: "row" }}>
             <Text style={styles.error}>
-              {loadingCheck && ''}
-              {!loadingCheck && ''}
-            </Text>
-            <Text style={styles.error}>
-              {edit && checkError2}
-              {!edit && checkError1}
+              {`${checkError1}`}
             </Text>
         </View>
 
@@ -60,7 +51,7 @@ export const Contents = ({ currentPassword, setCurrentPassword, newPassword,
           />
         </View>
         <View style={{ flexDirection: "row" }}>
-            <Text style={styles.error}>{newPasswordError}</Text>
+            <Text style={styles.error, {marginLeft: '5%', color: 'red'}}>{newPasswordError}</Text>
         </View>
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
@@ -75,8 +66,15 @@ export const Contents = ({ currentPassword, setCurrentPassword, newPassword,
           />
         </View>
         <View style={{ flexDirection: "row" }}>
-            <Text style={styles.error}>{passwordConfirmError}</Text>
             <Text style={styles.error}>{emptyError}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+            <Text style={styles.error}>{passwordConfirmError}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+            <Text style={styles.error}>
+              {edit && checkError2}
+            </Text>
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -100,7 +98,6 @@ export const Contents = ({ currentPassword, setCurrentPassword, newPassword,
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 10,
-      padding: 5,
       margin: 3,
     },
     myInfoText: {

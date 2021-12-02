@@ -1,4 +1,4 @@
-import { startLoading, finishLoading } from '../../../modules/student/loading';
+import { startLoading, finishLoading } from '../loading'
 
 export default function createRequestThunk(type, request){
 

@@ -12,8 +12,7 @@ const CheckBoxIcon = ({ item, style }) => {
     // 어떤 버튼도 선택하지 않았을 때
     if(!checkId){
       setSelection(true);
-      dispatch(setCheck(true));      
-      // console.log(item);      
+      dispatch(setCheck(true));   
       dispatch(setValue(item));
     }
     // 버튼이 선택되어 있을 때
@@ -22,10 +21,6 @@ const CheckBoxIcon = ({ item, style }) => {
       dispatch(setCheck(false));
       dispatch(setValue(0));
     }
-    // checkId && valueId === item.c_idx && dispatch(setCheck(false));
-    // dispatch(setCheck(true));
-    // isSelected && dispatch(setValue(item.c_idx));
-    // console.log("후: ", isSelected, checkId, item.c_idx, valueId);
   },[isSelected]);
 
   return (
