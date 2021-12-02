@@ -26,8 +26,17 @@ export const countUser = phone => {
     });
 };
 
-export const getStudentInfo = uid => 
-    client.get(`api/getStudentInfo/${uid}`)
+export const getStudentInfo = uid => {
+    return client
+    .get(`api/getStudentInfo/${uid}`)
+    .then(function (response){
+        return response.data.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
+
 
 export const updateUser = ({selectedClassUpdate, uName, uPhone, uid}) => 
     client.post(`/api/updateUser`, {c_idx: selectedClassUpdate, u_name: uName, u_phone: uPhone, u_idx: uid})

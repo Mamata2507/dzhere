@@ -110,7 +110,6 @@ const student = handleActions(
     }),
     [INSERT_USER_SUCCESS]: (state, action) => ({
       ...state,
-      checkuid: true,
     }),
     [INSERT_USER_FAILURE]: (state, action) => ({
       ...state

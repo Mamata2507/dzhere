@@ -21,7 +21,7 @@ export const StudentListAndroid = ({
   loadingAgName,
   loadingStudentList,
   selectedAccept,
-  // setSelectedAccept,
+  setSelectedAccept,
   filterList,
   loadingFilterList,
   showModalAdd,
@@ -47,9 +47,6 @@ export const StudentListAndroid = ({
   studentInfo,
   loadingStudentInfo,
   onUpdate,
-  phoneCheck,
-  handleSetAccept,
-  pickerStatus,
 }) => {
 
   // DataTable - Pagination
@@ -61,8 +58,6 @@ export const StudentListAndroid = ({
   React.useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
-
-  console.log('안드로이드'+selectedAccept);
 
 
   return (
@@ -88,7 +83,7 @@ export const StudentListAndroid = ({
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
                 keyboardType="default"
-                editable={phoneCheck}
+                editable={checkuid}
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
@@ -126,8 +121,8 @@ export const StudentListAndroid = ({
                 style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" />
-                {classList.map((c, i) => (
-                  <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
+                {classList.map((c) => (
+                  <Picker.Item label={c.c_name} value={c.c_idx} />
                 ))}
               </Picker>
             </View>
@@ -167,7 +162,7 @@ export const StudentListAndroid = ({
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
                 keyboardType="default"
-                editable={phoneCheck}
+                editable={checkuid}
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
@@ -205,8 +200,8 @@ export const StudentListAndroid = ({
                 style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" />
-                {classList.map((c, i) => (
-                  <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
+                {classList.map((c) => (
+                  <Picker.Item label={c.c_name} value={c.c_idx} />
                 ))}
               </Picker>
             </View>
@@ -249,42 +244,23 @@ export const StudentListAndroid = ({
               style={styles.pickerText}
             >
               <Picker.Item label="전체선택" value="0" />
-              {classList.map((c, i) => (
-                <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
+              {classList.map((c) => (
+                <Picker.Item label={c.c_name} value={c.c_idx} />
               ))}
             </Picker>
           </View>
           <View style={styles.btnContainer}>
-            {/* <Picker
+            <Picker
               selectedValue={selectedAccept}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedAccept(itemValue)
               }
               style={styles.miniPicker}
-            > */}
-            <Picker
-            style={[styles.miniPicker]}
-            onValueChange={handleSetAccept}
-            enabled={pickerStatus}
             >
-              <Picker.Item label='승인여부' value='2' />
-              <Picker.Item label='승인' value='1' />
-              <Picker.Item label='미승인' value='0' />
-          </Picker>
-            {/* <Picker
-            // style={[styles.miniPicker]}
-            // selectedValue={selectedAccept}
-            onValueChange={() => {
-              // btnDisable
-                // ? setBtnDisable(() => false)
-                // : setBtnDisable(() => true);
-                handleSetAccept;
-            }}
-          >
-              <Picker.Item label="승인여부" value="2" key="accept"/>
-              <Picker.Item label="승인" value="1" key="accept" />
-              <Picker.Item label="미승인" value="0" key="accept" />
-            </Picker> */}
+              <Picker.Item label="승인여부" value="2" />
+              <Picker.Item label="승인" value="1" />
+              <Picker.Item label="미승인" value="0" />
+            </Picker>
             <TouchableOpacity style={styles.btn} onPress={onSearch}>
               <Text style={styles.btnText}>검색</Text>
             </TouchableOpacity>
@@ -304,7 +280,9 @@ export const StudentListAndroid = ({
 
             {selectedAccept < 2 ? (
               <ScrollView>
-                {filterList.map((s) => (
+                <Text>{loadingFilterList == true && "로딩중..."}</Text>
+                {loadingFilterList == false &&
+                  filterList.map((s) => (
                     <DataTable.Row>
                       <DataTable.Cell>
                         <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
