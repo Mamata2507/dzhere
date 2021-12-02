@@ -12,47 +12,45 @@ import { Modal, Portal, Provider, DataTable } from "react-native-paper";
 import CheckBoxIcon from "../../containers/student/CheckBoxContainer";
 
 export const StudentListAndroid = ({
+  // 처음 렌더링될 때 가져오기
   agName,
-  classList,
-  selectedClass,
-  setSelectedClass,
-  onSearch,
-  studentList,
   loadingAgName,
+  classList,
+  // picker
+  pickerStatus={pickerStatus}, 
+  selectedClass={selectedClass},
+  setSelectedClass={setSelectedClass},
+  selectedClassAdd={selectedClassAdd},
+  setSelectedClassAdd={setSelectedClassAdd},
+  selectedClassUpdate={selectedClassUpdate},
+  setSelectedClassUpdate={setSelectedClassUpdate},
+  selectedAccept={selectedAccept}, 
+  handleSetAccept={handleSetAccept}, 
+  // onPress event
+  onSearch,
+  onDelete,
+  onAdd,
+  onCheck,
+  onUpdate,
+  // List
+  studentList,
   loadingStudentList,
-  selectedAccept,
-  // setSelectedAccept,
   filterList,
-  loadingFilterList,
-  showModalAdd,
+  // Modal
   visibleAdd,
   hideModalAdd,
-  onAdd,
+  showModalAdd, 
+  visibleUpdate,
+  hideModalUpdate,
+  showModalUpdate,
+  phoneCheck,
+  error,
+  // useState
   uName,
   onChangeUname,
   uPhone,
   onChangeUphone,
-  onDelete,
-  selectedClassAdd,
-  setSelectedClassAdd,
-  selectedClassUpdate,
-  setSelectedClassUpdate,
-  onCheck,
-  checkuid,
-  error,
-  loadingCheck,
-  showModalUpdate, 
-  visibleUpdate, 
-  hideModalUpdate,
-  studentInfo,
-  loadingStudentInfo,
-  onUpdate,
-  phoneCheck,
-  handleSetAccept,
-  pickerStatus,
 }) => {
-
-
 
   return (
     <View style={styles.container}>
@@ -88,7 +86,7 @@ export const StudentListAndroid = ({
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>
-                 <Text style={styles.error}>{!loadingCheck && error}</Text>
+                 <Text style={styles.error}>{error}</Text>
               </View>
 
             <View style={styles.picker}>
@@ -167,7 +165,7 @@ export const StudentListAndroid = ({
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>
-                 <Text style={styles.error}>{!loadingCheck && error}</Text>
+                 <Text style={styles.error}>{error}</Text>
               </View>
 
             <View style={styles.picker}>
@@ -305,8 +303,6 @@ export const StudentListAndroid = ({
                   ))}
               </ScrollView>
             )}
-
-
           </DataTable>
            {/* <<<<<<<<<<<<<<<<<<  content 끝 >>>>>>>>>>>>>>>>>>>>*/}
           

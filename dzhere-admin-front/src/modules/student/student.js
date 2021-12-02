@@ -29,10 +29,6 @@ const INSERT_USER = 'student/INSERT_USER'
 const INSERT_USER_SUCCESS = 'student/INSERT_USER_SUCCESS'
 const INSERT_USER_FAILURE = 'student/INSERT_USER_FAILURE'
 
-const GET_STUDENT_INFO = 'student/GET_STUDENT_INFO'
-const GET_STUDENT_INFO_SUCCESS = 'student/GET_STUDENT_INFO_SUCCESS'
-const GET_STUDENT_INFO_FAILURE = 'student/GET_STUDENT_INFO_FAILURE'
-
 const UPDATE_USER = 'student/UPDATE_USER'
 const UPDATE_USER_SUCCESS = 'student/UPDATE_USER_SUCCESS'
 const UPDATE_USER_FAILURE = 'student/UPDATE_USER_FAILURE'
@@ -48,7 +44,6 @@ export const setCheck = createAction(SET_CHECK, checkid => checkid);
 export const setValue = createAction(SET_VALUE, uid => uid);
 export const deleteUser = createRequestThunk(DELETE_USER, api.deleteUser);
 export const insertUser = createRequestThunk(INSERT_USER, api.insertUser);
-export const getStudentInfo = createRequestThunk(GET_STUDENT_INFO, api.getStudentInfo);
 export const updateUser = createRequestThunk(UPDATE_USER, api.updateUser);
   
 // 초기 상태를 선언한다
@@ -59,11 +54,9 @@ const initialState = {
   classList: [],
   studentList: [],
   filterList: [],
-  loadingFilterList: true,
   uid: 0,
   checkid: false,
-  result:false,
-  studentInfo: [],
+  studentError: null
 };
 
 const student = handleActions(
@@ -71,61 +64,68 @@ const student = handleActions(
     [GET_AG_NAME_SUCCESS]: (state, action) => ({
       ...state,
       agName: action.payload,
+      studentError: null
     }),
-    [GET_AG_NAME_FAILURE]: (state, action) => ({
+    [GET_AG_NAME_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      studentError: error
     }),
     [GET_CLASS_LIST_SUCCESS]: (state, action) => ({
       ...state,
       classList: action.payload,
+      studentError: null
     }),
-    [GET_CLASS_LIST_FAILURE]: (state, action) => ({
+    [GET_CLASS_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      studentError: error
     }),
     [GET_STUDENT_LIST_SUCCESS]: (state, action) => ({
       ...state,
       studentList: action.payload,
+      studentError: null
     }),
-    [GET_STUDENT_LIST_FAILURE]: (state, action) => ({
+    [GET_STUDENT_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      studentError: error
     }),
     [SET_FILTER_LIST]: (state, { payload: filterList }) => ({
       ...state,
       filterList,
-      loadingFilterList: false,
+      studentError: null
     }),
     [SET_CHECK]: (state, { payload: checkid }) => ({
       ...state,
       checkid,
+      studentError: null
     }),
     [SET_VALUE]: (state, { payload: uid }) => ({
       ...state,
       uid,
+      studentError: null
     }),
     [DELETE_USER_SUCCESS]: (state, action) => ({
       ...state,
+      studentError: null
     }),
-    [DELETE_USER_FAILURE]: (state, action) => ({
+    [DELETE_USER_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      studentError: error
     }),
     [INSERT_USER_SUCCESS]: (state, action) => ({
       ...state,
+      studentError: null
     }),
-    [INSERT_USER_FAILURE]: (state, action) => ({
-      ...state
-    }),
-    [GET_STUDENT_INFO_SUCCESS]: (state, action) => ({
+    [INSERT_USER_FAILURE]: (state, { payload: error }) => ({
       ...state,
-      studentInfo: action.payload,
-    }),
-    [GET_STUDENT_INFO_FAILURE]: (state, action) => ({
-      ...state,
+      studentError: error
     }),
     [UPDATE_USER_SUCCESS]: (state, action) => ({
       ...state,
+      studentError: null
     }),
-    [UPDATE_USER_FAILURE]: (state, action) => ({
-      ...state
+    [UPDATE_USER_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      studentError: error
     }),
   },
   initialState

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Alert, Keyboard } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../components/student/StudentList'
-import { 
+import student, { 
   getAgName, 
   getClassList, 
   getStudentList, 
@@ -22,34 +22,29 @@ const StudentListContainer = () => {
   const dispatch = useDispatch();
   const u_phone = '01023454710';
   
-  const [selectedClass, setSelectedClass] = useState(0);
+  const [selectedClass, setSelectedClass] = useState(0); // 헤더 - 강의 선택
+  const [selectedClassAdd, setSelectedClassAdd] = useState(0); // 등록 모달 - 강의 선택
+  const [selectedClassUpdate, setSelectedClassUpdate] = useState(0); // 수정 모달 - 강의 선택
   const [visibleAdd, setVisibleAdd] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
   const [uName, onChangeUname] = useState('');
   const [uPhone, onChangeUphone] = useState('');
-  const [selectedClassAdd, setSelectedClassAdd] = useState(0);
-  const [selectedClassUpdate, setSelectedClassUpdate] = useState(0);
   const [error, setError] = useState('');
   const [phoneCheck, setPhoneCheck] = useState(true);
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  let searchCheck = false;
-
   const { agName, classList, studentList, loadingAgName, 
-          loadingStudentList, filterList, loadingFilterList, 
-          uid, loadingCheck, studentInfo, loadingStudentInfo } = useSelector(({ student, loading }) => ({
+          loadingStudentList, filterList, uid, studentError }
+         = useSelector(({ student, loading }) => ({
     agName: student.agName,
     loadingAgName: loading['student/GET_AG_NAME'],
     classList: student.classList,
     studentList: student.studentList,
     loadingStudentList: loading['student/GET_STUDENT_LIST'],
     filterList: student.filterList,
-    loadingFilterList: student.loadingFilterList,
     uid: student.uid, 
-    loadingCheck: loading['student/COUNT_USER'],
-    studentInfo: student.studentInfo,
-    loadingStudentInfo: loading['student/GET_STUDENT_INFO']
+    studentError: student.studentError,
   }))
 
   const agIdx = agName.ag_idx
@@ -57,8 +52,14 @@ const StudentListContainer = () => {
 
   // 처음 렌더링 될 때
   useEffect(() => {
-    dispatch(getAgName(u_phone));
-    dispatch(getClassList(u_phone));
+    if (studentError) {
+      console.log('기관명, 수업리스트 가져오기 오류');
+      console.log(studentError)
+    } 
+    if (!studentError) {
+      dispatch(getAgName(u_phone));
+      dispatch(getClassList(u_phone));
+    }
   }, []);
 
   // 승인 상태 변경 시
@@ -75,9 +76,11 @@ const StudentListContainer = () => {
 
   // 헤더 - 검색 버튼 클릭 시
   const onSearch = () => {
-      searchCheck = true;
       dispatch(getStudentList({agIdx, selectedClass}))
       setPickerStatus(true)
+      if(studentError){
+        console.log(studentError);
+      }
   }
 
   // 등록 모달 클릭 시
@@ -135,7 +138,10 @@ const StudentListContainer = () => {
           setError('전화번호를 정확히 입력하세요');
         } else {
           let check_ = await(countUser(uPhone));
-          if(check_ === true){
+          if(studentError){
+            console.log(studentError);
+          }
+          if(!studentError && check_ === true){
             setError('')
             setPhoneCheck(false)
           } else {
@@ -155,18 +161,24 @@ const StudentListContainer = () => {
       Alert.alert('전화번호 확인 버튼을 클릭하세요');
     } else {
       dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone}))
-      Alert.alert(
-        "",
-        "추가완료",
-        [{},
-          { text: "확인", onPress: () => 
-            {
-              dispatch(getStudentList({agIdx, selectedClass}))
-              hideModalAdd()
+      if(studentError){
+        console.log(studentError);
+        Alert.alert('등록 실패')
+      }
+      if(!studentError){
+        Alert.alert(
+          "",
+          "등록 완료",
+          [{},
+            { text: "확인", onPress: () => 
+              {
+                dispatch(getStudentList({agIdx, selectedClass}))
+                hideModalAdd()
+              }
             }
-          }
-        ]
-      );
+          ]
+        );
+      }
     }
   } // 등록 모달(사용자 등록) 끝
   
@@ -180,18 +192,24 @@ const StudentListContainer = () => {
       Alert.alert('전화번호 확인 버튼을 클릭하세요');
     } else {
       dispatch(updateUser({selectedClassUpdate, uName, uPhone, uid}))
-      Alert.alert(
-        "",
-        "수정완료",
-        [{},
-          { text: "확인", onPress: () => 
-            {
-              dispatch(getStudentList({agIdx, selectedClass}))
-              hideModalUpdate()
+      if(studentError){
+        console.log(studentError);
+        Alert.alert('수정 실패')
+      }
+      if(!studentError){
+        Alert.alert(
+          "",
+          "수정 완료",
+          [{},
+            { text: "확인", onPress: () => 
+              {
+                dispatch(getStudentList({agIdx, selectedClass}))
+                hideModalUpdate()
+              }
             }
-          }
-        ]
-      );
+          ]
+        );
+      }
     }
   } // 수정 모달 끝
 
@@ -200,6 +218,7 @@ const StudentListContainer = () => {
     if(uid === 0){
       Alert.alert('수강생을 선택해주세요')
     } else {
+      console.log('>>>>>>>>>>>>>>>.'+uid);
       Alert.alert(
         "",
         "수강생을 삭제 하시겠습니까?",
@@ -212,10 +231,16 @@ const StudentListContainer = () => {
           { text: "확인", onPress: () => 
             {
               dispatch(deleteUser(uid))
-              Alert.alert('삭제완료')
-              dispatch(getStudentList({agIdx, selectedClass}))
-              dispatch(setCheck(false))
-              dispatch(setValue(0))
+              if(studentError){
+                console.log(studentError);
+                Alert.alert('삭제 실패')
+              }
+              if(!studentError){
+                Alert.alert('삭제 완료')
+                dispatch(getStudentList({agIdx, selectedClass}))
+                dispatch(setCheck(false))
+                dispatch(setValue(0))
+              }
             }
           }
         ]
@@ -226,44 +251,49 @@ const StudentListContainer = () => {
 
   return (
       <Contents
+         // 처음 렌더링될 때 가져오기
          agName={agName}
+         loadingAgName={loadingAgName}
          classList={classList}
+         
+         // picker
+         pickerStatus={pickerStatus} // true, false
          selectedClass={selectedClass}
          setSelectedClass={setSelectedClass}
-         onSearch={onSearch}
-         studentList={studentList}
-         loadingAgName={loadingAgName}
-         loadingStudentList={loadingStudentList}
-         selectedAccept={selectedAccept}
-        //  setSelectedAccept={setSelectedAccept}
-         filterList={filterList}
-         loadingFilterList={loadingFilterList}
-         onDelete={onDelete}
-         showModalAdd={showModalAdd}
-         visibleAdd={visibleAdd}
-         hideModalAdd={hideModalAdd}
-         showModalUpdate={showModalUpdate}
-         visibleUpdate={visibleUpdate}
-         hideModalUpdate={hideModalUpdate}
-         uName={uName}
-         onChangeUname={onChangeUname}
-         uPhone={uPhone}
-         onChangeUphone={onChangeUphone}
-         onAdd={onAdd}
-         showModalUpdate={showModalUpdate}
          selectedClassAdd={selectedClassAdd}
          setSelectedClassAdd={setSelectedClassAdd}
          selectedClassUpdate={selectedClassUpdate}
          setSelectedClassUpdate={setSelectedClassUpdate}
+         selectedAccept={selectedAccept} // 승인여부
+         handleSetAccept={handleSetAccept} // 승인여부 이벤트
+
+         // onPress event
+         onSearch={onSearch}
+         onDelete={onDelete}
+         onAdd={onAdd}
          onCheck={onCheck}
-         error={error}
-         loadingCheck={loadingCheck}
-         studentInfo={studentInfo}
-         loadingStudentInfo={loadingStudentInfo}
          onUpdate={onUpdate}
+        
+         // List
+         studentList={studentList}
+         loadingStudentList={loadingStudentList}
+         filterList={filterList}
+
+        // Modal
+         visibleAdd={visibleAdd}
+         hideModalAdd={hideModalAdd}
+         showModalAdd={showModalAdd} // onPress
+         visibleUpdate={visibleUpdate}
+         hideModalUpdate={hideModalUpdate}
+         showModalUpdate={showModalUpdate}
          phoneCheck={phoneCheck}
-         handleSetAccept={handleSetAccept}
-         pickerStatus={pickerStatus}
+         error={error}
+         
+        // useState
+         uName={uName}
+         onChangeUname={onChangeUname}
+         uPhone={uPhone}
+         onChangeUphone={onChangeUphone}
       />
   );
 };
