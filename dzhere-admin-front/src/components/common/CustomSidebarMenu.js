@@ -1,6 +1,6 @@
 // Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
-import image from "../../../assets/logo.png";
+import image from "../../../assets/sidebar-logo.png";
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -9,17 +9,49 @@ import {
   Image,
   Text,
   Linking,
+  Platform,
+  TouchableOpacity,
 } from "react-native";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { apiLogout } from "../../lib/api/auth/auth";
+import { logout } from "../../modules/auth/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import client from "../../lib/api/client";
+import toggle_down from "../../../assets/class/toggle_down.png";
 
 const CustomSidebarMenu = (props) => {
+  const [pressMain, setPressMain] = useState(false);
   const [pressClass, setPressClass] = useState(false);
+  const [pressStudent, setPressStudent] = useState(false);
+  const [pressTeacher, setPressTeacher] = useState(false);
+  const [labels, setLabel] = useState("");
+  const [colors, setColors] = useState("#565966");
+  const [weight, setWeight] = useState("300");
+  const agencyInfo = useSelector(({ classes }) => classes.agency);
+console.log(agencyInfo);
+  const dispatch = useDispatch();
+
+  const onPressMain = () => {
+    if (pressClass || pressStudent || pressTeacher) {
+      setPressMain(!pressMain);
+      setPressClass(false);
+      setPressTeacher(false);
+      setPressStudent(false);
+    } else {
+      setPressMain(!pressMain);
+    }
+    props.navigation.navigate("ClassList");
+    setLabel("ClassList");
+  };
+
   const onPressClass = () => {
     if (pressStudent || pressTeacher) {
       setPressClass(!pressClass);
@@ -29,7 +61,7 @@ const CustomSidebarMenu = (props) => {
       setPressClass(!pressClass);
     }
   };
-  const [pressStudent, setPressStudent] = useState(false);
+  
   const onPressStudent = () => {
     if (pressClass || pressTeacher) {
       setPressStudent(!pressStudent);
@@ -39,7 +71,7 @@ const CustomSidebarMenu = (props) => {
       setPressStudent(!pressStudent);
     }
   };
-  const [pressTeacher, setPressTeacher] = useState(false);
+
   const onPressTeacher = () => {
     if (pressStudent || pressClass) {
       setPressTeacher(!pressTeacher);
@@ -50,152 +82,285 @@ const CustomSidebarMenu = (props) => {
     }
   };
 
-  const [labels, setLabel] = useState("");
-  const [colors, setColors] = useState("#505050");
-  // const changeColor = useCallback(
-  //   () => {
-  //    setColors('labe);
-  //   },
-  //   [colors],
-  // )
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#40cae9" }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#CEEDFF"}}
+    >
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
-      <DrawerContentScrollView {...props}>
+      {agencyInfo.ag_name !== null && <Text style={styles.headName}>🌸 {agencyInfo.ag_name}님 환영합니다 🌸</Text>}
+      <DrawerContentScrollView
+        {...props}
+        style={{
+          padding: Platform.OS === "android" ? 5 : 10,
+          marginTop: Platform.OS === "android" ? 0 : 10,
+          paddingRight: 40,
+        }}
+      >
         {/* <DrawerItemList {...props} /> */}
         <View>
+          <TouchableOpacity onPress={onPressMain}>
+            <Text
+              style={{
+                paddingLeft: 14,
+                paddingBottom: 10,
+                paddingTop: Platform.OS === 'android' ? 0 : 15,
+                flexDirection: "row",
+                alignItems: "center",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+            🏡 HOME
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={onPressClass}>
-            <Text style={styles.title}>강의 및 장소</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.title}>강의 및 장소</Text>
+              <Image source={toggle_down} style={{ width: 15, height: 12 }} />
+            </View>
           </TouchableOpacity>
         </View>
         {pressClass === true ? (
-          <>
+          <View style={{ marginLeft: 10 }}>
             <DrawerItem
-              label="▪️ 강의 목록"
-              labelStyle={{ color: labels === "ClassList" ? "white" : colors }}
-              onPress={() => {
-                props.navigation.navigate("ClassList");
-                setLabel("ClassList");
-                setColors("#505050");
-              }}
-            />
-            <DrawerItem
-              label="▪️ 강의 관리"
+              label={labels === "ClassManage" ? ">  강의 관리" : "강의 관리"}
               labelStyle={{
-                color: labels === "ClassManage" ? "white" : colors,
+                color: labels === "ClassManage" ? "black" : colors,
+                fontWeight: labels === "ClassManage" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("ClassManage");
                 setLabel("ClassManage");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
             <DrawerItem
-              label="▪️ 강의 장소 관리"
+              label={
+                labels === "ClassLocation"
+                  ? ">  강의 장소 관리"
+                  : "강의 장소 관리"
+              }
               labelStyle={{
-                color: labels === "ClassLocation" ? "white" : colors,
+                color: labels === "ClassLocation" ? "black" : colors,
+                fontWeight: labels === "ClassLocation" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("ClassLocation");
                 setLabel("ClassLocation");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
             <DrawerItem
-              label="▪️ 외부 장소 관리"
+              label={
+                labels === "ClassExternal"
+                  ? ">  외부 장소 관리"
+                  : "외부 장소 관리"
+              }
               labelStyle={{
-                color: labels === "ClassExternal" ? "white" : colors,
+                color: labels === "ClassExternal" ? "black" : colors,
+                fontWeight: labels === "ClassExternal" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("ClassExternal");
                 setLabel("ClassExternal");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
-          </>
+          </View>
         ) : (
           <></>
         )}
         <View>
           <TouchableOpacity onPress={onPressStudent}>
-            <Text style={styles.title}>수강생</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.title}>수강생</Text>
+              <Image source={toggle_down} style={{ width: 15, height: 12 }} />
+            </View>
           </TouchableOpacity>
         </View>
         {pressStudent === true ? (
-          <>
+          <View style={{ marginLeft: 10 }}>
             <DrawerItem
-              label="▪️ 수강생 정보 관리"
+              label={
+                labels === "StudentList"
+                  ? ">  수강생 정보 관리"
+                  : "수강생 정보 관리"
+              }
               labelStyle={{
-                color: labels === "StudentList" ? "white" : colors,
+                color: labels === "StudentList" ? "black" : colors,
+                fontWeight: labels === "StudentList" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("StudentList");
                 setLabel("StudentList");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
             <DrawerItem
-              label="▪️ 수강생별 출결 현황"
+              label={
+                labels === "StudentAttend"
+                  ? ">  수강생별 출결 현황"
+                  : "수강생별 출결 현황"
+              }
               labelStyle={{
-                color: labels === "StudentAttend" ? "white" : colors,
+                color: labels === "StudentAttend" ? "black" : colors,
+                fontWeight: labels === "StudentAttend" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("StudentAttend");
                 setLabel("StudentAttend");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
             <DrawerItem
-              label="▪️ 강의별 출결 현황(수강생)"
+              label={
+                labels === "StudentAttendClass"
+                  ? ">  강의별 출결 현황(수강생)"
+                  : "강의별 출결 현황(수강생)"
+              }
               labelStyle={{
-                color: labels === "StudentAttendClass" ? "white" : colors,
+                color: labels === "StudentAttendClass" ? "black" : colors,
+                fontWeight: labels === "StudentAttendClass" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("StudentAttendClass");
                 setLabel("StudentAttendClass");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
-          </>
+          </View>
         ) : (
           <></>
         )}
         <View>
           <TouchableOpacity onPress={onPressTeacher}>
-            <Text style={styles.title}>강사</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.title}>강사</Text>
+              <Image source={toggle_down} style={{ width: 15, height: 12 }} />
+            </View>
           </TouchableOpacity>
         </View>
         {pressTeacher === true ? (
-          <>
+          <View style={{ marginLeft: 10 }}>
             <DrawerItem
-              label="▪️ 강사 정보 관리"
+              label={
+                labels === "TeacherList"
+                  ? ">  강사 정보 관리"
+                  : "강사 정보 관리"
+              }
               labelStyle={{
-                color: labels === "TeacherList" ? "white" : colors,
+                color: labels === "TeacherList" ? "black" : colors,
+                fontWeight: labels === "TeacherList" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("TeacherList");
                 setLabel("TeacherList");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
             <DrawerItem
-              label="▪️ 강의별 출결 현황(강사)"
+              label={
+                labels === "TeacherAttendClass"
+                  ? ">  강의별 출결 현황(강사)"
+                  : "강의별 출결 현황(강사)"
+              }
               labelStyle={{
-                color: labels === "TeacherAttendClass" ? "white" : colors,
+                color: labels === "TeacherAttendClass" ? "black" : colors,
+                fontWeight: labels === "TeacherAttendClass" ? "bold" : weight,
               }}
               onPress={() => {
                 props.navigation.navigate("TeacherAttendClass");
                 setLabel("TeacherAttendClass");
-                setColors("#505050");
+                setColors("#565966");
+                setWeight("300");
               }}
             />
-          </>
+          </View>
         ) : (
           <></>
         )}
       </DrawerContentScrollView>
-      <Text style={{ fontSize: 16, textAlign: "center", color: "grey" }}>
+      <TouchableOpacity
+        onPress={() => {
+          apiLogout()
+            .then(async (res) => {
+              if (res.result) {
+                console.log("result : ", res.message);
+                dispatch(logout());
+                try {
+                  await AsyncStorage.clear();
+                  client.defaults.headers.common["Authorization"] = "";
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: "AdminLoginPage" }],
+                  });
+                } catch (e) {
+                  console.log("Storage is not working : ", e);
+                }
+              } else {
+                console.log(res.message);
+                dispatch(logout());
+                try {
+                  await AsyncStorage.clear();
+                  client.defaults.headers.common["Authorization"] = "";
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: "UserLoginPage" }],
+                  });
+                } catch (e) {
+                  console.log("Storage is not working : ", e);
+                }
+              }
+            })
+            .catch((e) => {
+              console.log("apiLogout.catch - e:", e);
+            });
+        }}
+      >
+        <Text
+          style={{
+            fontSize: Platform.OS === "android" ? 23 : 20,
+            textAlign: "center",
+            marginBottom: Platform.OS === "android" ? 10 : 10,
+          }}
+        >
+          로그아웃
+        </Text>
+      </TouchableOpacity>
+      <Text
+        style={{
+          fontSize: 16,
+          textAlign: "center",
+          color: "grey",
+          marginBottom: Platform.OS === "android" ? 40 : 30,
+        }}
+      >
         더존HERE
       </Text>
     </SafeAreaView>
@@ -204,18 +369,24 @@ const CustomSidebarMenu = (props) => {
 
 const styles = StyleSheet.create({
   headerImage: {
-    width: 70,
-    height: 70,
+    width: 90,
+    height: 78,
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: Platform.OS === "android" ? 70 : 30,
   },
   title: {
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     fontWeight: "bold",
+    fontSize: 15,
     color: "#505050",
   },
+  headName: {
+    alignSelf: "center",
+    marginTop: Platform.OS ==='android' ? "15%" : 35, 
+    fontSize: Platform.OS ==='android' ? 16 : 14,
+  }
 });
 
 export default CustomSidebarMenu;

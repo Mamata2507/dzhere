@@ -1,8 +1,8 @@
 /* 관리자, 사용자 버튼 부터 로그인 완료 전까지의 stack */
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import AdminLoginPage from "../pages/admin/auth/Auth";
-import AdminSignUpPage from "../pages/admin/auth/Auth";
+import AdminLoginPage from '../pages/auth/AdminLoginPage'
+import AdminFindPasswordPage from "../pages/auth/AdminFindPasswordPage";
 import AdminDrawer from "./AdminDrawer";
 
 const Stack = createStackNavigator();
@@ -22,8 +22,8 @@ const AuthStack = () => {
         }}
       />
       <Stack.Screen
-        name="AdminSignUpPage"
-        component={AdminSignUpPage}
+        name="AdminFindPasswordPage"
+        component={AdminFindPasswordPage}
         options={{
           title: "", //Set Header Title
         }}

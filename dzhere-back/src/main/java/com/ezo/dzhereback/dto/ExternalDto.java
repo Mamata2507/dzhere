@@ -1,6 +1,5 @@
 package com.ezo.dzhereback.dto;
 import com.ezo.dzhereback.domain.External;
-import com.ezo.dzhereback.domain.External.ExternalBuilder;
 import lombok.*;
 
 @Data
@@ -16,9 +15,11 @@ public class ExternalDto {
 	private int u_idx;
 	private int c_idx;
 	private String u_phone;
+	private int ag_idx;
+	private String u_name;
 
 	@Builder
-	public ExternalDto(int e_idx, String e_name, String e_ssid, String e_bssid, int e_accept, int u_idx, int c_idx, String u_phone) {
+	public ExternalDto(int e_idx, String e_name, String e_ssid, String e_bssid, int e_accept, int u_idx, int c_idx, String u_phone, int ag_idx, String u_name) {
 		this.e_idx = e_idx;
 		this.e_name = e_name;
 		this.e_ssid = e_ssid;
@@ -27,6 +28,8 @@ public class ExternalDto {
 		this.u_idx = u_idx;
 		this.c_idx = c_idx;
 		this.u_phone = u_phone;
+		this.ag_idx = ag_idx;
+		this.u_name = u_name;
 	}
 
 	public External toEntity() {

@@ -6,16 +6,15 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import menubar from '../../../assets/menubar.png'
-import ClassManage from '../../pages/admin/class/ClassManage'
-import ClassList from '../../pages/admin/class/ClassList'
-import ClassLocation from '../../pages/admin/class/ClassLocation'
-import ClassExternal from '../../pages/admin/class/ClassExternal'
-import StudentList from '../../pages/admin/student/StudentList'
-import StudentAttend from '../../pages/admin/student/StudentAttend'
-import StudentAttendClass from '../../pages/admin/student/StudentAttendClass'
-import TeacherList from '../../pages/admin/teacher/TeacherList'
-import TeacherAttendClass from '../../pages/admin/teacher/TeacherAttendClass'
-
+import ClassManage from '../../pages/class/ClassManage'
+import ClassList from '../../pages/class/ClassList'
+import ClassLocation from '../../pages/class/ClassLocation'
+import ClassExternal from '../../pages/class/ClassExternal'
+import StudentList from '../../pages/student/StudentList'
+import StudentAttend from '../../pages/student/StudentAttend'
+import StudentAttendClass from '../../pages/student/StudentAttendClass'
+import TeacherList from '../../pages/teacher/TeacherList'
+import TeacherAttendClass from '../../pages/teacher/TeacherAttendClass'
 
 // Import Custom Sidebar
 // import CustomSidebarMenu from './CustomSidebarMenu';
@@ -36,7 +35,7 @@ export const NavigationDrawerStructure = (props) => {
         {/*Donute Button Image */}
         <Image
           source={menubar}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{ width: 30, height: 30, marginLeft: 20 }}
         />
       </TouchableOpacity>
     </View>
@@ -58,6 +57,7 @@ export const ClassListScreenStack = ({ navigation }) => {
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
           headerTransparent: true,
+          
         }}
       />
     </Stack.Navigator>
