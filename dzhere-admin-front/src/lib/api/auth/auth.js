@@ -70,4 +70,3 @@ export const apiLogout = () => {
 // 비밀번호 찾기
 export const findPassword = ({userEmail}) =>
   client.post('/api/admin/find-password', {userEmail, });
-

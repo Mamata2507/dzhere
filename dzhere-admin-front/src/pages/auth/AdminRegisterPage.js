@@ -9,7 +9,7 @@ const AdminRegisterPage = ({ navigation, route }) => {
         />
         // <AuthTemplate>
         //     {/* <AuthForm type="register"/> */}
-           
+
         // </AuthTemplate>
     );
 };
