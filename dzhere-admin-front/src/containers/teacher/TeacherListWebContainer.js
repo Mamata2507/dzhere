@@ -5,23 +5,23 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import TeacherListWebComponent from '../../components/teacher/web/TeacherListWebComponent';
 import { apiAgencyList, apiClassList, apiTeacherList, apiRemoveTeacher, apiEditTeacher, apiAddTeacher } from '../../lib/api/teacher/teacher';
-import { resetField, getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, changeField} from '../../modules/teacher/teacher';
+import { resetField, getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, changeField} from '../../modules/user/teacherWeb';
 
 const TeacherListWebContainer = () => {
     console.log("TeacherListWebContainer ====> Component 리턴");
 
     const dispatch = useDispatch();
 
-    const { agencyList, classList, teacherList, editTextInputName, editTextInputPhone, editTextInputEmail, insertTextInputName, insertTextInputPhone, insertTextInputEmail } = useSelector(({ teacher }) => ({
-      agencyList: teacher.agencyList,
-      classList: teacher.classList,
-      teacherList: teacher.teacherList,
-      editTextInputName: teacher.editTextInputName,
-      editTextInputPhone: teacher.editTextInputPhone,
-      editTextInputEmail: teacher.editTextInputEmail,
-      insertTextInputName: teacher.insertTextInputName,
-      insertTextInputPhone: teacher.insertTextInputPhone,
-      insertTextInputEmail: teacher.insertTextInputEmail,
+    const { agencyList, classList, teacherList, editTextInputName, editTextInputPhone, editTextInputEmail, insertTextInputName, insertTextInputPhone, insertTextInputEmail } = useSelector(({ teacherWeb }) => ({
+      agencyList: teacherWeb.agencyList,
+      classList: teacherWeb.classList,
+      teacherList: teacherWeb.teacherList,
+      editTextInputName: teacherWeb.editTextInputName,
+      editTextInputPhone: teacherWeb.editTextInputPhone,
+      editTextInputEmail: teacherWeb.editTextInputEmail,
+      insertTextInputName: teacherWeb.insertTextInputName,
+      insertTextInputPhone: teacherWeb.insertTextInputPhone,
+      insertTextInputEmail: teacherWeb.insertTextInputEmail,
     }));
 
     const [agIdxTmp, setAgIdxTmp] = useState(-1);
