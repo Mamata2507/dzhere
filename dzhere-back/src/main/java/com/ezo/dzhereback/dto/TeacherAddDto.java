@@ -9,15 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 public class TeacherAddDto {
-    private String u_phone;
     private String u_name;
-    private String c_idx;
-    private String ag_idx;
+    private String u_phone;
+    private String u_email;
+    private int c_idx;
+    private int ag_idx;
 
     @Builder
-    public TeacherAddDto(String u_phone, String u_name, String c_idx, String ag_idx) {
-        this.u_phone = u_phone;
+    public TeacherAddDto(String u_name, String u_phone, String u_email, int c_idx, int ag_idx) {
         this.u_name = u_name;
+        this.u_phone = u_phone;
+        this.u_email = u_email;
         this.c_idx = c_idx;
         this.ag_idx = ag_idx;
     }

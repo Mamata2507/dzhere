@@ -2,6 +2,7 @@ import React from "react";
 import AuthStack from "./navigations/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
 import { enableScreens } from 'react-native-screens';
+import 'bootstrap/dist/css/bootstrap.css';
 // const prefix = Linking.createURL('/');
 
 enableScreens();

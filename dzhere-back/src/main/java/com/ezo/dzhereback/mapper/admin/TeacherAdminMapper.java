@@ -32,7 +32,7 @@ public interface TeacherAdminMapper {
             "where u.c_idx = c.c_idx and u.ag_idx = ag.ag_idx and u.u_auth=2 and u.u_phone=#{userPhone}")
     TeacherInfoDto findTeacherByPhone(@Param("userPhone") String userPhone);
 
-    @Update("UPDATE User SET u_phone = #{teacher.u_phone} , u_email = #{teacher.u_email} WHERE (u_idx = #{teacher.u_idx})")
+    @Update("UPDATE User SET u_name = #{teacher.u_name}, u_phone = #{teacher.u_phone} , u_email = #{teacher.u_email} WHERE (u_idx = #{teacher.u_idx})")
     int updateTeacher(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
 
     @Update("UPDATE User SET u_email = #{teacher.u_email} WHERE (u_idx = #{teacher.u_idx})")
@@ -40,6 +40,18 @@ public interface TeacherAdminMapper {
 
     @Update("UPDATE User SET u_phone = #{teacher.u_phone} WHERE (u_idx = #{teacher.u_idx})")
     int updateTeacherPhone(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
+
+    @Update("UPDATE User SET u_name = #{teacher.u_name} WHERE (u_idx = #{teacher.u_idx})")
+    int updateTeacherName(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
+
+    @Update("UPDATE User SET u_phone = #{teacher.u_phone}, u_email = #{teacher.u_email} WHERE (u_idx = #{teacher.u_idx})")
+    int updateTeacherPhoneEmail(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
+
+    @Update("UPDATE User SET u_phone = #{teacher.u_phone}, u_name = #{teacher.u_name} WHERE (u_idx = #{teacher.u_idx})")
+    int updateTeacherPhoneName(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
+
+    @Update("UPDATE User SET u_email = #{teacher.u_email}, u_name = #{teacher.u_name} WHERE (u_idx = #{teacher.u_idx})")
+    int updateTeacherEmailName(@Param("teacher") TeacherUpdateDto teacherUpdateDto);
 
     @Select("SELECT u.u_idx, ag.ag_name, c.c_name, u.u_name, u.u_phone, u.u_email, u.u_accept\n" +
             "from User u, Agency ag, Class c\n" +
@@ -51,6 +63,7 @@ public interface TeacherAdminMapper {
 
     @Delete("DELETE from User where u_idx in ${u_idxes}")
     int deleteTeachers(@Param("u_idxes") String u_idxes);
+
 
 
 }

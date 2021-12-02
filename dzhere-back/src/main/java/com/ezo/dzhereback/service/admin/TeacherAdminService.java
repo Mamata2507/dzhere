@@ -56,12 +56,21 @@ public class TeacherAdminService {
         int result = -1;
         try{
             System.out.println(teacherUpdateDto);
-            if((teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null))
-                result = teacherAdminMapper.updateTeacherEmail(teacherUpdateDto);
-            if(!(teacherUpdateDto.getU_phone()==null) && (teacherUpdateDto.getU_email()==null))
-                result = teacherAdminMapper.updateTeacherPhone(teacherUpdateDto);
-            if(!(teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null))
+            if(!(teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null) && !(teacherUpdateDto.getU_name()==null))
                 result = teacherAdminMapper.updateTeacher(teacherUpdateDto);
+            if(!(teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null) && (teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherPhoneEmail(teacherUpdateDto);
+            if(!(teacherUpdateDto.getU_phone()==null) && (teacherUpdateDto.getU_email()==null) && !(teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherPhoneName(teacherUpdateDto);
+            if(!(teacherUpdateDto.getU_phone()==null) && (teacherUpdateDto.getU_email()==null) && (teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherPhone(teacherUpdateDto);
+            if((teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null) && !(teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherEmailName(teacherUpdateDto);
+            if((teacherUpdateDto.getU_phone()==null) && !(teacherUpdateDto.getU_email()==null) && (teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherEmail(teacherUpdateDto);
+            if((teacherUpdateDto.getU_phone()==null) && (teacherUpdateDto.getU_email()==null) && !(teacherUpdateDto.getU_name()==null))
+                result = teacherAdminMapper.updateTeacherName(teacherUpdateDto);
+
             log.info("update query result : " + result);
             TeacherInfoDto resultInfo = teacherAdminMapper.findTeacherByIdx(teacherUpdateDto.getU_idx());
             return resultInfo;

@@ -46,19 +46,27 @@ public class TeacherAdminController {
 
     @PostMapping("/api/admin/teacher/add")
     public ResponseEntity<?> addTeacher(@RequestBody TeacherAddDto teacherAddDto){
-        TeacherInfoDto result = teacherAdminService.createTeacher(teacherAddDto);
-        return ResponseEntity.ok().body(result);
+        teacherAdminService.createTeacher(teacherAddDto);
+        List<TeacherInfoDto> result = teacherAdminService.getTeacherListByLessonIdAndAgencyId(teacherAddDto.getC_idx(), teacherAddDto.getAg_idx());
+        return ResponseEntity.ok().body(new Result<>(result));
     }
 
-    @PutMapping("/api/admin/teacher/update")
+    @PostMapping("/api/admin/teacher/update")
     public ResponseEntity<?> updateTeacher(@RequestBody TeacherUpdateDto teacherUpdateDto){
-        TeacherInfoDto result = teacherAdminService.updateTeacher(teacherUpdateDto);
-        return ResponseEntity.ok().body(result);
+        teacherAdminService.updateTeacher(teacherUpdateDto);
+        List<TeacherInfoDto> result = teacherAdminService.getTeacherListByLessonIdAndAgencyId(teacherUpdateDto.getC_idx(), teacherUpdateDto.getAg_idx());
+        return ResponseEntity.ok().body(new Result<>(result));
     }
 
-    @DeleteMapping("/api/admin/teacher/delete")
-    public void deleteTeacher(@RequestBody TeacherDeleteDto teacherDeleteDto){
+    @Transactional
+    @PostMapping("/api/admin/teacher/delete")
+    public ResponseEntity<?> deleteTeacher(@RequestBody TeacherDeleteDto teacherDeleteDto){
+        System.out.println(teacherDeleteDto);
         int[] u_idxes = teacherDeleteDto.getU_idxes();
+        int cIdx = teacherDeleteDto.getC_idx();
+        int agIdx = teacherDeleteDto.getAg_idx();
         teacherAdminService.deleteTeacher(u_idxes);
+        List<TeacherInfoDto> result = teacherAdminService.getTeacherListByLessonIdAndAgencyId(cIdx, agIdx);
+        return ResponseEntity.ok().body(new Result<>(result));
     }
 }

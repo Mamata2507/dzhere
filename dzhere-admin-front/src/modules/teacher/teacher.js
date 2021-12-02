@@ -11,14 +11,15 @@ const GET_CLASS_LIST = 'teacher/GET_CLASS_LIST'
 const GET_CLASS_LIST_ERROR = 'teacher/GET_CLASS_LIST_ERROR'
 const GET_TEACHER_LIST = 'teacher/GET_TEACHER_LIST'
 const GET_TEACHER_LIST_ERROR = 'teacher/GET_TEACHER_LIST_ERROR'
+const REMOVE_ROW = 'teacher/REMOVE_ROW'
 
 
 /*** 액션 생성 ***/
 //  TextInput 필드 값 변경
 export const changeField = createAction(          
   CHANGE_FIELD,
-  ({form, key, value}) => ({
-    form,   // register, login  
+  ({/*form, */key, value}) => ({
+    // form,   // register, login  
     key,    // register 폼과 login 폼의 입력 해야 하는 각 필드들을 인식하기 위한 이름 값 
     value,  // 실제 바꾸려는 값
   }),
@@ -42,20 +43,28 @@ export const getTeacherList = createAction(GET_TEACHER_LIST, teahcerList => teah
 
 export const getTeacherListError = createAction(GET_TEACHER_LIST_ERROR, error => error)
 
+export const removeRow = createAction(REMOVE_ROW, teacherList => teacherList);
+
 /*** initial state ***/
 const initialState = {
   agencyList : [],
   classList : [],
   teacherList : [],
   error : '',
+  editTextInputName : null,
+  editTextInputPhone : null,
+  editTextInputEmail : null,
+  insertTextInputName : null,
+  insertTextInputPhone : null,
+  insertTextInputEmail : null,
 };
 
 /*** 리듀서 ***/
 const teacher = handleActions(
   {
-    [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
+    [CHANGE_FIELD]: (state, { payload: { /*form, */key, value } }) =>
       produce(state, (draft) => {
-        draft[form][key] = value;
+        draft[key] = value;
       }),
 
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
@@ -103,7 +112,10 @@ const teacher = handleActions(
       ...state,
       error: error
     }),
-
+    [REMOVE_ROW]: (state, {payload: teacherList}) => ({
+      ...state,
+      teacherList : teacherList
+    })
   },
   initialState
 );

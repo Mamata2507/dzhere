@@ -4,23 +4,41 @@ import { Text, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import TeacherListWebComponent from '../../components/teacher/TeacherListWebComponent';
-import { apiAgencyList, apiClassList, apiTeacherList } from '../../lib/api/teacher/teacher';
-import { getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, ch} from '../../modules/teacher/teacher';
+import { apiAgencyList, apiClassList, apiTeacherList, apiRemoveTeacher, apiEditTeacher, apiAddTeacher } from '../../lib/api/teacher/teacher';
+import { getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, changeField} from '../../modules/teacher/teacher';
 
 const TeacherListWebContainer = () => {
     console.log("TeacherListWebContainer ====> Component 리턴");
 
     const dispatch = useDispatch();
 
-    const { agencyList, classList, teacherList, } = useSelector(({ teacher }) => ({
+    const { agencyList, classList, teacherList, editTextInputName, editTextInputPhone, editTextInputEmail, insertTextInputName, insertTextInputPhone, insertTextInputEmail } = useSelector(({ teacher }) => ({
       agencyList: teacher.agencyList,
       classList: teacher.classList,
       teacherList: teacher.teacherList,
+      editTextInputName: teacher.editTextInputName,
+      editTextInputPhone: teacher.editTextInputPhone,
+      editTextInputEmail: teacher.editTextInputEmail,
+      insertTextInputName: teacher.insertTextInputName,
+      insertTextInputPhone: teacher.insertTextInputPhone,
+      insertTextInputEmail: teacher.insertTextInputEmail,
     }));
 
     const [agIdxTmp, setAgIdxTmp] = useState(-1);
+    const [cIdxTmp, setCIdxTmp] = useState(-1);
     const [checkedList, setCheckedList] = useState([]);
     const [rowIndexList, setRowIndexList] = useState([]);
+    const [addModalShow, setAddModalShow] = useState(false);
+    const [editModalShow, setEditModalShow] = useState(false);
+    const [addModalButtonControl, setAddModalButtonControl] = useState(true);
+    const [editModalButtonControl, setEditModalButtonControl] = useState(true);
+    const [removeModalButtonControl, setRemoveModalButtonControl] = useState(true);
+
+    const handleAddModalClose = () => setAddModalShow(false);
+    const handleAddModalShow = () => setAddModalShow(true);
+    const handleEditModalClose = () => setEditModalShow(false);
+    const handleEditModalShow = () => setEditModalShow(true);
+
 
     useEffect(() => {
       apiAgencyList()
@@ -75,8 +93,8 @@ const TeacherListWebContainer = () => {
       }
 
       if (name === "classList") {
-        console.log('클래스 idx : ', value);
-        console.log('기관 idx : ', agIdxTmp);
+        setCIdxTmp(value)
+        
         apiTeacherList(value, agIdxTmp)
           .then(async (res) => {
             if (res.result) {
@@ -87,7 +105,7 @@ const TeacherListWebContainer = () => {
               dispatch(getTeacherList(res.teacherList));
               let rowIndexList_ = new Array(res.teacherList.length);
               for(let i=0; i<res.teacherList.length; i++){
-                rowIndexList_[i] = String(i);
+                rowIndexList_[i] = String(res.teacherList[i]['u_idx']);
               }
               setRowIndexList(rowIndexList_);
             } else {
@@ -98,6 +116,56 @@ const TeacherListWebContainer = () => {
           .catch((e) => {
             console.log("apiTeacherList.catch - e:", e);
           });
+
+          // if(rowIndexList.length > 0)
+          //   setAddModalButtonControl(true)
+          // else setAddModalButtonControl(false)
+          console.log('addModalButtonControl : ', addModalButtonControl);
+          console.log('클래스 idx : ', cIdxTmp);
+          console.log('기관 idx : ', agIdxTmp);
+      }
+
+      if(name === 'editTextInputName'){
+        dispatch(
+          changeField({
+            key: name,
+            value: value,
+          })
+        );
+      }
+
+      if(name === 'editTextInputPhone'){
+        dispatch(
+          changeField({
+            key: name,
+            value: value,
+          })
+        );
+      }
+
+      if(name === 'insertTextInputName'){
+        dispatch(
+          changeField({
+            key: name,
+            value: value,
+          })
+        );
+      }
+      if(name === 'insertTextInputPhone'){
+        dispatch(
+          changeField({
+            key: name,
+            value: value,
+          })
+        );
+      }
+      if(name === 'insertTextInputEmail'){
+        dispatch(
+          changeField({
+            key: name,
+            value: value,
+          })
+        );
       }
     };
 
@@ -126,12 +194,152 @@ const TeacherListWebContainer = () => {
       }
     }
 
+    // 삭제 아벤트 핸들러
+    const removeBtnHandler = (checkedList, cIdxTmp, agIdxTmp) => {
+      console.log('remove row 핸들러', checkedList);
+
+      apiRemoveTeacher(checkedList, cIdxTmp, agIdxTmp)
+        .then(async (res) => {
+          if (res.result) {
+            console.log(
+              "==================res.result==================",
+              res.teacherList
+            );
+            dispatch(getTeacherList(res.teacherList));
+            let rowIndexList_ = new Array(res.teacherList.length);
+            for (let i = 0; i < res.teacherList.length; i++) {
+              rowIndexList_[i] = String(res.teacherList[i]["u_idx"]);
+            }
+            setRowIndexList(rowIndexList_);
+            setCheckedList([]);
+          } else {
+            console.log(res.error);
+            dispatch(getTeacherListError(res.error));
+          }
+        })
+        .catch((e) => {
+          console.log("apiTeacherList.catch - e:", e);
+        });
+    }
+
+    // 수정 이벤트 핸들러
+    const editBtnHandler = (u_idx, editTextInputName, editTextInputPhone, editTextInputEmail, cIdxTmp, agIdxTmp) => {
+      console.log('edit btn 핸들러', u_idx, editTextInputName, editTextInputPhone, editTextInputEmail, cIdxTmp, agIdxTmp);
+
+      apiEditTeacher(u_idx, editTextInputName, editTextInputPhone, editTextInputEmail, cIdxTmp, agIdxTmp)
+        .then(async (res) => {
+          if (res.result) {
+            console.log(
+              "==================res.result==================",
+              res.teacherList
+            );
+            dispatch(getTeacherList(res.teacherList));
+            let rowIndexList_ = new Array(res.teacherList.length);
+            for (let i = 0; i < res.teacherList.length; i++) {
+              rowIndexList_[i] = String(res.teacherList[i]["u_idx"]);
+            }
+            setRowIndexList(rowIndexList_);
+            setCheckedList([]);
+            dispatch(
+              changeField({
+                key: 'editTextInputName',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'editTextInputPhone',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'editTextInputEmail',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'insertTextInputName',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'insertTextInputPhone',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'insertTextInputEmail',
+                value: null,
+              })
+            );
+          } else {
+            console.log(res.error);
+            dispatch(getTeacherListError(res.error));
+          }
+        })
+        .catch((e) => {
+          console.log("apiTeacherList.catch - e:", e);
+        });
+    }
+
+    // 등록 이벤트 핸들러
+    const addBtnHandler = (insertTextInputName, insertTextInputPhone, insertTextInputEmail, c_idx, ag_idx) => {
+      console.log('add btn 핸들러', insertTextInputName, insertTextInputPhone, insertTextInputEmail, c_idx, ag_idx);
+
+      apiAddTeacher(insertTextInputName, insertTextInputPhone, insertTextInputEmail, c_idx, ag_idx)
+        .then(async (res) => {
+          if (res.result) {
+            console.log(
+              "==================res.result==================",
+              res.teacherList
+            );
+            dispatch(getTeacherList(res.teacherList));
+            let rowIndexList_ = new Array(res.teacherList.length);
+            for (let i = 0; i < res.teacherList.length; i++) {
+              rowIndexList_[i] = String(res.teacherList[i]["u_idx"]);
+            }
+            setRowIndexList(rowIndexList_);
+            setCheckedList([]);
+            dispatch(
+              changeField({
+                key: 'insertTextInputName',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'insertTextInputPhone',
+                value: null,
+              })
+            );
+            dispatch(
+              changeField({
+                key: 'insertTextInputEmail',
+                value: null,
+              })
+            );
+          } else {
+            console.log(res.error);
+            dispatch(getTeacherListError(res.error));
+          }
+        })
+        .catch((e) => {
+          console.log("apiAddTeacher.catch - e:", e);
+        });
+    }
+    
     console.log('agencyList : ', agencyList);
     console.log('classList : ', classList);
     console.log('teacherList : ', teacherList);
     console.log('rowIndexList : ', rowIndexList);
     console.log('checkedList : ', checkedList);
     return  <TeacherListWebComponent 
+                agIdxTmp={agIdxTmp}
+                cIdxTmp={cIdxTmp}
                 agencyList={agencyList}
                 classList={classList}
                 teacherList={teacherList}
@@ -139,6 +347,24 @@ const TeacherListWebContainer = () => {
                 rowIndexList={rowIndexList}
                 onChange={onChange}
                 checkHandler={checkHandler}
+                addModalShow={addModalShow}
+                editModalShow={editModalShow}
+                handleAddModalClose={handleAddModalClose}
+                handleAddModalShow={handleAddModalShow}
+                handleEditModalClose={handleEditModalClose}
+                handleEditModalShow={handleEditModalShow}
+                addModalButtonControl={addModalButtonControl}
+                editModalButtonControl={editModalButtonControl}
+                removeModalButtonControl={removeModalButtonControl}
+                removeBtnHandler={removeBtnHandler}
+                editBtnHandler={editBtnHandler}
+                addBtnHandler={addBtnHandler}
+                editTextInputName={editTextInputName}
+                editTextInputPhone={editTextInputPhone}
+                editTextInputEmail={editTextInputEmail}
+                insertTextInputName={insertTextInputName}
+                insertTextInputPhone={insertTextInputPhone}
+                insertTextInputEmail={insertTextInputEmail}
             />;
 };
 
