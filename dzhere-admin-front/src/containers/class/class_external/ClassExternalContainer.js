@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Alert, Platform } from "react-native";
-import { getExternalList, deleteExternal } from "../../../lib/api/class/course";
+import { getExternalList, deleteExternal, permitExternal } from "../../../lib/api/class/course";
 import {
   setExternal,
   setCheck,
   setValue,
   setUserName,
+  IsVisible
 } from "../../../modules/class/course";
 import ClassExternalComponent from "../../../components/class/class_external/ClassExternalComponent";
 import { useIsFocused } from "@react-navigation/core";
@@ -14,6 +15,7 @@ import { useIsFocused } from "@react-navigation/core";
 const ClassExternalContainer = () => {
   const dispatch = useDispatch();
   const [externaList, setExternaList] = useState(null);
+  const [visible, setVisible] = useState(false);
   const [name, setName] = useState(null);
   const [click, setClick] = useState(null);
   const selectClass = useSelector(({ classes }) => classes.selectClass);
@@ -56,6 +58,22 @@ const ClassExternalContainer = () => {
     dispatch(setExternal(data));
     dispatch(setCheck(false));
     setClick(null);
+    dispatch(IsVisible(true));
+  }
+
+  async function classExternalPermitApi(){
+    console.log("외부장소 승인");
+    const data = await permitExternal({
+      e_idx: classId,
+      c_idx: selectClass,
+      ag_idx: agency.ag_idx,
+      u_name: name.trim().replace(" ", ""),
+    });
+    setExternaList(data);
+    dispatch(setExternal(data));
+    dispatch(setCheck(false));
+    setClick(null);
+    dispatch(IsVisible(true));
   }
 
   const onChangeLoc = (name) => {
@@ -86,6 +104,26 @@ const ClassExternalContainer = () => {
     }
   };
 
+    // 페이지에서 승인 버튼 누를 때
+    const onModalShow = () => {
+      const data = externaList.filter((item) => item.e_idx == classId);
+      if (classId == null || classId == 0) {
+        Platform.OS === "android"
+          ? Alert.alert("승인할 항목을 선택해주세요.")
+          : alert("승인할 항목을 선택해주세요.");
+      } else if (data[0].e_accept == 1) {
+        Platform.OS === "android"
+          ? Alert.alert("이미 승인되었습니다.")
+          : alert("이미 승인되었습니다.");
+          dispatch(setCheck(false));
+          dispatch(setValue(0));
+          dispatch(IsVisible(true));
+      } else {
+        // setClassname(data[0].c_name);
+        setVisible(true);
+      }
+    };
+
   const checkTextInput = () => {
     if (name === null || name.trim().length < 3) {
       Platform.OS === "android"
@@ -96,6 +134,27 @@ const ClassExternalContainer = () => {
       return true;
     }
   };
+
+  
+  const onSubmit = () => {
+      classExternalPermitApi();
+      // dispatch(IsVisible(true));
+      Platform.OS === "android"
+        ? Alert.alert("승인이 완료되었습니다.")
+        : alert("승인이 완료되었습니다.");
+      dispatch(IsVisible(false));
+      setVisible(false);
+      dispatch(setCheck(false));
+      dispatch(setValue(0));
+      // dispatch(setValue(null));
+  };
+
+  
+  const hideModalShow = () => {
+    setVisible(false);
+  };
+
+
 
   useEffect(() => {
     console.log("isFocused");
@@ -116,6 +175,10 @@ const ClassExternalContainer = () => {
       name={name}
       NameRef={NameRef}
       onDelete={onDelete}
+      hideModalShow={hideModalShow}
+      onModalShow={onModalShow}
+      visible={visible}
+      onSubmit={onSubmit}
     />
   );
 };

@@ -259,3 +259,27 @@ export const deleteExternal = (data) => {
       console.log(error);
     });
 };
+
+// 외부장소 승인하기
+export const permitExternal = (data) => {
+  console.log("외부장소 승인 API 호출");
+  return client
+    .post("/class/external/permit", {
+      e_idx: data.e_idx,
+      c_idx: data.c_idx,
+      ag_idx: data.ag_idx,
+      u_name: data.u_name,
+    },
+    {
+      headers:{
+          "Access-Control-Allow-Origin": "*",
+      }
+    }
+   )
+    .then(function (response) {
+      return response.data.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};

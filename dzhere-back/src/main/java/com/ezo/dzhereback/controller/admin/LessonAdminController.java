@@ -78,13 +78,26 @@ public class LessonAdminController {
 	}
 	
 	//기관의 강의 내부장소 정보 리스트 호출
-	@PostMapping("/api/admin/class/internal/list")
-	public Result selectClassInternalList(@RequestBody UserDto userDto){  //ag_idx
-		List<InternalDto> classinternalList = classService.selectClassInternalList(userDto);
-		System.out.println(classinternalList);
-		return new Result(classinternalList);
+	@PostMapping("/api/admin/class/external/permit")
+	public Result updateExternalAccept(@RequestBody ExternalDto externalDto, UserDto userDto){  //ag_idx
+		int e_idx = externalDto.getE_idx();
+		classService.updateExternalAccept(e_idx);
+		userDto.setAg_idx(externalDto.getAg_idx());
+		userDto.setC_idx(externalDto.getC_idx());
+		userDto.setU_name(externalDto.getU_name());
+		List<ExternalDto> classexternalList = classService.selectClassExternalList(userDto);
+		System.out.println(classexternalList);
+		return new Result(classexternalList);
 	}
 	
+	
+	//기관의 강의 내부장소 정보 리스트 호출
+		@PostMapping("/api/admin/class/internal/list")
+		public Result selectClassInternalList(@RequestBody UserDto userDto){  //ag_idx
+			List<InternalDto> classinternalList = classService.selectClassInternalList(userDto);
+			System.out.println(classinternalList);
+			return new Result(classinternalList);
+		}
 	
 	//기관의 강의 내부장소 정보 리스트 업데이트
 		@PostMapping("/api/admin/class/internal/update")
