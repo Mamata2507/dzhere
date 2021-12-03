@@ -253,12 +253,14 @@ export const TeacherListWeb = ({
               <Picker.Item label='승인' value='1' key='accpet1'/>
               <Picker.Item label='미승인' value='0' key='accpet0'/>
             </Picker>
-            <TouchableOpacity style={styles.btn} onPress={onSearch}>
-              <Text style={styles.btnText}>검색</Text>
-            </TouchableOpacity>
           </View>
         </View>
         {/* <<<<<<<<<<<<<<<<<< 헤더 끝 >>>>>>>>>>>>>>>>>>>>*/}
+        <View>
+        <TouchableOpacity style={[styles.btn, {alignSelf: "flex-end", margin: '1%'}]} onPress={onSearch}>
+          <Text style={styles.btnText}>검색</Text>
+        </TouchableOpacity>
+        </View>
         
         {/* <<<<<<<<<<<<<<<<<<  content 시작 >>>>>>>>>>>>>>>>>>>>*/}
         <View style={styles.content}>
@@ -386,6 +388,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
     alignSelf: "flex-end",
+    height: 200,
   },
   btn: {
     backgroundColor: "#5AA0C8",

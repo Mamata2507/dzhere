@@ -12,8 +12,8 @@ export const getStudentList = ({agIdx, selectedClass}) =>
 export const getTeacherList = ({agIdx, selectedClass}) => 
     client.post(`/getTeacherList`, {ag_idx: agIdx, c_idx: selectedClass})
     
-export const deleteUser = ({uid, agIdx, selectedClass}) => 
-    client.post(`/deleteUser/${uid}/${agIdx}/${selectedClass}`)
+export const deleteUser = (uid) => 
+    client.post(`/deleteUser/${uid}`)
     
 export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone, uAuth}) => 
     client.post(`/insertUser`, {ag_idx: agIdx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone, u_auth: uAuth})
@@ -41,5 +41,5 @@ export const getStudentInfo = uid => {
 };
 
 
-export const updateUser = ({selectedClassUpdate, uName, uPhone, uid}) => 
+export const updateUser = ({selectedClassUpdate, uName, uPhone, uid, agIdx}) => 
     client.post(`/updateUser`, {c_idx: selectedClassUpdate, u_name: uName, u_phone: uPhone, u_idx: uid})

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Alert, Platform } from 'react-native';
 import { Contents } from '../../components/teacher/TeacherList'
 import { 
   getAgName, 
@@ -12,7 +13,7 @@ import {
   setCheck, 
   updateUser, 
 } from '../../modules/user/list'
-import { countUser, getStudentInfo } from '../../lib/api/user/list';
+import { countUser, getStudentInfo } from '../../lib/api/user/list'
 
 let selectedAccept = 2;
 
@@ -33,7 +34,7 @@ const TeacherListContainer = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
   const { agName, classList, teacherList, loadingAgName, 
-          loadingTeacherList, filterList, uid, teacherError, userInfo }
+          loadingTeacherList, filterList, uid, resultError, userInfo }
          = useSelector(({ list, loading, auth }) => ({
     agName: list.agName,
     loadingAgName: loading['list/GET_AG_NAME'],
@@ -43,7 +44,7 @@ const TeacherListContainer = () => {
     filterList: list.filterList,
     uid: list.uid, 
     userInfo: auth.userInfo,
-    teacherError: list.resultError,
+    resultError: list.resultError,
   }))
 
   const agIdx = agName.ag_idx
@@ -52,18 +53,24 @@ const TeacherListContainer = () => {
 
   // 처음 렌더링 될 때
   useEffect(() => {
-    if (teacherError) {
+    if (resultError) {
       console.log('기관명, 수업리스트 가져오기 오류');
-      console.log(teacherError)
+      console.log(resultError)
     } 
-    if (!teacherError) {
+    if (!resultError) {
       dispatch(getAgName(userInfo.userPhone));
       dispatch(getClassList(userInfo.userPhone));
     }
   }, []);
 
+  useEffect(() => {
+    onSearch
+  }, [teacherList]);
+
   // 승인 상태 변경 시
   const handleSetAccept = useCallback((e) => {
+    dispatch(setCheck(false))
+    dispatch(setValue(0))
     selectedAccept = e;
     let teacherList_ = teacherList;
     let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
@@ -74,8 +81,13 @@ const TeacherListContainer = () => {
   const onSearch = () => {
       dispatch(getTeacherList({agIdx, selectedClass}))
       setPickerStatus(true)
-      if(teacherError){
-        console.log(teacherError);
+      if(resultError){
+        console.log(resultError);
+      }
+      if(selectedAccept < 2){
+        let teacherList_ = teacherList;
+        let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
+        dispatch(setFilterList(tempArr))            
       }
   }
 
@@ -87,6 +99,7 @@ const TeacherListContainer = () => {
   
   // 등록 모달 껐을 때 
   const hideModalAdd = () => {
+    dispatch(getTeacherList({agIdx, selectedClass}))
     setVisibleAdd(false);
     setSelectedClassAdd(0)
     onChangeUname('')
@@ -97,7 +110,11 @@ const TeacherListContainer = () => {
   // 수정 모달 클릭 시
   async function showModalUpdate () {
     if(uid === 0){
-      alert('강사를 선택해주세요')
+      if(Platform.OS === 'web'){
+        alert('수강생을 선택해주세요');
+      } else {
+        Alert.alert('수강생을 선택해주세요');
+      }
     } else {
       let info = await(getStudentInfo(uid));
       onChangeUphone(info.u_phone);
@@ -110,7 +127,6 @@ const TeacherListContainer = () => {
   
   // 수정 모달 껐을 때
   const hideModalUpdate = () => {
-    dispatch(getTeacherList({agIdx, selectedClass}))
     setVisibleUpdate(false);
     setSelectedClassUpdate(0)
     onChangeUname('')
@@ -121,7 +137,11 @@ const TeacherListContainer = () => {
   //동일한 전화번호가 있는지 확인
     async function onCheck () {
       if(uPhone === ''){
-        alert('전화번호를 입력하세요')
+        if(Platform.OS === 'web'){
+          alert('전화번호를 입력하세요');
+        } else {
+          Alert.alert('전화번호를 입력하세요');
+        }
       } else if(uPhone === uPhoneTemp) {
         setError('')
         setPhoneCheck(false)        
@@ -130,14 +150,18 @@ const TeacherListContainer = () => {
           setError('전화번호를 정확히 입력하세요');
         } else {
           let check_ = await(countUser(uPhone));
-          if(teacherError){
-            console.log(teacherError);
+          if(resultError){
+            console.log(resultError);
           }
-          if(!teacherError && check_ === true){
+          if(!resultError && check_ === true){
             setError('')
             setPhoneCheck(false)
           } else {
-            alert('등록된 전화번호입니다.')
+            if(Platform.OS === 'web'){
+              alert('등록된 전화번호입니다.');
+            } else {
+              Alert.alert('등록된 전화번호입니다.');
+            }
           }
         }          
     } 
@@ -146,30 +170,40 @@ const TeacherListContainer = () => {
   // 등록 모달 -> 사용자 등록
   const onAdd = () => {
     if(uName === ''|| uPhone === ''){
-      alert('빈 항목이 있습니다.');
+      if(Platform.OS === 'web'){
+        alert('빈 항목이 있습니다.');
+      } else {
+        Alert.alert('빈 항목이 있습니다.');
+      }
     } else if(selectedClassAdd === 0){
-      alert('강의명을 선택하세요');
+      if(Platform.OS === 'web'){
+        alert('강의명을 선택하세요');
+      } else {
+        Alert.alert('강의명을 선택하세요');
+      }
     } else if(phoneCheck === true) {
-      alert('전화번호 확인 버튼을 클릭하세요');
+      if(Platform.OS === 'web'){
+        alert('전화번호 확인 버튼을 클릭하세요');
+      } else {
+        Alert.alert('전화번호 확인 버튼을 클릭하세요');
+      }
     } else {
       dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone, uAuth}))
-      if(teacherError){
-        console.log(teacherError);
-        alert('등록 실패')
+      if(resultError){
+        console.log(resultError);
+        if(Platform.OS === 'web'){
+          alert('등록 실패');
+        } else {
+          Alert.alert('등록 실패');
+        }
       }
-      if(!teacherError){
-        alert(
-          "",
-          "등록 완료",
-          [{},
-            { text: "확인", onPress: () => 
-              {
-                dispatch(getTeacherList({agIdx, selectedClass}))
-                hideModalAdd()
-              }
-            }
-          ]
-        );
+      if(!resultError){
+        if(Platform.OS === 'web'){
+          alert('등록 완료');
+        } else {
+          Alert.alert('등록 완료');
+        }
+        hideModalAdd()
       }
     }
   } // 등록 모달(사용자 등록) 끝
@@ -177,70 +211,88 @@ const TeacherListContainer = () => {
   // 수정 모달 -> 사용자 수정
   const onUpdate = () => {
     if(uName === ''|| uPhone === ''){
-      alert('빈 항목이 있습니다.');
+      if(Platform.OS === 'web'){
+        alert('빈 항목이 있습니다.');
+      } else {
+        Alert.alert('빈 항목이 있습니다.');
+      }
     } else if(selectedClassUpdate === 0){
-      alert('강의명을 선택하세요');
+      if(Platform.OS === 'web'){
+        alert('강의명을 선택하세요');
+      } else {
+        Alert.alert('강의명을 선택하세요');
+      }
     } else if(phoneCheck === true) {
-      alert('전화번호 확인 버튼을 클릭하세요');
+      if(Platform.OS === 'web'){
+        alert('전화번호 확인 버튼을 클릭하세요');
+      } else {
+        Alert.alert('전화번호 확인 버튼을 클릭하세요');
+      }
     } else {
       dispatch(updateUser({selectedClassUpdate, uName, uPhone, uid}))
-      if(teacherError){
-        console.log(teacherError);
-        alert('수정 실패')
+      if(resultError){
+        console.log(resultError);
+        if(Platform.OS === 'web'){
+          alert('수정 실패');
+        } else {
+          Alert.alert('수정 실패');
+        }
       }
-      if(!teacherError){
-        alert(
-          "",
-          "수정 완료",
-          [{},
-            { text: "확인", onPress: () => 
-              {
-                dispatch(getTeacherList({agIdx, selectedClass}))
-                hideModalUpdate()
-                dispatch(setCheck(false))
-                dispatch(setValue(0))
-              }
-            }
-          ]
-        );
+      if(!resultError){
+        if(Platform.OS === 'web'){
+          alert('수정 완료');
+        } else {
+          Alert.alert('수정 완료');
+        }
+        hideModalUpdate()
+        dispatch(setCheck(false))
+        dispatch(setValue(0))
+        dispatch(getTeacherList({agIdx, selectedClass}))
+        if(selectedAccept < 2){
+          let teacherList_ = teacherList;
+          let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
+          dispatch(setFilterList(tempArr))            
+        }
       }
     }
   } // 수정 모달 끝
 
+
   // 유저 삭제 -> 체크박스 이용
   const onDelete = () => {
     if(uid === 0){
-      alert('강사를 선택해주세요')
+      if(Platform.OS === 'web'){
+        alert('수강생을 선택해주세요');
+      } else {
+        Alert.alert('수강생을 선택해주세요');
+      }
     } else {
-      alert(
-        "",
-        "강사를 삭제 하시겠습니까?",
-        [
-          {
-            text: "취소",
-            onPress: () => console.log("취소"),
-            style: "cancel"
-          },
-          { text: "확인", onPress: () => 
-            {
-              dispatch(deleteUser({uid, agIdx, selectedClass}))
-              if(teacherError){
-                console.log(teacherError);
-                alert('삭제 실패')
-              }
-              if(!teacherError){
-                alert('삭제 완료')
-                dispatch(getTeacherList({agIdx, selectedClass}))
-                dispatch(setCheck(false))
-                dispatch(setValue(0))
-              }
-            }
-          }
-        ]
-      );
+      dispatch(deleteUser(uid))
+      if(resultError){
+        console.log(resultError);
+        if(Platform.OS === 'web'){
+          alert('삭제 실패');
+        } else {
+          Alert.alert('삭제 실패');
+        }
+      }
+      if(!resultError){
+        if(Platform.OS === 'web'){
+          alert('삭제 완료');
+        } else {
+          Alert.alert('삭제 완료');
+        }
+        dispatch(setCheck(false))
+        dispatch(setValue(0))
+        dispatch(getTeacherList({agIdx, selectedClass}))
+        if(selectedAccept < 2){
+          let teacherList_ = teacherList;
+          let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
+          dispatch(setFilterList(tempArr))            
+        }
+      }
     }
   } // 유저 삭제 끝
-
 
   return (
       <Contents

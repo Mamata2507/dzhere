@@ -120,7 +120,6 @@ const list = handleActions(
     }),
     [DELETE_USER_SUCCESS]: (state, action) => ({
       ...state,
-      studentList: action.payload,
       resultError: null
     }),
     [DELETE_USER_FAILURE]: (state, { payload: error }) => ({

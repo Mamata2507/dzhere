@@ -76,16 +76,12 @@ public class ListAdminController {
 		}
 	}
 	
-	@PostMapping("/api/admin/deleteUser/{u_idx}/{ag_idx}/{c_idx}")
-	public Result deleteUser(@PathVariable("u_idx") int u_idx,
-							 @PathVariable("ag_idx") int ag_idx,
-							 @PathVariable("c_idx") int c_idx) {
+	@PostMapping("/api/admin/deleteUser/{u_idx}")
+	public Result deleteUser(@PathVariable("u_idx") int u_idx) {
 		System.out.println("<<<<<< userDelete 컨트롤러 시작 >>>>>>");
 		int deleteResult = studentService.deleteUser(u_idx);
-		List<User> studentList = studentService.getStudentListAll(ag_idx, c_idx);
 		System.out.println("<<<<<< userDelete 컨트롤러 완료 >>>>>>"+deleteResult);
-		System.out.println("<<<<<< userDelete 컨트롤러 완료 >>>>>>"+studentList);
-		return new Result(studentList);
+		return new Result(deleteResult);
 	}
 	
 	@PostMapping("/api/admin/insertUser")
