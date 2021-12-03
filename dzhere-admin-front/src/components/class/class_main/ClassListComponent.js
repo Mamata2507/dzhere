@@ -11,7 +11,7 @@ const ClassListComponent = ({ today, agency, classname, navigation }) => {
       <View style={styles.container}>
         <Text style={styles.today}>{"🐥" + today + "🐥"}</Text>
         <View style={styles.box}>
-          <Text style={styles.agency}>{agency.ag_name}</Text>
+          <Text style={styles.agency}>{agency?.ag_name}</Text>
         </View>
         {classname ? <ClassCardComponent classname={classname} navigation={navigation} />
         : <Text style={styles.loading}>리스트를 불러오는 중입니다.</Text>}

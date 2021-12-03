@@ -139,7 +139,7 @@ const ClassManageWebContainer = () => {
       c_idx: data,
       ag_idx: agency.ag_idx,
     });
-    if(selectClass ==0){
+    if(selectClass == 0){
       setClasstimeList(newData);
       setClassSelect(newData)
     }

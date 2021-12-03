@@ -8,9 +8,9 @@ const PickerBoxContainer = ({ style }) => {
   const dispatch = useDispatch();
   const classList = useSelector(({ classes }) => classes.clist);
   // const externalist = useSelector(({ classes }) => classes.externalist);
-  // const selectClass = useSelector(({ classes }) => classes.selectClass);
+  const selectClass = useSelector(({ classes }) => classes.selectClass);
   // const username = useSelector(({ classes }) => classes.name);
-  // const ctlist = useSelector(({ classes }) => classes.ctlist);
+  const ctlist = useSelector(({ classes }) => classes.ctlist);
   // console.log(classList);
   const [selectedValue, setSelectedValue] = useState(0);
   const isFocused = useIsFocused();
@@ -32,9 +32,9 @@ const PickerBoxContainer = ({ style }) => {
   //   }
   // }, [ctlist]);
 
-  // useEffect(() => {
-  //   setSelectedValue(0);
-  // }, [ctlist]);
+  useEffect(() => {
+    setSelectedValue(0);
+  }, [ctlist]);
 
   return (
     <Picker

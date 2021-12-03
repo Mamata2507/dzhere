@@ -88,7 +88,7 @@ console.log(agencyInfo);
     >
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
-      {agencyInfo.ag_name !== null && <Text style={styles.headName}>🌸 {agencyInfo.ag_name}님 환영합니다 🌸</Text>}
+      {agencyInfo.ag_name !== null && <Text style={styles.headName}>🌸 {agencyInfo.u_name}님 환영합니다 🌸</Text>}
       <DrawerContentScrollView
         {...props}
         style={{

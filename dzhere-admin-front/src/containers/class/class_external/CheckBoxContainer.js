@@ -23,31 +23,23 @@ const CheckBoxIcon = ({ item, style }) => {
     else {
       setSelection(false);
       dispatch(setCheck(false));
-      dispatch(setValue(0));
+      dispatch(setValue(null));
     }
   };
 
   useEffect(() => {
-    if (isFocused) {
       setSelection(false);
       dispatch(setCheck(false));
-      dispatch(setValue(0));
-    }
+      dispatch(setValue(null));
   }, [isFocused]);
 
   useEffect(() => {
-    setSelection(false);
-    dispatch(setCheck(false));
-    // dispatch(setValue(null));
-}, [visible]);
-
-  // useEffect(() => {
-  //   if(click){
-  //     setSelection(false);
-  //     dispatch(setCheck(false));
-  //     dispatch(setValue(0));
-  //   }
-  // }, [click]);
+    if(visible){
+      setSelection(false);
+      dispatch(setCheck(false));
+      dispatch(setValue(null));
+    }
+  }, [visible]);
 
   return (
     <Checkbox
