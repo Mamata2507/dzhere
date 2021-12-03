@@ -11,8 +11,13 @@ const GET_CLASS_LIST = 'teacher/GET_CLASS_LIST'
 const GET_CLASS_LIST_ERROR = 'teacher/GET_CLASS_LIST_ERROR'
 const GET_TEACHER_LIST = 'teacher/GET_TEACHER_LIST'
 const GET_TEACHER_LIST_ERROR = 'teacher/GET_TEACHER_LIST_ERROR'
+const GET_TEACHER_ATTEND_LIST = 'teacher/GET_TEACHER_ATTEND_LIST'
+const GET_TEACHER_ATTEND_LIST_ERROR = 'teacher/GET_TEACHER_ATTEND_LIST_ERROR'
+const GET_TEACHER_IDX_NAME = 'teacher/GET_TEACHER_IDX_NAME'
+const GET_TEACHER_IDX_NAME_ERROR = 'teacher/GET_TEACHER_IDX_NAME_ERROR'
 const REMOVE_ROW = 'teacher/REMOVE_ROW'
 const RESET_FIELD = 'teacher/RESET_FIELD'
+
 
 /*** 액션 생성 ***/
 //  TextInput 필드 값 변경
@@ -39,9 +44,17 @@ export const getClassList = createAction(GET_CLASS_LIST, classList => classList)
 
 export const getClassListError = createAction(GET_CLASS_LIST_ERROR, error => error)
 
-export const getTeacherList = createAction(GET_TEACHER_LIST, teahcerList => teahcerList)
+export const getTeacherList = createAction(GET_TEACHER_LIST, teacherList => teacherList)
 
 export const getTeacherListError = createAction(GET_TEACHER_LIST_ERROR, error => error)
+
+export const getTeacherAttendList = createAction(GET_TEACHER_ATTEND_LIST, teacherAttendList => teacherAttendList)
+
+export const getTeacherAttendListError = createAction(GET_TEACHER_ATTEND_LIST_ERROR, error => error)
+
+export const getTeacherIdxName = createAction(GET_TEACHER_IDX_NAME, teacherIdxName => teacherIdxName);
+
+export const getTeacherIdxNameError = createAction(GET_TEACHER_IDX_NAME_ERROR, error => error);
 
 export const removeRow = createAction(REMOVE_ROW, teacherList => teacherList);
 
@@ -52,6 +65,8 @@ const initialState = {
   agencyList : [],
   classList : [],
   teacherList : [],
+  teacherAttendList : [],
+  teacherIdxName : [],
   error : '',
   editTextInputName : null,
   editTextInputPhone : null,
@@ -59,6 +74,7 @@ const initialState = {
   insertTextInputName : null,
   insertTextInputPhone : null,
   insertTextInputEmail : null,
+  
 };
 
 /*** 리듀서 ***/
@@ -113,6 +129,27 @@ const teacher = handleActions(
     [GET_TEACHER_LIST_ERROR]: (state, {payload: error}) => ({
       ...state,
       error: error
+    }),
+
+    [GET_TEACHER_ATTEND_LIST]: (state, {payload: teacherAttendList}) => ({
+      ...state,
+      teacherAttendList : teacherAttendList
+    }),
+
+    [GET_TEACHER_ATTEND_LIST_ERROR]: (state, {payload: error}) => ({
+      ...state,
+      error: error
+    }),
+
+    [GET_TEACHER_IDX_NAME]: (state, {payload: teacherIdxName}) => ({
+      ...state,
+      teacherIdxName : teacherIdxName,
+    }),
+
+    [GET_TEACHER_IDX_NAME_ERROR]: (state, {payload: error}) => ({
+      ...state,
+      error: error,
+      teacherIdx: null,
     }),
     
     [REMOVE_ROW]: (state, {payload: teacherList}) => ({

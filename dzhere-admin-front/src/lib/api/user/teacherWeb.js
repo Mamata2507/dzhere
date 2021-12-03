@@ -1,7 +1,7 @@
 import client from "../client";
 
 export const apiAgencyList = () => {
-    return client.get("teacher/agency-list")
+    return client.get("teacher/web/agency-list")
     .then(res => {
         return {
             result : true,
@@ -17,7 +17,7 @@ export const apiAgencyList = () => {
 }
 
 export const apiClassList = (agIdx) => {
-    return client.get("teacher/class-list",{
+    return client.get("teacher/web/class-list",{
         params: {
             agIdx: agIdx
         }
@@ -37,7 +37,7 @@ export const apiClassList = (agIdx) => {
 }
 
 export const apiTeacherList = (cIdx, agIdx) => {
-    return client.get("teacher/teacher-list",{
+    return client.get("teacher/web/teacher-list",{
         params: {
             cIdx : cIdx,
             agIdx : agIdx,
@@ -59,7 +59,7 @@ export const apiTeacherList = (cIdx, agIdx) => {
 
 export const apiAddTeacher = (u_name, u_phone, u_email, c_idx, ag_idx) => {
     console.log('apiAddTeacher : ', u_name, u_phone, u_email, c_idx, ag_idx);
-    return client.post("teacher/add",
+    return client.post("teacher/web/add",
         {
             c_idx : c_idx,
             ag_idx : ag_idx,
@@ -84,7 +84,7 @@ export const apiAddTeacher = (u_name, u_phone, u_email, c_idx, ag_idx) => {
 
 export const apiEditTeacher = (u_idx, u_name, u_phone, u_email, c_idx, ag_idx) => {
     console.log('apiEditTeacher : ', u_idx, u_phone, u_email);
-    return client.post("teacher/update",
+    return client.post("teacher/web/update",
         {
             u_idx : u_idx,
             c_idx : c_idx,
@@ -110,7 +110,7 @@ export const apiEditTeacher = (u_idx, u_name, u_phone, u_email, c_idx, ag_idx) =
 
 export const apiRemoveTeacher = (checkedList, cIdxTmp, agIdxTmp) => {
     console.log('apiRemoveTeacher : ', checkedList, cIdxTmp, agIdxTmp);
-    return client.post("teacher/delete",
+    return client.post("teacher/web/delete",
         {
             u_idxes : [...checkedList],
             c_idx : cIdxTmp,
@@ -121,6 +121,79 @@ export const apiRemoveTeacher = (checkedList, cIdxTmp, agIdxTmp) => {
         return {
             result: true,
             teacherList: res.data.data
+        }
+    })
+    .catch(e => {
+        return {
+            result: false,
+            error: e,
+        }
+    })
+}
+
+export const apiTeacherAttendList = (u_idx, start_date, end_date) => {
+    console.log('apiTeacherAttendList : ', u_idx, start_date, end_date);
+    return client.get("teacher/web/attend-list",
+        {
+            params : {
+                u_idx : u_idx,
+                start_date : start_date,
+                end_date : end_date,
+            }
+            
+        },
+    )
+    .then(res => {
+        return {
+            result: true,
+            teacherAttendList: res.data.data
+        }
+    })
+    .catch(e => {
+        return {
+            result: false,
+            error: e,
+        }
+    })
+}
+
+export const apiTeacherAttendListAll = (u_idx) => {
+    console.log('apiTeacherAttendList : ', u_idx);
+    return client.get("teacher/web/attend-list-all",
+        {
+            params : {
+                u_idx : u_idx,
+            }
+            
+        },
+    )
+    .then(res => {
+        return {
+            result: true,
+            teacherAttendList: res.data.data
+        }
+    })
+    .catch(e => {
+        return {
+            result: false,
+            error: e,
+        }
+    })
+}
+
+export const apiTeacherIdxName = (c_idx) => {
+    console.log('apiTeacherIdx : ', c_idx);
+    return client.get("teacher/web/teacher-iname",
+        {
+            params : {
+                c_idx : c_idx,
+            }
+        },
+    )
+    .then(res => {
+        return {
+            result: true,
+            teacherIdxName: res.data.data
         }
     })
     .catch(e => {

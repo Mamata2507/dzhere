@@ -3,9 +3,7 @@ package com.ezo.dzhereback.mapper.admin;
 
 import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Lesson;
-import com.ezo.dzhereback.dto.TeacherAddDto;
-import com.ezo.dzhereback.dto.TeacherInfoDto;
-import com.ezo.dzhereback.dto.TeacherUpdateDto;
+import com.ezo.dzhereback.dto.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -63,6 +61,17 @@ public interface TeacherAdminMapper {
     @Delete("DELETE from User where u_idx in ${u_idxes}")
     int deleteTeachers(@Param("u_idxes") String u_idxes);
 
+    @Select("SELECT a.a_idx, a.a_today_date, c.c_name, u.u_name, a.a_attend_time, a.a_exit_time, a.a_late_status, a.a_leave, a.a_absent, a.a_not_exit, a.a_result_time\n" +
+            "FROM User u, Class c, Attend a\n" +
+            "WHERE u.u_idx=a.u_idx and c.c_idx=u.c_idx and u.u_idx=#{u_idx} and a.a_today_date between date(#{start_date}) and date(#{end_date})")
+    List<TeacherAttendDto> findTeacherAttendListByDateRange(@Param("u_idx") int uIdx, @Param("start_date") String start_date, @Param("end_date") String end_date);
 
+    @Select("SELECT a.a_idx, a.a_today_date, c.c_name, u.u_name, a.a_attend_time, a.a_exit_time, a.a_late_status, a.a_leave, a.a_absent, a.a_not_exit, a.a_result_time\n" +
+            "FROM User u, Class c, Attend a\n" +
+            "WHERE u.u_idx=a.u_idx and c.c_idx=u.c_idx and u.u_idx=#{u_idx}")
+    List<TeacherAttendDto> findTeacherAttendListAll(int uIdx);
+
+    @Select("SELECT u_idx, u_name FROM User WHERE c_idx=#{c_idx}")
+    TeacherIdxNameDto findTeacherIdxNameByCIdx(@Param("c_idx") int cIdx);
 
 }

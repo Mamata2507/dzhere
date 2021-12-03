@@ -1,22 +1,18 @@
-import * as React from 'react';
-import { Button, View, Text, SafeAreaView, StyleSheet } from 'react-native';
+// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
+// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
-const ClassList = ({ navigation }) => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>{'TeacherAttendClass'}</Text>
-    </SafeAreaView>
+import * as React from 'react';
+import { Platform } from 'react-native';
+import TeacherAttendClassWebContainer from '../../containers/teacher/TeacherAttendClassWebContainer';
+
+const TeacherAttendClass = ({ navigation }) => {
+  console.log('TeacherListPage : Platform 구분 ===> Container 리턴');
+  return Platform.OS === "web" ? (
+    <TeacherAttendClassWebContainer
+    />
+  ) : (
+    <TeacherAttendClassContainerAndroid/>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-});
-
-export default ClassList;
+export default TeacherAttendClass;

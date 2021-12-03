@@ -1,17 +1,18 @@
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import TeacherListWebComponent from '../../components/teacher/web/TeacherListWebComponent';
-import { apiAgencyList, apiClassList, apiTeacherList, apiRemoveTeacher, apiEditTeacher, apiAddTeacher } from '../../lib/api/user/teacherWeb';
-import { resetField, getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, changeField} from '../../modules/user/teacherWeb';
+import TeacherAttendClassWebComponent from "../../components/teacher/web/TeacherAttendClassWebComponent";
+import { apiTeacherAttendList, apiTeacherAttendListAll, apiTeacherIdxName, apiAgencyList, apiClassList, apiTeacherList, apiRemoveTeacher, apiEditTeacher, apiAddTeacher } from '../../lib/api/user/teacherWeb';
+import { getTeacherAttendListError, getTeacherAttendList, getTeacherIdxNameError, getTeacherIdxName, resetField, getAgencyList, getClassList, getAgencyListError, getClassListError, getTeacherList, getTeacherListError, changeField} from '../../modules/user/teacherWeb';
 
-const TeacherListWebContainer = () => {
+const TeacherAttendClassWebContainer = () => {
     console.log("TeacherListWebContainer ====> Component 리턴");
 
     const dispatch = useDispatch();
 
-    const { agencyList, classList, teacherList, editTextInputName, editTextInputPhone, editTextInputEmail, insertTextInputName, insertTextInputPhone, insertTextInputEmail } = useSelector(({ teacherWeb }) => ({
+    const { teacherAttendList, teacherIdxName, agencyList, classList, teacherList, editTextInputName, editTextInputPhone, editTextInputEmail, insertTextInputName, insertTextInputPhone, insertTextInputEmail } = useSelector(({ teacherWeb }) => ({
+      teacherAttendList: teacherWeb.teacherAttendList,
+      teacherIdxName: teacherWeb.teacherIdxName,
       agencyList: teacherWeb.agencyList,
       classList: teacherWeb.classList,
       teacherList: teacherWeb.teacherList,
@@ -37,7 +38,6 @@ const TeacherListWebContainer = () => {
     const handleAddModalShow = () => setAddModalShow(true);
     const handleEditModalClose = () => setEditModalShow(false);
     const handleEditModalShow = () => setEditModalShow(true);
-
 
     useEffect(() => {
       apiAgencyList()
@@ -94,34 +94,48 @@ const TeacherListWebContainer = () => {
       if (name === "classList") {
         setCIdxTmp(value)
         
-        apiTeacherList(value, agIdxTmp)
+        apiTeacherIdxName(value)
           .then(async (res) => {
             if (res.result) {
               console.log(
                 "==================res.result==================",
-                res.TeacherList
+                res.teacherIdxName,
+                res.teacherIdxName['u_idx'],
+                res.teacherIdxName['u_name'],
               );
-              dispatch(getTeacherList(res.teacherList));
-              let rowIndexList_ = new Array(res.teacherList.length);
-              for(let i=0; i<res.teacherList.length; i++){
-                rowIndexList_[i] = String(res.teacherList[i]['u_idx']);
-              }
-              setRowIndexList(rowIndexList_);
+              dispatch(getTeacherIdxName([res.teacherIdxName['u_idx'], res.teacherIdxName['u_name']]));
+              
+              apiTeacherAttendListAll(res.teacherIdxName['u_idx'])
+                .then(async (res) => {
+                  if (res.result) {
+                    console.log(
+                      "==================res.result==================",
+                      res.teacherAttendList
+                    );
+                    dispatch(getTeacherAttendList(res.teacherAttendList));
+                    let rowIndexList_ = new Array(res.teacherAttendList.length);
+                    for(let i=0; i<res.teacherAttendList.length; i++){
+                      rowIndexList_[i] = String(res.teacherAttendList[i]['a_idx']);
+                    }
+                    setRowIndexList(rowIndexList_);
+                  } else {
+                    console.log(res.error);
+                    dispatch(getTeacherAttendListError(res.error));
+                  }
+                })
+                .catch((e) => {
+                  console.log("apiTeacherAttendListAll.catch - e:", e);
+                });
+               
             } else {
               console.log(res.error);
-              dispatch(getTeacherListError(res.error));
+              dispatch(getTeacherIdxError(res.error));
             }
           })
           .catch((e) => {
-            console.log("apiTeacherList.catch - e:", e);
+            console.log("apiAgencyList.catch - e:", e);
           });
-
-          // if(rowIndexList.length > 0)
-          //   setAddModalButtonControl(true)
-          // else setAddModalButtonControl(false)
-          console.log('addModalButtonControl : ', addModalButtonControl);
-          console.log('클래스 idx : ', cIdxTmp);
-          console.log('기관 idx : ', agIdxTmp);
+        
       }
 
       if(['editTextInputName', 'editTextInputPhone', 'editTextInputEmail', 'insertTextInputName', 'insertTextInputPhone', 'insertTextInputEmail'].includes(name)){
@@ -264,7 +278,10 @@ const TeacherListWebContainer = () => {
     console.log('teacherList : ', teacherList);
     console.log('rowIndexList : ', rowIndexList);
     console.log('checkedList : ', checkedList);
-    return  <TeacherListWebComponent 
+    console.log('teacherIdxName : ', teacherIdxName);
+    console.log('teacherAttendList: ', teacherAttendList);
+
+    return  <TeacherAttendClassWebComponent 
                 agIdxTmp={agIdxTmp}
                 cIdxTmp={cIdxTmp}
                 agencyList={agencyList}
@@ -292,7 +309,9 @@ const TeacherListWebContainer = () => {
                 insertTextInputName={insertTextInputName}
                 insertTextInputPhone={insertTextInputPhone}
                 insertTextInputEmail={insertTextInputEmail}
+                teacherIdxName={teacherIdxName}
+                teacherAttendList={teacherAttendList}
             />;
 };
 
-export default TeacherListWebContainer;
+export default TeacherAttendClassWebContainer;

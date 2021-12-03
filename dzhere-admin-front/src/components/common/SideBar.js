@@ -226,6 +226,7 @@ export const TeacherAttendClassScreenStack = ({ navigation }) => {
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
           headerTransparent: true,
+          
         }}
       />
     </Stack.Navigator>

@@ -25,7 +25,7 @@ import { apiLogout } from "../../lib/api/auth/auth";
 import { logout } from "../../modules/auth/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client from "../../lib/api/client";
-import toggle_down from "../../../assets/class/toggle_down.png";
+import toggle_down from "../../../assets/toggle.png";
 
 const CustomSidebarMenu = (props) => {
   const [pressMain, setPressMain] = useState(false);

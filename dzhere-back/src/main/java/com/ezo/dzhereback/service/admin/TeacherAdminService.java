@@ -3,9 +3,7 @@ package com.ezo.dzhereback.service.admin;
 
 import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Lesson;
-import com.ezo.dzhereback.dto.TeacherAddDto;
-import com.ezo.dzhereback.dto.TeacherInfoDto;
-import com.ezo.dzhereback.dto.TeacherUpdateDto;
+import com.ezo.dzhereback.dto.*;
 import com.ezo.dzhereback.mapper.admin.TeacherAdminMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +89,17 @@ public class TeacherAdminService {
         }
 
         return result;
+    }
+
+    public List<TeacherAttendDto> getTeacherAttendListAll(int uIdx) {
+        return teacherAdminMapper.findTeacherAttendListAll(uIdx);
+    }
+
+    public List<TeacherAttendDto> getTeacherAttendList(int uIdx, String start_date, String end_date) {
+        return teacherAdminMapper.findTeacherAttendListByDateRange(uIdx, start_date, end_date);
+    }
+
+    public TeacherIdxNameDto getTeacherIdxName(int cIdx) {
+        return teacherAdminMapper.findTeacherIdxNameByCIdx(cIdx);
     }
 }
