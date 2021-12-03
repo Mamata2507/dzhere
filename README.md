@@ -9,7 +9,7 @@
 
 4. React Native 프로젝트 폴더 내의 package.json 파일 수정
 
-"script" : {
+"scripts" : {
     "deploy": "aws s3 sync ./web-build s3://dzhere-web-deploy --profile=dzhere-web-deploy",
     "invalidate": "aws cloudfront create-invalidation --profile=dzhere-web-deploy --distribution-id E2G404576ZEHPW --paths / /index.html /error.html /service-worker.js /manifest.json /favicon.ico"
 }
