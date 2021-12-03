@@ -24,7 +24,7 @@
  
 ## USER APP BUILD
  ``` 
- 1. app.json 파일 수정
+ 1. playstore 에 수동 업데이트 시, app.json 파일 versionCode 수정
  
  "android": {
       "package": "com.dzhere.DHere",
