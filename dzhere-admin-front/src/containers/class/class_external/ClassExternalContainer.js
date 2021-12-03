@@ -115,9 +115,9 @@ const ClassExternalContainer = () => {
         Platform.OS === "android"
           ? Alert.alert("이미 승인되었습니다.")
           : alert("이미 승인되었습니다.");
-          dispatch(setCheck(false));
-          dispatch(setValue(0));
-          dispatch(IsVisible(true));
+          // dispatch(setCheck(false));
+          // dispatch(setValue(0));
+          // setClick(null);
       } else {
         // setClassname(data[0].c_name);
         setVisible(true);

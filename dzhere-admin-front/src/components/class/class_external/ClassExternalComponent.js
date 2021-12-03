@@ -29,10 +29,7 @@ const ClassExternalComponent = ({
   return (
     <Provider>
       <View style={styles.container}>
-        {Platform.OS === "android" ? (
-          <></>
-        ) : (
-          <Portal>
+        <Portal>
             <Modal
               visible={visible}
               onDismiss={hideModalShow}
@@ -97,7 +94,6 @@ const ClassExternalComponent = ({
               </View>
             </Modal>
           </Portal>
-        )}
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View style={[styles.picker]}>
             <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
