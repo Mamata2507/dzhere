@@ -4,10 +4,13 @@ import logo from "../../../assets/logo.png";
 
 export const Header = () => {
   return (
-    <View style={(styles.container, { alignItems: "center", marginTop: 40 })}>
-      <View style={styles.header}></View>
-      <Image style={styles.headerImage} source={logo} />
-    </View>
+    <View style={styles.container, {alignItems: 'center', marginTop: 20}}>
+    <View style={styles.header}></View>
+    <Image
+      style={styles.headerImage}
+      source={logo}
+    />
+  </View>
   );
 };
 
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: 100,
-    height: 100,
+    height: 98,
   },
   myInfo: {
     flexDirection: "row",
