@@ -3,28 +3,34 @@ package com.ezo.dzhereback.service.admin;
 import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Lesson;
 import com.ezo.dzhereback.domain.User;
-import com.ezo.dzhereback.mapper.admin.StudentAdminMapper;
+import com.ezo.dzhereback.mapper.admin.ListAdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StudentAdminService {
-	private final StudentAdminMapper studentMapper;
+public class ListAdminService {
+	private final ListAdminMapper studentMapper;
 	
 	@Autowired
-	public StudentAdminService(StudentAdminMapper studentMapper) {
+	public ListAdminService(ListAdminMapper studentMapper) {
 		this.studentMapper = studentMapper;
 	}
 	
 	public Agency getAgName(String u_phone) {return studentMapper.getAgName(u_phone);}
 	
-	public List<Lesson> getClassList(String u_phone) {return studentMapper.getClassList(u_phone);}
+	public int getAgIdx(String u_phone) {return studentMapper.getAgIdx(u_phone);}
+	
+	public List<Lesson> getClassList(int ag_idx) {return studentMapper.getClassList(ag_idx);}
 	
 	public List<User> getStudentList(int ag_idx, int c_idx) {return studentMapper.getStudentList(ag_idx, c_idx);}
 	
 	public List<User> getStudentListAll(int ag_idx, int c_idx) {return studentMapper.getStudentListAll(ag_idx, c_idx);}
+
+	public List<User> getTeacherList(int ag_idx, int c_idx) {return studentMapper.getTeacherList(ag_idx, c_idx);}
+	
+	public List<User> getTeacherListAll(int ag_idx, int c_idx) {return studentMapper.getTeacherListAll(ag_idx, c_idx);}
 
 	public int deleteUser(int u_idx) {return studentMapper.deleteUser(u_idx);}
 	

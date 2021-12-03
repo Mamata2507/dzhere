@@ -33,8 +33,8 @@ export const TeacherListAndroid = ({
   onCheck,
   onUpdate,
   // List
-  studentList,
-  loadingStudentList,
+  teacherList,
+  loadingTeacherList,
   filterList,
   // Modal
   visibleAdd,
@@ -62,7 +62,7 @@ export const TeacherListAndroid = ({
             onDismiss={hideModalAdd}
             contentContainerStyle={styles.modal}
           >
-            <Text style={styles.modalText}>수강생 정보 추가</Text>
+            <Text style={styles.modalText}>강사 정보 추가</Text>
             <View style={styles.lineContainer}>
               <View style={styles.line} />
             </View>
@@ -90,12 +90,12 @@ export const TeacherListAndroid = ({
               </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>수강생명</Text>
+              <Text style={styles.text}>강사명</Text>
               <TextInput
                 style={[styles.pickerText, { flex: 3 }]}
                 onChangeText={onChangeUname}
                 value={uName}
-                placeholder="수강생명을 입력하세요"
+                placeholder="강사명을 입력하세요"
                 keyboardType="default"
               />
             </View>
@@ -141,7 +141,7 @@ export const TeacherListAndroid = ({
             onDismiss={hideModalUpdate}
             contentContainerStyle={styles.modal}
           >
-            <Text style={styles.modalText}>수강생 정보 수정</Text>
+            <Text style={styles.modalText}>강사 정보 수정</Text>
             <View style={styles.lineContainer}>
               <View style={styles.line} />
             </View>
@@ -169,12 +169,12 @@ export const TeacherListAndroid = ({
               </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>수강생명</Text>
+              <Text style={styles.text}>강사명</Text>
               <TextInput
                 style={[styles.pickerText, { flex: 3 }]}
                 onChangeText={onChangeUname}
                 value={uName}
-                placeholder="수강생명을 입력하세요"
+                placeholder="강사명을 입력하세요"
                 keyboardType="default"
               />
             </View>
@@ -286,9 +286,9 @@ export const TeacherListAndroid = ({
               </ScrollView>
             ) : (
               <ScrollView>
-                <Text>{loadingStudentList && "로딩중..."}</Text>
-                {!loadingStudentList &&
-                  studentList.map((s, i) => (
+                <Text>{loadingTeacherList && "로딩중..."}</Text>
+                {!loadingTeacherList &&
+                  teacherList.map((s, i) => (
                     <DataTable.Row key={i}>
                       <DataTable.Cell>
                         <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />

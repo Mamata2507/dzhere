@@ -8,9 +8,12 @@ export const getClassList = phone =>
 
 export const getStudentList = ({agIdx, selectedClass}) => 
     client.post(`/getStudentList`, {ag_idx: agIdx, c_idx: selectedClass})
+
+export const getTeacherList = ({agIdx, selectedClass}) => 
+    client.post(`/getTeacherList`, {ag_idx: agIdx, c_idx: selectedClass})
     
-export const deleteUser = uid => 
-    client.post(`/deleteUser/${uid}`)
+export const deleteUser = ({uid, agIdx, selectedClass}) => 
+    client.post(`/deleteUser/${uid}/${agIdx}/${selectedClass}`)
     
 export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone}) => 
     client.post(`/insertUser`, {ag_idx: agIdx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone})

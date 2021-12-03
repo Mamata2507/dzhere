@@ -44,7 +44,7 @@ const StudentListContainer = () => {
     filterList: list.filterList,
     uid: list.uid, 
     userInfo: auth.userInfo,
-    studentError: list.studentError,
+    studentError: list.resultError,
   }))
 
   const agIdx = agName.ag_idx
@@ -199,6 +199,7 @@ const StudentListContainer = () => {
           [{},
             { text: "확인", onPress: () => 
               {
+                dispatch(getStudentList({agIdx, selectedClass}))
                 hideModalUpdate()
                 dispatch(setCheck(false))
                 dispatch(setValue(0))
@@ -226,14 +227,13 @@ const StudentListContainer = () => {
           },
           { text: "확인", onPress: () => 
             {
-              dispatch(deleteUser(uid))
+              dispatch(deleteUser({uid, agIdx, selectedClass}))
               if(studentError){
                 console.log(studentError);
                 Alert.alert('삭제 실패')
               }
               if(!studentError){
                 Alert.alert('삭제 완료')
-                dispatch(getStudentList({agIdx, selectedClass}))
                 dispatch(setCheck(false))
                 dispatch(setValue(0))
               }

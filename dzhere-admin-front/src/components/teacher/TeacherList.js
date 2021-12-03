@@ -25,8 +25,8 @@ export const Contents = ({
   onCheck,
   onUpdate,
   // List
-  studentList,
-  loadingStudentList,
+  teacherList,
+  loadingTeacherList,
   filterList,
   // Modal
   visibleAdd,
@@ -70,8 +70,8 @@ export const Contents = ({
     onUpdate={onUpdate}
   
     // List
-    studentList={studentList}
-    loadingStudentList={loadingStudentList}
+    teacherList={teacherList}
+    loadingTeacherList={loadingTeacherList}
     filterList={filterList}
 
     // Modal

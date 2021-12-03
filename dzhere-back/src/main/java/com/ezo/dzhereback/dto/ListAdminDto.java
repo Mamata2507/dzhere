@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class StudentDto {
+public class ListAdminDto {
 	private int ag_idx;
 	private String ag_name;
 	private int c_idx;
@@ -17,7 +17,7 @@ public class StudentDto {
 	private int u_accept;
 
 	@Builder
-	public StudentDto(int ag_idx, String ag_name, int c_idx, String c_name,
+	public ListAdminDto(int ag_idx, String ag_name, int c_idx, String c_name,
                       int u_idx, String u_name, String u_phone, int u_accept) {
 		this.ag_idx = ag_idx;
 		this.ag_name = ag_name;
