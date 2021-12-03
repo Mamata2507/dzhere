@@ -24,9 +24,16 @@
  
 ## USER APP BUILD
  ``` 
- 1. expo build:app --release-channel <채널명> 실행 -> apk 또는 abb 로 build
+ 1. app.json 파일 수정
+ 
+ "android": {
+      "package": "com.dzhere.DHere",
+      "versionCode": 2
+ }
+    
+ 2. expo build:app --release-channel <채널명> 실행 -> apk 또는 abb 로 build
    - 릴리즈 명을 구분해서 build 하면, 해당 릴리즈에 대해 수정사항이 생기더라도 publish 명령어를 통해 바로바로 업데이트하는 것이 가능하다.
-
+   
   expo build:app --release-channel prod-v1
   expo publish --release-channel prod-v1
 ```
