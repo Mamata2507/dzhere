@@ -37,8 +37,8 @@ public interface ListAdminMapper {
 	@Delete("delete from User where u_idx='${u_idx}'")
 	int deleteUser(int u_idx);
 	
-	@Insert("insert into User(u_phone, u_name, ag_idx, c_idx, u_auth) values ('${u_phone}', '${u_name}', '${ag_idx}', '${c_idx}', 1);")
-	int insertUser(int ag_idx, int c_idx, String u_name, String u_phone);
+	@Insert("insert into User(u_phone, u_name, ag_idx, c_idx, u_auth) values ('${u_phone}', '${u_name}', '${ag_idx}', '${c_idx}', '${u_auth}');")
+	int insertUser(int ag_idx, int c_idx, String u_name, String u_phone, int u_auth);
 	
 	@Select("select count(*) from User where u_phone='${u_phone}';")
 	int countUser(String u_phone);

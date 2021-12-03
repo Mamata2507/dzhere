@@ -15,8 +15,8 @@ export const getTeacherList = ({agIdx, selectedClass}) =>
 export const deleteUser = ({uid, agIdx, selectedClass}) => 
     client.post(`/deleteUser/${uid}/${agIdx}/${selectedClass}`)
     
-export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone}) => 
-    client.post(`/insertUser`, {ag_idx: agIdx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone})
+export const insertUser = ({agIdx, selectedClassAdd, uName, uPhone, uAuth}) => 
+    client.post(`/insertUser`, {ag_idx: agIdx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone, u_auth: uAuth})
 
 export const countUser = phone => {
     return client

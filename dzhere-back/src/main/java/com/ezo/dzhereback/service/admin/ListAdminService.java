@@ -34,7 +34,7 @@ public class ListAdminService {
 
 	public int deleteUser(int u_idx) {return studentMapper.deleteUser(u_idx);}
 	
-	public int insertUser(int ag_idx, int c_idx, String u_name, String u_phone) {return studentMapper.insertUser(ag_idx, c_idx, u_name, u_phone);}
+	public int insertUser(int ag_idx, int c_idx, String u_name, String u_phone, int u_auth) {return studentMapper.insertUser(ag_idx, c_idx, u_name, u_phone, u_auth);}
 	
 	public int countUser(String u_phone) {return studentMapper.countUser(u_phone);}
 	

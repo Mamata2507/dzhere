@@ -15,10 +15,11 @@ public class ListAdminDto {
 	private String u_name;
 	private String u_phone;
 	private int u_accept;
+	private int u_auth;
 
 	@Builder
 	public ListAdminDto(int ag_idx, String ag_name, int c_idx, String c_name,
-                      int u_idx, String u_name, String u_phone, int u_accept) {
+                      int u_idx, String u_name, String u_phone, int u_accept, int u_auth) {
 		this.ag_idx = ag_idx;
 		this.ag_name = ag_name;
 		this.c_idx = c_idx;
@@ -27,6 +28,7 @@ public class ListAdminDto {
 		this.u_name = u_name;
 		this.u_phone = u_phone;
 		this.u_accept = u_accept;
+		this.u_auth = u_auth;
 		
 	}
 	

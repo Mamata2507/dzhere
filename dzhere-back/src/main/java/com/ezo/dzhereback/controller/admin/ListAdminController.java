@@ -91,12 +91,13 @@ public class ListAdminController {
 	@PostMapping("/api/admin/insertUser")
 	public Result insertUser(@RequestBody ListAdminDto listDto) {
 		System.out.println("<<<<<< insertUser 컨트롤러 시작 >>>>>>");
-		System.out.println(listDto.getAg_idx()+" "+listDto.getC_idx()+" "+listDto.getU_name()+" "+listDto.getU_phone());
+		System.out.println(listDto.getAg_idx()+" "+listDto.getC_idx()+" "+listDto.getU_name()+" "+listDto.getU_phone()+listDto.getU_auth());
 		int result = studentService.insertUser(
 				listDto.getAg_idx(), 
 				listDto.getC_idx(), 
 				listDto.getU_name(), 
-				listDto.getU_phone()
+				listDto.getU_phone(),
+				listDto.getU_auth()
 				);
 		System.out.println("<<<<<< insertUser 컨트롤러 완료 >>>>>>"+result);
 		return new Result(result);

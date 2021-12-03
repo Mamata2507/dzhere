@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contents } from '../../components/teacher/TeacherList'
 import { 
@@ -49,6 +48,7 @@ const TeacherListContainer = () => {
 
   const agIdx = agName.ag_idx
   const regex = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
+  const uAuth = 2;
 
   // 처음 렌더링 될 때
   useEffect(() => {
@@ -65,13 +65,9 @@ const TeacherListContainer = () => {
   // 승인 상태 변경 시
   const handleSetAccept = useCallback((e) => {
     selectedAccept = e;
-    if(selectedAccept === 2) {
-      Alert.alert('승인 상태를 선택하세요')
-    } else {
-      let teacherList_ = teacherList;
-      let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
-      dispatch(setFilterList(tempArr))      
-    }
+    let teacherList_ = teacherList;
+    let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
+    dispatch(setFilterList(tempArr))      
   });
 
   // 헤더 - 검색 버튼 클릭 시
@@ -101,7 +97,7 @@ const TeacherListContainer = () => {
   // 수정 모달 클릭 시
   async function showModalUpdate () {
     if(uid === 0){
-      Alert.alert('강사를 선택해주세요')
+      alert('강사를 선택해주세요')
     } else {
       let info = await(getStudentInfo(uid));
       onChangeUphone(info.u_phone);
@@ -125,7 +121,7 @@ const TeacherListContainer = () => {
   //동일한 전화번호가 있는지 확인
     async function onCheck () {
       if(uPhone === ''){
-        Alert.alert('전화번호를 입력하세요')
+        alert('전화번호를 입력하세요')
       } else if(uPhone === uPhoneTemp) {
         setError('')
         setPhoneCheck(false)        
@@ -141,7 +137,7 @@ const TeacherListContainer = () => {
             setError('')
             setPhoneCheck(false)
           } else {
-            Alert.alert('등록된 전화번호입니다.')
+            alert('등록된 전화번호입니다.')
           }
         }          
     } 
@@ -150,19 +146,19 @@ const TeacherListContainer = () => {
   // 등록 모달 -> 사용자 등록
   const onAdd = () => {
     if(uName === ''|| uPhone === ''){
-      Alert.alert('빈 항목이 있습니다.');
+      alert('빈 항목이 있습니다.');
     } else if(selectedClassAdd === 0){
-      Alert.alert('강의명을 선택하세요');
+      alert('강의명을 선택하세요');
     } else if(phoneCheck === true) {
-      Alert.alert('전화번호 확인 버튼을 클릭하세요');
+      alert('전화번호 확인 버튼을 클릭하세요');
     } else {
-      dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone}))
+      dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone, uAuth}))
       if(teacherError){
         console.log(teacherError);
-        Alert.alert('등록 실패')
+        alert('등록 실패')
       }
       if(!teacherError){
-        Alert.alert(
+        alert(
           "",
           "등록 완료",
           [{},
@@ -181,19 +177,19 @@ const TeacherListContainer = () => {
   // 수정 모달 -> 사용자 수정
   const onUpdate = () => {
     if(uName === ''|| uPhone === ''){
-      Alert.alert('빈 항목이 있습니다.');
+      alert('빈 항목이 있습니다.');
     } else if(selectedClassUpdate === 0){
-      Alert.alert('강의명을 선택하세요');
+      alert('강의명을 선택하세요');
     } else if(phoneCheck === true) {
-      Alert.alert('전화번호 확인 버튼을 클릭하세요');
+      alert('전화번호 확인 버튼을 클릭하세요');
     } else {
       dispatch(updateUser({selectedClassUpdate, uName, uPhone, uid}))
       if(teacherError){
         console.log(teacherError);
-        Alert.alert('수정 실패')
+        alert('수정 실패')
       }
       if(!teacherError){
-        Alert.alert(
+        alert(
           "",
           "수정 완료",
           [{},
@@ -214,9 +210,9 @@ const TeacherListContainer = () => {
   // 유저 삭제 -> 체크박스 이용
   const onDelete = () => {
     if(uid === 0){
-      Alert.alert('강사를 선택해주세요')
+      alert('강사를 선택해주세요')
     } else {
-      Alert.alert(
+      alert(
         "",
         "강사를 삭제 하시겠습니까?",
         [
@@ -230,10 +226,10 @@ const TeacherListContainer = () => {
               dispatch(deleteUser({uid, agIdx, selectedClass}))
               if(teacherError){
                 console.log(teacherError);
-                Alert.alert('삭제 실패')
+                alert('삭제 실패')
               }
               if(!teacherError){
-                Alert.alert('삭제 완료')
+                alert('삭제 완료')
                 dispatch(getTeacherList({agIdx, selectedClass}))
                 dispatch(setCheck(false))
                 dispatch(setValue(0))
