@@ -1,8 +1,13 @@
 package com.ezo.dzhereback.domain;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
+import java.sql.Time;
+import java.util.Date;
+
+@Data @Slf4j
+
 @Getter @Setter
 @NoArgsConstructor
 public class Lessontime {

@@ -24,13 +24,13 @@ public class LessonUserController {
     }
     Iterator iterator;
 
-    @GetMapping("/m/user/class")
+    @GetMapping("/api/user/class")
     public Lesson AllLesson(@RequestParam("u_phone") String u_phone) {
         int c_idx = lessonUserService.getCidx(u_phone);
         return lessonUserService.getLesson(c_idx);
     }
 
-    @GetMapping("/m/user/class/time")
+    @GetMapping("/api/user/class/time")
     public List<Lessontime> AllLessonTime(@RequestParam("u_phone") String u_phone) {
         int c_idx = lessonUserService.getCidx(u_phone);
         System.out.println(lessonUserService.getAllLessonTime(c_idx));

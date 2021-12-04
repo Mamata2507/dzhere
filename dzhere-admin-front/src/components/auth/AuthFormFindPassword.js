@@ -10,7 +10,6 @@ const AuthFormFindPassword = ({
   navigation,
   route,
 }) => {
-  console.log("AuthFormLogin");
   console.log("form : ", form);
   return (
     <>

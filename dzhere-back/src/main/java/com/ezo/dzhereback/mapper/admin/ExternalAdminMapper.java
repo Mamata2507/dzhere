@@ -21,4 +21,5 @@ public interface ExternalAdminMapper {
 //	// 외부 장소 리스트 (검색 조건 : 강의명)
 //	@Select("select * from External where c_idx=#{user.c_idx}")
 //	List<ExternalSelectDto> selectExternal(@Param("user") final User user);
+
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ClassListContainer from '../../containers/class/class_main/ClassListContainer';
+import ClassListContainer from '../../containers/class/ClassListContainer';
 
-const ClassListPage = () => {
+const ClassList = () => {
   return (
    <ClassListContainer />
   );
 };
 
-export default ClassListPage;
+export default ClassList;

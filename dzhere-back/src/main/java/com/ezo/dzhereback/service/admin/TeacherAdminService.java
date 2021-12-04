@@ -91,11 +91,11 @@ public class TeacherAdminService {
         return result;
     }
 
-    public List<TeacherAttendDto> getTeacherAttendListAll(int uIdx) {
+    public List<TeacherAttendYJDto> getTeacherAttendListAll(int uIdx) {
         return teacherAdminMapper.findTeacherAttendListAll(uIdx);
     }
 
-    public List<TeacherAttendDto> getTeacherAttendList(int uIdx, String start_date, String end_date) {
+    public List<TeacherAttendYJDto> getTeacherAttendList(int uIdx, String start_date, String end_date) {
         return teacherAdminMapper.findTeacherAttendListByDateRange(uIdx, start_date, end_date);
     }
 

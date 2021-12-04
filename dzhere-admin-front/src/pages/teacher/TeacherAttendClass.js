@@ -1,18 +1,37 @@
-// Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
-// https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
+import * as React from "react";
+import {
+  Button,
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+} from "react-native";
+import TeacherAttendClassContainerAndroid from "../../containers/teacher/TeacherAttendClassContainerAndroid";
+import TeacherAttendClassContainerWeb from "../../containers/teacher/TeacherAttendClassWebContainer";
+import { getStatusBarHeight } from "react-native-status-bar-height";
+import { Provider } from "react-native-paper";
 
-import * as React from 'react';
-import { Platform } from 'react-native';
-import TeacherAttendClassWebContainer from '../../containers/teacher/TeacherAttendClassWebContainer';
-
-const TeacherAttendClass = ({ navigation }) => {
-  console.log('TeacherListPage : Platform 구분 ===> Container 리턴');
-  return Platform.OS === "web" ? (
-    <TeacherAttendClassWebContainer
-    />
-  ) : (
-    <TeacherAttendClassContainerAndroid/>
+const ClassList = ({ navigation }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      {Platform.OS === "android" ? (
+        <TeacherAttendClassContainerAndroid />
+      ) : (
+        <TeacherAttendClassContainerWeb />
+      )}
+    </SafeAreaView>
   );
 };
 
-export default TeacherAttendClass;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: getStatusBarHeight(),
+  },
+});
+
+export default ClassList;

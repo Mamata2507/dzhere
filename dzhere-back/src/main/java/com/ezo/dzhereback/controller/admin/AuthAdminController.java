@@ -67,6 +67,7 @@ public class AuthAdminController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(444).body(new Result<String>("가입에러"));
+
         }
     }
 
@@ -118,3 +119,4 @@ public class AuthAdminController {
 //        }
 //    }
 }
+
