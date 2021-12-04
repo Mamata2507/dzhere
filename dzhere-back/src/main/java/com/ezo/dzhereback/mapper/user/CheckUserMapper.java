@@ -15,6 +15,9 @@ public interface CheckUserMapper {
     @Select("select u_idx from User where u_phone = #{u_phone}")
     int getUidx(String u_phone);
 
+    @Select("select u_name from User where u_phone = #{u_phone}")
+    String getUserName(String u_phone);
+    
 //    @Insert("insert into Attend(a_attend_time,u_idx) values(#{attendTime}, #{u_idx})")
 //    int insertCheck(String attendTime, int u_idx);
     @Insert("insert into Attend(a_attend_time, a_late_status, u_idx)\n" +

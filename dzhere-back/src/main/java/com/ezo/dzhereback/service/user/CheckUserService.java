@@ -21,6 +21,10 @@ public class CheckUserService {
         return checkUserMapper.getUidx(u_phone);
     }
 
+    public String getUserName(String u_phone){
+        return checkUserMapper.getUserName(u_phone);
+    }
+    
     public int insertCheck(String attendTime, int u_idx, int c_idx){
         return checkUserMapper.insertCheck(attendTime, u_idx, c_idx);
     }

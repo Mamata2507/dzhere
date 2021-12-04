@@ -12,34 +12,34 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class AuthUserService {
-    private final AuthUserMapper authUserMapper;
+    private final AuthUserMapper authMapper;
 
     @Autowired
-    public AuthUserService(AuthUserMapper authUserMapper) {
-        this.authUserMapper = authUserMapper;
+    public AuthUserService(AuthUserMapper authMapper) {
+        this.authMapper = authMapper;
     }
 
     public int join(final Member member) {
         final String u_phone = member.getU_phone();
 
-        if (!authUserMapper.existsByPhone(u_phone))
+        if (!authMapper.existsByPhone(u_phone))
             throw new RuntimeException("가입 불가 : 관리자가 등록하지 않은 사용자,410");
-        else if (authUserMapper.findAcceptByPhone(u_phone) == 1) {
+        else if (authMapper.findAcceptByPhone(u_phone) == 1) {
             throw new RuntimeException("가입 불가 : 이미 가입한 회원,409");
         }
         else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             member.setU_pw(passwordEncoder.encode(member.getU_pw()));
-            return authUserMapper.join(member);
+            return authMapper.join(member);
         }
     }
 
     public Member findRegisteredMemberByPhone(String u_phone) {
-        return authUserMapper.findRegisteredMemberByPhone(u_phone);
+        return authMapper.findRegisteredMemberByPhone(u_phone);
     }
 
     public Member getByCredentials(final String u_phone, final String u_pw, final PasswordEncoder passwordEncoder) {
-        final Member originalMember = authUserMapper.findByPhone(u_phone);
+        final Member originalMember = authMapper.findByPhone(u_phone);
 
         // 존재하는 아이디인지 확인
         if (originalMember != null)

@@ -41,6 +41,13 @@ public class CheckUserController {
         this.external_ctn = 0;
     }
 
+    @PostMapping("/api/user/get/name")
+    public String getUserName(@RequestParam("u_phone") String u_phone){
+        String u_name = checkUserService.getUserName(u_phone);
+        System.out.println(u_name);
+        return u_name;
+    }
+    
     @PostMapping("/api/user/attend/insert")
     public int insertAttend(@RequestBody CheckInsertDto checkInsertDto){
         String u_phone = checkInsertDto.getU_phone();
@@ -119,7 +126,7 @@ public class CheckUserController {
     public TodayAttendList TodayAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("today") String today){
         int u_idx = checkUserService.getUidx(u_phone);
         TodayAttendList  todayAttendList = checkUserService.loadTodayAttendList(u_idx,today);
-        System.out.println("m/user/attend/todayload");
+        System.out.println("/api/user/attend/todayload");
         System.out.println(todayAttendList);
         return todayAttendList;
     }

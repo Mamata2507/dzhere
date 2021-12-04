@@ -21,7 +21,7 @@ public class ExternalUserController {
 		this.externalUserService = externalUserService;
 	}
 	
-	@PostMapping("/api/external/add")
+	@PostMapping("/api/user/external/add")
 	public Result addWifi(@RequestBody ExternalDto externalDto, External external){
 		String u_phone = externalDto.getU_phone();
 		System.out.println("u_phone:"+u_phone);
@@ -37,7 +37,7 @@ public class ExternalUserController {
 		return new Result(externalList);
 	}
 	
-	@PostMapping("/api/external/delete")
+	@PostMapping("/api/user/external/delete")
 	public Result removeExternalId(@RequestBody ExternalDto externalDto, External external){
 		String u_phone = externalDto.getU_phone();
 		int e_idx = externalDto.getE_idx();
@@ -50,7 +50,7 @@ public class ExternalUserController {
 		return new Result(externalList);
 	}
 	
-	@PostMapping("/api/external/select")
+	@PostMapping("/api/user/external/select")
 	public Result selectExternal(@RequestBody ExternalDto externalDto, @AuthenticationPrincipal String userId){
 		String u_phone = externalDto.getU_phone();
 		Member member = externalUserService.findUser(u_phone); //u_id, c_id 저장

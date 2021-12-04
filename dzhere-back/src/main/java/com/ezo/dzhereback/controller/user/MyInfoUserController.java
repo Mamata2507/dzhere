@@ -33,7 +33,7 @@ public class MyInfoUserController {
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	@GetMapping("/api/getEmail/{u_phone}")
+	@GetMapping("/api/user/getEmail/{u_phone}")
 	public Result getEmail(@PathVariable("u_phone") String u_phone) {
 		System.out.println("로컬폰---->"+u_phone);
 		User email = myInfoService.getEmail(u_phone);
@@ -45,7 +45,7 @@ public class MyInfoUserController {
 		return new Result(result);
 	}
 
-	@PostMapping("/api/updateEmail/{u_phone}/{u_email}")
+	@PostMapping("/api/user/updateEmail/{u_phone}/{u_email}")
 	public Result updateEmail(@PathVariable("u_phone") String u_phone,
 							  @PathVariable("u_email") String u_email) {
 		System.out.println("로컬폰------->"+u_phone);
@@ -54,7 +54,7 @@ public class MyInfoUserController {
 		return new Result(updateResult);
 	}
 
-	@PostMapping("/api/checkPw")
+	@PostMapping("/api/user/checkPw")
 	public Result checkPw(@RequestBody MyInfoDto myInfoDto) {
 		System.out.println("<<<<<< checkPw 컨트롤러 시작 >>>>>>");
 		System.out.println("폰"+myInfoDto.getU_phone());
@@ -67,7 +67,7 @@ public class MyInfoUserController {
 		return new Result(result);
 	}
 
-	@PostMapping("/api/updatePw")
+	@PostMapping("/api/user/updatePw")
 	public Result updatePw(@RequestBody MyInfoDto myInfoDto) {
 		System.out.println("<<<<<< updatePw 컨트롤러 시작 >>>>>>");
 		System.out.println("비번"+myInfoDto.getU_pw());
