@@ -28,12 +28,12 @@ import createSagaMiddleware from 'redux-saga';
 const sagaMiddleware = createSagaMiddleware();
 // const logger = createLogger();
 const store = createStore(
-  rootReducer, 
-  applyMiddleware( ReduxThunk, sagaMiddleware)  //logger   loge 미들웨어
+  rootReducer,
+  applyMiddleware(ReduxThunk, sagaMiddleware) //logger   loge 미들웨어
 );
 
-// // saga실행
-// sagaMiddleware.run(rootSaga);
+// saga실행
+sagaMiddleware.run(rootSaga);
 
 const App = () => {
   console.log("root App");

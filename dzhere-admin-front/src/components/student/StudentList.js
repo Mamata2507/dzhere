@@ -89,6 +89,7 @@ export const Contents = ({
     onChangeUname={onChangeUname}
     uPhone={uPhone}
     onChangeUphone={onChangeUphone}
+    
   /> 
   : 
   <StudentListWeb 

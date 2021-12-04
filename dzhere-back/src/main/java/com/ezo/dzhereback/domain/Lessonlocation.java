@@ -1,8 +1,9 @@
 package com.ezo.dzhereback.domain;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
+@Data @Slf4j
 @Getter @Setter
 @NoArgsConstructor
 public class Lessonlocation {

@@ -15,6 +15,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
+
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -26,6 +27,7 @@ import { logout } from "../../modules/auth/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client from "../../lib/api/client";
 import toggle_down from "../../../assets/class/toggle_down.png";
+
 
 const CustomSidebarMenu = (props) => {
   const [pressMain, setPressMain] = useState(false);
@@ -348,6 +350,7 @@ console.log(agencyInfo);
             fontSize: Platform.OS === "android" ? 23 : 20,
             textAlign: "center",
             marginBottom: Platform.OS === "android" ? 10 : 10,
+
           }}
         >
           로그아웃
@@ -361,6 +364,7 @@ console.log(agencyInfo);
           marginBottom: Platform.OS === "android" ? 40 : 30,
         }}
       >
+
         더존HERE
       </Text>
     </SafeAreaView>

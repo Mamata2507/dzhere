@@ -50,8 +50,8 @@ export const StudentListAndroid = ({
   onChangeUname,
   uPhone,
   onChangeUphone,
-}) => {
 
+}) => {
   return (
     <View style={styles.container}>
       <Provider>

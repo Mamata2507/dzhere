@@ -31,3 +31,4 @@ const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route, 
 };
 
 export default AuthForm;
+

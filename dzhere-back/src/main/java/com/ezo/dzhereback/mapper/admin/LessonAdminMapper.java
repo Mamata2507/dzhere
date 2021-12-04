@@ -90,3 +90,4 @@ public interface LessonAdminMapper {
 	//	@Select("select * from Classtime where c_idx in (select c_idx from Class where ag_idx=#{user.ag_idx})")
 	//	List<ClasstimeDto> selectClassTimeList(@Param("user") final UserDto userDto);
 }
+

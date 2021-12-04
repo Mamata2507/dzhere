@@ -140,5 +140,4 @@ public class ListAdminController {
 		System.out.println("<<<<<< updateUser 컨트롤러 완료 >>>>>>"+result);
 		return new Result(result);
 	}
-
 }
