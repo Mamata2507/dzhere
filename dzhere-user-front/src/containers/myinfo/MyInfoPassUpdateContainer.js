@@ -1,16 +1,9 @@
 import { Contents } from '../../components/myinfo/MyInfoPassUpdate'
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Platform } from 'react-native';
 import { updatePw } from '../../modules/myinfo/myInfo'
 import { checkPw } from '../../lib/api/myInfo/myInfo';
-=======
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
-import { checkPw, updatePw } from '../../modules/myinfo/myInfo'
->>>>>>> b14891c82e9aa972cd2458422a8edf7065542592
 import { useNavigation } from '@react-navigation/native'
 
 const MyInfoPassUpdateContainer = () => {

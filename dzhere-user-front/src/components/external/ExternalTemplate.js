@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { Header } from "../common/layout";
+import { Header } from "../myinfo/MyInfo";
 import External from "./ExternalList";
 import { StatusBar } from "expo-status-bar";
 
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     height: Platform.OS === "android" ? "70%" : 400,
     backgroundColor: "#CEEDFF",
     marginTop: Platform.OS === "android" ? 0 : 40,
+    borderRadius: 25,
   },
   btn: {
     backgroundColor: "#5AA0C8",
@@ -106,8 +107,8 @@ const styles = StyleSheet.create({
     margin: Platform.OS === "android" ? 10 : 20,
   },
   stretch: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 98,
   },
 });
 

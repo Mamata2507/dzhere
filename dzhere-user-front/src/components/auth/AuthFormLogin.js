@@ -13,7 +13,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
         <StatusBar style="light" />
         <View style={styles.container}>
           <Image source={image} style={styles.logo} />
-          <Text style={styles.logoTitle}>DZ Here</Text>
+          <Text style={styles.logoTitle}>DHere</Text>
 
           <View style={{ flexDirection: "row" }}>
             {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -59,12 +59,12 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
           >
             <Text style={styles.text}>회원가입</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.signupBtn}
-            onPress={() => client.get("api/user/test")}
+            onPress={() => client.get("/test")}
           >
             <Text style={styles.text}>테스트</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </>
     );

@@ -1,16 +1,16 @@
 import client from "../client";
 
 export const getEmail = phone => 
-    client.get(`/api/getEmail/${phone}`);
+    client.get(`/getEmail/${phone}`);
 
 export const updateEmail = ({phone, newEmail}) => 
-    client.post(`/api/updateEmail/${phone}/${newEmail}`);
+    client.post(`/updateEmail/${phone}/${newEmail}`);
 
 // 비밀번호 중복체크
 export const checkPw = ({currentPassword, phone}) => {
     return client
     .post(
-        '/api/checkPw',
+        '/checkPw',
         {
             u_pw: currentPassword, 
             u_phone: phone
@@ -25,4 +25,4 @@ export const checkPw = ({currentPassword, phone}) => {
 };
 
 export const updatePw = ({newPassword, phone}) => 
-    client.post('/api/updatePw', {u_pw: newPassword, u_phone: phone});
+    client.post('/updatePw', {u_pw: newPassword, u_phone: phone});

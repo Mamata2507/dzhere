@@ -32,19 +32,25 @@ import exit_disable_icon from "../../../assets/check/exit_gray.png";
 import clock_icon from "../../../assets/check/clock.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 import refresh_icon from "../../../assets/check/refresh.png";
+import { StatusBar } from "expo-status-bar";
 
 export const Header = ({ onRefresh }) => {
   return (
     <>
-      <View style={styles.container}>
-        <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
+    {/* <StatusBar/> */}
+    <View style={styles.container, {alignItems: 'center', marginTop: 20}}>
+      <View style={styles.header}></View>
+      <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
           <TouchableOpacity>
             {/* onPress={onRefresh} */}
             <Image source={refresh_icon} />
           </TouchableOpacity>
         </View>
-        <Image style={styles.headerImage} source={logo} />
-      </View>
+      <Image
+        style={styles.headerImage}
+        source={logo}
+      />
+    </View>
     </>
   );
 };
@@ -107,13 +113,15 @@ export const Contents = ({
 
   return (
     <View style={styles.contents}>
+      <View style={{flexDirection: "row"}}>
       <StyledText>출석 체크</StyledText>
+      <Text style={{ fontSize: 25 }}>
+        {"<"+moment().format("YYYY-MM-DD")} {week[new Date().getDay()]+">"}
+      </Text>
+      </View>
       <StyledClassList>
         {classList ? classList.c_name : "수강중인 수업이 없습니다."}
       </StyledClassList>
-      <Text style={{ fontSize: 30 }}>
-        {moment().format("YYYY-MM-DD")} {week[new Date().getDay()]}
-      </Text>
       {classTime[0] && endtime ? (
         <>
           <Text style={styles.test2}>
@@ -204,16 +212,20 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: 100,
-    height: 100,
+    height: 98,
+  },
+  header: {
+    height: 70,
   },
   contents: {
-    flex: 1,
+    // flex: 2,
+    marginTop: "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: 530,
+    height: "10%",
   },
   footer: {
-    flex: 1,
+    // flex: 3,
     justifyContent: "space-between",
     flexDirection: "column",
     backgroundColor: "#CEEDFF",

@@ -5,9 +5,10 @@ import Netinfo from '@react-native-community/netinfo';
 import * as Location from 'expo-location';
 import { Contents, Header } from '../../components/check/CheckLayout';
 import { loadClassList, loadClassTimeList, checkInsert, checkLeaveInsert, checkExitInsert, 
-    checkWifi, initCheckWifiInfo, checkLoadTodayAttendList, refreshCheckList, refreshResetCheckList } from '../../modules/check/check';
+    checkWifi, initCheckWifiInfo, checkLoadTodayAttendList, refreshCheckList, refreshResetCheckList, setName } from '../../modules/check/check';
 import { AsyncStorage, Platform, Alert } from 'react-native';
 import CheckHeaderContainer from './CheckHeaderContainer';
+import { getUserName } from '../../lib/api/check/check';
 
 // wifi 정보 저장용 state
 let wifiInfo = {};
@@ -124,6 +125,12 @@ const CheckContainer = () => {
         }
     }
 
+    async function getName(){
+        const data = await getUserName(phone)
+        console.log("이름", data);
+        dispatch(setName(data));
+      }
+
     const insertAttend = () => {
         const attend_starttime = (classTime)&&classTime[0].ct_attend_starttime;
         const u_phone = temp_uphone;
@@ -211,6 +218,7 @@ const CheckContainer = () => {
         loadCheckList();
         // class list load
         dispatch(loadClassList(u_phone));
+        getName();
         // class time load
         setTimeout(() => {
             (u_phone) && dispatch(loadClassTimeList(u_phone));            

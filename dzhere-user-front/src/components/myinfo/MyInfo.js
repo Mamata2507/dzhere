@@ -5,16 +5,20 @@ import { images } from './MyInfoImages';
 import IconButton from './MyInfoIconButton';
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 export const Header = () => {
   return (
-    <View style={styles.container, {alignItems: 'center', marginTop: 40}}>
+    <>
+    <StatusBar />
+    <View style={styles.container, {alignItems: 'center', marginTop: 20}}>
       <View style={styles.header}></View>
       <Image
         style={styles.headerImage}
         source={logo}
       />
     </View>
+    </>
   );
 };
 
@@ -75,16 +79,18 @@ export const Footer = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Platform.OS === "android" ? "95%" : "60%",
+    margin: 20,
+    width: Platform.OS === "android" ? "95%" : "90%",
     justifyContent: 'center',
     padding: Platform.OS === "android" ? "1%" : "1.5%",
+    height: 190,
   },
   header: {
-    height: 50
+    height: 70
   },
   headerImage: {
     width: 100,
-    height: 100,
+    height: 98,
   },
   myInfo: {
     flexDirection: 'row',

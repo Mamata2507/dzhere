@@ -119,7 +119,7 @@ const check_index = ({ navigation, route }) => {
       <CheckHeaderContainer/>
       <CheckContainer/>
       {/* <Footer/> */}
-      <View>
+      {/* <View>
         <TouchableOpacity
           onPress={() => {
             apiLogout()
@@ -167,7 +167,7 @@ const check_index = ({ navigation, route }) => {
             로그아웃
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };

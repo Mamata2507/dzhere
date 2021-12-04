@@ -41,10 +41,10 @@ const ListContainer = () => {
   useEffect(() => {
     console.log("추가 시 리렌더링");
     console.log(wifiLog);
-    if (isFocused) {
+    // if (isFocused) {
       setApiLog(locList);
-    }
-  }, [isFocused, wifiLog]);
+    // }
+  }, [wifiLog]);
 
   // 리렌더링 시 getApiList() 함수 실행
   useEffect(() => {

@@ -4,6 +4,7 @@ import createRequestSaga, {createRequestActionTypes} from '../../lib/api/createR
 import * as checkAPI from '../../lib/api/check/check';
 
 // Actions
+const SET_NAME = "check/SET_NAME";
 // Refresh
 const REFRESH = 'check/REFRESH';
 const REFRESH_RESET = 'check/REFRESH_RESET';
@@ -22,6 +23,7 @@ const [TODAY_ATTEND_LOAD, TODAY_ATTEND_LOAD_SUCCESS, TODAY_ATTEND_LOAD_FAILURE] 
 const [CHECK_WIFI, CHECK_WIFI_SUCCESS, CHECK_WIFI_FAILURE] = createRequestActionTypes('check/CHECK_WIFI');
 const RESET_CHECK_WIFI = 'check/RESET_CHECK_WIFI';
 
+export const setName = createAction(SET_NAME, name => name);
 // Reducers
 export const refreshCheckList = createAction(REFRESH);
 export const refreshResetCheckList = createAction(REFRESH_RESET);
@@ -75,6 +77,7 @@ const initState = {
     },
     classTime : {},
     classList : [],
+    name: "",
     result: '',
     checkWifiInfo: '',
     todayAttendList : [],
@@ -87,6 +90,10 @@ const initState = {
 
 export const check = handleActions(
     {
+        [SET_NAME]: (state, {payload: name})=>({
+            ...state,
+            name,
+        }),
         [CLASS_LOAD_SUCCESS]: (state, {payload: classes})=>({
             ...state,
             classList: classes,

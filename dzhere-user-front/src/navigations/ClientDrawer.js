@@ -7,7 +7,7 @@ const ClientDrawer = () => {
     return (
       <Drawer.Navigator
         drawerContentOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: 'grey',
           itemStyle: { marginVertical: 5 },
         }}
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register, registerError } from '../../modules/auth/auth';
 import AuthForm from '../../components/auth/AuthForm';
-import { apiRegister } from '../../lib/api/auth/auth';
+import { apiRegister } from '../../lib/api/auth/auth'
 import { Alert, Platform } from 'react-native';
 
 const RegisterForm = ({ navigation, route }) => {

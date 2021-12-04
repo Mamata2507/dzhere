@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "deploy": "aws s3 sync ./web-build s3://dzhere-web-deploy --profile=dzhere-web-deploy",
+    "invalidate": "aws cloudfront create-invalidation --profile=dzhere-web-deploy --distribution-id E2G404576ZEHPW --paths / /index.html /error.html /service-worker.js /manifest.json /favicon.ico"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",

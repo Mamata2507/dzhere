@@ -6,7 +6,7 @@ export const addWifi = (data) => {
   // console.log("외부장소 추가 API 호출", accessToken);
   return client
     .post(
-      "/api/external/add",
+      "/external/add",
       {
         e_ssid: data.ssid,
         e_bssid: data.bssid,
@@ -33,7 +33,7 @@ export const delWifi = (data) => {
   // console.log("외부장소 삭제 API 호출", accessToken);
   return client
     .post(
-      "/api/external/delete",
+      "/external/delete",
       {
         e_idx: data.id,
         u_phone: data.u_phone,
@@ -59,7 +59,7 @@ export const allWifi = (phone) => {
   // console.log("외부장소 리스트 API 호출", token);
   const data = client
     .post(
-      "/api/external/select",
+      "/external/select",
       {
         u_phone: phone,
       },

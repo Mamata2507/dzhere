@@ -11,12 +11,13 @@ const centerAlign = css`
 const balckText = css`
   ${centerAlign}
   color: black;
-  font-size: 40px;
+  font-size: 25px;
+  font-weight: bold,
 `;
 
 export const StyledText = styled.Text`
   ${balckText}
-  padding: 10px;
+  padding: 5px;
   width: 60%;
   text-align: center;
 `;
@@ -26,6 +27,7 @@ export const StyledClassList = styled.Text`
   background-color: #CEEDFF;
   text-align: center;
   font-size: 20;
+  border-radius: 35%;
 `;
 
 export const StyledButton = styled(Button)`
