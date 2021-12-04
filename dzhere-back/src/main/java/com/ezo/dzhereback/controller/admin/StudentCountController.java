@@ -20,7 +20,7 @@ public class StudentCountController {
         this.studentCountService = studentCountService;
     }
 
-    @PostMapping("/api/admin/m/student/count")
+    @PostMapping("/api/admin/student/count")
     StudentCount getStudentCount(@RequestBody StudentCountDto studentCountDto){
         StudentCount studentCount = studentCountService.getStudentCount(studentCountDto.toEntity());
 

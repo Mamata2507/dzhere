@@ -24,17 +24,17 @@ public class TeacherAdminController {
         this.teacherService = teacherService;
     }
 
-    @GetMapping("/m/teacher/agency/load")
+    @GetMapping("/api/admin/teacher/agency/load")
     List<Agency> getAgencyList(@RequestParam("u_phone") String u_phone){
         return teacherService.getAgencyList(u_phone);
     }
 
-    @GetMapping("/m/teacher/lesson/load")
+    @GetMapping("/api/admin/teacher/lesson/load")
     List<Lesson> getLessonList(@RequestParam("u_phone") String u_phone){
         return teacherService.getLessonList(u_phone);
     }
 
-    @PostMapping("/m/teacher/search")
+    @PostMapping("/api/admin/teacher/search")
     List<Teacher> getTeacherSearch(@RequestBody TeacherSearchDto teacherSearchDto){
         Teacher teacher = teacherSearchDto.toEntity();
         System.out.println(teacher);
@@ -48,15 +48,16 @@ public class TeacherAdminController {
                 ,teacher.getEnd_date()
                 ,teacher.getU_auth()
         );
-        System.out.println("/m/teacher/search");
+        System.out.println("/api/admin/teacher/search");
+        System.out.println(teacherList);
         return teacherList;
     }
 
-    @PostMapping("/m/teacher/update/attend")
+    @PostMapping("/api/admin/teacher/update/attend")
     int updateTeacherAttend(@RequestBody TeacherAttendDto teacherAttendDto){
         TeacherAttend teacher = teacherAttendDto.toEntity();
         int result = teacherService.updateTeacherAttend(teacher);
-        System.out.println("/m/teacher/update/attend");
+        System.out.println("/api/admin/teacher/update/attend");
         System.out.println(result);
 
         return result;

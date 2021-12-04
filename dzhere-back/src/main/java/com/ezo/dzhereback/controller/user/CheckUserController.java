@@ -41,7 +41,7 @@ public class CheckUserController {
         this.external_ctn = 0;
     }
 
-    @PostMapping("/m/user/attend/insert")
+    @PostMapping("/api/user/attend/insert")
     public int insertAttend(@RequestBody CheckInsertDto checkInsertDto){
         String u_phone = checkInsertDto.getU_phone();
         u_idx = checkUserService.getUidx(u_phone);   // 유저 index
@@ -56,7 +56,7 @@ public class CheckUserController {
         return checkUserService.insertCheck(attendTime, u_idx, c_idx);
     }
 
-    @PostMapping("/m/user/attend/reaveinsert")
+    @PostMapping("/api/user/attend/reaveinsert")
     public int insertLeaveAttend(@RequestBody CheckInsertDto checkInsertDto){
         u_phone = checkInsertDto.getU_phone();
         int u_idx = checkUserService.getUidx(u_phone);
@@ -71,7 +71,7 @@ public class CheckUserController {
         return result;
     }
 
-    @PostMapping("/m/user/attend/exitinsert")
+    @PostMapping("/api/user/attend/exitinsert")
     public int insertExitAttend(@RequestBody CheckInsertDto checkInsertDto){
         System.out.println("exit insert");
         u_phone = checkInsertDto.getU_phone();
@@ -87,7 +87,7 @@ public class CheckUserController {
         return result;
     }
 
-    @GetMapping("/m/user/attend/load")
+    @GetMapping("/api/user/attend/load")
     public LoadAttendCnt LoadAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("month") String month){
         int u_idx = checkUserService.getUidx(u_phone);
         LoadAttendCnt loadAttendList;
@@ -96,16 +96,16 @@ public class CheckUserController {
         }else{
             loadAttendList = checkUserService.loadAllAttendCnt(u_idx);
         }
-        System.out.println("/m/user/attend/load");
+        System.out.println("/api/user/attend/load");
         System.out.println(loadAttendList);
         return loadAttendList;
     }
 
     // list 페이지 전체 검색
-    @GetMapping("/m/user/attend/allload")
+    @GetMapping("/api/user/attend/allload")
     public List<AttendList> AllLoadAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("month") String month){
         int u_idx = checkUserService.getUidx(u_phone);
-        System.out.println("/m/user/attend/allload");
+        System.out.println("/api/user/attend/allload");
         List<AttendList> attend;
         if(Integer.parseInt(month)>0){
             attend = checkUserService.loadAttendList(u_idx, Integer.parseInt(month));
@@ -115,7 +115,7 @@ public class CheckUserController {
         return attend;
     }
 
-    @GetMapping("/m/user/attend/todayload")
+    @GetMapping("/api/user/attend/todayload")
     public TodayAttendList TodayAttendList(@RequestParam("u_phone") String u_phone, @RequestParam("today") String today){
         int u_idx = checkUserService.getUidx(u_phone);
         TodayAttendList  todayAttendList = checkUserService.loadTodayAttendList(u_idx,today);
@@ -124,7 +124,7 @@ public class CheckUserController {
         return todayAttendList;
     }
 
-    @PostMapping("/m/user/check/wifi")
+    @PostMapping("/api/user/check/wifi")
     public String CheckWifi(@RequestBody WifiInfoDto wifiInfoDto ){
         WifiInfo wifiInfo = wifiInfoDto.toEntity();
         String bssid = wifiInfo.getBssid();
@@ -134,7 +134,7 @@ public class CheckUserController {
         ag_idx = lessonUserService.getAgidx(c_idx);
         internal_cnt = checkUserService.checkInternalWifiInfo(bssid, ag_idx, c_idx);
         external_ctn = checkUserService.checkExternalWifiInfo(bssid, u_idx, c_idx, 1);  // a_accept 0 미승인 , 1 승인
-        System.out.println("/m/user/check/wifi");
+        System.out.println("/api/user/check/wifi");
         System.out.println(bssid+" , "+u_phone+" , "+u_idx+" , "+c_idx+" , "+ag_idx);
         System.out.println(internal_cnt+" , "+external_ctn);
         if(internal_cnt > 0 || external_ctn > 0) return "ok";

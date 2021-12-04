@@ -1,6 +1,6 @@
 import client from "../client";
 import qs from "qs";
-const teacherUrl = "/m/teacher";
+const teacherUrl = "/teacher";
 
 export const getAgencyList = async (u_phone) => {
   const queryString = qs.stringify({ u_phone });
@@ -23,7 +23,7 @@ export const getTeacherSearch = async (item) => {
     attend_state,
     attend_date_state,
   } = item;
-
+  console.log(item);
   return await client.post(`${teacherUrl}/search`, {
     ag_idx: agency.ag_idx,
     c_inx: agency.c_inx,
@@ -35,6 +35,7 @@ export const getTeacherSearch = async (item) => {
     end_date: eDate,
     attend_state: attend_state,
     attend_date_state: attend_date_state,
+    u_auth: 2,
   });
 };
 
