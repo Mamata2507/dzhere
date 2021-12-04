@@ -35,13 +35,13 @@ public class StudentController {
 		return new Result(result);
 	} 
 	
-	@GetMapping("/api/getClassList/{u_phone}")
-	public Result getClassList(@PathVariable("u_phone") String u_phone) {
-		System.out.println("<<<<<< getClassList 컨트롤러 시작 >>>>>>");
-		List<Class> classList = studentService.getClassList(u_phone);
-		System.out.println("<<<<<< getClassList 컨트롤러 완료 >>>>>>"+classList);
-		return new Result(classList);
-	}
+//	@GetMapping("/api/getClassList/{u_phone}")
+//	public Result getClassList(@PathVariable("u_phone") String u_phone) {
+//		System.out.println("<<<<<< getClassList 컨트롤러 시작 >>>>>>");
+//		List<Class> classList = studentService.getClassList(u_phone);
+//		System.out.println("<<<<<< getClassList 컨트롤러 완료 >>>>>>"+classList);
+//		return new Result(classList);
+//	}
 	
 	@PostMapping("/api/getStudentList")
 	public Result getStudentList(@RequestBody StudentDto studentDto) {

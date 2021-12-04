@@ -1,7 +1,6 @@
 package com.ezo.dzhereback.service.admin;
 
 import com.ezo.dzhereback.domain.Agency;
-import com.ezo.dzhereback.domain.Class;
 import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.mapper.admin.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class StudentService {
 	
 	public Agency getAgName(String u_phone) {return studentMapper.getAgName(u_phone);}
 	
-	public List<Class> getClassList(String u_phone) {return studentMapper.getClassList(u_phone);}
+//	public List<Class> getClassList(String u_phone) {return studentMapper.getClassList(u_phone);}
 	
 	public List<User> getStudentList(int ag_idx, int c_idx) {return studentMapper.getStudentList(ag_idx, c_idx);}
 	

@@ -8,7 +8,7 @@ const StudentListContainer = () => {
   
   const dispatch = useDispatch();
 
-  const u_phone = '01023454710';
+  const u_phone = '01088630406';
   
   const [selectedClass, setSelectedClass] = useState(0);
   const [selectedAccept, setSelectedAccept] = useState(2);

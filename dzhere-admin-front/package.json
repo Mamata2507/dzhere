@@ -7,8 +7,12 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "expo": {
+    "userInterfaceStyle": "automatic"
+  },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",
+    "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "6.0.2",
     "@react-native-picker/picker": "2.1.0",
@@ -33,10 +37,12 @@
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-modal-datetime-picker": "^13.0.0",
     "react-native-paper": "^4.10.1",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.9.0",
+    "react-native-status-bar-height": "^2.6.0",
     "react-native-table-component": "^1.2.1",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
@@ -51,6 +57,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   },
   "private": true
 }

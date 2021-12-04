@@ -8,7 +8,7 @@ import { apiLogin } from '../../lib/api/auth/auth';
 import client from '../../lib/api/client';
 
 const LoginForm = ({ navigation, route }) => {
-    console.log("LoginForm");
+    // console.log("LoginForm");
     const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const LoginForm = ({ navigation, route }) => {
 
     // TextInput 값 변경 이벤트 핸들러
     const onChangeText = (e) => {
-      console.log("onChangeText");
+      // console.log("onChangeText");
       console.log(e);
       const { value, name } = e;
 

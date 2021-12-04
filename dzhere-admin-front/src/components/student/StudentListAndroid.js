@@ -215,7 +215,7 @@ export const StudentListAndroid = ({
                   ))}
               </ScrollView>
             )}
-
+{/* 
             <DataTable.Pagination
               page={page}
               numberOfPages={3}
@@ -230,7 +230,7 @@ export const StudentListAndroid = ({
               setItemsPerPage={setItemsPerPage}
               showFastPagination
               optionsLabel={"Rows per page"}
-            />
+            /> */}
           </DataTable>
 
           <View style={styles.btnContainer2}>

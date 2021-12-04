@@ -1,73 +1,87 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
-import CustomTextInput from './CustomTextInput';
-import ErrorMessage from './ErrorMessage';
-import image from '../../../assets/logo.png'
-import client from '../../lib/api/client';
+import React from "react";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
+import CustomTextInput from "./CustomTextInput";
+import ErrorMessage from "./ErrorMessage";
+import image from "../../../assets/logo.png";
+import client from "../../lib/api/client";
 
-const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
-    console.log("AuthFormLogin");
+const AuthFormLogin = ({
+  form,
+  onChangeText,
+  onPress,
+  error,
+  navigation,
+  route,
+}) => {
+  // console.log("AuthFormLogin");
 
-    return (
-      <>
-        <StatusBar style="light" />
-        <View style={styles.container}>
-          <Image source={image} style={styles.logo} />
-          <Text style={styles.logoTitle}>DZ Here(관리자)</Text>
+  return (
+    <>
+      <StatusBar style="light" />
+      <View style={styles.container}>
+        <Image source={image} style={styles.logo} />
+        <Text style={styles.logoTitle}>DZ Here(관리자)</Text>
 
-          <View style={{ flexDirection: "row" }}>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-          </View>
+        <View style={{ flexDirection: "row" }}>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </View>
 
-          <CustomTextInput
-            name="userPhone"
-            autoCompleteType="tel"
-            value={form.userPhone}
-            onChangeText={onChangeText}
-            placeholder="아이디"
-            maxLength={11}
-            keyboardType="numeric"
-            style={styles.inputUserPhone}
-          />
+        <CustomTextInput
+          name="userPhone"
+          autoCompleteType="tel"
+          value={form.userPhone}
+          onChangeText={onChangeText}
+          placeholder="아이디"
+          maxLength={11}
+          keyboardType="numeric"
+          style={styles.inputUserPhone}
+        />
 
-          <CustomTextInput
-            name="password"
-            autoCompleteType="password"
-            value={form.password}
-            onChangeText={onChangeText}
-            placeholder={"패스워드"}
-            maxLength={20}
-            keyboardType="default"
-            secureTextEntry={true}
-            style={styles.inputPassword}
-          />
+        <CustomTextInput
+          name="password"
+          autoCompleteType="password"
+          value={form.password}
+          onChangeText={onChangeText}
+          placeholder={"패스워드"}
+          maxLength={20}
+          keyboardType="default"
+          secureTextEntry={true}
+          style={styles.inputPassword}
+        />
 
-          <Text
-            style={styles.txtFindPassword}
-            onPress={() => navigation.navigate("AdminFindPasswordPage")}
-            /* 구현 예정 */
-          >
-            비밀번호 찾기
-          </Text>
+        <Text
+          style={styles.txtFindPassword}
+          onPress={() => navigation.navigate("AdminFindPasswordPage")}
+          /* 구현 예정 */
+        >
+          비밀번호 찾기
+        </Text>
 
-          <TouchableOpacity style={styles.loginBtn} onPress={onPress}>
-            <Text style={styles.text}>로그인</Text>
-          </TouchableOpacity>
-          {/* <TouchableOpacity
+        <TouchableOpacity style={styles.loginBtn} onPress={onPress}>
+          <Text style={styles.text}>로그인</Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
             style={styles.loginBtn}
             onPress={() => navigation.navigate("UserRegisterPage")}
           >
             <Text style={styles.text}>회원가입</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity
-            style={styles.signupBtn}
-            onPress={() => client.get("api/user/test")}
-          >
-            <Text style={styles.text}>테스트</Text>
-          </TouchableOpacity>
-        </View>
-      </>
-    );
+        <TouchableOpacity
+          style={styles.signupBtn}
+          onPress={() => client.get("api/user/test")}
+        >
+          <Text style={styles.text}>테스트</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
 };
 
 export default AuthFormLogin;
@@ -85,8 +99,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     marginBottom: 40,
-    textAlign: 'center',
-    alignSelf: 'center',
+    textAlign: "center",
+    alignSelf: "center",
   },
   inputUserPhone: {
     width: 277,
