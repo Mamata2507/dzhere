@@ -1,15 +1,26 @@
 package com.ezo.dzhereback.dto;
 
+
 import com.ezo.dzhereback.domain.TeacherAttend;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+
+
+
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+
 
 @Data
 @Slf4j
 @NoArgsConstructor
 @Getter
 @Setter
-public class TeacherAttendDto {
+public class TeacherAttendSYDto {
+
     private int  a_absent;
     private String  a_attend_time;
     private String  a_exit_time;
@@ -30,7 +41,7 @@ public class TeacherAttendDto {
     private String u_phone;
 
     @Builder
-    public TeacherAttendDto(int a_absent, String a_attend_time, String a_exit_time, int a_idx, int a_late_status, int a_leave, int a_not_exit, String a_today_date, int ag_idx, String ag_name, int attend_date_state, int attend_state, int c_inx, String c_name, String end_date, String start_date, String u_name, String u_phone) {
+    public TeacherAttendSYDto(int a_absent, String a_attend_time, String a_exit_time, int a_idx, int a_late_status, int a_leave, int a_not_exit, String a_today_date, int ag_idx, String ag_name, int attend_date_state, int attend_state, int c_inx, String c_name, String end_date, String start_date, String u_name, String u_phone) {
         this.a_absent = a_absent;
         this.a_attend_time = a_attend_time;
         this.a_exit_time = a_exit_time;
@@ -51,7 +62,7 @@ public class TeacherAttendDto {
         this.u_phone = u_phone;
     }
 
-    public TeacherAttend toEntity(){
+    public TeacherAttend toEntity() {
         return TeacherAttend.builder()
                 .a_absent(a_absent)
                 .a_attend_time(a_attend_time)

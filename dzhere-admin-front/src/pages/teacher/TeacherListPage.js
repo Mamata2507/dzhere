@@ -2,17 +2,17 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import * as React from 'react';
-import { Platform } from 'react-native';
-import TeacherAttendClassWebContainer from '../../containers/teacher/TeacherAttendClassWebContainer';
+import { Button, View, Text, SafeAreaView, Platform } from 'react-native';
+import TeacherListWebContainer from '../../containers/teacher/TeacherListWebContainer';
 
-const TeacherAttendClass = ({ navigation }) => {
+const TeacherListPage = ({ navigation }) => {
   console.log('TeacherListPage : Platform 구분 ===> Container 리턴');
   return Platform.OS === "web" ? (
-    <TeacherAttendClassWebContainer
+    <TeacherListWebContainer
     />
   ) : (
-    <TeacherAttendClassContainerAndroid/>
+    <TeacherListAndroidContainer/>
   );
 };
 
-export default TeacherAttendClass;
+export default TeacherListPage;

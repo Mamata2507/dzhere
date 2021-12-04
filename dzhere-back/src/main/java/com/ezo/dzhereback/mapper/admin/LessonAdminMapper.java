@@ -43,7 +43,8 @@ public interface LessonAdminMapper {
 	@Update("update Classtime set ct_day=#{ct.ct_day}, ct_start_time=#{ct.ct_start_time}, ct_end_time=#{ct.ct_end_time}, ct_attend_starttime=#{ct.ct_attend_starttime}, ct_attend_endtime=#{ct.ct_attend_endtime}, ct_start_date=#{ct.ct_start_date}, ct_end_date=#{ct.ct_end_date}, ct_break_start=#{ct.ct_break_start},  ct_break_end=#{ct.ct_break_end} where c_idx=#{ct.c_idx}")
 	void updateClasstime(@Param("ct") final LessontimeDto classtimeDto);
 	
-	
+	@Update("update External set e_accept=1 where e_idx=#{e_idx}")
+	void updateExternalAccept(@Param("e_idx") final int e_idx);
 //	@Insert("insert into Class(c_name, ag_idx) values (#{class.c_name}, #{class.ag_idx})")
 //	void addClass(@Param("class") final ClasstimeDto classtimeDto);
 	

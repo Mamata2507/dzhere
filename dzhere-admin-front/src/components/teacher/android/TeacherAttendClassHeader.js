@@ -55,7 +55,7 @@ export default function HeaderAndroid(props) {
             ]}
             keyboardType="default"
             // value={props.teacherName}
-            value={'백문기'}
+            value={"백문기"}
             placeholder={"강사명"}
             onChangeText={props.handleSetTeacherName}
           />
@@ -91,6 +91,7 @@ export default function HeaderAndroid(props) {
             disabled={props.btnDisable}
           />
           <DateTimePickerModal
+            key={1}
             title="Show Date Picker"
             mode="date"
             isVisible={props.isDatePickerVisible}

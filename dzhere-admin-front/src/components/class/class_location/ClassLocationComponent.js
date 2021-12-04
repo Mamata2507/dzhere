@@ -451,7 +451,7 @@ const ClassLocationComponent = ({
 
               {classList ? (
                 classList.map((item) => (
-                  <DataTable.Row key={item.c_idx}>
+                  <DataTable.Row key={item.i_idx}>
                     {Platform.OS === "android" ? (
                       <>
                         <CheckBoxIcon item={item} style={styles.checkbox} />

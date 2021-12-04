@@ -47,6 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = parseBearerToken(request);
             log.info("Filter is running");
             log.info(token);
+            String ip = request.getHeader("X-FORWARDED-FOR");
+            if (ip == null) {
+                ip = request.getRemoteAddr();
+            }
+            log.info(ip);
+
             // 토큰을 검사한다.
             if (token != null && !token.equalsIgnoreCase("null")) {
                 // userId, 권한 가져오기. 위조 된 경우 예외 처리

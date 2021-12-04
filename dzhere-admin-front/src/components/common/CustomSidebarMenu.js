@@ -15,7 +15,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -28,7 +27,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import client from "../../lib/api/client";
 import toggle_down from "../../../assets/class/toggle_down.png";
 
-
 const CustomSidebarMenu = (props) => {
   const [pressMain, setPressMain] = useState(false);
   const [pressClass, setPressClass] = useState(false);
@@ -38,7 +36,7 @@ const CustomSidebarMenu = (props) => {
   const [colors, setColors] = useState("#565966");
   const [weight, setWeight] = useState("300");
   const agencyInfo = useSelector(({ classes }) => classes.agency);
-console.log(agencyInfo);
+  console.log(agencyInfo);
   const dispatch = useDispatch();
 
   const onPressMain = () => {
@@ -63,7 +61,7 @@ console.log(agencyInfo);
       setPressClass(!pressClass);
     }
   };
-  
+
   const onPressStudent = () => {
     if (pressClass || pressTeacher) {
       setPressStudent(!pressStudent);
@@ -85,12 +83,14 @@ console.log(agencyInfo);
   };
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#CEEDFF"}}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#CEEDFF" }}>
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
-      {/* {agencyInfo.ag_name !== null && <Text style={styles.headName}>🌸 {agencyInfo.ag_name}님 환영합니다 🌸</Text>} */}
+      {agencyInfo.ag_name !== null && (
+        <Text style={styles.headName}>
+          🌸 {agencyInfo.u_name}님 환영합니다 🌸
+        </Text>
+      )}
       <DrawerContentScrollView
         {...props}
         style={{
@@ -106,14 +106,14 @@ console.log(agencyInfo);
               style={{
                 paddingLeft: 14,
                 paddingBottom: 10,
-                paddingTop: Platform.OS === 'android' ? 0 : 15,
+                paddingTop: Platform.OS === "android" ? 0 : 15,
                 flexDirection: "row",
                 alignItems: "center",
                 fontWeight: "bold",
                 fontSize: 20,
               }}
             >
-            🏡 HOME
+              🏡 HOME
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressClass}>
@@ -350,7 +350,6 @@ console.log(agencyInfo);
             fontSize: Platform.OS === "android" ? 23 : 20,
             textAlign: "center",
             marginBottom: Platform.OS === "android" ? 10 : 10,
-
           }}
         >
           로그아웃
@@ -364,7 +363,6 @@ console.log(agencyInfo);
           marginBottom: Platform.OS === "android" ? 40 : 30,
         }}
       >
-
         더존HERE
       </Text>
     </SafeAreaView>
@@ -388,9 +386,9 @@ const styles = StyleSheet.create({
   },
   headName: {
     alignSelf: "center",
-    marginTop: Platform.OS ==='android' ? "15%" : 35, 
-    fontSize: Platform.OS ==='android' ? 16 : 14,
-  }
+    marginTop: Platform.OS === "android" ? "15%" : 35,
+    fontSize: Platform.OS === "android" ? 16 : 14,
+  },
 });
 
 export default CustomSidebarMenu;

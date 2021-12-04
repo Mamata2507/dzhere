@@ -87,6 +87,10 @@ public class LessonAdminService {
 		classMapper.updateClasstime(classtimeDto);
 	}
 	
+	public void updateExternalAccept(int e_idx) {
+		classMapper.updateExternalAccept(e_idx);
+	}
+	
 	public int selectClassId(LessonDto classinfodto) {
 		return classMapper.selectClassId(classinfodto);
 	}
