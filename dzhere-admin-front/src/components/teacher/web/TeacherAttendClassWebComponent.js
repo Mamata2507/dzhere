@@ -47,6 +47,8 @@ const TeacherAttendClassWebComponent = ({
     const [page, setPage] = React.useState(0);
     const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
     console.log('컴포넌트에서 teacherIdxName', teacherIdxName);
+    console.log('컴포넌트에서 startDate : ', startDate);
+    console.log('컴포넌트에서 endDate : ', endDate);
     return (
       <Provider>
         <View style={styles.container}>
@@ -86,12 +88,14 @@ const TeacherAttendClassWebComponent = ({
                     placeholderText="조회 시작일"
                     showPopperArrow={false}
                     selected={startDate}
+                    value={startDate}
                     onChange={onChangeStartDate}
-                    minDate={new Date()}
+                    // minDate={new Date()}
                     showMonthDropdown={true}
                     disabledKeyboardNavigation
                     withPortal
                     portalId="start-date"
+                    name="start-date"
                   />
                 </View>
               
@@ -105,6 +109,7 @@ const TeacherAttendClassWebComponent = ({
                       placeholderText="조회 종료일"
                       showPopperArrow={false}
                       selected={endDate}
+                      value={endDate}
                       onChange={onChangeEndDate}
                       endDate={endDate}
                       minDate={startDate}
@@ -112,6 +117,7 @@ const TeacherAttendClassWebComponent = ({
                       disabledKeyboardNavigation
                       withPortal
                       portalId="end-date"
+                      name="end-date"
                     />
                   </View>
                   
