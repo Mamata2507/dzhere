@@ -51,7 +51,7 @@ const TeacherAttendClassContainerAndroid = () => {
   const [selectAttendState, setSelectAttendState] = useState(0);
   const [selectDateState, setSelectDateState] = useState(0);
   const [btnDisable, setBtnDisable] = useState(true);
-  const [teacherName, setTeacherName] = useState("백문기");
+  const [teacherName, setTeacherName] = useState("");
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
@@ -94,7 +94,11 @@ const TeacherAttendClassContainerAndroid = () => {
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
 
-  const showDatePickerSbtn = () => {
+  useEffect(()=>{
+    // console.log(btnFlag);
+  },[btnFlag])
+
+  const showDatePickerSbtn = () => {    
     setBtnFlag(0);
     setDatePickerVisibility(true);
   };
@@ -105,7 +109,7 @@ const TeacherAttendClassContainerAndroid = () => {
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-  const startDate = (date) => {
+  const startDate = (date) => {    
     setDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
@@ -118,7 +122,7 @@ const TeacherAttendClassContainerAndroid = () => {
     setStartSearchDate(() => current_datetime);
     hideDatePicker();
   };
-  const endDate = (date) => {
+  const endDate = (date) => {    
     setDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
@@ -140,6 +144,7 @@ const TeacherAttendClassContainerAndroid = () => {
     setModalDatePickerVisibility(false);
   };
   const modalSetDate = (date) => {
+    console.log('123123123123');
     setModalDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
@@ -213,6 +218,7 @@ const TeacherAttendClassContainerAndroid = () => {
         eDate: endSearchDate,
         attend_state: selectAttendState,
         attend_date_state: selectDateState,
+        u_auth:2,
       };
       checkId = false;
       dispatch(getSearchAttend(searchObject));
@@ -238,7 +244,7 @@ const TeacherAttendClassContainerAndroid = () => {
     if (checkid) {
       updateBtn ? setUpdateBtn(false) : setUpdateBtn(true);
     } else {
-      Alert.alert("강의를 선택해 주세요");
+      Alert.alert("출결을 선택해 주세요");
     }
   };
   const handleVisibleBtn = () => {
@@ -333,6 +339,7 @@ const TeacherAttendClassContainerAndroid = () => {
         handleEventBtn02={handleEventBtn02}
         handleEventBtn03={handleEventBtn03}
         handleEventBtn04={handleEventBtn04}
+        teacherName={teacherName}
       />
     </>
   );

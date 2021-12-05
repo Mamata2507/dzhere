@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import styles from "./Styles";
 
-const StudentAttendHeader = (props) => {
+const StudentAttendHeaderWeb = (props) => {
   const agList = props.agencyList;
   const lessonList = props.lessonList;
 
   return (
-    <>
+    <>    
       <View style={stylesBase.container}>
         <View style={stylesBase.header}>
           <View style={styles.picker}>
@@ -44,17 +44,18 @@ const StudentAttendHeader = (props) => {
 
 const stylesBase = StyleSheet.create({
   container: {
-    width: "100%",
+    paddingHorizontal: "20%",
     justifyContent: "center",
+    width: '100%',
     flex: 3,
   },
   header: {
     padding: "3%",
     margin: 10,
-    marginTop: 30,
+    marginTop: 60,
     borderRadius: 15,
     backgroundColor: "#CEEDFF",
   },
 });
 
-export default StudentAttendHeader;
+export default StudentAttendHeaderWeb;

@@ -2,6 +2,8 @@ import React from "react";
 import { Platform, View } from "react-native";
 import StudentAttendContent from "./android/StudentAttendContent";
 import StudentAttendHeader from "./android/StudentAttendHeader";
+import StudentAttendContentWeb from "./web/StudentAttendContent";
+import StudentAttendHeaderWeb from "./web/StudentAttendHeader";
 
 const StudentAttend = (props) => {
   return (
@@ -12,12 +14,23 @@ const StudentAttend = (props) => {
             agencyList={props.agencyList}
             lessonList={props.lessonList}
             handleSearchBtn={props.handleSearchBtn}
+            handleSelectLesson={props.handleSelectLesson}
           />
-          <StudentAttendContent />
+          <StudentAttendContent 
+            stuCount = {props.stuCount}
+          />
         </>
       ) : (
         <>
-          <View></View>
+          <StudentAttendHeaderWeb
+            agencyList={props.agencyList}
+            lessonList={props.lessonList}
+            handleSearchBtn={props.handleSearchBtn}
+            handleSelectLesson={props.handleSelectLesson}
+          />
+          <StudentAttendContentWeb
+            stuCount = {props.stuCount}
+          />
         </>
       )}
     </>

@@ -7,7 +7,7 @@ const ClassListComponent = ({ today, agency, classname, navigation }) => {
   return (
     <>
       <StatusBar />
-      {agency !== null ? <Text style={styles.headName}>🌸{agency.ag_name} 님 환영합니다🌸</Text> : <></>}
+      {/* <Text style={styles.headName}>🌸{agency?.ag_name} 님 환영합니다🌸</Text> */}
       <View style={styles.container}>
         <Text style={styles.today}>{"🐥" + today + "🐥"}</Text>
         <View style={styles.box}>

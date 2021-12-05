@@ -51,7 +51,7 @@ const StudentAttendClassContainerAndroid = () => {
   const [selectAttendState, setSelectAttendState] = useState(0);
   const [selectDateState, setSelectDateState] = useState(0);
   const [btnDisable, setBtnDisable] = useState(true);
-  const [teacherName, setTeacherName] = useState("김상연");
+  const [teacherName, setTeacherName] = useState("");
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
@@ -93,6 +93,11 @@ const StudentAttendClassContainerAndroid = () => {
     setSelectLesson(() => lessonList[0]);
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
+
+  useEffect(()=>{
+    console.log('================');
+    console.log(checkid);
+  },[checkid])
 
   const showDatePickerSbtn = () => {
     setBtnFlag(0);
@@ -229,8 +234,8 @@ const StudentAttendClassContainerAndroid = () => {
   });
   // 전체,기간
   const handleSetDate = useCallback((e) => {
-    console.log(e);
-    btnDisable ? setBtnDisable(() => false) : setBtnDisable(() => true);
+    console.log(e);    
+    e===0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
     setSelectDateState(() => e);
   });
 
@@ -239,7 +244,7 @@ const StudentAttendClassContainerAndroid = () => {
     if (checkid) {
       updateBtn ? setUpdateBtn(false) : setUpdateBtn(true);
     } else {
-      Alert.alert("강의를 선택해 주세요");
+      Alert.alert("출결을 선택해 주세요");
     }
   };
   const handleVisibleBtn = () => {
@@ -262,8 +267,9 @@ const StudentAttendClassContainerAndroid = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
-      u_auth: 1,
+      u_auth: 0,
     };
+
     dispatch(getSearchAttend(searchObject));
   };
 
@@ -335,6 +341,7 @@ const StudentAttendClassContainerAndroid = () => {
         handleEventBtn02={handleEventBtn02}
         handleEventBtn03={handleEventBtn03}
         handleEventBtn04={handleEventBtn04}
+        teacherName={teacherName}
       />
     </>
   );

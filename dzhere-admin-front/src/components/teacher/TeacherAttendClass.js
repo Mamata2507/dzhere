@@ -43,6 +43,7 @@ export default function TeacherAttendClass(props) {
                 handleEventBtn02={props.handleEventBtn02}
                 handleEventBtn03={props.handleEventBtn03}
                 handleEventBtn04={props.handleEventBtn04}
+                teacherName={props.teacherName}
               />
               <HeaderAndroid
                 btnFlag={props.btnFlag}

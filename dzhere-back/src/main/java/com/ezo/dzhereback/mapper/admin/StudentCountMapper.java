@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface StudentCountMapper {
-    @Select("select AG.ag_name, CT.ct_start_date, CT.ct_end_date, C.c_name,count(*)\n" +
+    @Select("select AG.ag_name, CT.ct_start_date, CT.ct_end_date, C.c_name,count(*) as 'total_count'\n" +
             "from User U \n" +
             "left join Class C\n" +
             "on U.c_idx = C.c_idx\n" +

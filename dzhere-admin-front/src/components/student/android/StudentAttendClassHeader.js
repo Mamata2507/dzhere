@@ -54,8 +54,8 @@ export default function HeaderAndroid(props) {
               },
             ]}
             keyboardType="default"
-            // value={props.teacherName}
-            value={'김상연'}
+            value={props.teacherName}
+            // value={'김상연'}
             placeholder={"수강생명"}
             onChangeText={props.handleSetTeacherName}
           />
@@ -94,7 +94,7 @@ export default function HeaderAndroid(props) {
             title="Show Date Picker"
             mode="date"
             isVisible={props.isDatePickerVisible}
-            onConfirm={props.modalSetDate}
+            onConfirm={(props.btnFlag===0)?props.startDate:props.endDate}
             onCancel={props.hideDatePicker}
           />
           <Picker

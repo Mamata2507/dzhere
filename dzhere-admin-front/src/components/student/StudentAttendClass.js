@@ -3,11 +3,13 @@ import { Platform, View } from "react-native";
 
 import HeaderWeb from "./web/StudentAttendClassHeader";
 import ContentWeb from "./web/StudentAttendClassContent";
+import FooterWeb from "./web/StudentAttendClassFooter";
 import HeaderAndroid from "./android/StudentAttendClassHeader";
 import ContentAndroid from "./android/StudentAttendClassContent";
 import FooterAndroid from "./android/StudentAttendClassFooter";
-import { Portal, Provider } from "react-native-paper";
 import AttendClassModal from "./android/AttendClassModal";
+
+import { Portal, Provider } from "react-native-paper";
 
 export default function TeacherAttendClass(props) {
   return (
@@ -43,6 +45,7 @@ export default function TeacherAttendClass(props) {
                 handleEventBtn02={props.handleEventBtn02}
                 handleEventBtn03={props.handleEventBtn03}
                 handleEventBtn04={props.handleEventBtn04}
+                teacherName={props.teacherName}
               />
               <HeaderAndroid
                 btnFlag={props.btnFlag}
@@ -71,8 +74,26 @@ export default function TeacherAttendClass(props) {
         </>
       ) : (
         <>
-          <HeaderWeb />
-          <ContentWeb />
+          <HeaderWeb 
+            btnFlag={props.btnFlag}
+            startSearchDate={props.startSearchDate}
+            endSearchDate={props.endSearchDate}
+            showDatePickerSbtn={props.showDatePickerSbtn}
+            showDatePickerEbtn={props.showDatePickerEbtn}
+            isDatePickerVisible={props.isDatePickerVisible}
+            startDate={props.startDate}
+            endDate={props.endDate}
+            hideDatePicker={props.hideDatePicker}
+            searchHandler={props.searchHandler}
+            handleSetAttend={props.handleSetAttend}
+            handleSetDate={props.handleSetDate}
+            lessonList={props.lessonList}
+            agencyList={props.agencyList}
+            handleSetTeacherName={props.handleSetTeacherName}
+            btnDisable={props.btnDisable}
+          />
+          <ContentWeb searchList={props.searchList} />
+          <FooterWeb />
         </>
       )}
     </>

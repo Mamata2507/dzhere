@@ -13,7 +13,7 @@ import ClassExternal from '../../pages/class/ClassExternal'
 import StudentList from '../../pages/student/StudentList'
 import StudentAttend from '../../pages/student/StudentAttend'
 import StudentAttendClass from '../../pages/student/StudentAttendClass'
-import TeacherList from '../../pages/teacher/TeacherListPage'
+import TeacherList from '../../pages/teacher/TeacherList'
 import TeacherAttendClass from '../../pages/teacher/TeacherAttendClass'
 
 // Import Custom Sidebar
@@ -226,13 +226,11 @@ export const TeacherAttendClassScreenStack = ({ navigation }) => {
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
           headerTransparent: true,
-          
         }}
       />
     </Stack.Navigator>
   );
 }
-
 
 
 

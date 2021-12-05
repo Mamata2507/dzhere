@@ -2,7 +2,7 @@ import React from "react";
 import AuthStack from "./navigations/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
 import { enableScreens } from 'react-native-screens';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 // const prefix = Linking.createURL('/');
 
 enableScreens();
@@ -19,7 +19,6 @@ const App = () => {
   //   prefixes: [prefix],
   //   config,
   // }
-  console.log('src/App');
   return (
     <NavigationContainer /*linking={linking}*/>
       <AuthStack />

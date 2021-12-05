@@ -35,7 +35,7 @@ export const getTeacherSearch = async (item) => {
     end_date: eDate,
     attend_state: attend_state,
     attend_date_state: attend_date_state,
-    u_auth: 2,
+    u_auth: item.u_auth,
   });
 };
 

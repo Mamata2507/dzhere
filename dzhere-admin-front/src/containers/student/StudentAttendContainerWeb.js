@@ -7,7 +7,7 @@ import {
 } from "../../modules/user/studentClassAttend";
 import { getStudentCount } from "../../modules/user/studentCount";
 
-const StudentAttendContainerAndroid = () => {
+const StudentAttendContainerWeb = () => {
   const phone = "01088630406";
   const dispatch = useDispatch();
   const { agencyList, lessonList, stuCount } = useSelector(
@@ -31,11 +31,9 @@ const StudentAttendContainerAndroid = () => {
     dispatch(getLessonList(phone));
   }, []);
 
-  useEffect(()=>{
-    console.log('=================123123===========');
-    console.log(stuCount);
-    console.log('=================123123===========');
-  },[stuCount])
+  // useEffect(()=>{    
+  //   console.log(stuCount);  
+  // },[stuCount])
   
   const handleSetAttend = useCallback((e) => {
     console.log(e);
@@ -71,4 +69,4 @@ const StudentAttendContainerAndroid = () => {
   );
 };
 
-export default StudentAttendContainerAndroid;
+export default StudentAttendContainerWeb;

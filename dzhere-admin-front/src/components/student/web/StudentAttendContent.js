@@ -4,7 +4,7 @@ import { DataTable } from "react-native-paper";
 
 const dataHeader = ["시작날짜",'종료날짜', "기관명", "강의명", "수강인원"];
 
-const StudentAttendContent = (props) => {
+const StudentAttendContentWeb = (props) => {
   const items = props.stuCount;
   return (
     <>
@@ -19,8 +19,8 @@ const StudentAttendContent = (props) => {
             {(items.ct_start_date)?
             <>
             <DataTable.Row>
-              <DataTable.Cell>{items.ct_start_date.slice(2,10)}</DataTable.Cell>
-              <DataTable.Cell>{items.ct_end_date.slice(2,10)}</DataTable.Cell>
+              <DataTable.Cell>{items.ct_start_date}</DataTable.Cell>
+              <DataTable.Cell>{items.ct_end_date}</DataTable.Cell>
               <DataTable.Cell>{items.ag_name}</DataTable.Cell>
               <DataTable.Cell>{items.c_name}</DataTable.Cell>
               <DataTable.Cell>{items.total_count}</DataTable.Cell>
@@ -38,7 +38,7 @@ const StudentAttendContent = (props) => {
 const stylesBase = StyleSheet.create({
   container: {
     flex: 6,
-    width: "100%",
+    width: "80%",
     marginBottom: 10,
   },
   contents: {
@@ -51,4 +51,4 @@ const stylesBase = StyleSheet.create({
   },
 });
 
-export default StudentAttendContent;
+export default StudentAttendContentWeb;

@@ -23,7 +23,7 @@ public class StudentCountController {
     @PostMapping("/api/admin/student/count")
     StudentCount getStudentCount(@RequestBody StudentCountDto studentCountDto){
         StudentCount studentCount = studentCountService.getStudentCount(studentCountDto.toEntity());
-
+        System.out.println("/api/admin/student/count");
         System.out.println(studentCount);
         return studentCount;
     }

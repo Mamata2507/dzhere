@@ -44,7 +44,7 @@ const AttendClassModal = (props) => {
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={[styles.text, { fontSize: 20 }]}>강사명 : </Text>
-              <Text style={[styles.text, { fontSize: 25 }]}>{"백문기"}</Text>
+              <Text style={[styles.text, { fontSize: 25 }]}>{props.teacherName}</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={[styles.text, { fontSize: 20 }]}>출석 시간 : </Text>

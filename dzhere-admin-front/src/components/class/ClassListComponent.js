@@ -8,7 +8,7 @@ const ClassListComponent = ({ today, agency }) => {
       <StatusBar />
       <View style={styles.container}>
         <Text style={styles.today}>{"🐥" + today + "🐥"}</Text>
-        <View style={styles.box}>
+        <View style={styles.box}> 
           <Text style={styles.agency}>{agency}</Text>
         </View>
       </View>

@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "expo-checkbox";
-import { setCheck, setValue } from '../../modules/user/list';
+import { setCheck, setValue } from "../../modules/user/teacherClassAttend";
 
 const CheckBoxIcon = ({ item, style }) => {
   const dispatch = useDispatch();
   const [isSelected, setSelection] = useState(false);
-  const checkId = useSelector(({ list }) => list.checkid);
-
+  const checkId = useSelector(({ studentAttend }) => studentAttend.checkid);
+  console.log(item);
   const onValueChange = useCallback(() => {
     // 어떤 버튼도 선택하지 않았을 때
     if(!checkId){

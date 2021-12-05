@@ -86,11 +86,9 @@ const CustomSidebarMenu = (props) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#CEEDFF" }}>
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
-      {agencyInfo.ag_name !== null && (
         <Text style={styles.headName}>
-          🌸 {agencyInfo.u_name}님 환영합니다 🌸
+          🌸 {agencyInfo?.u_name}님 환영합니다 🌸
         </Text>
-      )}
       <DrawerContentScrollView
         {...props}
         style={{
