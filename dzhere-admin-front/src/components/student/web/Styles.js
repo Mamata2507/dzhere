@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   pickerText: {
     fontSize: 15,
-    width: "70%",
+    width: "50%",
     alignItems: "center",
     borderRadius: 20,
     marginLeft: 20,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     margin: "10%",
     height: 470,
-    width: 350,
+    width: 750,
     alignSelf: "center",
     position: "absolute",
     borderRadius: 25,

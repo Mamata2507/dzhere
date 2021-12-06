@@ -15,7 +15,11 @@ import { Provider } from "react-native-paper";
 const ClassList = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <StudentAttendClassContainerAndroid />
+      {Platform.OS === "android" ? (
+        <StudentAttendClassContainerAndroid />
+      ) : (
+        <StudentAttendClassContainerWeb />
+      )}
     </SafeAreaView>
   );
 };

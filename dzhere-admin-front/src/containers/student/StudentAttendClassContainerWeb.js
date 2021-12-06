@@ -57,18 +57,26 @@ const StudentAttendClassContainerWeb = () => {
 
   // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
   const phone = "01088630406";
-  const { lessonList, agencyList, searchList, uid, checkid, updateResult } =
-    useSelector(({ studentAttend }) => ({
-      agencyList: studentAttend.agencyList,
-      lessonList: studentAttend.lessonList,
-      searchList: studentAttend.searchList,
-      uid: studentAttend.uid,
-      checkid: studentAttend.checkid,
-      updateResult: studentAttend.updateResult,
-      agencyListError: studentAttend.agencyListError,
-      lessonListError: studentAttend.lessonListError,
-      searchListError: studentAttend.searchListError,
-    }));
+  const {
+    lessonList,
+    agencyList,
+    searchList,
+    uid,
+    checkid,
+    updateResult,
+    updateError,
+  } = useSelector(({ studentAttend }) => ({
+    agencyList: studentAttend.agencyList,
+    lessonList: studentAttend.lessonList,
+    searchList: studentAttend.searchList,
+    uid: studentAttend.uid,
+    checkid: studentAttend.checkid,
+    updateResult: studentAttend.updateResult,
+    agencyListError: studentAttend.agencyListError,
+    lessonListError: studentAttend.lessonListError,
+    searchListError: studentAttend.searchListError,
+    updateError: studentAttend.updateError,
+  }));
 
   // load
   useEffect(() => {
@@ -80,13 +88,14 @@ const StudentAttendClassContainerWeb = () => {
 
   useEffect(() => {
     setbtn1(uid && uid.a_late_status ? true : false); //지각
-    setbtn2(uid && uid.a_abscent ? true : false); //조퇴
+    setbtn2(uid && uid.a_absent ? true : false); //조퇴
     setbtn3(uid && uid.a_leave ? true : false); //결석
     setbtn4(uid && uid.a_not_exit ? true : false); //미퇴실
     setModalDate(uid.a_today_date);
     setModalStartTime(uid.a_attend_time && uid.a_attend_time.substring(11, 19));
     setModalEndTime(uid.a_exit_time && uid.a_exit_time.substring(11, 19));
-    // console.log(uid);
+    console.log("--------------");
+    console.log(uid);
   }, [uid]);
 
   useEffect(() => {
@@ -94,12 +103,19 @@ const StudentAttendClassContainerWeb = () => {
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
 
-  useEffect(()=>{
-    console.log('================');
-    console.log(checkid);
-  },[checkid])
+  // useEffect(() => {
+  //   console.log("--------------");
+  //   console.log(checkid);
+  // }, [checkid]);
+
+  // useEffect(() => {
+  //   if (updateError !== null) {
+  //     alert("수정 실패");
+  //   }
+  // }, [updateError]);
 
   const showDatePickerSbtn = () => {
+    console.log("여기----------------");
     setBtnFlag(0);
     setDatePickerVisibility(true);
   };
@@ -117,7 +133,7 @@ const StudentAttendClassContainerWeb = () => {
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setStartSearchDate(() => current_datetime);
@@ -130,7 +146,7 @@ const StudentAttendClassContainerWeb = () => {
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setEndSearchDate(() => current_datetime);
@@ -176,7 +192,7 @@ const StudentAttendClassContainerWeb = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       "00";
     setModalStartTime(() => current_datetime);
@@ -189,7 +205,7 @@ const StudentAttendClassContainerWeb = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       current_datetime.getSeconds();
     setModalEndTime(() => current_datetime);
@@ -205,26 +221,27 @@ const StudentAttendClassContainerWeb = () => {
     uid.a_today_date = modalDate;
     uid.a_attend_time = modalStartTime;
     uid.a_exit_time = modalEndTime;
-    await dispatch(updateTeacherAttend(uid));
-    if(updateResult>0){ 
-      setUpdateBtn(false);
-      alert('수정 완료')
+    dispatch(updateTeacherAttend(uid));
+    // if (updateResult > 0) {
+    setUpdateBtn(false);
+    alert("수정 완료");
 
-      const searchObject = {
-        agency: selectAgency,
-        lesson: selectLesson,
-        name: teacherName,
-        u_phone: phone,
-        sDate: startSearchDate,
-        eDate: endSearchDate,
-        attend_state: selectAttendState,
-        attend_date_state: selectDateState,
-      };
-      checkId = false;
-      dispatch(getSearchAttend(searchObject));
-    }else{
-      alert('수정 실패')
-    }
+    const searchObject = {
+      agency: selectAgency,
+      lesson: selectLesson,
+      name: teacherName,
+      u_phone: phone,
+      sDate: startSearchDate,
+      eDate: endSearchDate,
+      attend_state: selectAttendState,
+      attend_date_state: selectDateState,
+    };
+    //checkId = false;
+    // dispatch(setCheck(false));
+    dispatch(getSearchAttend(searchObject));
+    // } else {
+    //   alert("수정 실패");
+    // }
   };
 
   // 출석,지각,조퇴,결석,미퇴실
@@ -233,18 +250,18 @@ const StudentAttendClassContainerWeb = () => {
     setSelectAttendState(() => e);
   });
   // 전체,기간
-  const handleSetDate = useCallback((e) => {
+  const handleSetDate = (e) => {
     console.log(e);
-    e===0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
+    e !== "0" ? setBtnDisable(false) : setBtnDisable(true);
     setSelectDateState(() => e);
-  });
+  };
 
   // modal 이벤트
   const handleVisibleUpdateBtn = () => {
     if (checkid) {
       updateBtn ? setUpdateBtn(false) : setUpdateBtn(true);
     } else {
-      Alert.alert("출결을 선택해 주세요");
+      alert("출결을 선택해 주세요");
     }
   };
   const handleVisibleBtn = () => {
@@ -253,7 +270,6 @@ const StudentAttendClassContainerWeb = () => {
 
   // 검색
   const searchHandler = () => {
-    console.log('여기');
     dispatch(resetList);
     if (teacherName === "") {
       alert("수강생명을 입력 하세요");
@@ -281,7 +297,7 @@ const StudentAttendClassContainerWeb = () => {
   };
   const handleEventBtn02 = () => {
     setbtn2(!btn2);
-    uid.a_abscent = uid.a_abscent && uid.a_abscent > 0 ? 0 : 1;
+    uid.a_absent = uid.a_absent && uid.a_absent > 0 ? 0 : 1;
     dispatch(setAbscentStatus());
   };
   const handleEventBtn03 = () => {

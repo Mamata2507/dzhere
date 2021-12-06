@@ -72,8 +72,17 @@ public interface TeacherMapper {
             "where U.ag_idx=#{ag_idx} and U.u_accept=1 and U.u_auth = #{u_auth} and U.u_name=#{u_name} and A.a_not_exit = #{a_not_exit} and A.a_today_date between #{start_date} and #{end_date} order by A.a_today_date")
     List<Teacher> getTeacherSearch_04(int ag_idx, int c_idx, String u_name, String start_date, String end_date, int u_auth, int a_not_exit );
 
-    @Update("update Attend set a_today_date = #{teacher.a_today_date}, a_attend_time = #{teacher.a_attend_time}, a_exit_time=#{teacher.a_exit_time}, a_leave = #{teacher.a_leave}, " +
-            "a_late_status = #{teacher.a_late_status}, a_absent = #{teacher.a_absent}, a_not_exit = #{teacher.a_not_exit}\n" +
+
+//    @Update("update Attend set a_today_date = #{teacher.a_today_date}, a_attend_time = #{teacher.a_attend_time}, a_exit_time=#{teacher.a_exit_time}, a_leave = #{teacher.a_leave}, " +
+//            "a_late_status = #{teacher.a_late_status}, a_absent = #{teacher.a_absent}, a_not_exit = #{teacher.a_not_exit}\n" +
+//            "where a_idx = #{teacher.a_idx}")
+    @Update("UPDATE Attend\n" +
+            "SET a_today_date=#{teacher.a_today_date}, a_attend_time = #{teacher.a_attend_time}, a_exit_time = #{teacher.a_exit_time}, a_late_status=#{teacher.a_late_status}, a_leave=#{teacher.a_leave}, a_absent=#{teacher.a_absent}, a_not_exit=#{teacher.a_not_exit},\n" +
+            "a_result_time = if(\n" +
+            "instr(a_exit_time, '00:00:00')\n" +
+            "OR instr(a_attend_time, '00:00:00')\n" +
+            "OR (a_attend_time is null)\n" +
+            "OR (a_exit_time is null), '' , timediff(date_format(#{teacher.a_exit_time}, '%H:%i:%m'), date_format(a_attend_time, '%H:%i:%m')))\n" +
             "where a_idx = #{teacher.a_idx}")
     int updateTeacherUpdate (@Param("teacher")TeacherAttend teacherAttend);
 }

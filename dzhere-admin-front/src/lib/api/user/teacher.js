@@ -40,10 +40,10 @@ export const getTeacherSearch = async (item) => {
 };
 
 export const updateTeacherAttend = async (item) => {
-  // console.log("-=-=-=-=-=-=-=-=-=-=");
-  // console.log(item.a_today_date);
+  console.log("-=-=-=-=-=-=-=-=-=-=");
+  console.log(item);
   return await client.post(`${teacherUrl}/update/attend`, {
-    a_absent: item.a_abscent,
+    a_absent: item.a_absent,
     a_attend_time: item.a_today_date + " " + item.a_attend_time,
     a_exit_time: item.a_today_date + " " + item.a_exit_time,
     a_idx: item.a_idx,

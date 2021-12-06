@@ -62,7 +62,7 @@ const updateTeacherAttendSaga = createRequestSaga(
   api.updateTeacherAttend
 );
 
-export function*studentSaga() {
+export function* studentSaga() {
   yield takeLatest(LOAD_AGENCY_LIST, getAgencyListSaga);
   yield takeLatest(LOAD_LESSON_LIST, getLessonListSaga);
   yield takeLatest(SEARCH_ATTEND, getSearchAttendSaga);
@@ -79,6 +79,7 @@ const initialState = {
   lessonListError: null,
   agencyListError: null,
   searchListError: null,
+  updateError: null,
 };
 
 const studentAttend = handleActions(
@@ -113,7 +114,7 @@ const studentAttend = handleActions(
     }),
     [UPDATE_ATTEND_FAILURE]: (state, { payload: error }) => ({
       ...state,
-      updateResult: 0,
+      updateError: error,
     }),
     [RESET_LIST]: (state) => ({
       ...state,

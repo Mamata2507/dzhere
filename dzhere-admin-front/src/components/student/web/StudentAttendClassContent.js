@@ -5,7 +5,17 @@ import CheckBoxIcon from "../../../containers/student/CheckBoxContainer";
 import styles from "./Styles";
 import AttendClassModal from "./AttendClassModal";
 
-const dataHeader = ["선택", "날짜", "수강생명", "출석", "퇴실", "결석"];
+const dataHeader = [
+  "선택",
+  "날짜",
+  "수강생명",
+  "출석",
+  "퇴실",
+  "결석",
+  "지각",
+  "조퇴",
+  "미퇴실",
+];
 
 export default function ContentWeb(props) {
   const items = props.searchList;
@@ -37,7 +47,19 @@ export default function ContentWeb(props) {
                     <DataTable.Cell>
                       {v.a_exit_time && v.a_exit_time}
                     </DataTable.Cell>
-                    <DataTable.Cell>{v.a_leave ? "결석" : ""}</DataTable.Cell>
+                    <DataTable.Cell>
+                      {v.a_leave == 1 ? "ㅇ" : ""}
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                      {v.a_late_status == 1 ? "ㅇ" : ""}
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                      {v.a_absent == 1 ? "ㅇ" : ""}
+                      {/* <Text>{v.a_absent}</Text> */}
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                      {v.a_not_exit == 1 ? "ㅇ" : ""}
+                    </DataTable.Cell>
                   </DataTable.Row>
                 </>
               ))}
@@ -52,11 +74,11 @@ export default function ContentWeb(props) {
 const stylesBase = StyleSheet.create({
   container: {
     // flex: 5.5,
-    width: "80%",
+    width: "100%",
     marginBottom: 10,
   },
-  contents: {  
-    marginTop: 50,  
+  contents: {
+    marginTop: 50,
     borderRadius: 15,
     padding: 5,
   },

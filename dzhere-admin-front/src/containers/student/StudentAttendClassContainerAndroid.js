@@ -94,10 +94,10 @@ const StudentAttendClassContainerAndroid = () => {
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
 
-  useEffect(()=>{
-    console.log('================');
+  useEffect(() => {
+    console.log("================");
     console.log(checkid);
-  },[checkid])
+  }, [checkid]);
 
   const showDatePickerSbtn = () => {
     setBtnFlag(0);
@@ -117,7 +117,7 @@ const StudentAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setStartSearchDate(() => current_datetime);
@@ -130,7 +130,7 @@ const StudentAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setEndSearchDate(() => current_datetime);
@@ -176,7 +176,7 @@ const StudentAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       "00";
     setModalStartTime(() => current_datetime);
@@ -189,7 +189,7 @@ const StudentAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       current_datetime.getSeconds();
     setModalEndTime(() => current_datetime);
@@ -206,9 +206,9 @@ const StudentAttendClassContainerAndroid = () => {
     uid.a_attend_time = modalStartTime;
     uid.a_exit_time = modalEndTime;
     await dispatch(updateTeacherAttend(uid));
-    if(updateResult>0){ 
+    if (updateResult > 0) {
       setUpdateBtn(false);
-      alert('수정 완료')
+      alert("수정 완료");
 
       const searchObject = {
         agency: selectAgency,
@@ -222,8 +222,8 @@ const StudentAttendClassContainerAndroid = () => {
       };
       checkId = false;
       dispatch(getSearchAttend(searchObject));
-    }else{
-      alert('수정 실패')
+    } else {
+      alert("수정 실패");
     }
   };
 
@@ -234,8 +234,8 @@ const StudentAttendClassContainerAndroid = () => {
   });
   // 전체,기간
   const handleSetDate = useCallback((e) => {
-    console.log(e);    
-    e===0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
+    console.log(e);
+    e === 0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
     setSelectDateState(() => e);
   });
 

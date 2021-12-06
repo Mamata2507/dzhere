@@ -7,7 +7,7 @@ const CheckBoxIcon = ({ item, style }) => {
   const dispatch = useDispatch();
   const [isSelected, setSelection] = useState(false);
   const checkId = useSelector(({ studentAttend }) => studentAttend.checkid);
-  console.log(item);
+  // console.log(item);
   const onValueChange = useCallback(() => {
     // 어떤 버튼도 선택하지 않았을 때
     if(!checkId){

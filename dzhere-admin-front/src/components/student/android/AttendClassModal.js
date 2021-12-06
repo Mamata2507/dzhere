@@ -9,10 +9,6 @@ import { setLateStatus } from "../../../modules/user/studentClassAttend";
 
 const AttendClassModal = (props) => {
   const headers = ["지각", "조퇴", "결석", "미퇴실"];
-  const [first,setFirst] = useState(true);
-  const {updateResult} = useSelector(({teacher})=>({
-    updateResult:teacher.updateResult,
-  }))
 
   return (
     <>
@@ -44,7 +40,9 @@ const AttendClassModal = (props) => {
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={[styles.text, { fontSize: 20 }]}>수강생명 : </Text>
-              <Text style={[styles.text, { fontSize: 25 }]}>{props.teacherName}</Text>
+              <Text style={[styles.text, { fontSize: 25 }]}>
+                {props.teacherName}
+              </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={[styles.text, { fontSize: 20 }]}>출석 시간 : </Text>

@@ -6,14 +6,13 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { setLateStatus } from "../../../modules/user/studentClassAttend";
+import DatePicker from "react-datepicker";
+import "./react-datepicker.css";
+import { ko } from "date-fns/esm/locale";
+import styled from "styled-components";
 
-const AttendClassModal = (props) => {
+const AttendClassModalWeb = (props) => {
   const headers = ["지각", "조퇴", "결석", "미퇴실"];
-  const [first,setFirst] = useState(true);
-  const {updateResult} = useSelector(({teacher})=>({
-    updateResult:teacher.updateResult,
-  }))
-
   return (
     <>
       <Portal>
@@ -31,44 +30,122 @@ const AttendClassModal = (props) => {
             <View style={styles.line} />
           </View>
           <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={[styles.text, { fontSize: 20 }]}>날짜 : </Text>
-              <TouchableOpacity
-                style={[styles.btn, { margin: 5, width: 80 }]}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "50%",
+              }}
+            >
+              <Text style={[styles.text, { fontSize: 20, width: "28%" }]}>
+                날짜 :{" "}
+              </Text>
+              <CustomDatePicker
+                locale={ko}
+                dateFormat="yyyy-MM-dd"
+                placeholderText={props.modalDate}
+                showPopperArrow={false}
+                selected={props.isModalDatePickerVisible}
+                onChange={props.modalSetDate}
+                showMonthDropdown={true}
+                disabledKeyboardNavigation
+                withPortal
+                portalId="modal-date"
+              />
+              {/* <TouchableOpacity
+                style={[styles.btn, { margin: 5, width: "50%" }]}
                 onPress={props.showModalDatePickerBtn}
               >
                 <Text style={styles.btnText}>
                   {props.modalDate && props.modalDate.slice(2, 10)}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "50%",
+              }}
+            >
               <Text style={[styles.text, { fontSize: 20 }]}>수강생명 : </Text>
-              <Text style={[styles.text, { fontSize: 25 }]}>{props.teacherName}</Text>
+              <Text
+                style={[styles.text, { fontSize: 25, alignItems: "center" }]}
+              >
+                {props.teacherName}
+              </Text>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "50%",
+              }}
+            >
               <Text style={[styles.text, { fontSize: 20 }]}>출석 시간 : </Text>
-              <TouchableOpacity
-                style={[styles.btn, { margin: 5, width: "30%" }]}
+              <CustomDatePicker
+                locale={ko}
+                dateFormat="HH:mm:ss"
+                placeholderText={props.modalStartTime}
+                showPopperArrow={false}
+                selected={props.isModalTimePickerVisible}
+                onChange={props.setStartTime}
+                showPopperArrow={false}
+                showTimeSelect
+                showTimeSelectOnly
+                disabledKeyboardNavigation
+                timeCaption="time"
+                withPortal
+                portalId="start-time"
+              />
+              {/* <TouchableOpacity
+                style={[styles.btn, { margin: 5, width: "50%" }]}
                 onPress={props.showModalTimePickerBtn1}
               >
                 <Text style={styles.btnText}>
                   {props.modalStartTime && props.modalStartTime}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "50%",
+              }}
+            >
               <Text style={[styles.text, { fontSize: 20 }]}>퇴실 시간 : </Text>
-              <TouchableOpacity
-                style={[styles.btn, { margin: 5, width: "30%" }]}
+              <CustomDatePicker
+                locale={ko}
+                dateFormat="HH:mm:ss"
+                placeholderText={props.modalEndTime}
+                showPopperArrow={false}
+                selected={props.isModalTimePickerVisible}
+                onChange={props.setEndTime}
+                showPopperArrow={false}
+                showTimeSelect
+                showTimeSelectOnly
+                disabledKeyboardNavigation
+                timeCaption="time"
+                withPortal
+                portalId="start-time"
+              />
+              {/* <TouchableOpacity
+                style={[styles.btn, { margin: 5, width: "50%" }]}
                 onPress={props.showModalTimePickerBtn2}
               >
                 <Text style={[styles.btnText]}>
                   {props.modalEndTime && props.modalEndTime}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "50%",
+              }}
+            >
               <DataTable>
                 <DataTable.Header>
                   {headers.map((v) => (
@@ -114,7 +191,8 @@ const AttendClassModal = (props) => {
             >
               <Text style={styles.btnText}>{"수정"}</Text>
             </TouchableOpacity>
-            <DateTimePickerModal
+
+            {/* <DateTimePickerModal
               title="modal Date Picker"
               mode="date"
               isVisible={props.isModalDatePickerVisible}
@@ -131,11 +209,24 @@ const AttendClassModal = (props) => {
                   : props.setEndTime
               }
               onCancel={props.hideModalTimePickerBtn}
-            />
+            /> */}
           </View>
         </Modal>
       </Portal>
     </>
   );
 };
-export default AttendClassModal;
+
+const CustomDatePicker = styled(DatePicker)`
+  box-sizing: border-box;
+  height: 20px;
+  width: 100%;
+  border-style: none;
+  font-size: 20px;
+  /* background-color: #5aa0c8; */
+  border-color: white;
+  color: tomato;
+  align-items: center;
+`;
+
+export default AttendClassModalWeb;

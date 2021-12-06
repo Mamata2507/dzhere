@@ -62,7 +62,7 @@ public class TeacherAdminController {
         TeacherAttend teacher = teacherAttendSYDto.toEntity();
         int result = teacherService.updateTeacherAttend(teacher);
         System.out.println("/api/admin/teacher/update/attend");
-        System.out.println(result);
+        System.out.println(teacher);
         return result;
     }
 
