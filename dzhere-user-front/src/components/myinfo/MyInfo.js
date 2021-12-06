@@ -22,54 +22,6 @@ export const Header = () => {
   );
 };
 
-export const Contents = ({ phone, onPress }) => {
-
-  const navigation = useNavigation();
-
-  return (
-    <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
-      <View style={styles.myInfo}>
-        <IconButton type={images.phone}/>
-        <Text style={styles.myInfoText}>휴대폰번호</Text>
-        <Text style={{fontSize: 22}}>{phone}</Text>
-      </View>
-      <View style={styles.myInfo}>
-        <IconButton type={images.email}/>
-        <Text style={styles.myInfoText}>이메일 변경</Text>
-        <TouchableOpacity onPress={()=>navigation.navigate('MyPageEmailUpdate')}>
-          <Image style={[{width: 30, height: 30}]} source={require('../../../assets/myinfo/right.png')} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.myInfo}>
-        <IconButton type={images.lock}/>
-        <Text style={styles.myInfoText}>비밀번호 변경</Text>
-        <TouchableOpacity onPress={()=>navigation.navigate('MyPagePassUpdate')}>
-          <Image style={[{width: 30, height: 30}]} source={require('../../../assets/myinfo/right.png')} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.myInfo}>
-        <IconButton type={images.ring}/>
-        <Text style={styles.myInfoText}>푸시 알림</Text>
-        <IconButton type={images.on}/>
-      </View>
-      <View style={styles.myInfo}>
-        <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>이용약관</Text>
-      </View>
-      <View style={styles.myInfo}>
-        <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>개인정보 처리방침</Text>
-      </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={onPress}
-          >
-          <Text style={[{ fontSize: 22 }, styles.text]}>로그아웃</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
 export const Footer = () => {
   return (
     <View style={[styles.container, styles.footer]}>

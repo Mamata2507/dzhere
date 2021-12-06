@@ -1,7 +1,6 @@
-import { Contents } from '../../components/myinfo/MyInfo'
+import { MyInfoWeb } from '../../components/myinfo/MyInfoWeb'
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Alert, Platform } from 'react-native';
 import { apiLogout } from '../../lib/api/auth/auth'
 import { useDispatch } from 'react-redux';
 import { logout } from '../../modules/auth/auth'
@@ -10,7 +9,7 @@ import client from '../../lib/api/client';
 import { useNavigation } from '@react-navigation/native'
 
 
-const MyInfoContainer = () => {
+const MyInfoContainerWeb = () => {
 
   const navigation = useNavigation();
 
@@ -54,11 +53,11 @@ const MyInfoContainer = () => {
       });
    } 
   return (
-      <Contents
+      <MyInfoWeb
           phone={phone}
           onPress={onPress}
       />
   );
 };
 
-export default MyInfoContainer;
+export default MyInfoContainerWeb;

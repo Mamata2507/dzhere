@@ -26,14 +26,14 @@ export const StyledClassList = styled.Text`
   ${centerAlign}
   background-color: #CEEDFF;
   text-align: center;
-  font-size: 20;
-  border-radius: 35%;
+  font-size: 20px;
+  border-radius: 35px;
 `;
 
 export const StyledButton = styled(Button)`
   margin: 30px;
   background-color: blue;
-  border-radius: 50;
+  border-radius: 50px;
   padding: 100%;
 `;
 
@@ -41,7 +41,7 @@ export const ButtonView = styled.View`
   ${centerAlign}
   background-color: #ffffff;
   flex-direction: row;
-  margin-top: 20;
+  margin-top: 20px;
 `;
 
 const Title = styled.Text`
@@ -59,7 +59,7 @@ const ButtonContainer = styled.TouchableOpacity`
 `;
 //E4E2E1
 
-const ImageStyled = `
+const ImageStyled = styled.Image `
   width: 100;
   height: 100;
 `;
