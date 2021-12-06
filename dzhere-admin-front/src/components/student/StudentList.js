@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { StudentListAndroid } from './StudentListAndroid'
-import { StudentListWeb } from './StudentListWeb'
+import { StudentListAndroid } from './android/StudentListAndroid'
+import { StudentListWeb } from './web/StudentListWeb'
 
 export const Contents = ({
   // 처음 렌더링될 때 가져오기

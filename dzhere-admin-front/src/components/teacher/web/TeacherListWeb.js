@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { Modal, Portal, Provider, DataTable } from "react-native-paper";
-import CheckBoxIcon from '../../../containers/student/CheckBoxContainer';
+import CheckBoxIcon from '../../../containers/student/CheckBoxContainer_list';
 
 export const TeacherListWeb = ({
   // 처음 렌더링될 때 가져오기

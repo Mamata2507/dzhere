@@ -9,9 +9,9 @@ import {
   TextInput,
 } from "react-native";
 import { Modal, Portal, Provider, DataTable } from "react-native-paper";
-import CheckBoxIcon from "../../containers/student/CheckBoxContainer";
+import CheckBoxIcon from '../../../containers/student/CheckBoxContainer_list'
 
-export const StudentListAndroid = ({
+export const StudentListWeb = ({
   // 처음 렌더링될 때 가져오기
   agName,
   loadingAgName,
@@ -50,8 +50,8 @@ export const StudentListAndroid = ({
   onChangeUname,
   uPhone,
   onChangeUphone,
-
 }) => {
+
   return (
     <View style={styles.container}>
       <Provider>
@@ -68,9 +68,9 @@ export const StudentListAndroid = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>전화번호</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
+                style={styles.pickerText}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
@@ -79,7 +79,7 @@ export const StudentListAndroid = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
+                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
                 onPress={onCheck}
                 >
                 <Text style={styles.btnText}>확인</Text>
@@ -90,9 +90,9 @@ export const StudentListAndroid = ({
               </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>수강생명</Text>
+              <Text style={[styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}]}>수강생명</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 3 }]}
+                style={styles.pickerText}
                 onChangeText={onChangeUname}
                 value={uName}
                 placeholder="수강생명을 입력하세요"
@@ -104,13 +104,13 @@ export const StudentListAndroid = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>강의명</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '6%'}}>강의명</Text>
               <Picker
                 selectedValue={selectedClassAdd}
                 onValueChange={(itemValue, itemIndex) =>
                   setSelectedClassAdd(itemValue)
                 }
-                style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
+                style={[styles.pickerText]}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectAdd' />
                 {classList.map((c, i) => (
@@ -124,7 +124,7 @@ export const StudentListAndroid = ({
             <TouchableOpacity
               style={[
                 styles.btn,
-                { marginTop: 15, alignSelf: "center", width: "20%" },
+                { marginTop: 15, alignSelf: "center", width: "10%" },
               ]}
               onPress={onAdd}
             >
@@ -147,9 +147,9 @@ export const StudentListAndroid = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>전화번호</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
+                style={styles.pickerText}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
@@ -158,7 +158,7 @@ export const StudentListAndroid = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
+                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
                 onPress={onCheck}
                 >
                 <Text style={styles.btnText}>확인</Text>
@@ -169,7 +169,7 @@ export const StudentListAndroid = ({
               </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>수강생명</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}}>수강생명</Text>
               <TextInput
                 style={[styles.pickerText, { flex: 3 }]}
                 onChangeText={onChangeUname}
@@ -183,13 +183,13 @@ export const StudentListAndroid = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text}>강의명</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '6%'}}>강의명</Text>
               <Picker
                 selectedValue={selectedClassUpdate}
                 onValueChange={(itemValue, itemIndex) =>
                   setSelectedClassUpdate(itemValue)
                 }
-                style={[styles.pickerText, { flex: 4, marginLeft: 12 }]}
+                style={styles.pickerText}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectUpdate'/>
                 {classList.map((c, i) => (
@@ -203,7 +203,7 @@ export const StudentListAndroid = ({
             <TouchableOpacity
               style={[
                 styles.btn,
-                { marginTop: 15, alignSelf: "center", width: "20%" },
+                { marginTop: 15, alignSelf: "center", width: "10%" },
               ]}
               onPress={onUpdate}
             >
@@ -217,9 +217,9 @@ export const StudentListAndroid = ({
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View>
             <View style={styles.picker}>
-              <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
+              <Text style={[styles.text, { marginLeft: '2%', marginRight: '7%' }]}>기관</Text>
               <Text
-                style={[styles.pickerText, { fontSize: 16 }, { marginLeft: 8 }]}
+                style={[styles.pickerText, { fontSize: 16, marginLeft: 8, fontWeight: 'bold' }]}
               >
                 {loadingAgName && "로딩중..."}
                 {!loadingAgName && agName.ag_name}
@@ -227,7 +227,7 @@ export const StudentListAndroid = ({
             </View>
           </View>
           <View style={styles.picker}>
-            <Text style={[styles.text, { marginLeft: 15 }]}>강의</Text>
+            <Text style={[styles.text, { marginLeft: '2%', marginRight: '7%' }]}>강의</Text>
             <Picker
               selectedValue={selectedClass}
               onValueChange={(itemValue, itemIndex) =>
@@ -241,23 +241,26 @@ export const StudentListAndroid = ({
               ))}
             </Picker>
           </View>
-          <View style={styles.btnContainer}>
+
+          <View style={styles.picker}>
+            <Text style={{ marginLeft: '2%', fontSize: 16, fontWeight: 'bold', flexDirection: 'row', marginRight: '3%'}}>승인여부</Text>
             <Picker
-            style={[styles.miniPicker]}
-            onValueChange={handleSetAccept}
-            enabled={pickerStatus}
-            >
+              onValueChange={handleSetAccept}
+              enabled={pickerStatus}
+              style={[styles.pickerText, {marginRight: '5%'}]}
+              >
               <Picker.Item label='승인여부' value='2' key='accpet2'/>
               <Picker.Item label='승인' value='1' key='accpet1'/>
               <Picker.Item label='미승인' value='0' key='accpet0'/>
-          </Picker>
-            <TouchableOpacity style={styles.btn} onPress={onSearch}>
-              <Text style={styles.btnText}>검색</Text>
-            </TouchableOpacity>
+            </Picker>
           </View>
         </View>
         {/* <<<<<<<<<<<<<<<<<< 헤더 끝 >>>>>>>>>>>>>>>>>>>>*/}
-        
+        <View>
+        <TouchableOpacity style={[styles.btn, {alignSelf: "flex-end", margin: '1%'}]} onPress={onSearch}>
+          <Text style={styles.btnText}>검색</Text>
+        </TouchableOpacity>
+        </View>
         {/* <<<<<<<<<<<<<<<<<<  content 시작 >>>>>>>>>>>>>>>>>>>>*/}
         <View style={styles.content}>
           <DataTable>
@@ -270,7 +273,8 @@ export const StudentListAndroid = ({
 
             {selectedAccept < 2 ? (
               <ScrollView>
-                {filterList.map((s, i) => (
+                {!loadingStudentList &&
+                  filterList.map((s, i) => (
                     <DataTable.Row key={i}>
                       <DataTable.Cell>
                         <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
@@ -336,21 +340,19 @@ export const StudentListAndroid = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    paddingHorizontal: "20%",
     justifyContent: "center",
+    width: '100%',
     flex: 1,
   },
   content: {
-    marginTop: 60,
-    justifyContent: "center",
-    height: "50%",
-    margin: 10,
+    marginTop: 5,
+    textAlign: "center",
+    marginLeft: 0,
   },
   header: {
-    height: "20%",
+    marginTop: '5%',
     padding: "3%",
-    margin: 10,
-    marginTop: 70,
     borderRadius: 15,
   },
   picker: {
@@ -358,33 +360,39 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     margin: 4,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#99c0d6",
   },
   text: {
-    flex: 1,
-    fontSize: 16,
+    marginRight: 10,
+    fontSize:  16,
     fontWeight: "bold",
     color: "#000000",
   },
   pickerText: {
-    flex: 6,
-    fontSize: 16,
+    fontSize: 15,
+    width: "30%",
     alignItems: "center",
-    color: "#000000",
+    borderRadius: 20,
+    borderColor: "#99c0d6",
+    backgroundColor: "#00000000",
+    color: "black",
   },
   btnContainer: {
     flex: 1,
     flexDirection: "row",
-    alignSelf: "flex-end",
   },
   btnContainer2: {
     flexDirection: "row",
-    margin: 5,
+    margin: 10,
     alignSelf: "flex-end",
+    height: 200,
   },
   btn: {
     backgroundColor: "#5AA0C8",
     borderRadius: 6,
-    width: "15%",
+    width: 50,
     height: 30,
     alignItems: "center",
     padding: 5,
@@ -394,11 +402,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlignVertical: "center",
-  },
-  miniPicker: {
-    width: "35%",
-    height: 30,
-    color: "#4400ff",
   },
   checkbox: {
     alignSelf: "center",
@@ -413,11 +416,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#CEEDFF",
     padding: "5%",
     margin: "10%",
-    height: 470,
-    width: 350,
+    height: 400,
+    width: "50%",
     alignSelf: "center",
-    position: "absolute",
-    borderRadius: 25,
+    borderRadius: 35,
   },
   modalText: {
     fontSize: 18,
