@@ -1,15 +1,84 @@
 import React from "react";
 import { Platform, View } from "react-native";
-
-import HeaderWeb from "./web/TeacherAttendClassHeader";
-import ContentWeb from "./web/TeacherAttendClassContent";
 import HeaderAndroid from "./android/TeacherAttendClassHeader";
 import ContentAndroid from "./android/TeacherAttendClassContent";
 import FooterAndroid from "./android/TeacherAttendClassFooter";
 import { Portal, Provider } from "react-native-paper";
 import AttendClassModal from "./android/AttendClassModal";
+import { TeacherAttendClassWebComponent } from './web/TeacherAttendClassWebComponent'
 
-export default function TeacherAttendClass(props) {
+export default function TeacherAttendClass({
+  // 수정 필드
+  editTodayDate,
+  editAttendTime,
+  editExitTime,
+  editLateStatus,
+  editLeave,
+  editAbsent,
+  editNotExit,
+
+  // module state
+  teacherIdxName,
+  searchType,
+
+  // date picker 상태
+  onChangeStartDate,
+  onChangeEndDate,
+  startDate,
+  endDate,
+
+  // 처음 렌더링될 때 가져오기
+  agName,
+  loadingAgName,
+  classList,
+  // picker
+  pickerStatus={pickerStatus}, // true, false
+  selectedClass={selectedClass},
+  setSelectedClass={setSelectedClass},
+  selectedClassAdd={selectedClassAdd},
+  setSelectedClassAdd={setSelectedClassAdd},
+  selectedClassUpdate={selectedClassUpdate},
+  setSelectedClassUpdate={setSelectedClassUpdate},
+  selectedAccept={selectedAccept}, // 승인여부
+  handleSetAccept={handleSetAccept}, // 승인여부 이벤트
+  // onPress event
+  onChangeSearchType,
+  onChangeEditAttendTime,
+  onChangeEditExitTime,
+  onChangeEditLateStatus,
+  onChangeEditLeave,
+  onChangeEditAbsent,
+  onChangeEditNotExit,
+  onChangeEditTodayDate,
+  onChangeSelectedClass,
+  checkHandler,
+  onSearch,
+  // setSearchType,
+  onDelete,
+  onAdd,
+  onCheck,
+  onUpdate,
+  // List
+  rowIndexList,
+  checkedList,
+  teacherAttendList,
+  loadingTeacherAttendList,
+  filterList,
+  // Modal
+  visibleAdd,
+  hideModalAdd,
+  showModalAdd, // onPress
+  visibleUpdate,
+  hideModalUpdate,
+  showModalUpdate,
+  phoneCheck,
+  error,
+  // useState
+  uName,
+  onChangeUname,
+  uPhone,
+  onChangeUphone,
+}) {
   return (
     <>
       {Platform.OS === "android" ? (
@@ -71,10 +140,77 @@ export default function TeacherAttendClass(props) {
           </View>
         </>
       ) : (
-        <>
-          <HeaderWeb />
-          <ContentWeb />
-        </>
+        <TeacherAttendClassWebComponent
+          // 수정 필드
+          editTodayDate={editTodayDate}
+          editAttendTime={editAttendTime}
+          editExitTime={editExitTime}
+          editLateStatus={editLateStatus}
+          editLeave={editLeave}
+          editAbsent={editAbsent}
+          editNotExit={editNotExit}
+          // module state
+          teacherIdxName={teacherIdxName}
+          searchType={searchType}
+          // date picker 상태
+          onChangeStartDate={onChangeStartDate}
+          onChangeEndDate={onChangeEndDate}
+          startDate={startDate}
+          endDate={endDate}
+          // 처음 렌더링될 때 가져오기
+          agName={agName}
+          loadingAgName={loadingAgName}
+          classList={classList}
+          // picker
+          pickerStatus={pickerStatus} // true, false
+          selectedClass={selectedClass}
+          setSelectedClass={setSelectedClass}
+          selectedClassAdd={selectedClassAdd}
+          setSelectedClassAdd={setSelectedClassAdd}
+          selectedClassUpdate={selectedClassUpdate}
+          setSelectedClassUpdate={setSelectedClassUpdate}
+          selectedAccept={selectedAccept} // 승인여부
+          handleSetAccept={handleSetAccept} // 승인여부 이벤트
+          // onPress event
+          onChangeEndDate={onChangeEndDate}
+          onChangeStartDate={onChangeStartDate}
+          onChangeSearchType={onChangeSearchType}
+          onChangeEditAttendTime={onChangeEditAttendTime}
+          onChangeEditExitTime={onChangeEditExitTime}
+          onChangeEditLateStatus={onChangeEditLateStatus}
+          onChangeEditLeave={onChangeEditLeave}
+          onChangeEditAbsent={onChangeEditAbsent}
+          onChangeEditNotExit={onChangeEditNotExit}
+          onChangeEditTodayDate={onChangeEditTodayDate}
+          onChangeSelectedClass={onChangeSelectedClass}
+          checkHandler={checkHandler}
+          onSearch={onSearch}
+          // setSearchType={setSearchType}
+          onDelete={onDelete}
+          onAdd={onAdd}
+          onCheck={onCheck}
+          onUpdate={onUpdate}
+          // List
+          rowIndexList={rowIndexList}
+          checkedList={checkedList}
+          teacherAttendList={teacherAttendList}
+          loadingTeacherAttendList={loadingTeacherAttendList}
+          filterList={filterList}
+          // Modal
+          visibleAdd={visibleAdd}
+          hideModalAdd={hideModalAdd}
+          showModalAdd={showModalAdd} // onPress
+          visibleUpdate={visibleUpdate}
+          hideModalUpdate={hideModalUpdate}
+          showModalUpdate={showModalUpdate}
+          phoneCheck={phoneCheck}
+          error={error}
+          // useState
+          uName={uName}
+          onChangeUname={onChangeUname}
+          uPhone={uPhone}
+          onChangeUphone={onChangeUphone}
+        />
       )}
     </>
   );

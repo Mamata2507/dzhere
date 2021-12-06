@@ -3,7 +3,7 @@ import axios from "axios";
 const client = axios.create();
 
 // client.defaults.baseURL = "http://ec2-3-133-198-159.us-east-2.compute.amazonaws.com:8080/api/admin/";
-client.defaults.baseURL = "http://192.168.0.17:8080/api/admin/";
+client.defaults.baseURL = "http://172.27.208.1:8080/api/admin/";
 client.defaults.timeout = 7000;
 /*
   글로벌 설정 예시:

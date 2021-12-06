@@ -1,281 +1,713 @@
-import React from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
-import CustomPicker from '../CustomPicker'
+import React from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  Picker,
+  TextInput,
+} from "react-native";
+import { Modal, Portal, Provider, DataTable, RadioButton, } from "react-native-paper";
 import DatePicker from "react-datepicker";
-import { ko } from "date-fns/esm/locale";
-import { DataTable, Provider, Portal } from "react-native-paper";
 import styled from 'styled-components';
+import { ko } from "date-fns/esm/locale";
+import "./react-datepicker.css";
 
-const optionsPerPage = [2, 3, 4];
+export const TeacherAttendClassWebComponent = ({
+  // 수정 필드
+  editTodayDate,
+  editAttendTime,
+  editExitTime,
+  editLateStatus,
+  editLeave,
+  editAbsent,
+  editNotExit,
 
-const TeacherAttendClassWebComponent = ({
-  agIdxTmp,
-  cIdxTmp,
-  agencyList,
-  classList,
-  teacherList,
-  checkedList,
-  rowIndexList,
-  checkHandler,
-  onChange,
-  handleAddModalShow,
-  handleAddModalClose,
-  handleEditModalShow,
-  handleEditModalClose,
-  addModalShow,
-  editModalShow,
-  addModalButtonControl,
-  editModalButtonControl,
-  removeModalButtonControl,
-  removeBtnHandler,
-  editBtnHandler,
-  addBtnHandler,
-  editTextInputName,
-  editTextInputPhone,
-  editTextInputEmail,
-  insertTextInputName,
-  insertTextInputPhone,
-  insertTextInputEmail,
+  // module state
+  teacherIdxName,
+
+  // DatePicker 상태
   startDate,
   endDate,
   onChangeStartDate,
   onChangeEndDate,
-  teacherIdxName,
+
+  // 처음 렌더링될 때 가져오기
+  agName,
+  loadingAgName,
+  classList,
+  // picker
+  pickerStatus={pickerStatus}, 
+  selectedClass={selectedClass},
+  setSelectedClass={setSelectedClass},
+  selectedClassAdd={selectedClassAdd},
+  setSelectedClassAdd={setSelectedClassAdd},
+  selectedClassUpdate={selectedClassUpdate},
+  setSelectedClassUpdate={setSelectedClassUpdate},
+  selectedAccept={selectedAccept}, 
+  handleSetAccept={handleSetAccept}, 
+  // onPress event
+  onChangeSearchType,
+  onChangeEditAttendTime,
+  onChangeEditExitTime,
+  onChangeEditLateStatus,
+  onChangeEditLeave,
+  onChangeEditAbsent,
+  onChangeEditNotExit,
+  onChangeEditTodayDate,
+  onChangeSelectedClass,
+  checkHandler,
+  onSearch,
+  searchType,
+  // setSearchType,
+  onDelete,
+  onAdd,
+  onCheck,
+  onUpdate,
+  // List
+  rowIndexList,
+  checkedList,
   teacherAttendList,
+  loadingTeacherAttendList,
+  filterList,
+  // Modal
+  visibleAdd,
+  hideModalAdd,
+  showModalAdd, 
+  visibleUpdate,
+  hideModalUpdate,
+  showModalUpdate,
+  phoneCheck,
+  error,
+  useState,
+  uName,
+  onChangeUname,
+  uPhone,
+  onChangeUphone,
 }) => {
 
-    const [page, setPage] = React.useState(0);
-    const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
-    console.log('컴포넌트에서 teacherIdxName', teacherIdxName);
-    console.log('컴포넌트에서 startDate : ', startDate);
-    console.log('컴포넌트에서 endDate : ', endDate);
-    return (
+  return (
+    <View style={styles.container}>
       <Provider>
-        <View style={styles.container}>
-          <Portal>
-            {/* <View>
-            <Text>강의별 출결 현황(강사)</Text>
-          </View> */}
-            <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
-              <View style={[styles.picker]}>
-                <Text style={[styles.text, { marginLeft: '3%' }]}>기관</Text>
-                <CustomPicker
-                  name="agencyList"
-                  onChange={onChange}
-                  agencyList={agencyList}
-                  style={[styles.pickerText, { marginLeft: 25 }]}
-                />
-                <Text style={[styles.text, { marginLeft: '6%' }]}>강의명</Text>
-                <CustomPicker
-                  name="classList"
-                  onChange={onChange}
-                  classList={classList}
-                  style={[styles.pickerText, { marginLeft: '2.5%' }]}
-                />
-              </View>
-
-              <View style={[styles.picker]}>
-                <Text style={[styles.text, { marginLeft: '3%' }]}>강사</Text>
-                <Text style={{ marginLeft: 25 }}>{teacherIdxName[1]}</Text>
-                <Text style={{ display: "none" }}>{teacherIdxName[0]}</Text>
-              </View>
-
-              <View style={[styles.picker]}>
-                <View style={{ marginLeft: '27%' , borderWidth:2, borderColor: "#a9cee2", borderRadius: 15}}>
-                  <CustomDatePicker
-                    locale={ko}
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="조회 시작일"
-                    showPopperArrow={false}
-                    selected={startDate}
-                    value={startDate}
-                    onChange={onChangeStartDate}
-                    // minDate={new Date()}
-                    showMonthDropdown={true}
-                    disabledKeyboardNavigation
-                    withPortal
-                    portalId="start-date"
-                    name="start-date"
-                  />
-                </View>
-              
-                <Text style={{marginHorizontal: '5%', fontSize: 30, fontWeight: 'bold', color: '#8b9296',}}> ~ </Text>
-              
-                <View>
-                  <View style={{ borderWidth:2, borderColor: "#a9cee2", borderRadius: 15}}>
-                    <CustomDatePicker
-                      locale={ko}
-                      dateFormat="yyyy-MM-dd"
-                      placeholderText="조회 종료일"
-                      showPopperArrow={false}
-                      selected={endDate}
-                      value={endDate}
-                      onChange={onChangeEndDate}
-                      endDate={endDate}
-                      minDate={startDate}
-                      showMonthDropdown={true}
-                      disabledKeyboardNavigation
-                      withPortal
-                      portalId="end-date"
-                      name="end-date"
-                    />
-                  </View>
-                  
-                </View>
-                
-              </View>
+        {/* <<<<<<<<<<<<<<<<<< 등록 모달 시작 >>>>>>>>>>>>>>>>>>>>*/}
+        <Portal>
+          <Modal
+            visible={visibleAdd}
+            onDismiss={hideModalAdd}
+            contentContainerStyle={styles.modal}
+          >
+            <Text style={styles.modalText}>강사 정보 추가</Text>
+            <View style={styles.lineContainer}>
+              <View style={styles.line} />
             </View>
 
-            <View>
-              <DataTable
-                style={{
-                  width: Dimensions.get("window").width - 200,
-                }}
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  {
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    margin: "2%",
+                    marginRight: "4%",
+                  })
+                }
               >
-                <DataTable.Header>
-                  <DataTable.Title
-                    style={{
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      id={"-999"}
-                      onClick={checkHandler}
-                      checked={
-                        checkedList.length == rowIndexList.length &&
-                        checkedList.length !== 0 &&
-                        rowIndexList.length !== 0
-                          ? true
-                          : false
-                      }
-                    />
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    순번
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    날짜
-                  </DataTable.Title>
-                  {/* <DataTable.Title>강의명</DataTable.Title>
-              <DataTable.Title>강사명</DataTable.Title> */}
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    출석
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    퇴실
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    지각
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    조퇴
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    결석
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    미퇴실
-                  </DataTable.Title>
-                  <DataTable.Title
-                    style={{
-                      borderLeftWidth: 0.5,
-                      justifyContent: "center",
-                      borderColor: "#d5d5d5",
-                    }}
-                  >
-                    총 시간
-                  </DataTable.Title>
-                </DataTable.Header>
+                전화번호
+              </Text>
+              <TextInput
+                style={styles.pickerText}
+                onChangeText={onChangeUphone}
+                value={uPhone}
+                placeholder="전화번호를 입력하세요"
+                keyboardType="default"
+                editable={phoneCheck}
+                keyboardShouldPersistTaps="handled"
+              />
+              <TouchableOpacity
+                style={[
+                  styles.btn,
+                  { marginTop: 3, alignSelf: "center", width: "10%" },
+                ]}
+                onPress={onCheck}
+              >
+                <Text style={styles.btnText}>확인</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.error}>{error}</Text>
+            </View>
 
-                {/* <DataTable.Row>
-              <DataTable.Cell>
-                <input type="checkbox" />
-              </DataTable.Cell> */}
-                {/* <DataTable.Cell>1</DataTable.Cell>
-                <DataTable.Cell>2019-07-10</DataTable.Cell>
-                <DataTable.Cell>열린 강의-1</DataTable.Cell>
-                <DataTable.Cell>구본욱</DataTable.Cell>
-                <DataTable.Cell>오후 03:12</DataTable.Cell>
-                <DataTable.Cell>오후 03:15</DataTable.Cell>
-                <DataTable.Cell>O</DataTable.Cell>
-                <DataTable.Cell>X</DataTable.Cell>
-                <DataTable.Cell>-</DataTable.Cell>
-                <DataTable.Cell>-</DataTable.Cell>
-                <DataTable.Cell>총 0시간 0분</DataTable.Cell> */}
-                {teacherAttendList.map((item, index) => {
-                  let attend_time = new Date(item.a_attend_time);
-                  let exit_time = new Date(item.a_exit_time);
-                  let result_hour =
-                    new Date(exit_time - attend_time).getHours() < 10
-                      ? "0" +
-                        String(new Date(exit_time - attend_time).getHours())
-                      : String(new Date(exit_time - attend_time).getHours());
-                  let result_minute =
-                    new Date(exit_time - attend_time).getMinutes() < 10
-                      ? "0" +
-                        String(new Date(exit_time - attend_time).getMinutes())
-                      : String(new Date(exit_time - attend_time).getMinutes());
-                  let result_time =
-                    "총 " + result_hour + "시간 " + result_minute + "분";
+            <View style={styles.picker}>
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    margin: "2%",
+                    marginRight: "6%",
+                  },
+                ]}
+              >
+                강사명
+              </Text>
+              <TextInput
+                style={styles.pickerText}
+                onChangeText={onChangeUname}
+                value={uName}
+                placeholder="강사명을 입력하세요"
+                keyboardType="default"
+              />
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text></Text>
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  {
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    margin: "2%",
+                    marginRight: "6%",
+                  })
+                }
+              >
+                강의명
+              </Text>
+              <Picker
+                selectedValue={selectedClassAdd}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedClassAdd(itemValue)
+                }
+                style={[styles.pickerText]}
+              >
+                <Picker.Item
+                  label="강의명을 선택하세요"
+                  value="0"
+                  key="selectAdd"
+                />
+                {classList.map((c, i) => (
+                  <Picker.Item label={c.c_name} value={c.c_idx} key={i} />
+                ))}
+              </Picker>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text></Text>
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                { marginTop: 15, alignSelf: "center", width: "10%" },
+              ]}
+              onPress={onAdd}
+            >
+              <Text style={styles.btnText}>등록</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+        {/* <<<<<<<<<<<<<<<<<< 등록 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
+
+        {/* <<<<<<<<<<<<<<<<<< 수정 모달 시작 >>>>>>>>>>>>>>>>>>>>*/}
+        <Portal>
+          <Modal
+            visible={visibleUpdate}
+            onDismiss={hideModalUpdate}
+            contentContainerStyle={styles.modal}
+          >
+            <Text style={styles.modalText}>강사 출결 정보 수정</Text>
+            <View style={styles.lineContainer}>
+              <View style={styles.line} />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: "12%" })
+                }
+              >
+                날짜
+              </Text>
+              <Text
+                style={[styles.pickerText, { flex: 2, marginRight: "3%", paddingHorizontal: 10 }]}
+              >
+                {editTodayDate}
+              </Text>
+            </View>
+            {/* <View style={{ flexDirection: "row" }}>
+              <Text style={styles.error}>{error}</Text>
+            </View> */}
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: "4%" })
+                }
+              >
+                출석 시간
+              </Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 3, paddingHorizontal: 10 }]}
+                onChangeText={onChangeEditAttendTime}
+                value={editAttendTime}
+                placeholder="HH:mm:ss"
+                keyboardType="default"
+              />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: "4%" })
+                }
+              >
+                퇴실 시간
+              </Text>
+              <TextInput
+                style={[styles.pickerText, { flex: 3, paddingHorizontal: 10 }]}
+                onChangeText={onChangeEditExitTime}
+                value={editExitTime}
+                placeholder="HH:mm:ss"
+                keyboardType="default"
+              />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: 50 })
+                }
+              >
+                지각
+              </Text>
+              <input
+                type="checkbox"
+                id='lateStatus'
+                onClick={e => onChangeEditLateStatus(e)}
+                checked={
+                  editLateStatus===0 ? false : true
+                }
+              />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: 50 })
+                }
+              >
+                조퇴
+              </Text>
+              <input
+                type="checkbox"
+                id='leave'
+                onClick={onChangeEditLeave}
+                checked={
+                  editLeave===0 ? false : true
+                }
+              />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: 50 })
+                }
+              >
+                결석
+              </Text>
+              <input
+                type="checkbox"
+                id='absent'
+                onClick={onChangeEditAbsent}
+                checked={
+                  editAbsent===0 ? false : true
+                }
+              />
+            </View>
+
+            <View style={styles.picker}>
+              <Text
+                style={
+                  (styles.text,
+                  { fontWeight: "bold", margin: "2%", marginRight: 36 })
+                }
+              >
+                미퇴실
+              </Text>
+              <input
+                type="checkbox"
+                id='notExit'
+                onClick={onChangeEditNotExit}
+                checked={
+                  editNotExit===0 ? false : true
+                }
+              />
+            </View>
+
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                { marginTop: 15, alignSelf: "center", width: "10%" },
+              ]}
+              onPress={() => onUpdate({
+                a_idx : checkedList[0],
+                u_idx : teacherIdxName['u_idx'],
+                editTodayDate : editTodayDate,
+                editAttendTime: editTodayDate + ' ' + editAttendTime,
+                editExitTime : editTodayDate + ' ' + editExitTime,
+                editLateStatus : editLateStatus,
+                editLeave : editLeave,
+                editAbsent : editAbsent,
+                editNotExit : editNotExit,
+                startDate : startDate,
+                endDate : endDate,
+              })}
+            >
+              <Text style={styles.btnText}>등록</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+        {/* <<<<<<<<<<<<<<<<<< 수정 모달 끝 >>>>>>>>>>>>>>>>>>>>*/}
+
+        {/* <<<<<<<<<<<<<<<<<< 헤더 시작 >>>>>>>>>>>>>>>>>>>>>>*/}
+        <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
+          <View>
+            <View style={styles.picker}>
+              <Text
+                style={[styles.text, { marginLeft: "2%", marginRight: "7%" }]}
+              >
+                기관
+              </Text>
+              <Text
+                style={[
+                  styles.pickerText,
+                  { fontSize: 16, marginLeft: 8, fontWeight: "bold" },
+                ]}
+              >
+                {loadingAgName && "로딩중..."}
+                {!loadingAgName && agName.ag_name}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.picker}>
+            <Text
+              style={[styles.text, { marginLeft: "2%", marginRight: "7%" }]}
+            >
+              강의
+            </Text>
+            <Picker
+              // selectedValue={selectedClass}
+              onValueChange={(itemValue, itemIndex) => {
+                setSelectedClass(itemValue);
+                onChangeSelectedClass(itemValue);
+              }}
+              style={[styles.pickerText, { textAlign: "center" }]}
+            >
+              <Picker.Item label="선택" value="0" key="selectHeader" />
+              {classList.map((c, i) => (
+                <Picker.Item label={c.c_name} value={c.c_idx} key={i} />
+              ))}
+            </Picker>
+          </View>
+
+          <View style={styles.picker}>
+            <Text
+              style={{
+                marginLeft: "2%",
+                fontSize: 16,
+                fontWeight: "bold",
+                flexDirection: "row",
+                marginRight: "7%",
+              }}
+            >
+              강사
+            </Text>
+            <Text
+              style={[
+                styles.pickerText,
+                { fontSize: 16, marginLeft: 8, fontWeight: "bold" },
+              ]}
+            >
+              {/* {loadingAgName && "로딩중..."}
+                {!loadingAgName && agName.ag_name} */}
+              {/* 백문기 */}
+              {teacherIdxName !== null && teacherIdxName !== undefined
+                ? teacherIdxName["u_name"]
+                : ""}
+            </Text>
+          </View>
+          <View style={[styles.picker, { justifyContent: "center" }]}>
+            <View style={{ marginLeft: "4%" }}>
+              <RadioButton
+                value="all"
+                status={searchType === "all" ? "checked" : "unchecked"}
+                onPress={() => {
+                  onChangeSearchType("all");
+                  onChangeStartDate(null);
+                  onChangeEndDate(null);
+                }}
+              />
+            </View>
+            <Text style={{ marginRight: "4%" }}>전체</Text>
+
+            <View style={{ marginLeft: "4%" }}>
+              <RadioButton
+                value="filter"
+                status={searchType === "filter" ? "checked" : "unchecked"}
+                onPress={() => {
+                  onChangeSearchType("filter");
+                }}
+              />
+            </View>
+            <Text style={{ marginRight: "4%" }}>기간 선택</Text>
+
+            <View
+              style={{
+                // marginHorizontal: "12%",
+                borderWidth: 2,
+                borderColor: "#a9cee2",
+                borderRadius: 15,
+              }}
+            >
+              <CustomDatePicker
+                locale={ko}
+                dateFormat="yyyy-MM-dd"
+                placeholderText={searchType === "filter" ? "조회 시작일" : ""}
+                showPopperArrow={false}
+                selected={startDate}
+                value={startDate}
+                onChange={onChangeStartDate}
+                // minDate={new Date()}
+                showMonthDropdown={true}
+                disabledKeyboardNavigation
+                withPortal
+                portalId="start-date"
+                name="start-date"
+                readOnly={searchType === "filter" ? false : true}
+              />
+            </View>
+
+            <Text
+              style={{
+                marginHorizontal: "1%",
+                fontSize: 22,
+                fontWeight: "bold",
+                color: "#8b9296",
+              }}
+            >
+              {" "}
+              ~{" "}
+            </Text>
+
+            <View
+              style={{
+                // marginHorizontal: "12%",
+                borderWidth: 2,
+                borderColor: "#a9cee2",
+                borderRadius: 15,
+              }}
+            >
+              <CustomDatePicker
+                locale={ko}
+                dateFormat="yyyy-MM-dd"
+                placeholderText={
+                  searchType === "filter" && startDate !== null
+                    ? "조회 종료일"
+                    : ""
+                }
+                showPopperArrow={false}
+                selected={endDate}
+                value={endDate}
+                onChange={onChangeEndDate}
+                minDate={startDate}
+                showMonthDropdown={true}
+                disabledKeyboardNavigation
+                withPortal
+                portalId="end-date"
+                name="end-date"
+                readOnly={
+                  searchType === "filter" && startDate !== null ? false : true
+                }
+              />
+            </View>
+          </View>
+        </View>
+        {/* <<<<<<<<<<<<<<<<<< 헤더 끝 >>>>>>>>>>>>>>>>>>>>*/}
+        <View>
+          <TouchableOpacity
+            style={[styles.btn, { alignSelf: "flex-end", margin: "1%" }]}
+            onPress={() => {
+              if (selectedClass === 0) {
+                return alert("강의를 먼저 선택 해주세요!");
+              }
+              if (
+                searchType === "filter" &&
+                (startDate == null ||
+                  endDate == null ||
+                  startDate == "" ||
+                  endDate == "")
+              ) {
+                return alert("조회 기간을 지정해주세요.");
+              } else
+                onSearch({
+                  u_idx: teacherIdxName["u_idx"],
+                  type: searchType,
+                  start_date: startDate,
+                  end_date: endDate,
+                });
+            }}
+          >
+            <Text style={styles.btnText}>검색</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <<<<<<<<<<<<<<<<<<  content 시작 >>>>>>>>>>>>>>>>>>>>*/}
+        {teacherAttendList.length == 0 || rowIndexList == 0 ? (
+          <></>
+        ) : (
+          <View style={styles.content}>
+            <DataTable>
+              <DataTable.Header>
+                <DataTable.Title
+                  style={{
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    id={"-999"}
+                    onClick={checkHandler}
+                    checked={
+                      checkedList.length == rowIndexList.length &&
+                      checkedList.length !== 0 &&
+                      rowIndexList.length !== 0
+                        ? true
+                        : false
+                    }
+                  />
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  순번
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  날짜
+                </DataTable.Title>
+                {/* <DataTable.Title>강의명</DataTable.Title>
+              <DataTable.Title>강사명</DataTable.Title> */}
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  출석
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  퇴실
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  지각
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  조퇴
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  결석
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  미퇴실
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{
+                    borderLeftWidth: 0.5,
+                    justifyContent: "center",
+                    borderColor: "#d5d5d5",
+                  }}
+                >
+                  총 시간
+                </DataTable.Title>
+              </DataTable.Header>
+
+              <Text>{loadingTeacherAttendList && "로딩중..."}</Text>
+              {!loadingTeacherAttendList &&
+                teacherAttendList.map((item, index) => {
+                  // let attend_time = new Date(item.a_attend_time);
+                  // let exit_time = new Date(item.a_exit_time);
+                  // let result_hour =
+                  //   new Date(exit_time - attend_time).getHours() < 10
+                  //     ? "0" +
+                  //       String(new Date(exit_time - attend_time).getHours())
+                  //     : String(new Date(exit_time - attend_time).getHours());
+                  // let result_minute =
+                  //   new Date(exit_time - attend_time).getMinutes() < 10
+                  //     ? "0" +
+                  //       String(new Date(exit_time - attend_time).getMinutes())
+                  //     : String(new Date(exit_time - attend_time).getMinutes());
+                  // let result_time =
+                  //   "총 " + result_hour + "시간 " + result_minute + "분";
                   return (
                     <DataTable.Row key={index}>
                       <DataTable.Cell
@@ -403,39 +835,95 @@ const TeacherAttendClassWebComponent = ({
                           borderColor: "#d5d5d5",
                         }}
                       >
-                        {item.a_attend_time !== null &&
+                        {item.a_result_time}
+                        {/* {item.a_attend_time !== null &&
                         item.a_exit_time !== null &&
                         item.a_absent !== 1 &&
                         item.a_not_exit !== 1
                           ? result_time
-                          : "-"}
+                          : "-"} */}
                       </DataTable.Cell>
                     </DataTable.Row>
                   );
                 })}
-                {/* </DataTable.Row> */}
 
-                <DataTable.Pagination
-                  page={page}
-                  numberOfPages={3}
-                  onPageChange={(page) => setPage(page)}
-                  label="1-2 of 6"
-                  optionsPerPage={optionsPerPage}
-                  itemsPerPage={itemsPerPage}
-                  setItemsPerPage={setItemsPerPage}
-                  showFastPagination
-                  optionsLabel={"Rows per page"}
-                />
-              </DataTable>
+              {/* {selectedAccept < 2 ? (
+              <ScrollView>
+                {filterList.map((s, i) => (
+                  <DataTable.Row key={i}>
+                    <DataTable.Cell>
+                      <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
+                    </DataTable.Cell>
+                    <DataTable.Cell>{s.u_name}</DataTable.Cell>
+                    <DataTable.Cell>{s.u_phone}</DataTable.Cell>
+                    <DataTable.Cell numeric>
+                      {s.u_accept === 0 && "미승인"}
+                      {s.u_accept === 1 && "승인"}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              </ScrollView>
+            ) : (
+              <ScrollView>
+                <Text>{loadingTeacherList && "로딩중..."}</Text>
+                {!loadingTeacherList &&
+                  teacherList.map((s, i) => (
+                    <DataTable.Row key={i}>
+                      <DataTable.Cell>
+                        <CheckBoxIcon item={s.u_idx} style={styles.checkbox} />
+                      </DataTable.Cell>
+                      <DataTable.Cell>{s.u_name}</DataTable.Cell>
+                      <DataTable.Cell>{s.u_phone}</DataTable.Cell>
+                      <DataTable.Cell numeric>
+                        {s.u_accept === 0 && "미승인"}
+                        {s.u_accept === 1 && "승인"}
+                      </DataTable.Cell>
+                    </DataTable.Row>
+                  ))}
+              </ScrollView>
+            )} */}
+            </DataTable>
+            {/* <<<<<<<<<<<<<<<<<<  content 끝 >>>>>>>>>>>>>>>>>>>>*/}
+
+            {/* <<<<<<<<<<<<<<<<<<  푸터 시작 >>>>>>>>>>>>>>>>>>>>*/}
+            <View style={styles.btnContainer2}>
+              {/* <TouchableOpacity
+                style={[styles.btn, { margin: 5 }]}
+                onPress={showModalAdd}
+              >
+                <Text style={styles.btnText}>등록</Text>
+              </TouchableOpacity> */}
+              {checkedList.length === 1 ? (
+                <TouchableOpacity
+                  style={[styles.btn, { margin: 5 }]}
+                  onPress={() =>
+                    showModalUpdate(rowIndexList.indexOf(checkedList[0]))
+                  }
+                >
+                  <Text style={styles.btnText}>수정</Text>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+
+              {/* {checkedList.length >= 1 ? (
+                <TouchableOpacity
+                  style={[styles.btn, { margin: 5 }]}
+                  onPress={onDelete}
+                >
+                  <Text style={styles.btnText}>삭제</Text>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )} */}
             </View>
-          </Portal>
-        </View>
+            {/* <<<<<<<<<<<<<<<<<<  푸터 끝 >>>>>>>>>>>>>>>>>>>>*/}
+          </View>
+        )}
       </Provider>
-    );
+    </View>
+  );
 };
-
-export default TeacherAttendClassWebComponent;
-
 const CustomDatePicker = styled(DatePicker)`
   box-sizing: border-box;
   height: 22px;
@@ -450,8 +938,9 @@ const CustomDatePicker = styled(DatePicker)`
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: "20%",
+    paddingHorizontal: "10%",
     justifyContent: "center",
+    width: '100%',
     flex: 1,
   },
   content: {
@@ -461,9 +950,8 @@ const styles = StyleSheet.create({
     height: "55%",
   },
   header: {
+    marginTop: '5%',
     padding: "3%",
-    marginTop: "5%",
-    marginHorizontal: '20%',
     borderRadius: 15,
   },
   picker: {
@@ -474,18 +962,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#99c0d6",
+    paddingHorizontal: '2%',
   },
   text: {
-    margin: 10,
-    fontSize: 16,
+    marginRight: 10,
+    fontSize:  16,
     fontWeight: "bold",
     color: "#000000",
   },
   pickerText: {
     fontSize: 15,
-    width: "35%",
+    width: "40%",
     alignItems: "center",
-    textAlign: 'center',
     borderRadius: 20,
     borderColor: "#99c0d6",
     backgroundColor: "#00000000",
@@ -499,6 +987,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
     alignSelf: "flex-end",
+    height: 200,
   },
   btn: {
     backgroundColor: "#5AA0C8",
@@ -514,25 +1003,21 @@ const styles = StyleSheet.create({
     color: "white",
     textAlignVertical: "center",
   },
-  miniPicker: {
-    width: "50%",
-    height: 30,
-    color: "#004cff",
-  },
   checkbox: {
     alignSelf: "center",
-    marginRight: "5%",
-    margin: 5,
-    width: 18,
-    height: 18,
-    borderColor: "#004cff",
+    margin: 8,
+    borderColor: "#999999",
+  },
+  tableContainer: {
+    paddingTop: 100,
+    paddingHorizontal: 30,
   },
   modal: {
     backgroundColor: "#CEEDFF",
     padding: "5%",
     margin: "10%",
-    height: "70%",
-    width: "60%",
+    height: 600,
+    width: "35%",
     alignSelf: "center",
     borderRadius: 35,
   },
@@ -544,6 +1029,7 @@ const styles = StyleSheet.create({
   lineContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: '5%',
   },
   line: {
     flex: 1,
@@ -552,17 +1038,8 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginBottom: "5%",
   },
-  textInput: {
-    fontSize: 16,
-    color: "#000000",
-    height: 50,
-    width: 300,
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
-  },
-  calendar: {
-    borderRadius: 20,
+  error: {
+    color: "red",
+    marginLeft: '0.5%',
   },
 });

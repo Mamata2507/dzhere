@@ -85,8 +85,10 @@ public class TeacherAdminController {
     }
 
     @GetMapping("/api/admin/teacher/web/attend-list")
-    public ResponseEntity<?> attendList(@RequestParam("uIdx") int uIdx, @RequestParam("startDate") String start_date, @RequestParam("endDate") String end_date){
-        List<TeacherAttendSYDto> result = teacherAdminService.getTeacherAttendList(uIdx, start_date, end_date);
+    public ResponseEntity<?> attendList(@RequestParam("uIdx") int uIdx, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+        System.out.println(startDate);
+        System.out.println(endDate);
+        List<TeacherAttendYJDto> result = teacherAdminService.getTeacherAttendList(uIdx, startDate, endDate);
         return ResponseEntity.ok().body(new Result<>(result));
     }
 
@@ -98,7 +100,7 @@ public class TeacherAdminController {
 
     @GetMapping("/api/admin/teacher/web/attend-list-all")
     public ResponseEntity<?> attendListAll(@RequestParam("u_idx") int uIdx){
-        List<TeacherAttendSYDto> result = teacherAdminService.getTeacherAttendListAll(uIdx);
+        List<TeacherAttendYJDto> result = teacherAdminService.getTeacherAttendListAll(uIdx);
         return ResponseEntity.ok().body(new Result<>(result));
     }
 
@@ -125,6 +127,16 @@ public class TeacherAdminController {
         int agIdx = teacherDeleteDto.getAg_idx();
         teacherAdminService.deleteTeacher(u_idxes);
         List<TeacherInfoDto> result = teacherAdminService.getTeacherListByLessonIdAndAgencyId(cIdx, agIdx);
+        return ResponseEntity.ok().body(new Result<>(result));
+    }
+
+    @Transactional
+    @PostMapping("/api/admin/teacher/web/attend/update")
+    public ResponseEntity<?> updateTeacherAttend(@RequestBody TeacherAttendYJDto teacherAttendYJDto){
+        System.out.println(teacherAttendYJDto);
+        teacherAdminService.updateWebTeacherAttend(teacherAttendYJDto);
+
+        List<TeacherAttendYJDto> result = teacherAdminService.getTeacherAttendList(teacherAttendYJDto.getU_idx(), teacherAttendYJDto.getStart_date(), teacherAttendYJDto.getEnd_date());
         return ResponseEntity.ok().body(new Result<>(result));
     }
 }

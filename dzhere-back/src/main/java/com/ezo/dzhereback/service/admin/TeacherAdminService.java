@@ -91,15 +91,19 @@ public class TeacherAdminService {
         return result;
     }
 
-    public List<TeacherAttendSYDto> getTeacherAttendListAll(int uIdx) {
+    public List<TeacherAttendYJDto> getTeacherAttendListAll(int uIdx) {
         return teacherAdminMapper.findTeacherAttendListAll(uIdx);
     }
 
-    public List<TeacherAttendSYDto> getTeacherAttendList(int uIdx, String start_date, String end_date) {
+    public List<TeacherAttendYJDto> getTeacherAttendList(int uIdx, String start_date, String end_date) {
         return teacherAdminMapper.findTeacherAttendListByDateRange(uIdx, start_date, end_date);
     }
 
     public TeacherIdxNameDto getTeacherIdxName(int cIdx) {
         return teacherAdminMapper.findTeacherIdxNameByCIdx(cIdx);
+    }
+
+    public int updateWebTeacherAttend(TeacherAttendYJDto teacherAttendYJDto) {
+        return teacherAdminMapper.updateWebTeacherAttend(teacherAttendYJDto);
     }
 }
