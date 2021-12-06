@@ -32,33 +32,6 @@ const MyInfoContainerAndroid = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [notifyStatus, setNotifyState] = useState(false);
-  // let notifyStatus = false
-
-  function onNotify() {
-    console.log('1. [onNotify]notifyStatus='+notifyStatus);
-    setNotifyState(!notifyStatus)
-    console.log('2. [onNotify]notifyStatus='+notifyStatus);
-  }
-
-  useEffect(() => {
-    console.log('3. [useEffect]notifyStatus='+notifyStatus);
-    if(notifyStatus === true){
-      async function schedulePushNotification() {
-        console.log('schedulePushNotification');
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "You've got mail! 📬",
-            body: 'Here is the notification body',
-            data: { data: 'goes here' },
-          },
-          trigger: { seconds: 1 },
-        });
-      }
-      schedulePushNotification();
-    }
-  }, [notifyStatus]);
-
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
@@ -76,7 +49,17 @@ const MyInfoContainerAndroid = () => {
     };
   }, []);
 
-
+  async function schedulePushNotification() {
+    console.log('클릭!');
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've got mail! 📬",
+        body: 'Here is the notification body',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 1 },
+    });
+  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -149,8 +132,7 @@ const MyInfoContainerAndroid = () => {
       <MyInfoAndroid
           phone={phone}
           onPress={onPress}
-          // schedulePushNotification={schedulePushNotification}
-          onNotify={onNotify}
+          schedulePushNotification={schedulePushNotification}
       />
   );
 };

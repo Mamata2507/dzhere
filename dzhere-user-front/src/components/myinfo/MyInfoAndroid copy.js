@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
 
-export const MyInfoAndroid = ({ phone, onPress, onNotify }) => {
+export const MyInfoAndroid = ({ phone, onPress, schedulePushNotification }) => {
 
   const navigation = useNavigation();
   // console.log(`${notify}`);
@@ -35,7 +35,9 @@ export const MyInfoAndroid = ({ phone, onPress, onNotify }) => {
       <View style={styles.myInfo}>
         <IconButton type={images.ring}/>
         <Text style={styles.myInfoText}>푸시 알림</Text>
-        <TouchableOpacity onPress={onNotify}>
+        <TouchableOpacity onPress={async () => {
+          await schedulePushNotification();
+        }}>
           <Image style={[{width: 30, height: 30}]} source={images.on} />
         </TouchableOpacity>
       </View>
