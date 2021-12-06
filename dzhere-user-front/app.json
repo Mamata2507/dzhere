@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "dzhere-front",
-    "slug": "dzhere-front",
-    "version": "1.0.0",
+    "name": "DHere",
+    "slug": "DHere",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,13 +20,12 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.dzhere.DHere",
+      "versionCode": 2
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/app-icon.png"
     }
-  }
+  },
+  "privacy": "public"
 }

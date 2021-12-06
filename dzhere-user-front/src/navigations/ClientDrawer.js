@@ -7,7 +7,7 @@ const ClientDrawer = () => {
     return (
       <Drawer.Navigator
         drawerContentOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: 'grey',
           itemStyle: { marginVertical: 5 },
         }}
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
@@ -17,7 +17,7 @@ const ClientDrawer = () => {
           component={firstScreenStack}
         />
         <Drawer.Screen
-          name="LisPage"
+          name="ListPage"
           options={{ drawerLabel: '지난 출석 보기' }}
           component={secondScreenStack}
         />
