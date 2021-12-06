@@ -10,6 +10,8 @@ import client from '../../lib/api/client';
 import { useNavigation } from '@react-navigation/native'
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
+import { getClassTime } from '../../lib/api/myInfo/myInfo';
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,8 +34,7 @@ const MyInfoContainerAndroid = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [notifyStatus, setNotifyState] = useState(false);
-  // let notifyStatus = false
+  const [notifyStatus, setNotifyState] = useState(false); // 사용자 알람 허용 상태
 
   function onNotify() {
     console.log('1. [onNotify]notifyStatus='+notifyStatus);
@@ -45,17 +46,30 @@ const MyInfoContainerAndroid = () => {
     console.log('3. [useEffect]notifyStatus='+notifyStatus);
     if(notifyStatus === true){
       async function schedulePushNotification() {
-        console.log('schedulePushNotification');
+        console.log('4. <<<<<<<< [ schedulePushNotification ] >>>>>>>>>>>');
+        const classTime = await getClassTime(phone);
+        console.log('classTime>>>>>>>'+classTime);
         await Notifications.scheduleNotificationAsync({
           content: {
-            title: "You've got mail! 📬",
-            body: 'Here is the notification body',
-            data: { data: 'goes here' },
+            title: "[더조은here] ⏰출석체크를 해주세요",
+            body: '수업 시작 10분 전입니다',
+            data: { url: '../../pages/check/check_index' }, 
           },
-          trigger: { seconds: 1 },
+          trigger: { 
+            hour: 21,
+            minute: 35,
+            repeats: true,
+            channelId: 'check',
+          },
         });
       }
       schedulePushNotification();
+    } else {
+      async function deleteNotificationChannel() {
+        console.log('<<<<<<<< [ deleteNotificationChannel ] >>>>>>>>>>>');
+        await Notifications.deleteNotificationChannelAsync('check');
+      }
+      deleteNotificationChannel();
     }
   }, [notifyStatus]);
 
