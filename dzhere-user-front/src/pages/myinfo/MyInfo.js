@@ -4,16 +4,30 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Header, Footer } from '../../components/myinfo/MyInfo';
-import MyInfoContainer from '../../containers/myinfo/MyInfoContainer'
+import MyInfoContainerAndroid from '../../containers/myinfo/MyInfoContainerAndroid'
+import MyInfoContainerWeb from '../../containers/myinfo/MyInfoContainerWeb'
+import { Platform } from 'react-native';
 
 const MyInfo = ({ navigation }) => {
-    return (
-        <SafeAreaView style={styles.container}>
-                <Header />
-                <MyInfoContainer />
-                <Footer />
-        </SafeAreaView>
-    );
+    // return (
+        // <SafeAreaView style={styles.container}>
+        //         <Header />
+        //         <MyInfoContainer />
+        //         <Footer />
+        // </SafeAreaView>
+    // );
+    return (Platform.OS === "android") ? 
+    <SafeAreaView style={styles.container}>
+        <Header />
+            <MyInfoContainerAndroid />
+        <Footer />
+    </SafeAreaView>
+    :
+    <SafeAreaView style={styles.container}>
+        <Header />
+            <MyInfoContainerWeb />
+        <Footer />
+    </SafeAreaView>
 };
 
 const styles = StyleSheet.create({
