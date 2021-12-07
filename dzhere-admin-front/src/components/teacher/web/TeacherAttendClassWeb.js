@@ -710,7 +710,7 @@ const CustomDatePicker = styled(DatePicker)`
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: "10%",
+    paddingHorizontal: "20%",
     justifyContent: "center",
     width: "100%",
     flex: 1,

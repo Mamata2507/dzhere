@@ -33,10 +33,10 @@ const StudentAttendHeaderWeb = (props) => {
               ))}
             </Picker>
           </View>
-          <View style={{ alignSelf: "flex-end" }}>
+        </View>
+          <View style={{ alignSelf: "flex-end", margin: 10 }}>
             <Button title={"검색"} color={"#5AA0C8"} onPress={props.handleSearchBtn}/>
           </View>
-        </View>
       </View>
     </>
   );
