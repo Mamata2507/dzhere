@@ -221,7 +221,7 @@ export const StudentListAndroid = ({
               <Text
                 style={[styles.pickerText, { fontSize: 16 }, { marginLeft: 8 }]}
               >
-                {loadingAgName && "로딩중..."}
+                {loadingAgName && "리스트를 가져오는 중입니다."}
                 {!loadingAgName && agName.ag_name}
               </Text>
             </View>
@@ -286,7 +286,7 @@ export const StudentListAndroid = ({
               </ScrollView>
             ) : (
               <ScrollView>
-                <Text>{loadingStudentList && "로딩중..."}</Text>
+                <Text>{loadingStudentList && "리스트를 가져오는 중입니다."}</Text>
                 {!loadingStudentList &&
                   studentList.map((s, i) => (
                     <DataTable.Row key={i}>

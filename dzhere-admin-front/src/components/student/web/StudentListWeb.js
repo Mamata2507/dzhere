@@ -17,7 +17,6 @@ export const StudentListWeb = ({
   loadingAgName,
   classList,
   // picker
-  pickerStatus={pickerStatus}, 
   selectedClass={selectedClass},
   setSelectedClass={setSelectedClass},
   selectedClassAdd={selectedClassAdd},
@@ -221,7 +220,7 @@ export const StudentListWeb = ({
               <Text
                 style={[styles.pickerText, { fontSize: 16, marginLeft: 8, fontWeight: 'bold' }]}
               >
-                {loadingAgName && "로딩중..."}
+                {loadingAgName && "리스트를 가져오는 중입니다."}
                 {!loadingAgName && agName.ag_name}
               </Text>
             </View>
@@ -246,7 +245,6 @@ export const StudentListWeb = ({
             <Text style={{ marginLeft: '2%', fontSize: 16, fontWeight: 'bold', flexDirection: 'row', marginRight: '3%'}}>승인여부</Text>
             <Picker
               onValueChange={handleSetAccept}
-              enabled={pickerStatus}
               style={[styles.pickerText, {marginRight: '5%'}]}
               >
               <Picker.Item label='승인여부' value='2' key='accpet2'/>
@@ -290,7 +288,7 @@ export const StudentListWeb = ({
               </ScrollView>
             ) : (
               <ScrollView>
-                <Text>{loadingStudentList && "로딩중..."}</Text>
+                <Text>{loadingStudentList && "리스트를 가져오는 중입니다."}</Text>
                 {!loadingStudentList &&
                   studentList.map((s, i) => (
                     <DataTable.Row key={i}>

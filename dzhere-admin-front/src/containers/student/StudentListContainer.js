@@ -60,6 +60,10 @@ const StudentListContainer = () => {
     if (!resultError) {
       dispatch(getAgName(userInfo.userPhone));
       dispatch(getClassList(userInfo.userPhone));
+      if(Platform.OS !== "android"){
+        dispatch(getStudentList({agIdx, selectedClass}))
+        setPickerStatus(true)
+      }
     }
   }, []);
 
@@ -77,7 +81,9 @@ const StudentListContainer = () => {
   // 헤더 - 검색 버튼 클릭 시
   const onSearch = () => {
       dispatch(getStudentList({agIdx, selectedClass}))
-      setPickerStatus(true)
+      if(Platform.OS === "android"){
+        setPickerStatus(true)
+      }
       if(resultError){
         console.log(resultError);
       }

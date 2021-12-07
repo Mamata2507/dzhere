@@ -221,7 +221,7 @@ export const TeacherListWeb = ({
               <Text
                 style={[styles.pickerText, { fontSize: 16, marginLeft: 8, fontWeight: 'bold' }]}
               >
-                {loadingAgName && "로딩중..."}
+                {loadingAgName && "리스트를 가져오는 중입니다."}
                 {!loadingAgName && agName.ag_name}
               </Text>
             </View>
@@ -290,7 +290,7 @@ export const TeacherListWeb = ({
               </ScrollView>
             ) : (
               <ScrollView>
-                <Text>{loadingTeacherList && "로딩중..."}</Text>
+                <Text>{loadingTeacherList && "리스트를 가져오는 중입니다."}</Text>
                 {!loadingTeacherList &&
                   teacherList.map((s, i) => (
                     <DataTable.Row key={i}>
