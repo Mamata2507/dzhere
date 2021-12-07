@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "deploy": "aws s3 sync ./web-build s3://dzhere-web-deploy --profile=dzhere-web-deploy",
+    "invalidate": "aws cloudfront create-invalidation --profile=dzhere-web-deploy --distribution-id E2G404576ZEHPW --paths / /index.html /error.html /service-worker.js /manifest.json /favicon.ico"
   },
   "expo": {
     "userInterfaceStyle": "automatic"
@@ -40,6 +42,7 @@
     "qs": "^6.10.1",
     "react": "17.0.1",
     "react-bootstrap": "^2.0.3",
+    "react-csv": "^2.0.3",
     "react-datepicker": "^4.5.0",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
