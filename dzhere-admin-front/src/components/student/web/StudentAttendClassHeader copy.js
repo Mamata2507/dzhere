@@ -30,7 +30,7 @@ export default function HeaderWeb(props) {
     <View style={stylesBase.container}>
       <View style={stylesBase.header}>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>기관</Text>
+          <Text style={[styles.text, { marginLeft: 30 }]}>기관</Text>
           <Picker style={[styles.pickerText]}>
             {agList.map((v) => (
               <Picker.Item label={v.ag_name} value={v.ag_idx} />
@@ -38,7 +38,7 @@ export default function HeaderWeb(props) {
           </Picker>
         </View>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>강의</Text>
+          <Text style={[styles.text, { marginLeft: 30 }]}>강의</Text>
           <Picker style={[styles.pickerText]}>
             {lessonList.map((v) => (
               <Picker.Item label={v.c_name} value={v.c_idx} />
@@ -46,7 +46,7 @@ export default function HeaderWeb(props) {
           </Picker>
         </View>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>수강생명</Text>
+          <Text style={[styles.text, { marginLeft: 30 }]}>수강생명</Text>
           <TextInput
             style={[
               styles.pickerText,
@@ -147,7 +147,7 @@ export default function HeaderWeb(props) {
 const stylesBase = StyleSheet.create({
   container: {
     justifyContent: "center",
-    width: '100%',
+    width: 1100,
   },
   header: {
     padding: "3%",

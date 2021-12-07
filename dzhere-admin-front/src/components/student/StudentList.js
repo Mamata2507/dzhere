@@ -99,7 +99,6 @@ export const Contents = ({
     classList={classList}
     
     // picker
-    pickerStatus={pickerStatus} // true, false
     selectedClass={selectedClass}
     setSelectedClass={setSelectedClass}
     selectedClassAdd={selectedClassAdd}

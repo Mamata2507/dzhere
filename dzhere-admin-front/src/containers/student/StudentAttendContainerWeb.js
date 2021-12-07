@@ -25,10 +25,11 @@ const StudentAttendContainerWeb = () => {
     setSelectLesson(() => lessonList[0]);
     setSelectAgency(() => agencyList[0]);        
   }, [lessonList, agencyList]);
-
+  
   useEffect(() => {
     dispatch(getAgencyList(phone));
     dispatch(getLessonList(phone));
+    dispatch(getStudentCount(selectLesson));
   }, []);
 
   // useEffect(()=>{    

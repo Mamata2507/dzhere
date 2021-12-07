@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, View } from "react-native";
+import { StyleSheet, Platform, View } from "react-native";
 
 import HeaderWeb from "./web/StudentAttendClassHeader";
 import ContentWeb from "./web/StudentAttendClassContent";
@@ -75,7 +75,7 @@ export default function TeacherAttendClass(props) {
         </>
       ) : (
         <>
-          <View>
+          <View style={styles.container}>
             <Provider>
               <AttendClassModalWeb
                 isModalDatePickerVisible={props.isModalDatePickerVisible}
@@ -136,3 +136,12 @@ export default function TeacherAttendClass(props) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: "20%",
+    justifyContent: "center",
+    width: '100%',
+    flex: 1,
+  },
+})

@@ -96,7 +96,7 @@ const ClassExternalComponent = ({
           </Portal>
         <View style={[styles.header, { backgroundColor: "#CEEDFF" }]}>
           <View style={[styles.picker]}>
-            <Text style={[styles.text, { marginLeft: 15 }]}>기관</Text>
+            <Text style={[styles.text, { marginLeft: 15, width: '10%' }]}>기관</Text>
             <Text
               style={[styles.pickerText, { fontSize: 16 }, { marginLeft: 8 }]}
             >
@@ -104,11 +104,11 @@ const ClassExternalComponent = ({
             </Text>
           </View>
           <View style={styles.picker}>
-            <Text style={[styles.text, { marginLeft: 15 }]}>강의명</Text>
+            <Text style={[styles.text, { marginLeft: 15, width: '10%' }]}>강의명</Text>
             <PickerBox style={styles} />
           </View>
           <View style={[styles.picker]}>
-            <Text style={[styles.text, { marginLeft: 15 }]}>수강생명</Text>
+            <Text style={[styles.text, { marginLeft: 15, width: '10%' }]}>수강생명</Text>
             <TextInput
               style={styles.inputText}
               onChangeText={onChangeText}

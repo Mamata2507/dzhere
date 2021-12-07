@@ -38,7 +38,7 @@ const StudentAttendContentWeb = (props) => {
 const stylesBase = StyleSheet.create({
   container: {
     flex: 6,
-    width: "80%",
+    width: "59%",
     marginBottom: 10,
   },
   contents: {
