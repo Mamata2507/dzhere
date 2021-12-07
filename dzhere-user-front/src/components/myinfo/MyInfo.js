@@ -11,7 +11,8 @@ export const Header = () => {
   return (
     <>
     <StatusBar />
-    <View style={styles.container, {alignItems: 'center', marginTop: 20}}>
+    {/* <View style={styles.container, {alignItems: 'center', marginTop: 20}}> */}
+    <View style={styles.container}>
       <View style={styles.header}></View>
       <Image
         style={styles.headerImage}
@@ -32,10 +33,14 @@ export const Footer = () => {
 const styles = StyleSheet.create({
   container: {
     margin: 20,
-    width: Platform.OS === "android" ? "95%" : "90%",
-    justifyContent: 'center',
+    // width: Platform.OS === "android" ? "95%" : "90%",
+    top: 10,
+    // justifyContent: 'center',
     padding: Platform.OS === "android" ? "1%" : "1.5%",
-    height: 190,
+    // alignSelf: "center",
+    // alignContent: "center",
+    alignItems: "center",
+    // height: 190,
   },
   header: {
     height: 70

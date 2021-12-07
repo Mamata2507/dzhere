@@ -49,7 +49,8 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
     container: {
       width: Platform.OS === "android" ? "95%" : "60%",
       justifyContent: 'center',
-      padding: Platform.OS === "android" ? "1%" : "1.5%",
+      padding: Platform.OS === "android" ? "2%" : "1.5%",
+      borderRadius: 20,
     },
     myInfo: {
       flexDirection: 'row',

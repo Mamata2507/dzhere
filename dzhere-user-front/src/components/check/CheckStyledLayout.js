@@ -33,8 +33,9 @@ export const StyledClassList = styled.Text`
   ${centerAlign}
   background-color: #CEEDFF;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   border-radius: 35px;
+  padding: 10px;
 `;
 
 export const StyledButton = styled(Button)`
@@ -48,7 +49,7 @@ export const ButtonView = styled.View`
   ${centerAlign}
   background-color: #ffffff;
   flex-direction: row;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 const Title = styled.Text`

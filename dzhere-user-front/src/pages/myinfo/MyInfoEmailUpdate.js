@@ -18,10 +18,15 @@ const MyInfo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        // flex: 1,
+        // backgroundColor: '#fff',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+         // flex: 1,
+    alignItems: "center",
+    // justifyContent: "center",
+    backgroundColor: '#fff',
+    height: "100%",
     },
 });
 

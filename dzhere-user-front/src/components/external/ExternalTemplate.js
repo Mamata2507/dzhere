@@ -6,20 +6,27 @@ import {
   Platform,
   Dimensions,
   ScrollView,
+  Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "../myinfo/MyInfo";
 import External from "./ExternalList";
 import { StatusBar } from "expo-status-bar";
+import logo from '../../../assets/logo.png'
 
 const ExternalTemplate = ({ wifiList, navigation }) => {
   const width = Dimensions.get("window").width;
 
   return (
-    <>
+    <View style={{backgroundColor: "#FFF", height: "100%"}}>
       <StatusBar />
-      {/* // 헤더 */}
-      <Header />
+    {/* <View style={styles.container, {alignItems: 'center', marginTop: 20}}> */}
+    <View style={styles.container}>
+      <Image
+        style={styles.headerImage}
+        source={logo}
+      />
+    </View>
       {/* // 본문 */}
       <View style={styles.container}>
         <View style={styles.contents}>
@@ -61,7 +68,7 @@ const ExternalTemplate = ({ wifiList, navigation }) => {
           </View>
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -77,7 +84,14 @@ const styles = StyleSheet.create({
     height: Platform.OS === "android" ? "70%" : 400,
     backgroundColor: "#CEEDFF",
     marginTop: Platform.OS === "android" ? 0 : 40,
-    borderRadius: 25,
+    padding: 10,
+    borderRadius: 20,
+  },
+  headerImage: {
+    top: 70,
+    margin: 50,
+    width: 100,
+    height: 98,
   },
   btn: {
     backgroundColor: "#5AA0C8",

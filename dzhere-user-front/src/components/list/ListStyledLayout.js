@@ -18,7 +18,7 @@ export const StyledText = styled.Text`
 
 const StyledPicker = styled.Picker`
   ${centerAlign}  
-  width: 70%;
+  width: 30%;
   height: 50px;
 `;
 

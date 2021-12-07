@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         height: 30,
+        borderRadius: 20,
     },
     tableContainer: {
         paddingTop:20,
@@ -22,8 +23,8 @@ export const styles = StyleSheet.create({
     },
     noticeContainer:{
         marginTop: 5,
-        marginBottom: 5,
-        backgroundColor: '#CEEDFF',
+        marginBottom: 10,
+        // backgroundColor: '#CEEDFF',
         width: '100%',
     },
     headerImage: {
@@ -36,11 +37,15 @@ export const styles = StyleSheet.create({
     },
     footer: {
         flex: 5,
-        top: 5,
-        bottom: 5,
+        top: 10,
+        bottom: 10,
         backgroundColor: '#CEEDFF',
-        
-        width: '100%',
+        borderRadius: 20,
+        // alignContent: "center",
+        padding: 10,
+        width: Platform.OS==='android' ? '95%':'100%',
+        marginBottom: 30,
+        alignSelf: "center",
     },
     head: { height: 40, backgroundColor: '#f1f8ff' },
     text: {

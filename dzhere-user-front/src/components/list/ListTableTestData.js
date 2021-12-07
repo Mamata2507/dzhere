@@ -1,4 +1,4 @@
-export const footer_tableHeader = ['일자', '입실시간', '퇴실시간', '실수업시간', '출결상태'];
+export const footer_tableHeader = ['일자', '출석시간', '퇴근시간', '총교육시간', '출결상태'];
     
 export const data = [
     ['ADBE', '4', '$270.45', '$1,081.80', '$278.25', '$1,113.00'],

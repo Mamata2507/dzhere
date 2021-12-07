@@ -38,7 +38,7 @@ export const Header = ({ onRefresh }) => {
   return (
     <>
       {/* <StatusBar/> */}
-      <View style={(styles.container, { alignItems: "center", marginTop: 20 })}>
+      <View style={[styles.container, { alignItems: "center", marginTop: 20 }]}>
         <View style={styles.header}></View>
         <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
           <TouchableOpacity>
@@ -57,7 +57,7 @@ const Item = ({ label, attendState, source }) => (
     <View
       style={
         Platform.OS === "android"
-          ? [{ flexDirection: "row", height: 70 }, styles.centerAlign]
+          ? [{ flexDirection: "row", height: 50 }, styles.centerAlign]
           : [{ flexDirection: "row", height: 100 }, styles.centerAlign]
       }
     >
@@ -73,7 +73,7 @@ const Item = ({ label, attendState, source }) => (
     </View>
     <View style={{ flexDirection: "row" }}>
       {Platform.OS === "android" && (
-        <Text style={{ fontSize: 30 }}>{attendState}</Text>
+        <Text style={{ fontSize: Platform.OS === 'android' ? 23 : 30 }}>{attendState}</Text>
       )}
     </View>
   </View>
@@ -110,8 +110,17 @@ export const Contents = ({
 
   return (
     <View style={styles.contents}>
-      <View style={{ flexDirection: "row" }}>
-        <StyledText>출석 체크</StyledText>
+      <View style={{ flexDirection: "row", paddingBottom: 15 }}>
+        <Text
+          style={{
+            width: Platform.OS === "android" ? "25%" : "60%",
+            textAlign: "center",
+            fontSize: 25,
+            fontWeight: "bold",
+          }}
+        >
+          출석 체크
+        </Text>
         <Text style={{ fontSize: 25 }}>
           {"<" + moment().format("YYYY-MM-DD")}{" "}
           {week[new Date().getDay()] + ">"}
@@ -172,7 +181,7 @@ export const Contents = ({
         {attendList ? (
           <>
             <FlatList
-              style={{ marginBottom: 5, marginTop: 1 }}
+              style={{ marginBottom: 5, marginTop:  Platform.OS === 'android' ? 0 : 1 }}
               data={attendList}
               keyExtractor={(v) => v.id}
               renderItem={renderItem}
@@ -213,14 +222,14 @@ const styles = StyleSheet.create({
     height: 98,
   },
   header: {
-    height: 70,
+    height: Platform.OS === "android" ? 40 : 70,
   },
   contents: {
     // flex: 2,
-    marginTop: "10%",
+    marginTop: Platform.OS === "android" ? "7%" : "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",    
+    height: "100%",
   },
   footer: {
     // flex: 3,
@@ -228,9 +237,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#CEEDFF",
     marginBottom: 2,
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    marginTop: Platform.OS === 'android' ? 10 : 10,
+    marginLeft:  Platform.OS === 'android' ? 15 : 10,
+    marginRight:  Platform.OS === 'android' ? 15 : 10,
+    borderRadius: Platform.OS === 'android' ? 25 : 0,
+    padding: Platform.OS === 'android' ? 10 : 0
   },
   footerText: {
     fontSize: 18,

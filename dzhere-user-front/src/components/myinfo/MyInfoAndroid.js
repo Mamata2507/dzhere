@@ -66,9 +66,12 @@ export const MyInfoAndroid = ({ phone, onPress, onNotify, notifyStatus }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 20,
-    width: Platform.OS === "android" ? "95%" : "90%",
+    width: Platform.OS === "android" ? "93%" : "90%",
     justifyContent: 'center',
-    padding: Platform.OS === "android" ? "1%" : "1.5%",
+    alignSelf: "center",
+    alignContent: "center",
+    padding: Platform.OS === "android" ? "2%" : "1.5%",
+    borderRadius: 20,
     height: 190,
   },
   header: {

@@ -7,6 +7,7 @@ import { styles } from "./Styles";
 import {data, footer_tableHeader} from './ListTableTestData';
 import ListLayoutContentAndroid from "./ListLayoutContentAndroid";
 import ListLayoutContentWeb from "./ListLayoutContentWeb";
+import { StatusBar } from "expo-status-bar";
 
 const days = [
     { id:0, value:'0', label:'전체'},
@@ -26,10 +27,10 @@ const days = [
 
 export const Header = ({classList}) => {    
     return (
-    <View style={{alignSelf:'center',width:'100%', }}>
-        <StyledText>지난 출석 현황</StyledText>
+    <View style={{alignSelf:'center',width:'100%', marginTop: Platform.OS === 'android' ? "15%" : 0 }}>
+        <StyledText>지난 출결 현황</StyledText>
         <View style={styles.container}>
-            <Text>{(classList)&&classList.c_name}</Text>        
+            <Text style={{color: "black"}}>{(classList)&&classList.c_name}</Text>        
         </View>
     </View>
     );
@@ -38,7 +39,7 @@ export const Header = ({classList}) => {
 const optionsPerPage = [2, 3, 4];
 
 export const Content = ({classTime, onPressSearch, onMonthChange, attendCnt}) => {
-    let [tableHead, setTableHead] = React.useState(['총훈련일수', '출석일', '결석', '지각', '조퇴', '미퇴실', '출석률(일수)']);
+    let [tableHead, setTableHead] = React.useState(['총교육일수', '출석일수', '결석', '지각', '조퇴', '미퇴실', '출석률']);
 
     return (Platform.OS === "android") ? 
         <ListLayoutContentAndroid 
@@ -92,7 +93,7 @@ export const Footer = ({attendList}) => {
                                 </DataTable.Row>
                             ))
                         }                                
-                    <DataTable.Pagination
+                    {/* <DataTable.Pagination
                         page={page}
                         numberOfPages={7}
                         onPageChange={(page) => setPage(page)}
@@ -102,7 +103,7 @@ export const Footer = ({attendList}) => {
                         setItemsPerPage={setItemsPerPage}
                         showFastPagination
                         optionsLabel={'Rows per page'}
-                    />
+                    /> */}
                 </DataTable>                                        
             </View>
             </ScrollView>

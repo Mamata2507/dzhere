@@ -107,11 +107,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     textAlign: "right",
   },
-  safearea: { flex: 1, backgroundColor: "white" },
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
+    top: Platform.OS === 'android' && 80,
   },
   loginBtn: {
     backgroundColor: "#FFC279",
@@ -132,4 +132,5 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
   },
+  safearea: { flex: 1, backgroundColor: "white" },
 });

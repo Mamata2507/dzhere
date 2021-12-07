@@ -16,7 +16,7 @@ const ExternalAdd = ({
 }) => {
   const navigation = useNavigation();
   return (
-    <>
+    <View style={{backgroundColor: "#FFF", height: "100%"}}>
     <StatusBar style={{width: 20, height: 10}}/>
       {/* // 헤더 */}
       <Header />
@@ -85,13 +85,12 @@ const ExternalAdd = ({
           </TouchableOpacity>
         )}
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
   },
@@ -100,6 +99,7 @@ const styles = StyleSheet.create({
     width: Platform.OS === "android" ? "90%" : "80%",
     height: Platform.OS === "android" ? 400 : 500,
     backgroundColor: "#CEEDFF",
+    borderRadius: 20,
     marginTop: 50,
   },
   btn: {

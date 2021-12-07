@@ -24,7 +24,7 @@ export const loadClassTime = async (u_phone) => {
 }
 
 export const insertCheck = (u_phone) => {
-    return checkAxios.post(`$/attend/insert`,{
+    return checkAxios.post(`/attend/insert`,{
         u_phone:u_phone
     });
 }

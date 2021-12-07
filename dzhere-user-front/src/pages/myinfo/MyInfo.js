@@ -6,15 +6,17 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import { Header, Footer } from '../../components/myinfo/MyInfo';
 import MyInfoContainerAndroid from '../../containers/myinfo/MyInfoContainerAndroid'
 import MyInfoContainerWeb from '../../containers/myinfo/MyInfoContainerWeb'
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 
 const MyInfo = ({ navigation }) => {
     return (Platform.OS === "android") ? 
-    <SafeAreaView style={styles.container}>
+    // <SafeAreaView style={styles.container}>
+    <View style={{ backgroundColor: '#fff', height: "100%"}}>
         <Header />
             <MyInfoContainerAndroid />
         <Footer />
-    </SafeAreaView>
+    </View>
+    // </SafeAreaView>
     :
     <SafeAreaView style={styles.container}>
         <Header />

@@ -2,7 +2,7 @@
   "expo": {
     "name": "DHere",
     "slug": "DHere",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "splash": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "package": "com.dzhere.DHere",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/app-icon.png"
