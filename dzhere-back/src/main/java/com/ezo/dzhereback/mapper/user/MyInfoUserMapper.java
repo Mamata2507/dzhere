@@ -19,9 +19,12 @@ public interface MyInfoUserMapper {
 	@Update("update User set u_pw='${u_pw}' where u_phone='${u_phone}'")
 	int updatePw(String u_pw, String u_phone);
 
-	@Select("select ct.ct_day, hour(ct_start_time) as ct_hour, "
-			+ "minute(date_sub(ct.ct_start_time, interval 10 minute)) as ct_minute "
-			+ "from User u join Classtime ct on u.c_idx = ct.c_idx where u_phone='${u_phone}'")
+	@Select("select ct.ct_day, hour(ct_start_time) as ct_start_hour, "
+			+ "minute(date_sub(ct.ct_start_time, interval 10 minute)) as ct_start_minute, "
+			+ "hour(ct_end_time) as ct_end_hour, "
+			+ "minute(date_sub(ct.ct_end_time, interval 10 minute)) as ct_end_minute "
+			+ "from User u join Classtime ct on u.c_idx = ct.c_idx "
+			+ "where u_phone='${u_phone}'")
 	Lessontime getClassTime(String u_phone);
 
 
