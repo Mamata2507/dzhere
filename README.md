@@ -18,14 +18,14 @@ react native 구조 상 프로젝트 내에서 일반적으로 두 개의 App.js
 
 
 ## 스택
-|Skills|Version|
-|---------|----|
+|Skill|Version|Content|
+|---------|----|-------|
 |react-native | 0.64.3| APP 개발 시 중점적으로 사용|
 |react.js | 17.0.1| WEB 개발 시 일부 사용|
-|react-redux | ^7.2.6| react 앱 상태관리를 위해 redux 사용|
+|react-redux | 7.2.6| react 앱 상태관리를 위해 redux 사용|
 |mysql | 8.0.x| DB|
-|expo cli | ~43.0.2| develope tool|
+|expo cli | 43.0.2| develope tool|
 |spring-boot | jdk 11| client-server 간의 데이터 전달을 위한 API 쿼리 작성|
 |spring-security | jdk 11| 회원관리를 위한 auth 인증 체계 구축 (jwt)|
-|aws rds | mysql| DB 접근을 위하 DB 서버 구축|
+|aws rds | mysql| DB 접근을 위한 DB 서버 구축|
 |aws s3 & aws cloudfront & aws ec2 | storage| static web 을 위한 호스팅|
