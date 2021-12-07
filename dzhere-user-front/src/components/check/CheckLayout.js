@@ -37,20 +37,17 @@ import { StatusBar } from "expo-status-bar";
 export const Header = ({ onRefresh }) => {
   return (
     <>
-    {/* <StatusBar/> */}
-    <View style={styles.container, {alignItems: 'center', marginTop: 20}}>
-      <View style={styles.header}></View>
-      <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
+      {/* <StatusBar/> */}
+      <View style={(styles.container, { alignItems: "center", marginTop: 20 })}>
+        <View style={styles.header}></View>
+        <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
           <TouchableOpacity>
             {/* onPress={onRefresh} */}
             <Image source={refresh_icon} />
           </TouchableOpacity>
         </View>
-      <Image
-        style={styles.headerImage}
-        source={logo}
-      />
-    </View>
+        <Image style={styles.headerImage} source={logo} />
+      </View>
     </>
   );
 };
@@ -113,11 +110,12 @@ export const Contents = ({
 
   return (
     <View style={styles.contents}>
-      <View style={{flexDirection: "row"}}>
-      <StyledText>출석 체크</StyledText>
-      <Text style={{ fontSize: 25 }}>
-        {"<"+moment().format("YYYY-MM-DD")} {week[new Date().getDay()]+">"}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <StyledText>출석 체크</StyledText>
+        <Text style={{ fontSize: 25 }}>
+          {"<" + moment().format("YYYY-MM-DD")}{" "}
+          {week[new Date().getDay()] + ">"}
+        </Text>
       </View>
       <StyledClassList>
         {classList ? classList.c_name : "수강중인 수업이 없습니다."}
@@ -174,7 +172,7 @@ export const Contents = ({
         {attendList ? (
           <>
             <FlatList
-              style={{ marginBottom: 10 }}
+              style={{ marginBottom: 5, marginTop: 1 }}
               data={attendList}
               keyExtractor={(v) => v.id}
               renderItem={renderItem}
@@ -222,7 +220,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: "10%",
+    height: "100%",    
   },
   footer: {
     // flex: 3,
