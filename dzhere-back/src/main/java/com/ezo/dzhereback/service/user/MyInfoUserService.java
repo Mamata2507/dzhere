@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.ezo.dzhereback.domain.Lessontime;
 import com.ezo.dzhereback.domain.User;
 
 @Service
@@ -32,6 +34,9 @@ public class MyInfoUserService {
 		return myInfoMapper.updatePw(readUser.getU_pw(), u_phone);
 	}
 
+	public Lessontime getClassTime(String u_phone) {return myInfoMapper.getClassTime(u_phone);}
+	
+	
 //  public Member getPw(String u_phone) {return myInfoMapper.getPw(u_phone);}
 //
 //  public int updatePw(String u_phone, String u_pw) {return myInfoMapper.updatePw(u_phone, u_pw);}
