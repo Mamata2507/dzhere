@@ -1,6 +1,9 @@
 # 더조은Here
 Douzone 풀스택 개발자 교육과정 5기 2조 최종 프로젝트
 
+![image](https://user-images.githubusercontent.com/46439700/145102753-1c1b3c56-ad9f-4a7b-b66b-d612761030cf.png)
+
+
 ## 프로젝트 구조 (Cross-Platform)
 
 react native 구조 상 프로젝트 내에서 일반적으로 두 개의 App.js 를 가진다.
