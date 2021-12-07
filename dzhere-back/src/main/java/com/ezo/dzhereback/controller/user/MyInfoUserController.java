@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ezo.dzhereback.domain.Lessontime;
 import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.dto.MyInfoDto;
@@ -84,4 +85,20 @@ public class MyInfoUserController {
 			return new Result(updateResult);
 		}
 	}
+	
+	@GetMapping("/api/user/getClassTime/{u_phone}")
+	public Result getClassTime(@PathVariable("u_phone") String u_phone) {
+		System.out.println("<<<<<<<<<<<<<< getClassTime 컨트롤러 시작>>>>>>>>>>>");
+		Lessontime ct = myInfoService.getClassTime(u_phone);
+		MyInfoDto result = MyInfoDto.builder()
+				.ct_hour(ct.getCt_hour())
+				.ct_minute(ct.getCt_minute())
+				.ct_day(ct.getCt_day())
+				.build();
+		System.out.println("완료"+result);
+		System.out.println("<<<<<<<<<<<<<< getClassTime 컨트롤러 완료 >>>>>>>>>>>");
+		return new Result(result);
+	}
+	
+	
 }

@@ -24,5 +24,17 @@ export const checkPw = ({currentPassword, phone}) => {
     });
 };
 
+// 강의 시간
+export const getClassTime = phone => {
+    return client
+    .get(`/getClassTime/${phone}`)
+    .then(function (response){
+        return response.data.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
+
 export const updatePw = ({newPassword, phone}) => 
     client.post('/updatePw', {u_pw: newPassword, u_phone: phone});

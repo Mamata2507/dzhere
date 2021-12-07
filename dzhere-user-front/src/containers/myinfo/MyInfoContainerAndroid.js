@@ -10,6 +10,7 @@ import client from '../../lib/api/client';
 import { useNavigation } from '@react-navigation/native'
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
+import { getClassTime } from '../../lib/api/myInfo/myInfo';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -29,8 +30,77 @@ const MyInfoContainerAndroid = () => {
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
+  const [notifyStatus, setNotifyState] = useState(false); // 알람 수신 상태
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  // 푸시 알람 기능
+  function onNotify() {
+    setNotifyState(!notifyStatus)
+  }
+
+  // 알람 수신 상태 변경할 때 마다 실행
+  useEffect(() => {
+    // 푸시 알람 ON
+    if(notifyStatus === true){
+      async function schedulePushNotification() {
+        console.log('<<<<<<<< [ 푸시 알람 ON ] >>>>>>>>>>>');
+        const ct = await getClassTime(phone); // 학생의 수업 시간 가져오기
+        let ct_hour = ct.ct_hour; // 수업 시작 시간
+        let ct_minute = ct.ct_minute; // 수업 시작 10분 전
+        let day_temp = ct.ct_day; // 수업 요일
+        let ct_day = day_temp.split('');
+        for (let i = 0; i < ct_day.length; i++) {
+          switch (ct_day[i]) {
+            case '월':
+              ct_day[i] = 2;
+              break;
+            case '화':
+              ct_day[i] = 3;
+              break;
+            case '수':
+              ct_day[i] = 4;
+              break;
+            case '목':
+              ct_day[i] = 5;
+              break;
+            case '금':
+              ct_day[i] = 6;
+              break;
+            default:
+              break;
+          }
+        }
+
+      // 요일의 길이만큼 트리거 생성
+      for (let i = 0; i < ct_day.length; i++) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "[더조은here] ⏰출석체크를 해주세요",
+            body: '수업 시작 10분 전입니다',
+            data: { url: '../../pages/check/check_index' }, 
+          },
+          trigger: { 
+            channelId: 'check',
+            weekday: ct_day[i],
+            hour: ct_hour,
+            minute: ct_minute,
+            repeats: true,
+          },
+        });
+      }
+    }
+    schedulePushNotification();
+  } 
+    // 푸시 알람 OFF
+    if(notifyStatus === false) {
+      async function deleteNotificationChannel() {
+        console.log('<<<<<<<< [ 푸시 알람 OFF ] >>>>>>>>>>>');
+        await Notifications.deleteNotificationChannelAsync('check');
+      }
+      deleteNotificationChannel();
+    }
+  }, [notifyStatus]);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -48,18 +118,6 @@ const MyInfoContainerAndroid = () => {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  async function schedulePushNotification() {
-    console.log('클릭!');
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: 'Here is the notification body',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 1 },
-    });
-  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -88,11 +146,10 @@ const MyInfoContainerAndroid = () => {
         lightColor: '#FF231F7C',
       });
     }
-  
     return token;
   }
 
-
+  // 로그아웃
   function onPress(){
       apiLogout()
       .then(async (res) => {
@@ -128,11 +185,13 @@ const MyInfoContainerAndroid = () => {
         console.log("apiLogout.catch - e:", e);
       });
    } 
+
   return (
       <MyInfoAndroid
           phone={phone}
-          onPress={onPress}
-          schedulePushNotification={schedulePushNotification}
+          onPress={onPress}           // 로그아웃
+          onNotify={onNotify}         // 푸시알람
+          notifyStatus={notifyStatus} // 푸시 알람 수신 상태
       />
   );
 };

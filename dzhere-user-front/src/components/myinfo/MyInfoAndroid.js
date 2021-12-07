@@ -6,10 +6,9 @@ import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
 
-export const MyInfoAndroid = ({ phone, onPress, schedulePushNotification }) => {
+export const MyInfoAndroid = ({ phone, onPress, onNotify, notifyStatus }) => {
 
   const navigation = useNavigation();
-  // console.log(`${notify}`);
 
   return(
     <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
@@ -35,11 +34,15 @@ export const MyInfoAndroid = ({ phone, onPress, schedulePushNotification }) => {
       <View style={styles.myInfo}>
         <IconButton type={images.ring}/>
         <Text style={styles.myInfoText}>푸시 알림</Text>
-        <TouchableOpacity onPress={async () => {
-          await schedulePushNotification();
-        }}>
-          <Image style={[{width: 30, height: 30}]} source={images.on} />
-        </TouchableOpacity>
+        {notifyStatus?
+          <TouchableOpacity onPress={onNotify}>
+            <Image style={[{width: 30, height: 30}]} source={images.on} />
+          </TouchableOpacity>
+          :
+          <TouchableOpacity onPress={onNotify}>
+            <Image style={[{width: 30, height: 30}]} source={images.off} />
+          </TouchableOpacity>
+        }
       </View>
       <View style={styles.myInfo}>
         <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>이용약관</Text>
