@@ -29,7 +29,7 @@ public interface LessonAdminMapper {
 	List<LessontimeDto> selectClassTimeList(@Param("user") final UserDto userDto);
 
 	// 소속 기관이 연 강의의 수강생 외부장소 등록 정보(external) 리스트
-	@Select("select * from External where c_idx=#{user.c_idx} and u_idx in (select u_idx from User where u_name=#{user.u_name} and ag_idx=#{user.ag_idx} and u_accept=1 and u_auth=1)")
+	@Select("select * from External where c_idx=#{user.c_idx} and u_idx in (select u_idx from User where u_name=#{user.u_name} and ag_idx=#{user.ag_idx} and u_accept=1 and u_auth > 0)")
 	List<ExternalDto> selectClassExternalList(@Param("user") final UserDto userDto);
 	
 	@Select("select i.i_idx, i.c_idx, i.ag_idx, i.i_name, i.i_ssid, i.i_bssid, c.c_name from Class as c join Internal as i on c.c_idx=i.c_idx where i.ag_idx=#{user.ag_idx}")
