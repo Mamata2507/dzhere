@@ -91,8 +91,10 @@ public class MyInfoUserController {
 		System.out.println("<<<<<<<<<<<<<< getClassTime 컨트롤러 시작>>>>>>>>>>>");
 		Lessontime ct = myInfoService.getClassTime(u_phone);
 		MyInfoDto result = MyInfoDto.builder()
-				.ct_hour(ct.getCt_hour())
-				.ct_minute(ct.getCt_minute())
+			    .ct_start_hour(ct.getCt_start_hour())
+			    .ct_start_minute(ct.getCt_start_minute())
+			    .ct_end_hour(ct.getCt_end_hour())
+			    .ct_end_minute(ct.getCt_end_minute())
 				.ct_day(ct.getCt_day())
 				.build();
 		System.out.println("완료"+result);

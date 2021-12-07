@@ -45,10 +45,10 @@ const MyInfoContainerAndroid = () => {
       async function schedulePushNotification() {
         console.log("<<<<<<<< [ 푸시 알람 ON ] >>>>>>>>>>>");
         const ct = await getClassTime(phone); // 학생의 수업 시간 가져오기
-        let ct_hour = ct.ct_hour; // 수업 시작 시간
-        let ct_minute = ct.ct_minute; // 수업 시작 10분 전
-        // let ct_hour = 16; // 수업 시작 시간
-        // let ct_minute = 22; // 수업 시작 10분 전
+        let ct_start_hour = ct.ct_start_hour; // 수업 시작 시간
+        let ct_start_minute = ct.ct_start_minute; // 수업 시작 10분 전
+        let ct_end_hour = ct.ct_end_hour; // 수업 시작 시간
+        let ct_end_minute = ct.ct_end_minute; // 수업 시작 10분 전
         let day_temp = ct.ct_day; // 수업 요일
         let ct_day = day_temp.split("");
         for (let i = 0; i < ct_day.length; i++) {
@@ -73,31 +73,48 @@ const MyInfoContainerAndroid = () => {
           }
         }
 
-        // 요일의 길이만큼 트리거 생성
-        for (let i = 0; i < ct_day.length; i++) {
-          await Notifications.scheduleNotificationAsync({
-            content: {
-              title: "[더조은here] ⏰출석체크를 해주세요",
-              body: "수업 시작 10분 전입니다",
-              data: { url: "../../pages/check/check_index" },
-            },
-            trigger: {
-              channelId: "check",
-              weekday: ct_day[i],
-              hour: ct_hour,
-              minute: ct_minute,
-              repeats: true,
-            },
-          });
-        }
+      // 요일의 길이만큼 트리거 생성
+      for (let i = 0; i < ct_day.length; i++) {
+        // 수업 시작 10분 전 알림
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "[더조은here] ⏰출석체크를 해주세요",
+            body: '수업 시작 10분 전입니다',
+            data: { url: '../../pages/check/check_index' }, 
+          },
+          trigger: { 
+            channelId: 'start_check',
+            weekday: ct_day[i],
+            hour: ct_start_hour,
+            minute: ct_start_minute,
+            repeats: true,
+          },
+        });
+        // 수업 종료 10분 전 알림
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "[더조은here] ⏰수업 종료 10분 전입니다",
+            body: '퇴실체크를 잊지마세요!',
+            data: { url: '../../pages/check/check_index' }, 
+          },
+          trigger: { 
+            channelId: 'end_check',
+            weekday: ct_day[i],
+            hour: ct_end_hour,
+            minute: ct_end_minute,
+            repeats: true,
+          },
+        });
       }
       schedulePushNotification();
     }
     // 푸시 알람 OFF
     if (notifyStatus === false) {
       async function deleteNotificationChannel() {
-        console.log("<<<<<<<< [ 푸시 알람 OFF ] >>>>>>>>>>>");
-        await Notifications.deleteNotificationChannelAsync("check");
+        console.log('<<<<<<<< [ 푸시 알람 OFF ] >>>>>>>>>>>');
+        await Notifications.deleteNotificationChannelAsync('start_check');
+        await Notifications.deleteNotificationChannelAsync('end_check');
+
       }
       deleteNotificationChannel();
     }
