@@ -1,6 +1,6 @@
 package com.ezo.dzhereback.dto;
-import com.ezo.dzhereback.domain.Lessonlocation;
 
+import com.ezo.dzhereback.domain.Lessonlocation;
 import lombok.*;
 
 @Data

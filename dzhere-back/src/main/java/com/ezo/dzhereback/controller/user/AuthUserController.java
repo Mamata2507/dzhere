@@ -4,7 +4,7 @@ import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.dto.AuthDto;
 import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.jwt.TokenProvider;
-import com.ezo.dzhereback.service.user.*;
+import com.ezo.dzhereback.service.user.AuthUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

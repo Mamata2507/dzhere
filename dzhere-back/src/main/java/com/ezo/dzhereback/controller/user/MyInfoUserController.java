@@ -1,25 +1,15 @@
 package com.ezo.dzhereback.controller.user;
 
-import com.ezo.dzhereback.service.user.MyInfoUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ezo.dzhereback.domain.Lessontime;
-import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.dto.MyInfoDto;
 import com.ezo.dzhereback.dto.Result;
-
-
+import com.ezo.dzhereback.service.user.MyInfoUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin

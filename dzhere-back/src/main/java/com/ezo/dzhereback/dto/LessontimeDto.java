@@ -1,9 +1,7 @@
 package com.ezo.dzhereback.dto;
-import lombok.*;
-import java.sql.Time;
-import java.util.Date;
 
 import com.ezo.dzhereback.domain.Lessontime;
+import lombok.*;
 
 @Data
 @Getter @Setter

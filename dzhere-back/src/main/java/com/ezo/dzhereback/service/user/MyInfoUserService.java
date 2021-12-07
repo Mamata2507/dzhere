@@ -35,8 +35,8 @@ public class MyInfoUserService {
 	}
 
 	public Lessontime getClassTime(String u_phone) {return myInfoMapper.getClassTime(u_phone);}
-	
-	
+
+
 //  public Member getPw(String u_phone) {return myInfoMapper.getPw(u_phone);}
 //
 //  public int updatePw(String u_phone, String u_pw) {return myInfoMapper.updatePw(u_phone, u_pw);}

@@ -22,7 +22,7 @@ public class TeacherSearchDto {
     private String end_date;
     private String a_today_date;
     private int a_late_status;     // 지각
-    private int a_abscent;       // 조퇴
+    private int a_absent;       // 조퇴
     private int a_leave;         // 결석
     private int a_not_exit;      // 미퇴실
     private int attend_state;    // 상태 코드
@@ -42,7 +42,7 @@ public class TeacherSearchDto {
                 .end_date(end_date)
                 .a_today_date(a_today_date)
                 .a_late_status(a_late_status)
-                .a_abscent(a_abscent)
+                .a_absent(a_absent)
                 .a_leave(a_leave)
                 .a_not_exit(a_not_exit)
                 .attend_state(attend_state)
@@ -51,7 +51,7 @@ public class TeacherSearchDto {
     }
 
     @Builder
-    public TeacherSearchDto(int ag_idx, int c_inx, String c_name, String ag_name, String u_name, String u_phone, String start_date, String end_date, int a_late_status, int a_abscent, int a_leave, int a_not_exit) {
+    public TeacherSearchDto(int ag_idx, int c_inx, String c_name, String ag_name, String u_name, String u_phone, String start_date, String end_date, int a_late_status, int a_absent, int a_leave, int a_not_exit) {
         this.ag_idx = ag_idx;
         this.c_inx = c_inx;
         this.c_name = c_name;
@@ -61,7 +61,7 @@ public class TeacherSearchDto {
         this.start_date = start_date;
         this.end_date = end_date;
         this.a_late_status = a_late_status;
-        this.a_abscent = a_abscent;
+        this.a_absent = a_absent;
         this.a_leave = a_leave;
         this.a_not_exit = a_not_exit;
     }

@@ -1,14 +1,20 @@
 package com.ezo.dzhereback.controller.user;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-import com.ezo.dzhereback.domain.*;
+import com.ezo.dzhereback.domain.External;
+import com.ezo.dzhereback.domain.Member;
+import com.ezo.dzhereback.dto.ExternalDto;
+import com.ezo.dzhereback.dto.ExternalSelectDto;
+import com.ezo.dzhereback.dto.Result;
 import com.ezo.dzhereback.service.user.ExternalUserService;
 import lombok.extern.slf4j.Slf4j;
-import com.ezo.dzhereback.dto.*;
-import com.ezo.dzhereback.dto.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin

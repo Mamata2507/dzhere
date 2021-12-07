@@ -1,8 +1,9 @@
 package com.ezo.dzhereback.controller.user;
 
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ezo.dzhereback.domain.*;
+import com.ezo.dzhereback.domain.AttendList;
+import com.ezo.dzhereback.domain.LoadAttendCnt;
+import com.ezo.dzhereback.domain.TodayAttendList;
+import com.ezo.dzhereback.domain.WifiInfo;
 import com.ezo.dzhereback.dto.CheckInsertDto;
 import com.ezo.dzhereback.dto.WifiInfoDto;
 import com.ezo.dzhereback.service.user.CheckUserService;

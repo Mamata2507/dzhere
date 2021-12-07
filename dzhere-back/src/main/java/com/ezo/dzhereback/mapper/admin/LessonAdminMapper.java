@@ -1,8 +1,10 @@
 package com.ezo.dzhereback.mapper.admin;
-import java.util.List;
-import org.apache.ibatis.annotations.*;
-import com.ezo.dzhereback.domain.*;
+
+import com.ezo.dzhereback.domain.User;
 import com.ezo.dzhereback.dto.*;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface LessonAdminMapper {

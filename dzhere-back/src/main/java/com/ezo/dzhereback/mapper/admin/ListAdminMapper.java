@@ -3,11 +3,7 @@ package com.ezo.dzhereback.mapper.admin;
 import com.ezo.dzhereback.domain.Agency;
 import com.ezo.dzhereback.domain.Lesson;
 import com.ezo.dzhereback.domain.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
