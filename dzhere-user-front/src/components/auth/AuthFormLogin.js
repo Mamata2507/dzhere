@@ -6,7 +6,7 @@ import image from '../../../assets/logo.png'
 import client from '../../lib/api/client';
 
 const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
-    console.log("AuthFormLogin");
+    // console.log("AuthFormLogin");
 
     return (
       <>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignItems: "center",
     // justifyContent: "center",
-    top: Platform.OS === 'android' && 80,
+    // top: Platform.OS === 'android' && 80,
   },
   loginBtn: {
     backgroundColor: "#FFC279",

@@ -17,8 +17,8 @@ const check_index = ({ navigation, route }) => {
     userInfo: auth.userInfo,
   }))
 
-  console.log('check_index 페이지에서 받은 토큰 결과 : \n', userInfo.token, typeof(userInfo.token));
-  console.log('check_index 페이지에서 받은 헤더 정보 : \n', client.defaults.headers.common['Authorization']);
+  // console.log('check_index 페이지에서 받은 토큰 결과 : \n', userInfo.token, typeof(userInfo.token));
+  // console.log('check_index 페이지에서 받은 헤더 정보 : \n', client.defaults.headers.common['Authorization']);
 
   // 뒤로가기 앱 종료
   const backAction = () => {

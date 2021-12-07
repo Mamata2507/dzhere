@@ -41,8 +41,7 @@ export const Header = ({ onRefresh }) => {
       <View style={[styles.container, { alignItems: "center", marginTop: 20 }]}>
         <View style={styles.header}></View>
         <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
-          <TouchableOpacity>
-            {/* onPress={onRefresh} */}
+          <TouchableOpacity onPress={onRefresh}>            
             <Image source={refresh_icon} />
           </TouchableOpacity>
         </View>
