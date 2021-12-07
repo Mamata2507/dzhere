@@ -30,14 +30,14 @@ const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthCha
                         (attendCnt)&&
                         <>
                         <DataTable.Row>
-                            <DataTable.Cell numeric>{attendCnt.a_total_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_real_date_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_real_date_cnt-attendCnt.a_absent_cnt-attendCnt.a_leave_cnt-attendCnt.a_not_exit_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_absent_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{attendCnt.a_leave_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_late_status_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{'100%'}</DataTable.Cell>
-                        </DataTable.Row>                        
+                            <DataTable.Cell numeric>{attendCnt.a_leave_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>                            
+                            <DataTable.Cell numeric>{(((attendCnt.a_real_date_cnt-attendCnt.a_absent_cnt-attendCnt.a_not_exit_cnt-attendCnt.a_leave_cnt)/(attendCnt.a_real_date_cnt))*100).toFixed(1)}%</DataTable.Cell>
+                        </DataTable.Row>                       
                         </>                        
                     }
                 </DataTable>

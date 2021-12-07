@@ -39,7 +39,7 @@ export const Header = ({classList}) => {
 const optionsPerPage = [2, 3, 4];
 
 export const Content = ({classTime, onPressSearch, onMonthChange, attendCnt}) => {
-    let [tableHead, setTableHead] = React.useState(['총교육일수', '출석일수', '결석', '지각', '조퇴', '미퇴실', '출석률']);
+    let [tableHead, setTableHead] = React.useState(['총훈련일수', '출석일', '결석', '지각', '조퇴', '미퇴실', '출석률']);
 
     return (Platform.OS === "android") ? 
         <ListLayoutContentAndroid 
@@ -89,7 +89,7 @@ export const Footer = ({attendList}) => {
                                     <DataTable.Cell numeric>{v.a_attend_time}</DataTable.Cell>
                                     <DataTable.Cell numeric>{v.a_exit_time}</DataTable.Cell>
                                     <DataTable.Cell numeric>{v.a_result_time}</DataTable.Cell>
-                                    <DataTable.Cell numeric style={(v.a_attend_state==="결석")&&{backgroundColor:'red'}}>{v.a_attend_state}</DataTable.Cell>
+                                    <DataTable.Cell numeric><Text style={(v.a_attend_state==="결석")&&{color:'red'}}>{v.a_attend_state}</Text></DataTable.Cell>
                                 </DataTable.Row>
                             ))
                         }                                

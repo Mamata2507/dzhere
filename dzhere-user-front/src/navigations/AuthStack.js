@@ -11,7 +11,7 @@ import Splash from "../components/common/splash"
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
-  console.log("AuthStack");
+  // console.log("AuthStack");
   const { isSignout } = useSelector(({ auth }) => ({
     isSignout: auth.isSignout,
   }));

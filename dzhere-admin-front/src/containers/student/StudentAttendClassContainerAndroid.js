@@ -267,7 +267,7 @@ const StudentAttendClassContainerAndroid = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
-      u_auth: 0,
+      u_auth: 1,
     };
 
     dispatch(getSearchAttend(searchObject));

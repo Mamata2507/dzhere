@@ -4,7 +4,7 @@ import AuthFormLogin from './AuthFormLogin';
 import AuthFormRegister from './AuthFormRegister';
 
 const AuthForm = ({type, form, onChangeText, onPress, error, navigation, route, validErrors }) => {
-    console.log("AuthForm");
+    // console.log("AuthForm");
     return (
       <>
         {type === "register" && (

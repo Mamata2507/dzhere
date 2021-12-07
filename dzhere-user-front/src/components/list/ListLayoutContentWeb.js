@@ -7,7 +7,7 @@ import { styles } from './Styles'
 const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthChange,attendCnt}) => {
     return (
         <View style={styles.contents}>            
-            <View style={styles.contentContainer}>
+            <View style={[styles.contentContainer,{width:200}]}>
                 {(days)&&<StyledSelect items={days} onMonthChange={onMonthChange}/>}
                 <Button title={'검색'} onPress={onPressSearch}/>
             </View>
@@ -29,13 +29,13 @@ const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthCha
                     {
                         (attendCnt)&&                        
                         <DataTable.Row>
-                            <DataTable.Cell numeric>{attendCnt.a_total_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_real_date_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_real_date_cnt-attendCnt.a_absent_cnt-attendCnt.a_leave_cnt-attendCnt.a_not_exit_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_absent_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{attendCnt.a_leave_cnt}일</DataTable.Cell>
                             <DataTable.Cell numeric>{attendCnt.a_late_status_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>
-                            <DataTable.Cell numeric>{'100%(sample)'}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_leave_cnt}일</DataTable.Cell>
+                            <DataTable.Cell numeric>{attendCnt.a_not_exit_cnt}일</DataTable.Cell>                            
+                            <DataTable.Cell numeric>{(((attendCnt.a_real_date_cnt-attendCnt.a_absent_cnt-attendCnt.a_not_exit_cnt-attendCnt.a_leave_cnt)/(attendCnt.a_real_date_cnt))*100).toFixed(1)}%</DataTable.Cell>
                         </DataTable.Row>                                                                        
                     }
                 </DataTable>

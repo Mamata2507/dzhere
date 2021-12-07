@@ -190,6 +190,7 @@ const CheckContainer = () => {
       }
     }
   };
+
   useEffect(() => {
     console.log("------btnState--------");
     console.log(btnState);
@@ -331,7 +332,9 @@ const CheckContainer = () => {
   }, [error]);
 
   useEffect(() => {
+    console.log(111);
     if (Refresh) {
+      console.log(222);
       phone && dispatch(loadClassTimeList(phone));
       dispatch(refreshResetCheckList());
       setFirt(true);

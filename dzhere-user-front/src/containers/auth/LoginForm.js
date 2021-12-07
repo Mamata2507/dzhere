@@ -8,7 +8,7 @@ import { apiLogin } from '../../lib/api/auth/auth';
 import client from '../../lib/api/client';
 
 const LoginForm = ({ navigation, route }) => {
-    console.log("LoginForm");
+    // console.log("LoginForm");
     const [error, setError] = useState(null);
 
     const dispatch = useDispatch();
