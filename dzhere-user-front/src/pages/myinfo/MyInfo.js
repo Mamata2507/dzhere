@@ -9,13 +9,6 @@ import MyInfoContainerWeb from '../../containers/myinfo/MyInfoContainerWeb'
 import { Platform } from 'react-native';
 
 const MyInfo = ({ navigation }) => {
-    // return (
-        // <SafeAreaView style={styles.container}>
-        //         <Header />
-        //         <MyInfoContainer />
-        //         <Footer />
-        // </SafeAreaView>
-    // );
     return (Platform.OS === "android") ? 
     <SafeAreaView style={styles.container}>
         <Header />
