@@ -86,4 +86,3 @@ public interface TeacherMapper {
             "where a_idx = #{teacher.a_idx}")
     int updateTeacherUpdate (@Param("teacher")TeacherAttend teacherAttend);
 }
-
