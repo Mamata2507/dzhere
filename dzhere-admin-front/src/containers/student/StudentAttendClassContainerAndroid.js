@@ -55,8 +55,8 @@ const StudentAttendClassContainerAndroid = () => {
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
-  // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const { lessonList, agencyList, searchList, uid, checkid, updateResult } =
     useSelector(({ studentAttend }) => ({
       agencyList: studentAttend.agencyList,
@@ -267,7 +267,7 @@ const StudentAttendClassContainerAndroid = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
-      u_auth: 0,
+      u_auth: 1,
     };
 
     dispatch(getSearchAttend(searchObject));

@@ -55,8 +55,8 @@ const StudentAttendClassContainerWeb = () => {
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
-  // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const {
     lessonList,
     agencyList,
@@ -94,8 +94,8 @@ const StudentAttendClassContainerWeb = () => {
     setModalDate(uid.a_today_date);
     setModalStartTime(uid.a_attend_time && uid.a_attend_time.substring(11, 19));
     setModalEndTime(uid.a_exit_time && uid.a_exit_time.substring(11, 19));
-    console.log("--------------");
-    console.log(uid);
+    // console.log("--------------");
+    // console.log(uid);
   }, [uid]);
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const StudentAttendClassContainerWeb = () => {
   // }, [updateError]);
 
   const showDatePickerSbtn = () => {
-    console.log("여기----------------");
+    // console.log("여기----------------");
     setBtnFlag(0);
     setDatePickerVisibility(true);
   };
@@ -284,7 +284,7 @@ const StudentAttendClassContainerWeb = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
-      u_auth: 0,
+      u_auth: 1,
     };
 
     dispatch(getSearchAttend(searchObject));

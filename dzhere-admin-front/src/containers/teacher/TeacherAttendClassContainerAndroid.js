@@ -55,8 +55,8 @@ const TeacherAttendClassContainerAndroid = () => {
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
-  // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const { lessonList, agencyList, searchList, uid, checkid, updateResult } =
     useSelector(({ teacher }) => ({
       agencyList: teacher.agencyList,

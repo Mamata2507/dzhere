@@ -8,7 +8,8 @@ import {
 import { getStudentCount } from "../../modules/user/studentCount";
 
 const StudentAttendContainerAndroid = () => {
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const dispatch = useDispatch();
   const { agencyList, lessonList, stuCount } = useSelector(
     ({ studentAttend, studentCount }) => ({
@@ -31,11 +32,11 @@ const StudentAttendContainerAndroid = () => {
     dispatch(getLessonList(phone));
   }, []);
 
-  useEffect(()=>{
-    console.log('=================123123===========');
-    console.log(stuCount);
-    console.log('=================123123===========');
-  },[stuCount])
+  // useEffect(()=>{
+  //   console.log('=================123123===========');
+  //   console.log(stuCount);
+  //   console.log('=================123123===========');
+  // },[stuCount])
   
   const handleSetAttend = useCallback((e) => {
     console.log(e);
@@ -52,8 +53,8 @@ const StudentAttendContainerAndroid = () => {
   };
 
   const handleSelectLesson = (e) => {
-    console.log('-------------------------');
-    console.log(lessonList[e]);
+    // console.log('-------------------------');
+    // console.log(lessonList[e]);
     setSelectLesson(() => lessonList[e]);
   }
   
