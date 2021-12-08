@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import { ko } from "date-fns/esm/locale";
 import "./react-datepicker.css";
+import { CSVLink } from 'react-csv';
 
 export const TeacherAttendClassWeb = ({
   editTodayDate,
@@ -72,6 +73,38 @@ export const TeacherAttendClassWeb = ({
   error,
   visibleUpdate,
 }) => {
+
+  const headers = [
+    { label: "순번", key: "index" },
+    { label: "기관명", key: "agname" },
+    { label: "강사명", key: "name" },
+    { label: "수강명", key: "class" },
+    { label: "출석일", key: "today" },
+    { label: "출석시간", key: "attend_time" },
+    { label: "퇴실시간", key: "exit_time" },
+    { label: "지각 유무", key: "late" },
+    { label: "조퇴 유무", key: "leave" },
+    { label: "결석 유무", key: "absent" },
+    { label: "미퇴실 유무", key: "not_exit" },
+  ];
+
+  const cidx = classList.map((item, idx) => ({cidx: item.c_idx, cname: item.c_name}));
+  const classname = cidx.filter((item, idx) => item.cidx == selectedClass);
+  const data = teacherAttendList.map((item, idx) => ({
+    index: idx,
+    agname: agName.ag_name,
+    name: teacherIdxName["u_name"],
+    class: classname[0]?.cname,
+    today: item.a_today_date,
+    attend_time: item.a_attend_time,
+    exit_time: item.a_exit_time,
+    late: item.a_late_status == 1 ? "유" : "무",
+    leave: item.a_leave == 1 ? "유" : "무",
+    absent: item.a_absent == 1 ? "유" : "무",
+    not_exit: item.a_not_exit == 1 ? "유" : "무",
+  }));
+
+
   return (
     <View style={styles.container}>
       <Provider>
@@ -394,9 +427,11 @@ export const TeacherAttendClassWeb = ({
           </View>
         </View>
         {/* <<<<<<<<<<<<<<<<<< 헤더 끝 >>>>>>>>>>>>>>>>>>>>*/}
-        <View>
+        <View style={{display: "flex",
+    flexDirection: "row",
+    alignSelf: "flex-end",}}>
           <TouchableOpacity
-            style={[styles.btn, { alignSelf: "flex-end", margin: "1%" }]}
+            style={[styles.btn, { margin: "2%" }]}
             onPress={() => {
               if (selectedClass === 0) {
                 return alert("강의를 먼저 선택 해주세요!");
@@ -420,6 +455,19 @@ export const TeacherAttendClassWeb = ({
           >
             <Text style={styles.btnText}>검색</Text>
           </TouchableOpacity>
+          <CSVLink
+            headers={headers}
+            data={data}
+            filename={"강사_" + teacherIdxName["u_name"] + "_"  + classname[0]?.cname + "_출석부" + ".csv"}
+            target="_blank"
+            style={{ textDecoration: "none", }}
+          >
+            <TouchableOpacity onPress={() => alert('출석부를 다운로드 하시겠습니까?')}>
+              <Text style={{color: "#5AA0C8", width: 100, margin: 10}}>
+                Excel 다운로드
+              </Text>
+            </TouchableOpacity>
+          </CSVLink>
         </View>
 
         {/* <<<<<<<<<<<<<<<<<<  content 시작 >>>>>>>>>>>>>>>>>>>>*/}
