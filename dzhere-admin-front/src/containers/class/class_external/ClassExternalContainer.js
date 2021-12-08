@@ -139,11 +139,11 @@ const ClassExternalContainer = () => {
   const onSubmit = () => {
       classExternalPermitApi();
       // dispatch(IsVisible(true));
+      dispatch(IsVisible(false));
+      setVisible(false);
       Platform.OS === "android"
         ? Alert.alert("승인이 완료되었습니다.")
         : alert("승인이 완료되었습니다.");
-      dispatch(IsVisible(false));
-      setVisible(false);
       dispatch(setCheck(false));
       dispatch(setValue(0));
       // dispatch(setValue(null));

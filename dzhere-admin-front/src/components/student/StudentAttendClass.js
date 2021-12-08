@@ -129,7 +129,7 @@ export default function TeacherAttendClass(props) {
               <ContentWeb searchList={props.searchList} />
 
               <FooterWeb
-                lessonList={props.lessonList} searchList={props.searchList} handleVisibleUpdateBtn={props.handleVisibleUpdateBtn}
+                searchObject={props.searchObject} lessonList={props.lessonList} searchList={props.searchList} handleVisibleUpdateBtn={props.handleVisibleUpdateBtn}
               />
             </Provider>
           </View>

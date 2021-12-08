@@ -36,6 +36,7 @@ const StudentAttendClassContainerWeb = () => {
   const [userState, setUserState] = useState();
 
   const [selectLesson, setSelectLesson] = useState();
+  const [lessonObject, setLessonObject] = useState(null);
   const [selectAgency, setSelectAgency] = useState();
   const [startSearchDate, setStartSearchDate] = useState(
     moment().format("YY-MM-DD")
@@ -295,6 +296,7 @@ const StudentAttendClassContainerWeb = () => {
       u_auth: 1,
     };
 
+    setLessonObject(searchObject.lesson);
     dispatch(getSearchAttend(searchObject));
   };
 
@@ -368,6 +370,7 @@ const StudentAttendClassContainerWeb = () => {
         handleEventBtn03={handleEventBtn03}
         handleEventBtn04={handleEventBtn04}
         teacherName={teacherName}
+        searchObject={lessonObject}
       />
     </>
   );

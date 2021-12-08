@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CSVLink } from 'react-csv';
+import { useSelector } from "react-redux";
 import styles from "./Styles";
 
 const FooterWeb = ({
   searchList,
   handleVisibleUpdateBtn,
-  lessonList
+  lessonList,
+  searchObject
 }) => {
   const headers = [
     { label: "순번", key: "index" },
@@ -20,17 +22,15 @@ const FooterWeb = ({
   const data = searchList.map((item, idx) => ({
     index: idx,
     name: item.u_name,
-    class: lessonList[item.c_inx].c_name,
+    class: searchObject,
     today: item.a_today_date,
     attend_time: item.a_attend_time,
     exit_time: item.a_exit_time,
     leave: item.a_leave ? "유" : "무",
   }));
 
-  const c_idx = searchList[0]?.c_inx;
-  const classname = lessonList[c_idx]?.c_name;
+  const classname = searchObject;
   const name = searchList[0]?.u_name;
-
   return (
     <>
       <View style={stylesBase.container}>
