@@ -28,7 +28,7 @@ export const getTeacherSearch = async (item) => {
   return await client.post(`${teacherUrl}/search`, {
     ag_idx: agency.ag_idx,
     c_idx: agency.c_idx,
-    c_name: item.lesson,
+    c_name: item.u_auth == 1 ? item.lesson.c_name : item.lesson,
     ag_name: agency.ag_name,
     u_name: name,
     u_phone: u_phone,
