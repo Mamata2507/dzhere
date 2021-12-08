@@ -65,6 +65,7 @@ export default function TeacherAttendClass(props) {
                 agencyList={props.agencyList}
                 handleSetTeacherName={props.handleSetTeacherName}
                 btnDisable={props.btnDisable}
+                handleSetSelectLesson={props.handleSetSelectLesson}
               />
               <ContentAndroid searchList={props.searchList} />
               <FooterAndroid
@@ -123,6 +124,7 @@ export default function TeacherAttendClass(props) {
                 agencyList={props.agencyList}
                 handleSetTeacherName={props.handleSetTeacherName}
                 btnDisable={props.btnDisable}
+                handleSetSelectLesson={props.handleSetSelectLesson}
               />
               <ContentWeb searchList={props.searchList} />
 

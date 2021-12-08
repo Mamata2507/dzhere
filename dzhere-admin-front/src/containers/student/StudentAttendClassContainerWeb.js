@@ -258,6 +258,12 @@ const StudentAttendClassContainerWeb = () => {
     setSelectDateState(() => e);
   };
 
+  const handleSetSelectLesson = (e) => {
+    console.log("-------------");
+    console.log(e);
+    setSelectLesson(e);
+  };
+
   // modal 이벤트
   const handleVisibleUpdateBtn = () => {
     if (checkid) {
@@ -336,6 +342,7 @@ const StudentAttendClassContainerWeb = () => {
         handleVisibleUpdateBtn={handleVisibleUpdateBtn}
         handleVisibleBtn={handleVisibleBtn}
         handleUpdateBtn={handleUpdateBtn}
+        handleSetSelectLesson={handleSetSelectLesson}
         // modal
         isModalDatePickerVisible={isModalDatePickerVisible}
         showModalDatePickerBtn={showModalDatePickerBtn}
