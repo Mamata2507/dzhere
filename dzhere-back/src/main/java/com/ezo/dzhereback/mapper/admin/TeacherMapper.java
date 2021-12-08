@@ -13,6 +13,9 @@ import java.util.List;
 
 @Mapper
 public interface TeacherMapper {
+    @Select("select c_idx from Class where c_name=#{c_name} ")
+    int getCidx(String c_name);
+
     @Select("select * from Agency where ag_idx = (select ag_idx from User where u_phone = #{u_phone})")
     List<Agency> getAgencyList(String u_phone);
 
@@ -20,6 +23,9 @@ public interface TeacherMapper {
     List<Lesson> getLessonList(String u_phone);
 
     // 전체 기간
+//    @Select("select A.a_idx, U.u_idx, U.u_phone, U.u_email, U.u_name, A.a_attend_time, A.a_exit_time, A.a_leave, A.a_late_status, A.a_absent, A.a_not_exit , A.a_today_date\n" +
+//            "from User U join Attend A on U.u_idx = A.u_idx\n" +
+//            "where U.ag_idx=#{ag_idx} and U.c_idx=#{c_idx}  and U.u_accept=1 and U.u_auth = #{u_auth} and U.u_name=#{u_name} and a_today_date order by A.a_today_date")
     @Select("select A.a_idx, U.u_idx, U.u_phone, U.u_email, U.u_name, A.a_attend_time, A.a_exit_time, A.a_leave, A.a_late_status, A.a_absent, A.a_not_exit , A.a_today_date\n" +
             "from User U join Attend A on U.u_idx = A.u_idx\n" +
             "where U.ag_idx=#{ag_idx} and U.c_idx=#{c_idx}  and U.u_accept=1 and U.u_auth = #{u_auth} and U.u_name=#{u_name} and a_today_date order by A.a_today_date")
@@ -54,7 +60,7 @@ public interface TeacherMapper {
 
     @Select("select A.a_idx, U.u_idx, U.u_phone, U.u_email, U.u_name, A.a_attend_time, A.a_exit_time, A.a_leave, A.a_late_status, A.a_absent, A.a_not_exit , A.a_today_date\n" +
             "from User U join Attend A on U.u_idx = A.u_idx\n" +
-            "where U.ag_idx=#{ag_idx} and U.c_idx=#{c_idx} and U.u_accept=1 and U.u_auth = #{u_auth} and U.u_name=#{u_name} and A.a_late_status = #{a_late_status} and A.a_today_date between #{start_date} and #{end_date} order by A.a_today_date")
+            "where U.ag_idx=#{ag_idx} and U.u_accept=1 and U.u_auth = #{u_auth} and U.u_name=#{u_name} and A.a_late_status = #{a_late_status} and A.a_today_date between #{start_date} and #{end_date} order by A.a_today_date")
     List<Teacher> getTeacherSearch_01(int ag_idx, int c_idx, String u_name, String start_date, String end_date, int u_auth, int a_late_status );
 
     @Select("select A.a_idx, U.u_idx, U.u_phone, U.u_email, U.u_name, A.a_attend_time, A.a_exit_time, A.a_leave, A.a_late_status, A.a_absent, A.a_not_exit , A.a_today_date\n" +

@@ -61,7 +61,7 @@ export default function TeacherAttendClass({
   visibleUpdate,
 
   /////////////////////////////////////////////////////////////////////////////
-
+  handleSetSelectLesson,
   btnFlag,
   startSearchDate,
   endSearchDate,
@@ -158,6 +158,7 @@ export default function TeacherAttendClass({
                 agencyList={agencyList}
                 handleSetTeacherName={handleSetTeacherName}
                 btnDisable={btnDisable}
+                handleSetSelectLesson={handleSetSelectLesson}
               />
               <ContentAndroid searchList={searchList} />
               <FooterAndroid
