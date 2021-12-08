@@ -34,8 +34,8 @@ const TeacherListContainer = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
   const { agName, classList, teacherList, loadingAgName, 
-          loadingTeacherList, filterList, uid, resultError, userInfo }
-         = useSelector(({ list, loading, auth }) => ({
+          loadingTeacherList, filterList, uid, resultError, userInfo, ag_idx }
+         = useSelector(({ list, loading, auth, classes }) => ({
     agName: list.agName,
     loadingAgName: loading['list/GET_AG_NAME'],
     classList: list.classList,
@@ -45,9 +45,9 @@ const TeacherListContainer = () => {
     uid: list.uid, 
     userInfo: auth.userInfo,
     resultError: list.resultError,
+    ag_idx: classes.agency.ag_idx
   }))
 
-  const agIdx = agName.ag_idx
   const regex = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
   const uAuth = 2;
 
@@ -61,7 +61,7 @@ const TeacherListContainer = () => {
       dispatch(getAgName(userInfo.userPhone));
       dispatch(getClassList(userInfo.userPhone));
       if(Platform.OS !== "android"){
-        dispatch(getTeacherList({agIdx, selectedClass}))
+        dispatch(getTeacherList({ag_idx, selectedClass}))
         setPickerStatus(true)
       }
     }
@@ -83,7 +83,7 @@ const TeacherListContainer = () => {
 
   // 헤더 - 검색 버튼 클릭 시
   const onSearch = () => {
-      dispatch(getTeacherList({agIdx, selectedClass}))
+      dispatch(getTeacherList({ag_idx, selectedClass}))
       if(Platform.OS === "android"){
         setPickerStatus(true)
       }
@@ -105,7 +105,7 @@ const TeacherListContainer = () => {
   
   // 등록 모달 껐을 때 
   const hideModalAdd = () => {
-    dispatch(getTeacherList({agIdx, selectedClass}))
+    dispatch(getTeacherList({ag_idx, selectedClass}))
     setVisibleAdd(false);
     setSelectedClassAdd(0)
     onChangeUname('')
@@ -194,7 +194,7 @@ const TeacherListContainer = () => {
         Alert.alert('전화번호 확인 버튼을 클릭하세요');
       }
     } else {
-      dispatch(insertUser({agIdx, selectedClassAdd, uName, uPhone, uAuth}))
+      dispatch(insertUser({ag_idx, selectedClassAdd, uName, uPhone, uAuth}))
       if(resultError){
         console.log(resultError);
         if(Platform.OS === 'web'){
@@ -253,7 +253,7 @@ const TeacherListContainer = () => {
         hideModalUpdate()
         dispatch(setCheck(false))
         dispatch(setValue(0))
-        dispatch(getTeacherList({agIdx, selectedClass}))
+        dispatch(getTeacherList({ag_idx, selectedClass}))
         if(selectedAccept < 2){
           let teacherList_ = teacherList;
           let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
@@ -290,7 +290,7 @@ const TeacherListContainer = () => {
         }
         dispatch(setCheck(false))
         dispatch(setValue(0))
-        dispatch(getTeacherList({agIdx, selectedClass}))
+        dispatch(getTeacherList({ag_idx, selectedClass}))
         if(selectedAccept < 2){
           let teacherList_ = teacherList;
           let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});

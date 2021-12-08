@@ -21,13 +21,13 @@ public interface ListAdminMapper {
 	@Select("select u_idx, u_name, u_phone, u_accept from User where ag_idx='${ag_idx}' and c_idx='${c_idx}' and u_auth=1;")
 	List<User> getStudentList(int ag_idx, int c_idx);
 	
-	@Select("select u_idx, u_name, u_phone, u_accept from User where u_auth=1;")
+	@Select("select u_idx, u_name, u_phone, u_accept from User where u_auth=1 and ag_idx='${ag_idx}'")
 	List<User> getStudentListAll(int ag_idx, int c_idx);
 	
 	@Select("select u_idx, u_name, u_phone, u_accept from User where ag_idx='${ag_idx}' and c_idx='${c_idx}' and u_auth=2;")
 	List<User> getTeacherList(int ag_idx, int c_idx);
 	
-	@Select("select u_idx, u_name, u_phone, u_accept from User where u_auth=2;")
+	@Select("select u_idx, u_name, u_phone, u_accept from User where u_auth=2 and ag_idx='${ag_idx}';")
 	List<User> getTeacherListAll(int ag_idx, int c_idx);
 	
 	@Delete("delete from User where u_idx='${u_idx}'")
