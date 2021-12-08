@@ -94,11 +94,11 @@ const TeacherAttendClassContainerAndroid = () => {
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(btnFlag);
-  },[btnFlag])
+  }, [btnFlag]);
 
-  const showDatePickerSbtn = () => {    
+  const showDatePickerSbtn = () => {
     setBtnFlag(0);
     setDatePickerVisibility(true);
   };
@@ -109,27 +109,27 @@ const TeacherAttendClassContainerAndroid = () => {
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-  const startDate = (date) => {    
+  const startDate = (date) => {
     setDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setStartSearchDate(() => current_datetime);
     hideDatePicker();
   };
-  const endDate = (date) => {    
+  const endDate = (date) => {
     setDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
     current_datetime =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth()+1) +
+      (current_datetime.getMonth() + 1) +
       "-" +
       current_datetime.getDate();
     setEndSearchDate(() => current_datetime);
@@ -144,7 +144,7 @@ const TeacherAttendClassContainerAndroid = () => {
     setModalDatePickerVisibility(false);
   };
   const modalSetDate = (date) => {
-    console.log('123123123123');
+    // console.log('123123123123');
     setModalDatePickerVisibility(true);
     let temp = date.toString();
     let current_datetime = new Date(temp);
@@ -176,7 +176,7 @@ const TeacherAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       "00";
     setModalStartTime(() => current_datetime);
@@ -189,7 +189,7 @@ const TeacherAttendClassContainerAndroid = () => {
     current_datetime =
       current_datetime.getHours() +
       ":" +
-      (current_datetime.getMinutes()) +
+      current_datetime.getMinutes() +
       ":" +
       current_datetime.getSeconds();
     setModalEndTime(() => current_datetime);
@@ -201,30 +201,32 @@ const TeacherAttendClassContainerAndroid = () => {
   };
 
   const handleUpdateBtn = async () => {
+    dispatch(resetList());
     uid.a_today_date = modalDate;
     uid.a_attend_time = modalStartTime;
     uid.a_exit_time = modalEndTime;
-    await dispatch(updateTeacherAttend(uid));
-    if(updateResult>0){ 
-      setUpdateBtn(false);
-      alert('수정 완료')
+    dispatch(updateTeacherAttend(uid));
+    // if(updateResult>0){
+    setUpdateBtn(false);
+    alert("수정 완료");
 
-      const searchObject = {
-        agency: selectAgency,
-        lesson: selectLesson,
-        name: teacherName,
-        u_phone: phone,
-        sDate: startSearchDate,
-        eDate: endSearchDate,
-        attend_state: selectAttendState,
-        attend_date_state: selectDateState,
-        u_auth:2,
-      };
-      checkId = false;
-      dispatch(getSearchAttend(searchObject));
-    }else{
-      alert('수정 실패')
-    }
+    const searchObject = {
+      agency: selectAgency,
+      lesson: selectLesson,
+      name: teacherName,
+      u_phone: phone,
+      sDate: startSearchDate,
+      eDate: endSearchDate,
+      attend_state: selectAttendState,
+      attend_date_state: selectDateState,
+      u_auth: 2,
+    };
+    // checkId = false;
+    dispatch(getSearchAttend(searchObject));
+    dispatch(setCheck(false));
+    // }else{
+    //   alert('수정 실패')
+    // }
   };
 
   // 출석,지각,조퇴,결석,미퇴실
@@ -238,6 +240,11 @@ const TeacherAttendClassContainerAndroid = () => {
     btnDisable ? setBtnDisable(() => false) : setBtnDisable(() => true);
     setSelectDateState(() => e);
   });
+
+  const handleSetSelectLesson = (e) => {
+    console.log(e);
+    setSelectLesson(e);
+  };
 
   // modal 이벤트
   const handleVisibleUpdateBtn = () => {
@@ -315,6 +322,7 @@ const TeacherAttendClassContainerAndroid = () => {
         handleVisibleUpdateBtn={handleVisibleUpdateBtn}
         handleVisibleBtn={handleVisibleBtn}
         handleUpdateBtn={handleUpdateBtn}
+        handleSetSelectLesson={handleSetSelectLesson}
         // modal
         isModalDatePickerVisible={isModalDatePickerVisible}
         showModalDatePickerBtn={showModalDatePickerBtn}

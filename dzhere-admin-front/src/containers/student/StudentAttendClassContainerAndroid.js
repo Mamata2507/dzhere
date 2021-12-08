@@ -55,8 +55,8 @@ const StudentAttendClassContainerAndroid = () => {
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
-  // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const { lessonList, agencyList, searchList, uid, checkid, updateResult } =
     useSelector(({ studentAttend }) => ({
       agencyList: studentAttend.agencyList,
@@ -94,10 +94,16 @@ const StudentAttendClassContainerAndroid = () => {
     setSelectAgency(() => agencyList[0]);
   }, [lessonList, agencyList]);
 
-  useEffect(() => {
-    console.log("================");
-    console.log(checkid);
-  }, [checkid]);
+  // useEffect(() => {
+  //   if (updateResult > 0) {
+  //     alert("수정 실패");
+  //   }
+  // }, [updateResult]);
+
+  // useEffect(() => {
+  //   console.log("================");
+  //   console.log(checkid);
+  // }, [checkid]);
 
   const showDatePickerSbtn = () => {
     setBtnFlag(0);
@@ -202,29 +208,35 @@ const StudentAttendClassContainerAndroid = () => {
 
   // 수정 버튼
   const handleUpdateBtn = async () => {
+    dispatch(resetList());
     uid.a_today_date = modalDate;
     uid.a_attend_time = modalStartTime;
     uid.a_exit_time = modalEndTime;
-    await dispatch(updateTeacherAttend(uid));
-    if (updateResult > 0) {
-      setUpdateBtn(false);
-      alert("수정 완료");
+    dispatch(updateTeacherAttend(uid));
+    // console.log("---------");
+    // console.log(updateResult);
+    // if (updateResult > 0) {
+    setUpdateBtn(false);
+    alert("수정 완료");
 
-      const searchObject = {
-        agency: selectAgency,
-        lesson: selectLesson,
-        name: teacherName,
-        u_phone: phone,
-        sDate: startSearchDate,
-        eDate: endSearchDate,
-        attend_state: selectAttendState,
-        attend_date_state: selectDateState,
-      };
-      checkId = false;
-      dispatch(getSearchAttend(searchObject));
-    } else {
-      alert("수정 실패");
-    }
+    const searchObject = {
+      agency: selectAgency,
+      lesson: selectLesson,
+      name: teacherName,
+      u_phone: phone,
+      sDate: startSearchDate,
+      eDate: endSearchDate,
+      attend_state: selectAttendState,
+      attend_date_state: selectDateState,
+      u_auth: 1,
+    };
+    // checkId = false;
+    dispatch(getSearchAttend(searchObject));
+    dispatch(setCheck(false));
+    // } else {
+    // alert("수정 실패");
+    // console.log("수정 실패");
+    // }
   };
 
   // 출석,지각,조퇴,결석,미퇴실
@@ -235,7 +247,7 @@ const StudentAttendClassContainerAndroid = () => {
   // 전체,기간
   const handleSetDate = useCallback((e) => {
     console.log(e);
-    e === 0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
+    e !== 0 ? setBtnDisable(() => false) : setBtnDisable(() => true);
     setSelectDateState(() => e);
   });
 

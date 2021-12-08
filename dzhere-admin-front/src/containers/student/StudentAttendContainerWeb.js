@@ -8,7 +8,8 @@ import {
 import { getStudentCount } from "../../modules/user/studentCount";
 
 const StudentAttendContainerWeb = () => {
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const dispatch = useDispatch();
   const { agencyList, lessonList, stuCount } = useSelector(
     ({ studentAttend, studentCount }) => ({

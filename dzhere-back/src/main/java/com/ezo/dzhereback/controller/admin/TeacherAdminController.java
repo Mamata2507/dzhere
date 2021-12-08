@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -41,10 +42,12 @@ public class TeacherAdminController {
     @PostMapping("/api/admin/teacher/search")
     List<Teacher> getTeacherSearch(@RequestBody TeacherSearchDto teacherSearchDto){
         Teacher teacher = teacherSearchDto.toEntity();
+        int c_idx = teacherService.getCidx(teacher.getC_name());
         System.out.println(teacher);
+        System.out.println(c_idx);
         List<Teacher> teacherList = teacherService.getTeacherSearch(
                 teacher.getAg_idx()
-                ,teacher.getC_inx()
+                ,c_idx
                 ,teacher.getU_name()
                 ,teacher.getAttend_state()
                 ,teacher.getAttend_date_state()
@@ -53,7 +56,10 @@ public class TeacherAdminController {
                 ,teacher.getU_auth()
         );
         System.out.println("/api/admin/teacher/search");
-        System.out.println(teacherList);
+        Iterator iterator = teacherList.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
         return teacherList;
     }
 

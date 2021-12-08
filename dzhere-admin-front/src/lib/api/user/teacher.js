@@ -23,11 +23,12 @@ export const getTeacherSearch = async (item) => {
     attend_state,
     attend_date_state,
   } = item;
-  console.log(item);
+  console.log("----------");
+  console.log(item.lesson);
   return await client.post(`${teacherUrl}/search`, {
     ag_idx: agency.ag_idx,
-    c_inx: agency.c_inx,
-    c_name: lesson.c_name,
+    c_idx: agency.c_idx,
+    c_name: item.lesson,
     ag_name: agency.ag_name,
     u_name: name,
     u_phone: u_phone,
@@ -40,8 +41,8 @@ export const getTeacherSearch = async (item) => {
 };
 
 export const updateTeacherAttend = async (item) => {
-  console.log("-=-=-=-=-=-=-=-=-=-=");
-  console.log(item);
+  // console.log("-=-=-=-=-=-=-=-=-=-=");
+  // console.log(item);
   return await client.post(`${teacherUrl}/update/attend`, {
     a_absent: item.a_absent,
     a_attend_time: item.a_today_date + " " + item.a_attend_time,

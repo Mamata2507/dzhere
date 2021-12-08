@@ -18,6 +18,10 @@ public class TeacherService {
         this.teacherMapper=teacherMapper;
     }
 
+    public int getCidx(String c_name){
+        return teacherMapper.getCidx(c_name);
+    }
+
     public List<Agency> getAgencyList(String u_phone){
         return teacherMapper.getAgencyList(u_phone);
     }

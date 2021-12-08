@@ -55,8 +55,8 @@ const StudentAttendClassContainerWeb = () => {
 
   const [updateBtn, setUpdateBtn] = useState(false); // visible
 
-  // const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
-  const phone = "01088630406";
+  const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
+  // const phone = "01088630406";
   const {
     lessonList,
     agencyList,
@@ -94,7 +94,7 @@ const StudentAttendClassContainerWeb = () => {
     setModalDate(uid.a_today_date);
     setModalStartTime(uid.a_attend_time && uid.a_attend_time.substring(11, 19));
     setModalEndTime(uid.a_exit_time && uid.a_exit_time.substring(11, 19));
-    console.log("--------------");
+    // console.log("--------------");
     console.log(uid);
   }, [uid]);
 
@@ -115,7 +115,7 @@ const StudentAttendClassContainerWeb = () => {
   // }, [updateError]);
 
   const showDatePickerSbtn = () => {
-    console.log("여기----------------");
+    // console.log("여기----------------");
     setBtnFlag(0);
     setDatePickerVisibility(true);
   };
@@ -218,6 +218,7 @@ const StudentAttendClassContainerWeb = () => {
 
   // 수정 버튼
   const handleUpdateBtn = async () => {
+    dispatch(resetList);
     uid.a_today_date = modalDate;
     uid.a_attend_time = modalStartTime;
     uid.a_exit_time = modalEndTime;
@@ -235,6 +236,7 @@ const StudentAttendClassContainerWeb = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
+      u_auth: 1,
     };
     //checkId = false;
     // dispatch(setCheck(false));
@@ -252,7 +254,7 @@ const StudentAttendClassContainerWeb = () => {
   // 전체,기간
   const handleSetDate = (e) => {
     console.log(e);
-    e !== "0" ? setBtnDisable(false) : setBtnDisable(true);
+    e !== 0 ? setBtnDisable(false) : setBtnDisable(true);
     setSelectDateState(() => e);
   };
 
@@ -284,7 +286,7 @@ const StudentAttendClassContainerWeb = () => {
       eDate: endSearchDate,
       attend_state: selectAttendState,
       attend_date_state: selectDateState,
-      u_auth: 0,
+      u_auth: 1,
     };
 
     dispatch(getSearchAttend(searchObject));
