@@ -30,7 +30,9 @@ export default function HeaderWeb(props) {
     <View style={stylesBase.container}>
       <View style={stylesBase.header}>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>기관</Text>
+          <Text style={[styles.text, { marginLeft: 30, width: "10%" }]}>
+            기관
+          </Text>
           <Picker style={[styles.pickerText]}>
             {agList.map((v) => (
               <Picker.Item label={v.ag_name} value={v.ag_idx} />
@@ -38,15 +40,22 @@ export default function HeaderWeb(props) {
           </Picker>
         </View>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>강의</Text>
-          <Picker style={[styles.pickerText]}>
+          <Text style={[styles.text, { marginLeft: 30, width: "10%" }]}>
+            강의
+          </Text>
+          <Picker
+            style={[styles.pickerText]}
+            onValueChange={props.handleSetSelectLesson}
+          >
             {lessonList.map((v) => (
-              <Picker.Item label={v.c_name} value={v.c_idx} />
+              <Picker.Item label={v.c_name} value={v.c_name} />
             ))}
           </Picker>
         </View>
         <View style={styles.picker}>
-          <Text style={[styles.text, { marginLeft: 30, width: '10%' }]}>수강생명</Text>
+          <Text style={[styles.text, { marginLeft: 30, width: "10%" }]}>
+            수강생명
+          </Text>
           <TextInput
             style={[
               styles.pickerText,
@@ -124,14 +133,14 @@ export default function HeaderWeb(props) {
             showPopperArrow={false}
             selected={props.isDatePickerVisible}
             onChange={props.endDate}
-            disabled={props.btnDisable}            
+            disabled={props.btnDisable}
             showMonthDropdown={true}
             disabledKeyboardNavigation
             withPortal
             portalId="end-date"
           />
           <Picker
-            style={[styles.miniPicker]}            
+            style={[styles.miniPicker]}
             onValueChange={props.handleSetDate}
           >
             {lookup.map((v, i) => (
@@ -147,7 +156,7 @@ export default function HeaderWeb(props) {
 const stylesBase = StyleSheet.create({
   container: {
     justifyContent: "center",
-    width: '100%',
+    width: "100%",
   },
   header: {
     padding: "3%",

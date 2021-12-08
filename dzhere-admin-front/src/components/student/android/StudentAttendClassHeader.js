@@ -35,7 +35,7 @@ export default function HeaderAndroid(props) {
         </View>
         <View style={styles.picker}>
           <Text style={[styles.text, { marginLeft: 15 }]}>강의</Text>
-          <Picker style={[styles.pickerText]}>
+          <Picker style={[styles.pickerText]} onValueChange={props.handleSetSelectLesson}>
             {lessonList.map((v) => (
               <Picker.Item label={v.c_name} value={v.c_idx} />
             ))}
