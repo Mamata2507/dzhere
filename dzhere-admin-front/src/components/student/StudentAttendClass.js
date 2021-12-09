@@ -49,6 +49,7 @@ export default function TeacherAttendClass(props) {
                 teacherName={props.teacherName}
               />
               <HeaderAndroid
+                clist={props.clist}
                 btnFlag={props.btnFlag}
                 startSearchDate={props.startSearchDate}
                 endSearchDate={props.endSearchDate}
@@ -108,6 +109,7 @@ export default function TeacherAttendClass(props) {
                 teacherName={props.teacherName}
               />
               <HeaderWeb
+                clist={props.clist}
                 btnFlag={props.btnFlag}
                 startSearchDate={props.startSearchDate}
                 endSearchDate={props.endSearchDate}
@@ -120,7 +122,7 @@ export default function TeacherAttendClass(props) {
                 searchHandler={props.searchHandler}
                 handleSetAttend={props.handleSetAttend}
                 handleSetDate={props.handleSetDate}
-                lessonList={props.lessonList}
+                lessonList={props.clist}
                 agencyList={props.agencyList}
                 handleSetTeacherName={props.handleSetTeacherName}
                 btnDisable={props.btnDisable}

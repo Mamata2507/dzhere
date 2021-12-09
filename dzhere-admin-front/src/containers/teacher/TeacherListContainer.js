@@ -32,11 +32,9 @@ const TeacherListContainer = () => {
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const { agName, teacherList, loadingAgName, clist,
+  const { agName, teacherList, clist,
           loadingTeacherList, filterList, uid, resultError, userInfo, ag_idx }
          = useSelector(({ list, loading, auth, classes }) => ({
-    // agName: list.agName,
-    // loadingAgName: loading['list/GET_AG_NAME'],
     teacherList: list.teacherList,
     loadingTeacherList: loading['list/GET_TEACHER_LIST'],
     filterList: list.filterList,

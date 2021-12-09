@@ -9,6 +9,7 @@ import AttendClassModal from "./android/AttendClassModal";
 import {TeacherAttendClassWeb} from './web/TeacherAttendClassWeb';
 
 export default function TeacherAttendClass({
+  clist,
   editTodayDate,
   editAttendTime,
   editExitTime,
@@ -142,6 +143,7 @@ export default function TeacherAttendClass({
                 teacherName={teacherName}
               />
               <HeaderAndroid
+                clist={clist}
                 btnFlag={btnFlag}
                 startSearchDate={startSearchDate}
                 endSearchDate={endSearchDate}
@@ -169,6 +171,7 @@ export default function TeacherAttendClass({
         </>
       ) : (
         <TeacherAttendClassWeb
+          clist={clist}
           editTodayDate={editTodayDate}
           editAttendTime={editAttendTime}
           editExitTime={editExitTime}

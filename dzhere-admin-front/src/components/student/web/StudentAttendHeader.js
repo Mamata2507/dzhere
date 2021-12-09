@@ -11,7 +11,7 @@ import styles from "./Styles";
 
 const StudentAttendHeaderWeb = (props) => {
   const agList = props.agencyList;
-  const lessonList = props.lessonList;
+  const lessonList = props.clist;
 
   return (
     <>    

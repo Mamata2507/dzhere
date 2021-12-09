@@ -21,6 +21,7 @@ import "./react-datepicker.css";
 import { CSVLink } from 'react-csv';
 
 export const TeacherAttendClassWeb = ({
+  clist,
   editTodayDate,
   editAttendTime,
   editExitTime,
@@ -88,7 +89,7 @@ export const TeacherAttendClassWeb = ({
     { label: "미퇴실 유무", key: "not_exit" },
   ];
 
-  const cidx = classList.map((item, idx) => ({cidx: item.c_idx, cname: item.c_name}));
+  const cidx = clist.map((item, idx) => ({cidx: item.c_idx, cname: item.c_name}));
   const classname = cidx.filter((item, idx) => item.cidx == selectedClass);
   const data = teacherAttendList.map((item, idx) => ({
     index: idx,
@@ -304,7 +305,7 @@ export const TeacherAttendClassWeb = ({
               style={[styles.pickerText, { textAlign: "center" }]}
             >
               <Picker.Item label="선택" value="0" key="selectHeader" />
-              {classList.map((c, i) => (
+              {clist.map((c, i) => (
                 <Picker.Item label={c.c_name} value={c.c_idx} key={i} />
               ))}
             </Picker>

@@ -66,7 +66,8 @@ const StudentAttendClassContainerWeb = () => {
     checkid,
     updateResult,
     updateError,
-  } = useSelector(({ studentAttend }) => ({
+    clist,
+  } = useSelector(({ studentAttend, classes }) => ({
     agencyList: studentAttend.agencyList,
     lessonList: studentAttend.lessonList,
     searchList: studentAttend.searchList,
@@ -77,6 +78,7 @@ const StudentAttendClassContainerWeb = () => {
     lessonListError: studentAttend.lessonListError,
     searchListError: studentAttend.searchListError,
     updateError: studentAttend.updateError,
+    clist: classes.clist
   }));
 
   // load
@@ -324,6 +326,7 @@ const StudentAttendClassContainerWeb = () => {
   return (
     <>
       <StudentAttendClass
+        clist={clist}
         btnFlag={btnFlag}
         startSearchDate={startSearchDate}
         endSearchDate={endSearchDate}

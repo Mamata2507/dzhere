@@ -15,7 +15,7 @@ const lookup = ["전체", "기간"];
 
 export default function HeaderAndroid(props) {
   const agList = props.agencyList;
-  const lessonList = props.lessonList;
+  const lessonList = props.clist;
   // const [btnDisable, setBtnDisable] = useState(true);
 
   // useEffect(() => {

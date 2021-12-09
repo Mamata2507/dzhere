@@ -34,8 +34,8 @@ const TeacherAttendClassContainerWeb = () => {
   const [error, setError] = useState('');
 
   const { startDate, endDate, searchType, teacherAttendList, teacherIdxName, agName, classList, loadingAgName, 
-          resultError, userInfo }
-         = useSelector(({ teacherClassAttendWeb, loading, auth }) => ({
+          resultError, userInfo, clist }
+         = useSelector(({ teacherClassAttendWeb, loading, auth, classes }) => ({
     startDate: teacherClassAttendWeb.startDate,
     endDate: teacherClassAttendWeb.endDate,
     searchType: teacherClassAttendWeb.searchType,       
@@ -46,6 +46,7 @@ const TeacherAttendClassContainerWeb = () => {
     classList: teacherClassAttendWeb.classList,
     userInfo: auth.userInfo,
     resultError: teacherClassAttendWeb.resultError,
+    clist: classes.clist,
   }))
 
   // 처음 렌더링 될 때
@@ -271,6 +272,7 @@ const TeacherAttendClassContainerWeb = () => {
 
   return (
     <TeacherAttendClass
+      clist={clist}
       // 수정 필드
       editTodayDate={editTodayDate}
       editAttendTime={editAttendTime}

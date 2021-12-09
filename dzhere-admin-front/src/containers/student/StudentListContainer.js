@@ -32,11 +32,9 @@ const StudentListContainer = () => {
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const { agName, studentList, loadingAgName, clist,
-          loadingStudentList, filterList, uid, resultError, userInfo, ag_idx }
+  const { agName, studentList, clist,
+          loadingStudentList, filterList, uid, resultError, ag_idx }
          = useSelector(({ list, loading, auth, classes }) => ({
-    // agName: list.agName,
-    loadingAgName: loading['list/GET_AG_NAME'],
     studentList: list.studentList,
     loadingStudentList: loading['list/GET_STUDENT_LIST'],
     filterList: list.filterList,
@@ -58,7 +56,6 @@ const StudentListContainer = () => {
       console.log(resultError)
     } 
     if (!resultError) {
-      // dispatch(getAgName(userInfo.userPhone));
       dispatch(getStudentList({ag_idx, selectedClass}))
       if(Platform.OS !== "android"){
         setPickerStatus(!pickerStatus)
