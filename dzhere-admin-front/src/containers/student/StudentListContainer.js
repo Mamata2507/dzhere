@@ -62,7 +62,7 @@ const StudentListContainer = () => {
       dispatch(getClassList(userInfo.userPhone));
       if(Platform.OS !== "android"){
         dispatch(getStudentList({ag_idx, selectedClass}))
-        setPickerStatus(true)
+        setPickerStatus(!pickerStatus)
       }
     }
   }, []);
@@ -82,7 +82,7 @@ const StudentListContainer = () => {
   const onSearch = () => {
       dispatch(getStudentList({ag_idx, selectedClass}))
       if(Platform.OS === "android"){
-        setPickerStatus(true)
+        setPickerStatus(!pickerStatus)
       }
       if(resultError){
         console.log(resultError);
@@ -147,7 +147,12 @@ const StudentListContainer = () => {
         }
       } else if(uPhone === uPhoneTemp) {
         setError('')
-        setPhoneCheck(false)        
+        setPhoneCheck(false)      
+        if(Platform.OS === 'web'){
+          alert('사용 가능한 전화번호입니다.');
+        } else {
+          Alert.alert('사용 가능한 전화번호입니다.');
+        }  
       } else {
         if(false === regex.test(uPhone)){
           setError('전화번호를 정확히 입력하세요');
@@ -159,6 +164,11 @@ const StudentListContainer = () => {
           if(!resultError && check_ === true){
             setError('')
             setPhoneCheck(false)
+            if(Platform.OS === 'web'){
+              alert('사용 가능한 전화번호입니다.');
+            } else {
+              Alert.alert('사용 가능한 전화번호입니다.');
+            }
           } else {
             if(Platform.OS === 'web'){
               alert('등록된 전화번호입니다.');

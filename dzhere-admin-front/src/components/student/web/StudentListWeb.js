@@ -78,10 +78,10 @@ export const StudentListWeb = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
+                style={[styles.btn, {alignSelf: 'center', width: '15%'}]}
                 onPress={onCheck}
                 >
-                <Text style={styles.btnText}>확인</Text>
+                <Text style={styles.btnText}>중복체크</Text>
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>
@@ -157,10 +157,10 @@ export const StudentListWeb = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
+                style={[styles.btn, {alignSelf: 'center', width: '15%'}]}
                 onPress={onCheck}
                 >
-                <Text style={styles.btnText}>확인</Text>
+                <Text style={styles.btnText}>중복체크</Text>
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>

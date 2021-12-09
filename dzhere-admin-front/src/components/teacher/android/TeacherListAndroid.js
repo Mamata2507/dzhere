@@ -82,7 +82,7 @@ export const TeacherListAndroid = ({
                 style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '20%'}]}
                 onPress={onCheck}
                 >
-                <Text style={styles.btnText}>확인</Text>
+                <Text style={styles.btnText}>중복체크</Text>
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>

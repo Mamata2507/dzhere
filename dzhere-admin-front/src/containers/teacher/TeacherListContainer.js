@@ -62,7 +62,7 @@ const TeacherListContainer = () => {
       dispatch(getClassList(userInfo.userPhone));
       if(Platform.OS !== "android"){
         dispatch(getTeacherList({ag_idx, selectedClass}))
-        setPickerStatus(true)
+        setPickerStatus(!pickerStatus)
       }
     }
   }, []);
@@ -85,7 +85,7 @@ const TeacherListContainer = () => {
   const onSearch = () => {
       dispatch(getTeacherList({ag_idx, selectedClass}))
       if(Platform.OS === "android"){
-        setPickerStatus(true)
+        setPickerStatus(!pickerStatus)
       }
       if(resultError){
         console.log(resultError);
@@ -162,6 +162,11 @@ const TeacherListContainer = () => {
           if(!resultError && check_ === true){
             setError('')
             setPhoneCheck(false)
+            if(Platform.OS === 'web'){
+              alert('사용 가능한 전화번호입니다.');
+            } else {
+              Alert.alert('사용 가능한 전화번호입니다.');
+            }
           } else {
             if(Platform.OS === 'web'){
               alert('등록된 전화번호입니다.');
