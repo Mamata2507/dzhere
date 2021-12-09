@@ -11,14 +11,14 @@ const CheckBoxIcon = ({ item, style }) => {
   const onValueChange = useCallback(() => {
     // 어떤 버튼도 선택하지 않았을 때
     if(!checkId){
-      setSelection(true);
-      dispatch(setCheck(true));   
+      setSelection(!isSelected);
+      dispatch(setCheck(!isSelected));   
       dispatch(setValue(item));
     }
     // 버튼이 선택되어 있을 때
     else{
-      setSelection(false);
-      dispatch(setCheck(false));
+      setSelection(!isSelected);
+      dispatch(setCheck(!isSelected));
       dispatch(setValue(0));
     }
   },[isSelected]);

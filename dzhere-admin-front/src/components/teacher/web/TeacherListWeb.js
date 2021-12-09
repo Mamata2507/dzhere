@@ -14,8 +14,8 @@ import CheckBoxIcon from '../../../containers/student/CheckBoxContainer_list';
 export const TeacherListWeb = ({
   // 처음 렌더링될 때 가져오기
   agName,
-  loadingAgName,
-  classList,
+  // loadingAgName,
+  clist,
   // picker
   pickerStatus={pickerStatus}, 
   selectedClass={selectedClass},
@@ -79,10 +79,10 @@ export const TeacherListWeb = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
+                style={[styles.btn, {alignSelf: 'center', width: '15%'}]}
                 onPress={onCheck}
                 >
-                <Text style={styles.btnText}>확인</Text>
+                <Text style={styles.btnText}>중복체크</Text>
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>
@@ -113,7 +113,7 @@ export const TeacherListWeb = ({
                 style={[styles.pickerText]}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectAdd' />
-                {classList.map((c, i) => (
+                {clist.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
               </Picker>
@@ -147,9 +147,9 @@ export const TeacherListWeb = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text, {fontWeight: 'bold', margin: '2%', marginRight: '3%'}}>전화번호</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
+                style={styles.pickerText}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
@@ -158,10 +158,10 @@ export const TeacherListWeb = ({
                 keyboardShouldPersistTaps='handled'
               />
                <TouchableOpacity
-                style={[styles.btn, {marginTop: 3, alignSelf: 'center', width: '10%'}]}
+                style={[styles.btn, {alignSelf: 'center', width: '15%'}]}
                 onPress={onCheck}
                 >
-                <Text style={styles.btnText}>확인</Text>
+                <Text style={styles.btnText}>중복체크</Text>
               </TouchableOpacity>
             </View>
               <View style={{ flexDirection: "row" }}>
@@ -192,7 +192,7 @@ export const TeacherListWeb = ({
                 style={styles.pickerText}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectUpdate'/>
-                {classList.map((c, i) => (
+                {clist.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
               </Picker>
@@ -221,8 +221,8 @@ export const TeacherListWeb = ({
               <Text
                 style={[styles.pickerText, { fontSize: 16, marginLeft: 8, fontWeight: 'bold' }]}
               >
-                {loadingAgName && "리스트를 가져오는 중입니다."}
-                {!loadingAgName && agName.ag_name}
+                {/* {loadingAgName && "리스트를 가져오는 중입니다."} */}
+                {agName}
               </Text>
             </View>
           </View>
@@ -236,7 +236,7 @@ export const TeacherListWeb = ({
               style={styles.pickerText}
             >
               <Picker.Item label="전체선택" value="0" key='selectHeader'/>
-              {classList.map((c, i) => (
+              {clist.map((c, i) => (
                 <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
               ))}
             </Picker>

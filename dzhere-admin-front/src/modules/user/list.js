@@ -8,10 +8,6 @@ const GET_AG_NAME = 'list/GET_AG_NAME'
 const GET_AG_NAME_SUCCESS = 'list/GET_AG_NAME_SUCCESS'
 const GET_AG_NAME_FAILURE = 'list/GET_AG_NAME_FAILURE'
 
-const GET_CLASS_LIST = 'list/GET_CLASS_LIST'
-const GET_CLASS_LIST_SUCCESS = 'list/GET_CLASS_LIST_SUCCESS'
-const GET_CLASS_LIST_FAILURE = 'list/GET_CLASS_LIST_FAILURE'
-
 const GET_STUDENT_LIST = 'list/GET_STUDENT_LIST'
 const GET_STUDENT_LIST_SUCCESS = 'list/GET_STUDENT_LIST_SUCCESS'
 const GET_STUDENT_LIST_FAILURE = 'list/GET_STUDENT_LIST_FAILURE'
@@ -41,7 +37,6 @@ const UPDATE_USER_FAILURE = 'list/UPDATE_USER_FAILURE'
 // thunk 함수 내부에서는 시작할 때, 성공했을 때, 실패했을 때 다른 액션을 디스패치한다.
 
 export const getAgName = createRequestThunk(GET_AG_NAME, api.getAgName);
-export const getClassList = createRequestThunk(GET_CLASS_LIST, api.getClassList);
 export const getStudentList = createRequestThunk(GET_STUDENT_LIST, api.getStudentList);
 export const getTeacherList = createRequestThunk(GET_TEACHER_LIST, api.getTeacherList);
 export const setFilterList = createAction(SET_FILTER_LIST, filterList => filterList);
@@ -56,7 +51,6 @@ export const updateUser = createRequestThunk(UPDATE_USER, api.updateUser);
 
 const initialState = {
   agName: '',
-  classList: [],
   studentList: [],
   teacherList: [],
   filterList: [],
@@ -73,15 +67,6 @@ const list = handleActions(
       resultError: null
     }),
     [GET_AG_NAME_FAILURE]: (state, { payload: error }) => ({
-      ...state,
-      resultError: error
-    }),
-    [GET_CLASS_LIST_SUCCESS]: (state, action) => ({
-      ...state,
-      classList: action.payload,
-      resultError: null
-    }),
-    [GET_CLASS_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,
       resultError: error
     }),

@@ -6,8 +6,8 @@ import { StudentListWeb } from './web/StudentListWeb'
 export const Contents = ({
   // 처음 렌더링될 때 가져오기
   agName,
-  loadingAgName,
-  classList,
+  // loadingAgName,
+  clist,
   // picker
   pickerStatus={pickerStatus}, // true, false
   selectedClass={selectedClass},
@@ -48,8 +48,8 @@ export const Contents = ({
   <StudentListAndroid 
     // 처음 렌더링될 때 가져오기
     agName={agName}
-    loadingAgName={loadingAgName}
-    classList={classList}
+    // loadingAgName={loadingAgName}
+    clist={clist}
     
     // picker
     pickerStatus={pickerStatus} // true, false
@@ -95,8 +95,8 @@ export const Contents = ({
   <StudentListWeb 
     // 처음 렌더링될 때 가져오기
     agName={agName}
-    loadingAgName={loadingAgName}
-    classList={classList}
+    // loadingAgName={loadingAgName}
+    clist={clist}
     
     // picker
     selectedClass={selectedClass}
