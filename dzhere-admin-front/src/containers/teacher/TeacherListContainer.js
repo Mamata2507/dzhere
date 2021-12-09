@@ -4,7 +4,6 @@ import { Alert, Platform } from 'react-native';
 import { Contents } from '../../components/teacher/TeacherList'
 import { 
   getAgName, 
-  getClassList, 
   getTeacherList, 
   setFilterList, 
   deleteUser, 
@@ -33,19 +32,20 @@ const TeacherListContainer = () => {
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const { agName, classList, teacherList, loadingAgName, 
+  const { agName, teacherList, loadingAgName, clist,
           loadingTeacherList, filterList, uid, resultError, userInfo, ag_idx }
          = useSelector(({ list, loading, auth, classes }) => ({
-    agName: list.agName,
-    loadingAgName: loading['list/GET_AG_NAME'],
-    classList: list.classList,
+    // agName: list.agName,
+    // loadingAgName: loading['list/GET_AG_NAME'],
     teacherList: list.teacherList,
     loadingTeacherList: loading['list/GET_TEACHER_LIST'],
     filterList: list.filterList,
     uid: list.uid, 
     userInfo: auth.userInfo,
     resultError: list.resultError,
-    ag_idx: classes.agency.ag_idx
+    ag_idx: classes.agency.ag_idx,
+    agName: classes.agency.ag_name,
+    clist: classes.clist
   }))
 
   const regex = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
@@ -58,10 +58,9 @@ const TeacherListContainer = () => {
       console.log(resultError)
     } 
     if (!resultError) {
-      dispatch(getAgName(userInfo.userPhone));
-      dispatch(getClassList(userInfo.userPhone));
+      // dispatch(getAgName(userInfo.userPhone));
+      dispatch(getTeacherList({ag_idx, selectedClass}))
       if(Platform.OS !== "android"){
-        dispatch(getTeacherList({ag_idx, selectedClass}))
         setPickerStatus(!pickerStatus)
       }
     }
@@ -309,8 +308,8 @@ const TeacherListContainer = () => {
       <Contents
          // 처음 렌더링될 때 가져오기
          agName={agName}
-         loadingAgName={loadingAgName}
-         classList={classList}
+        //  loadingAgName={loadingAgName}
+         clist={clist}
          
          // picker
          pickerStatus={pickerStatus} // true, false

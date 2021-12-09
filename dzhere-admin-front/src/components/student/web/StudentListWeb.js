@@ -14,8 +14,8 @@ import CheckBoxIcon from '../../../containers/student/CheckBoxContainer_list'
 export const StudentListWeb = ({
   // 처음 렌더링될 때 가져오기
   agName,
-  loadingAgName,
-  classList,
+  // loadingAgName,
+  clist,
   // picker
   selectedClass={selectedClass},
   setSelectedClass={setSelectedClass},
@@ -112,7 +112,7 @@ export const StudentListWeb = ({
                 style={[styles.pickerText]}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectAdd' />
-                {classList.map((c, i) => (
+                {clist.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
               </Picker>
@@ -191,7 +191,7 @@ export const StudentListWeb = ({
                 style={styles.pickerText}
               >
                 <Picker.Item label="강의명을 선택하세요" value="0" key='selectUpdate'/>
-                {classList.map((c, i) => (
+                {clist.map((c, i) => (
                   <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
                 ))}
               </Picker>
@@ -220,8 +220,8 @@ export const StudentListWeb = ({
               <Text
                 style={[styles.pickerText, { fontSize: 16, marginLeft: 8, fontWeight: 'bold' }]}
               >
-                {loadingAgName && "리스트를 가져오는 중입니다."}
-                {!loadingAgName && agName.ag_name}
+                {/* {loadingAgName && "리스트를 가져오는 중입니다."} */}
+                {agName}
               </Text>
             </View>
           </View>
@@ -235,7 +235,7 @@ export const StudentListWeb = ({
               style={styles.pickerText}
             >
               <Picker.Item label="전체선택" value="0" key='selectHeader'/>
-              {classList.map((c, i) => (
+              {clist.map((c, i) => (
                 <Picker.Item label={c.c_name} value={c.c_idx} key={i}/>
               ))}
             </Picker>

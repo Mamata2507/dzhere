@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Platform } from 'react-native';
 import { Contents } from '../../components/student/StudentList'
 import { 
-  getAgName, 
-  getClassList, 
+  // getAgName, 
   getStudentList, 
   setFilterList, 
   deleteUser, 
@@ -33,19 +32,20 @@ const StudentListContainer = () => {
   const [uPhoneTemp, setUphoneTemp] = useState('');
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const { agName, classList, studentList, loadingAgName, 
+  const { agName, studentList, loadingAgName, clist,
           loadingStudentList, filterList, uid, resultError, userInfo, ag_idx }
          = useSelector(({ list, loading, auth, classes }) => ({
-    agName: list.agName,
+    // agName: list.agName,
     loadingAgName: loading['list/GET_AG_NAME'],
-    classList: list.classList,
     studentList: list.studentList,
     loadingStudentList: loading['list/GET_STUDENT_LIST'],
     filterList: list.filterList,
     uid: list.uid, 
     userInfo: auth.userInfo,
     resultError: list.resultError,
-    ag_idx: classes.agency.ag_idx
+    ag_idx: classes.agency.ag_idx,
+    agName: classes.agency.ag_name,
+    clist: classes.clist
   }))
 
   const regex = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
@@ -55,17 +55,17 @@ const StudentListContainer = () => {
   useEffect(() => {
     if (resultError) {
       console.log('기관명, 수업리스트 가져오기 오류');
-      console.log(studentError)
+      console.log(resultError)
     } 
     if (!resultError) {
-      dispatch(getAgName(userInfo.userPhone));
-      dispatch(getClassList(userInfo.userPhone));
+      // dispatch(getAgName(userInfo.userPhone));
+      dispatch(getStudentList({ag_idx, selectedClass}))
       if(Platform.OS !== "android"){
-        dispatch(getStudentList({ag_idx, selectedClass}))
         setPickerStatus(!pickerStatus)
       }
     }
   }, []);
+
 
 
   // 승인 상태 변경 시
@@ -311,8 +311,8 @@ const StudentListContainer = () => {
       <Contents
          // 처음 렌더링될 때 가져오기
          agName={agName}
-         loadingAgName={loadingAgName}
-         classList={classList}
+        //  loadingAgName={loadingAgName}
+         clist={clist}
          
          // picker
          pickerStatus={pickerStatus} // true, false
