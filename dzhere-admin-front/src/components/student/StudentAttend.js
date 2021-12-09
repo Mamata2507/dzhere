@@ -12,7 +12,7 @@ const StudentAttend = (props) => {
         <>
           <StudentAttendHeader
             agencyList={props.agencyList}
-            lessonList={props.lessonList}
+            clist={props.clist}
             handleSearchBtn={props.handleSearchBtn}
             handleSelectLesson={props.handleSelectLesson}
           />
@@ -24,7 +24,7 @@ const StudentAttend = (props) => {
         <>
           <StudentAttendHeaderWeb
             agencyList={props.agencyList}
-            lessonList={props.lessonList}
+            clist={props.clist}
             handleSearchBtn={props.handleSearchBtn}
             handleSelectLesson={props.handleSelectLesson}
           />

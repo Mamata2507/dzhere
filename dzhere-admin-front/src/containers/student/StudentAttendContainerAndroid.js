@@ -11,11 +11,12 @@ const StudentAttendContainerAndroid = () => {
   const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
   // const phone = "01088630406";
   const dispatch = useDispatch();
-  const { agencyList, lessonList, stuCount } = useSelector(
-    ({ studentAttend, studentCount }) => ({
+  const { agencyList, lessonList, stuCount, clist } = useSelector(
+    ({ studentAttend, studentCount, classes }) => ({
       agencyList: studentAttend.agencyList,
       lessonList: studentAttend.lessonList,
       stuCount: studentCount.stuCount,
+      clist: classes.clist
     })
   );
   const [selectLesson, setSelectLesson] = useState();
@@ -67,6 +68,7 @@ const StudentAttendContainerAndroid = () => {
       handleSearchBtn={handleSearchBtn} 
       handleSelectLesson={handleSelectLesson}
       stuCount={stuCount}
+      clist={clist}
       />
     </>
   );

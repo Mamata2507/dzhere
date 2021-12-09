@@ -57,8 +57,8 @@ const TeacherAttendClassContainerAndroid = () => {
 
   const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
   // const phone = "01088630406";
-  const { lessonList, agencyList, searchList, uid, checkid, updateResult } =
-    useSelector(({ teacher }) => ({
+  const { lessonList, agencyList, searchList, uid, checkid, updateResult, clist } =
+    useSelector(({ teacher, classes }) => ({
       agencyList: teacher.agencyList,
       lessonList: teacher.lessonList,
       searchList: teacher.searchList,
@@ -68,6 +68,7 @@ const TeacherAttendClassContainerAndroid = () => {
       agencyListError: teacher.agencyListError,
       lessonListError: teacher.lessonListError,
       searchListError: teacher.searchListError,
+      clist: classes.clist,
     }));
 
   // load
@@ -302,6 +303,7 @@ const TeacherAttendClassContainerAndroid = () => {
   return (
     <>
       <TeacherAttendClass
+        clist={clist}
         btnFlag={btnFlag}
         startSearchDate={startSearchDate}
         endSearchDate={endSearchDate}
