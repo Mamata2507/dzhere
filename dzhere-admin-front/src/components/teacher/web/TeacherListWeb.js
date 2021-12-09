@@ -147,9 +147,9 @@ export const TeacherListWeb = ({
             </View>
 
             <View style={styles.picker}>
-              <Text style={styles.text, {fontWeight: 'bold', margin: '2%', marginRight: '3%'}}>전화번호</Text>
+              <Text style={styles.text, {fontSize: 15, fontWeight: 'bold', margin: '2%', marginRight: '4%'}}>전화번호</Text>
               <TextInput
-                style={[styles.pickerText, { flex: 2, marginRight: '3%' }]}
+                style={styles.pickerText}
                 onChangeText={onChangeUphone}
                 value={uPhone}
                 placeholder="전화번호를 입력하세요"
