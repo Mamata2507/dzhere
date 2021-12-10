@@ -41,10 +41,10 @@ const MyInfoEmailUpdateContainer = () => {
           } else {
             dispatch(updateEmail({phone, newEmail}));
             alert('이메일이 성공적으로 변경되었습니다.');
-            onChangeNewEmail('');
             setTimeout(()=>{
               navigation.goBack()
-            }, 500);
+            }, 100);
+            onChangeNewEmail('');
           }
       } else {
           if(newEmail === ''){

@@ -17,45 +17,9 @@ const MyInfoContainerWeb = () => {
 
   const phone = useSelector(({ auth }) => auth.userInfo.userPhone);
 
-  function onPress(){
-      apiLogout()
-      .then(async (res) => {
-        if (res.result) {
-          console.log("result : ", res.message);
-          dispatch(logout());
-          try {
-            await AsyncStorage.clear();
-            client.defaults.headers.common["Authorization"] = "";
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "UserLoginPage" }],
-            });
-          } catch (e) {
-            console.log("Storage is not working : ", e);
-          }
-        } else {
-          console.log(res.message);
-          dispatch(logout());
-          try {
-            await AsyncStorage.clear();
-            client.defaults.headers.common["Authorization"] = "";
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "UserLoginPage" }],
-            });
-          } catch (e) {
-            console.log("Storage is not working : ", e);
-          }
-        }
-      })
-      .catch((e) => {
-        console.log("apiLogout.catch - e:", e);
-      });
-   } 
   return (
       <MyInfoWeb
           phone={phone}
-          onPress={onPress}
       />
   );
 };
