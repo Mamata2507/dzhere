@@ -6,11 +6,9 @@ const AuthFormFindPassword = ({
   form,
   onChangeText,
   onPress,
-  error,
   navigation,
   route,
 }) => {
-  console.log("AuthFormLogin");
   console.log("form : ", form);
   return (
     <>
@@ -29,12 +27,12 @@ const AuthFormFindPassword = ({
             style={styles.inputEmail}
           />
           <Text style={styles.text}>
-            DHero 가입 시,{'\n'}입력하신 이메일 주소를 입력하세요.{'\n'}해당 이메일로 임시 비밀번호가 발송됩니다.
+            더조은Here 가입 시,{'\n'}입력하신 이메일 주소를 입력하세요.{'\n'}해당 이메일로 임시 비밀번호가 발송됩니다.
           </Text>
 
           <TouchableOpacity
             style={styles.submitBtn}
-            onPress={() => navigation.navigate("UserLoginPage")}
+            onPress={() => onPress(form.userEmail)}
           >
             <Text style={styles.submitBtnTxt}>전송</Text>
           </TouchableOpacity>

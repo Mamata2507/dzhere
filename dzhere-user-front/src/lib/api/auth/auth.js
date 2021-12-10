@@ -68,6 +68,23 @@ export const apiLogout = () => {
 }
 
 // 비밀번호 찾기
-export const findPassword = ({userEmail}) =>
-  client.post('/find-password', {userEmail, });
+export const apiFindPassword = (userEmail) => {
+  return client.post('../find-pw', {
+    data: userEmail,
+  })
+  .then(res => {
+    console.log('axios 비밀번호 찾기 성공');
+    return {
+      result: true,
+    }
+  })
+  .catch(e => {
+    console.log('axios 비밀번호 찾기 실패', e);
+    return {
+      result : false,
+      error : e,
+    }
+  });
 
+} 
+  
