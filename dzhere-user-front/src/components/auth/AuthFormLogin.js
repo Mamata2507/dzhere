@@ -59,12 +59,6 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
           >
             <Text style={styles.text}>회원가입</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity
-            style={styles.signupBtn}
-            onPress={() => client.get("/test")}
-          >
-            <Text style={styles.text}>테스트</Text>
-          </TouchableOpacity> */}
         </View>
       </>
     );
@@ -108,10 +102,14 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   container: {
-    // flex: 1,
+    flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
-    // top: Platform.OS === 'android' && 80,
+    justifyContent: "center",
+
+    // // flex: 1,
+    // alignItems: "center",
+    // // justifyContent: "center",
+    // // top: Platform.OS === 'android' && 80,
   },
   loginBtn: {
     backgroundColor: "#FFC279",
