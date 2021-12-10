@@ -168,47 +168,9 @@ const MyInfoContainerAndroid = () => {
     return token;
   }
 
-  // 로그아웃
-  function onPress(){
-      apiLogout()
-      .then(async (res) => {
-        if (res.result) {
-          console.log("result : ", res.message);
-          dispatch(logout());
-          try {
-            await AsyncStorage.clear();
-            client.defaults.headers.common["Authorization"] = "";
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "UserLoginPage" }],
-            });
-          } catch (e) {
-            console.log("Storage is not working : ", e);
-          }
-        } else {
-          console.log(res.message);
-          dispatch(logout());
-          try {
-            await AsyncStorage.clear();
-            client.defaults.headers.common["Authorization"] = "";
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "UserLoginPage" }],
-            });
-          } catch (e) {
-            console.log("Storage is not working : ", e);
-          }
-        }
-      })
-      .catch((e) => {
-        console.log("apiLogout.catch - e:", e);
-      });
-   } 
-
   return (
       <MyInfoAndroid
           phone={phone}
-          onPress={onPress}           // 로그아웃
           onNotify={onNotify}         // 푸시알람
           notifyStatus={notifyStatus} // 푸시 알람 수신 상태
       />
