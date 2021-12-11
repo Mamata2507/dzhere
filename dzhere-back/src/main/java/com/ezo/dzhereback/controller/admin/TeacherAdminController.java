@@ -41,6 +41,7 @@ public class TeacherAdminController {
 
     @PostMapping("/api/admin/teacher/search")
     List<Teacher> getTeacherSearch(@RequestBody TeacherSearchDto teacherSearchDto){
+        System.out.println("/api/admin/teacher/search");
         Teacher teacher = teacherSearchDto.toEntity();
         int c_idx = teacherService.getCidx(teacher.getC_name());
         System.out.println(teacher);

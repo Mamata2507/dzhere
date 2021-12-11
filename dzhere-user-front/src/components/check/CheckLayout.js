@@ -29,10 +29,55 @@ import check_disable_icon from "../../../assets/check/calendar_gray.png";
 import check_35px_icon from "../../../assets/check/calendar_35px.png";
 import exit_icon from "../../../assets/check/exit.png";
 import exit_disable_icon from "../../../assets/check/exit_gray.png";
+
+import outgo_icon from "../../../assets/check/outgo.png";
+import outgo2_icon from "../../../assets/check/outgo2.png";
+import outgo_gray_icon from "../../../assets/check/outgo_gray.png";
+import outgo_gray2_icon from "../../../assets/check/outgo_gray2.png";
+
 import clock_icon from "../../../assets/check/clock.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 import refresh_icon from "../../../assets/check/refresh.png";
 import { StatusBar } from "expo-status-bar";
+
+const Item = ({ label, attendState, source }) => (
+  <View style={styles.footer}>
+    <ScrollView>
+      <View
+        style={
+          Platform.OS === "android"
+            ? [{ flexDirection: "row", height: 50 }, styles.centerAlign]
+            : [{ flexDirection: "row", height: 60 }, styles.centerAlign]
+        }
+      >
+        {Platform.OS === "web" && (
+          <Text style={{ fontSize: 30 }}>{attendState}</Text>
+        )}
+        <Image
+          source={
+            attendState == "외출"
+              ? outgo_icon
+              : attendState == "외출종료"
+              ? outgo2_icon
+              : check_icon
+          }
+        />
+        <Image
+          source={clock_icon}
+          style={{ width: 15, height: 15, alignSelf: "baseline" }}
+        />
+        <Text style={styles.footerText}>{label}</Text>
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        {Platform.OS === "android" && (
+          <Text style={{ fontSize: Platform.OS === "android" ? 23 : 30 }}>
+            {attendState}
+          </Text>
+        )}
+      </View>
+    </ScrollView>
+  </View>
+);
 
 export const Header = ({ onRefresh }) => {
   return (
@@ -41,7 +86,7 @@ export const Header = ({ onRefresh }) => {
       <View style={[styles.container, { alignItems: "center", marginTop: 20 }]}>
         <View style={styles.header}></View>
         <View style={{ alignSelf: "flex-end", marginRight: 15 }}>
-          <TouchableOpacity onPress={onRefresh}>            
+          <TouchableOpacity onPress={onRefresh}>
             <Image source={refresh_icon} />
           </TouchableOpacity>
         </View>
@@ -50,33 +95,6 @@ export const Header = ({ onRefresh }) => {
     </>
   );
 };
-
-const Item = ({ label, attendState, source }) => (
-  <View style={styles.footer}>
-    <View
-      style={
-        Platform.OS === "android"
-          ? [{ flexDirection: "row", height: 50 }, styles.centerAlign]
-          : [{ flexDirection: "row", height: 100 }, styles.centerAlign]
-      }
-    >
-      {Platform.OS === "web" && (
-        <Text style={{ fontSize: 30 }}>{attendState}</Text>
-      )}
-      <Image source={check_icon} />
-      <Image
-        source={clock_icon}
-        style={{ width: 15, height: 15, alignSelf: "baseline" }}
-      />
-      <Text style={styles.footerText}>{label}</Text>
-    </View>
-    <View style={{ flexDirection: "row" }}>
-      {Platform.OS === "android" && (
-        <Text style={{ fontSize: Platform.OS === 'android' ? 23 : 30 }}>{attendState}</Text>
-      )}
-    </View>
-  </View>
-);
 
 export const Contents = ({
   onPressStartTime,
@@ -88,6 +106,10 @@ export const Contents = ({
   btnDisable,
   onPressLeaveTime,
   exitBtnDisable,
+  outgoBtnDisable,
+  outgoBtnDisable2,
+  onPressOutgo,
+  onPressOutgo2,
 }) => {
   const renderItem = ({ item }) => (
     <Item
@@ -131,12 +153,18 @@ export const Contents = ({
       {classTime[0] && endtime ? (
         <>
           <Text style={styles.test2}>
-            강의 시간: {classTime[0].ct_start_time.slice(0, 5)} ~{" "}
-            {classTime[0].ct_end_time.slice(0, 5)}
+            강의 시간:{" "}
+            {classTime[0].ct_start_time
+              ? classTime[0].ct_start_time.slice(0, 5)
+              : ""}{" "}
+            ~ {classTime[0].ct_end_time.slice(0, 5)}
           </Text>
           <Text style={styles.test2}>
-            점심 시간: {classTime[0].ct_break_start.slice(0, 5)} ~{" "}
-            {classTime[0].ct_break_end.slice(0, 5)}
+            점심 시간:{" "}
+            {classTime[0].ct_break_start
+              ? classTime[0].ct_break_start.slice(0, 5)
+              : ""}{" "}
+            ~ {classTime[0].ct_break_end.slice(0, 5)}
           </Text>
           <Text style={styles.test2}>
             출석 인정 시간: {classTime[0].ct_attend_starttime.slice(0, 5)} ~{" "}
@@ -156,6 +184,18 @@ export const Contents = ({
           source={!btnDisable ? check_icon : check_disable_icon}
           disabled={btnDisable}
           onPress={onPressStartTime}
+        />
+        <StyledButtons
+          title={"외출"}
+          source={outgoBtnDisable ? outgo_icon : outgo_gray_icon}
+          disabled={!outgoBtnDisable}
+          onPress={onPressOutgo}
+        />
+        <StyledButtons
+          title={"외출종료"}
+          source={outgoBtnDisable2 ? outgo2_icon : outgo_gray2_icon}
+          disabled={!outgoBtnDisable2}
+          onPress={onPressOutgo2}
         />
         <StyledButtons
           title={"조퇴"}
@@ -180,7 +220,11 @@ export const Contents = ({
         {attendList ? (
           <>
             <FlatList
-              style={{ marginBottom: 5, marginTop:  Platform.OS === 'android' ? 0 : 1 }}
+              scrollEnabled={true}
+              style={{
+                marginBottom: 50,
+                marginTop: Platform.OS === "android" ? 0 : 1,
+              }}
               data={attendList}
               keyExtractor={(v) => v.id}
               renderItem={renderItem}
@@ -228,19 +272,20 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? "7%" : "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
+    height: Platform.OS === "android" ? "80%" : 200,
+    // marginBottom:100,
   },
   footer: {
-    // flex: 3,
+    // flex: 2,
     justifyContent: "space-between",
     flexDirection: "column",
     backgroundColor: "#CEEDFF",
     marginBottom: 2,
-    marginTop: Platform.OS === 'android' ? 10 : 10,
-    marginLeft:  Platform.OS === 'android' ? 15 : 10,
-    marginRight:  Platform.OS === 'android' ? 15 : 10,
-    borderRadius: Platform.OS === 'android' ? 25 : 0,
-    padding: Platform.OS === 'android' ? 10 : 0
+    marginTop: Platform.OS === "android" ? 10 : 10,
+    marginLeft: Platform.OS === "android" ? 15 : 10,
+    marginRight: Platform.OS === "android" ? 15 : 10,
+    borderRadius: Platform.OS === "android" ? 25 : 0,
+    padding: Platform.OS === "android" ? 10 : 0,
   },
   footerText: {
     fontSize: 18,

@@ -23,9 +23,9 @@ export const getTeacherSearch = async (item) => {
     attend_state,
     attend_date_state,
   } = item;
-  console.log("----------");
+  console.log("-----2222-----");
   console.log(item.lesson);
-  console.log(item.u_auth);
+  console.log(agency);
   return await client.post(`${teacherUrl}/search`, {
     ag_idx: agency.ag_idx,
     c_idx: agency.c_idx,

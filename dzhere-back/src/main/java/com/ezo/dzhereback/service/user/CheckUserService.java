@@ -37,6 +37,14 @@ public class CheckUserService {
         return checkUserMapper.insertCheckExit(attendDate, attendTime, u_idx);
     }
 
+    public int insertOutgo(String attendDate,String attendTime, int u_idx){
+        return checkUserMapper.insertOutgo(attendDate, attendTime, u_idx);
+    }
+
+    public int insertOutgoEnd(String attendDate,String attendTime, int u_idx){
+        return checkUserMapper.insertOutgoEnd(attendDate, attendTime, u_idx);
+    }
+
     public LoadAttendCnt loadAttendCnt(int u_idx, int month){
         return checkUserMapper.getLoadAttendCnt(u_idx,month);
     }

@@ -12,6 +12,10 @@ const REFRESH_RESET = 'check/REFRESH_RESET';
 const [CLASS_LOAD, CLASS_LOAD_SUCCESS, CLASS_LOAD_FAILURE] = createRequestActionTypes('class/CLASS_LOAD');
 const [CLASS_TIME_LOAD, CLASS_TIME_LOAD_SUCCESS, CLASS_TIME_LOAD_FAILURE] = createRequestActionTypes('class/CLASS_TIME_LOAD');
 
+// 외출
+const [OUTGO_INSERT, OUTGO_INSERT_SUCCESS, OUTGO_INSERT_FAILURE] = createRequestActionTypes('check/OUTGO_INSERT');
+const [OUTGO_END_INSERT, OUTGO_END_INSERT_SUCCESS, OUTGO_END_INSERT_FAILURE] = createRequestActionTypes('check/OUTGO_END_INSERT');
+
 // 출석
 const ATTEND_LOAD = 'check/ATTEND_LOAD';
 const [ATTEND_INSERT, ATTEND_INSERT_SUCCESS, ATTEND_INSERT_FAILURE] = createRequestActionTypes('check/ATTEND_INSERT');
@@ -31,6 +35,10 @@ export const refreshResetCheckList = createAction(REFRESH_RESET);
 export const loadClassList = createAction(CLASS_LOAD, u_phone=>u_phone);
 export const loadClassTimeList = createAction(CLASS_TIME_LOAD, u_phone=>u_phone);
 
+// 외출
+export const outgoInsert = createAction(OUTGO_INSERT, u_phone=>u_phone);
+export const outgoEndInsert = createAction(OUTGO_END_INSERT, u_phone=>u_phone);
+
 // 출석
 export const loadCheck = createAction(ATTEND_LOAD, u_phone=>u_phone);
 export const checkInsert = createAction(ATTEND_INSERT, u_phone=>u_phone);
@@ -46,6 +54,9 @@ export const initCheckWifiInfo = createAction(RESET_CHECK_WIFI);
 // 수업
 const classListSaga = createRequestSaga(CLASS_LOAD, checkAPI.loadClasses);
 const classTimeListSaga = createRequestSaga(CLASS_TIME_LOAD, checkAPI.loadClassTime);
+// 외출
+const outgoInsertSaga = createRequestSaga(OUTGO_INSERT, checkAPI.insertOutgo);
+const outgoEndInsertSaga = createRequestSaga(OUTGO_END_INSERT, checkAPI.insertOutgoEnd);
 // 출석
 const attendCheckInsertSaga = createRequestSaga(ATTEND_INSERT, checkAPI.insertCheck);
 const attendCheckLeaveInsertSaga = createRequestSaga(ATTEND_LEAVE_INSERT, checkAPI.insertCheckReave);
@@ -63,6 +74,8 @@ export function* checkSaga() {
     yield takeLatest(ATTEND_EXIT_INSERT, attendCheckExitInsertSaga);
     yield takeLatest(CHECK_WIFI, checkWifiSaga);
     yield takeLatest(TODAY_ATTEND_LOAD, attendTodayCheckLoadSaga);
+    yield takeLatest(OUTGO_INSERT, outgoInsertSaga);
+    yield takeLatest(OUTGO_END_INSERT, outgoEndInsertSaga);
 }
 
 const initState = {

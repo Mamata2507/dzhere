@@ -16,6 +16,8 @@ import {
   refreshCheckList,
   refreshResetCheckList,
   setName,
+  outgoInsert,
+  outgoEndInsert,
 } from "../../modules/check/check";
 import { AsyncStorage, Platform, Alert } from "react-native";
 import CheckHeaderContainer from "./CheckHeaderContainer";
@@ -33,6 +35,9 @@ const CheckContainer = () => {
   const temp_uphone = phone;
   const [endtime, setEndtime] = useState();
   const [btnDisable, setBtnDisable] = useState(false); // 버튼 토글용 상태
+  const [outgoBtnDisable, setOutgoBtnDisable] = useState(false);
+  const [outgoBtnDisable2, setOutgoBtnDisable2] = useState(false);
+
   const [exitBtnDisable, setExitBtnDisable] = useState(true);
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
@@ -106,6 +111,7 @@ const CheckContainer = () => {
   const onPressStartTime = async () => {
     if (Platform.OS === "android") {
       setBtnClick(true);
+      // setOutgoBtnDisable(true); // 외출 시작
       setBtnState(1);
       if (await startWifi()) {
         console.log("출석 버튼 click");
@@ -115,6 +121,40 @@ const CheckContainer = () => {
     } else {
       alert("Web 환경에서는 출석/퇴실 이 불가능 합니다.");
     }
+  };
+
+  // 외출 버튼 이벤트
+  const onPressOutgo = () => {
+    const ID = Date.now();
+    const nowTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    const newCheckObject4 = {
+      id: ID + 3,
+      time: nowTime,
+      attendState: "외출",
+    };
+    setAttendList((list) => list.concat(newCheckObject4));
+    dispatch(outgoInsert(phone));
+    setOutgoBtnDisable(false);
+    setOutgoBtnDisable2(true);
+    setExitBtnDisable(true);
+  };
+
+  // 외출 종료 버튼 이벤트
+  const onPressOutgo2 = () => {
+    const ID = Date.now();
+    const nowTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    const newCheckObject5 = {
+      id: ID + 4,
+      time: nowTime,
+      attendState: "외출종료",
+    };
+    setAttendList((list) => list.concat(newCheckObject5));
+    dispatch(outgoEndInsert(phone));
+    setOutgoBtnDisable(false);
+    setOutgoBtnDisable2(false);
+    setExitBtnDisable(false);
   };
 
   // 조퇴 버튼 이벤트
@@ -151,7 +191,7 @@ const CheckContainer = () => {
 
   async function getName() {
     const data = await getUserName(phone);
-    console.log("이름", data);
+    // console.log("이름", data);
     dispatch(setName(data));
   }
 
@@ -172,30 +212,38 @@ const CheckContainer = () => {
         setAttendList(attendList.concat(newCheckObject));
         setBtnDisable(true);
         setExitBtnDisable(false);
+        setOutgoBtnDisable(true); // 외출 시작
       } else {
         Platform.OS === "android"
           ? Alert.alert("출석 인증 시간이 아닙니다.")
           : alert("출석 인증 시간이 아닙니다.");
       }
     } else {
-      // 퇴실, 조퇴
       if (attendStartTime) {
         console.log("퇴실");
-        dispatch(checkExitInsert(u_phone));
         setAttendEndTime(nowTime);
-        btnState === 2
-          ? setAttendList(attendList.concat(newCheckObject2))
-          : setAttendList(attendList.concat(newCheckObject3));
+        if (btnState === 2) {
+          // 조퇴
+          dispatch(checkLeaveInsert(u_phone));
+          setAttendList(attendList.concat(newCheckObject2));
+          setOutgoBtnDisable(false);
+          setOutgoBtnDisable2(false);
+        } else {
+          // 퇴실
+          dispatch(checkExitInsert(u_phone));
+          setAttendList(attendList.concat(newCheckObject3));
+        }
+
         setExitBtnDisable(true);
       }
     }
   };
 
-  useEffect(() => {
-    console.log("------btnState--------");
-    console.log(btnState);
-    console.log("------btnState--------");
-  }, [btnState]);
+  // useEffect(() => {
+  //   console.log("------btnState--------");
+  //   console.log(btnState);
+  //   console.log("------btnState--------");
+  // }, [btnState]);
 
   // 출석 리스트 받아 오기
   const loadCheckList = () => {
@@ -207,6 +255,7 @@ const CheckContainer = () => {
   useEffect(() => {
     const ID = Date.now();
     const nowTime = moment().format("YYYY-MM-DD HH:mm:ss");
+    // console.log(todayAttendList);
     const newCheckObject = {
       id: ID,
       time: todayAttendList.a_attend_time,
@@ -222,20 +271,47 @@ const CheckContainer = () => {
       time: todayAttendList.a_exit_time,
       attendState: "퇴실",
     };
-    // console.log(newCheckObject);
-    // console.log(newCheckObject2);
-    // console.log(newCheckObject3);
+    const newCheckObject4 = {
+      id: ID + 3,
+      time: todayAttendList.a_start_outgo,
+      attendState: "외출",
+    };
+    const newCheckObject5 = {
+      id: ID + 4,
+      time: todayAttendList.a_end_outgo,
+      attendState: "외출종료",
+    };
 
     setAttendList(() => []);
+    console.log(todayAttendList);
     if (todayAttendList) {
       if (todayAttendList.a_attend_time) {
         setAttendEndTime(nowTime);
-        setBtnDisable(true);
-        setExitBtnDisable(false);
+        setBtnDisable(true); // 출석
+        setExitBtnDisable(false); // 퇴실
         setAttendList((list) => list.concat(newCheckObject));
+        // if (todayAttendList.a_exit_time) {
+        //   todayAttendList.a_absent == 1 &&
+        //     setAttendList((list) => list.concat(newCheckObject2));
+        //   setExitBtnDisable(true);
+        // }
+
+        if (todayAttendList.a_start_outgo) {
+          // 외출
+          if (todayAttendList.a_outgo_status == 1) {
+            setAttendList((list) => list.concat(newCheckObject4));
+            setOutgoBtnDisable(false);
+            setOutgoBtnDisable2(true);
+          }
+          if (todayAttendList.a_outgo_end_status == 1) {
+            setAttendList((list) => list.concat(newCheckObject5));
+            setOutgoBtnDisable(false);
+            setOutgoBtnDisable2(false);
+          }
+        }
+
         if (todayAttendList.a_exit_time) {
-          // console.log("890-");
-          todayAttendList.a_absent == 1
+          todayAttendList.a_leave == 1
             ? setAttendList((list) => list.concat(newCheckObject2))
             : setAttendList((list) => list.concat(newCheckObject3));
           setExitBtnDisable(true);
@@ -243,17 +319,6 @@ const CheckContainer = () => {
       }
     }
     // console.log(attendList);
-  }, [todayAttendList]);
-
-  // useEffect(()=>{
-  //     refreshResetCheckList();
-  //     console.log('Refresh  ',Refresh);
-  // },[Refresh])
-
-  useEffect(() => {
-    console.log("--------todayAttendList--------");
-    console.log(todayAttendList);
-    console.log("--------todayAttendList--------");
   }, [todayAttendList]);
 
   useEffect(() => {
@@ -332,7 +397,7 @@ const CheckContainer = () => {
   }, [error]);
 
   useEffect(() => {
-    console.log(111);
+    console.log("---리프레시---");
     if (Refresh) {
       console.log(222);
       phone && dispatch(loadClassTimeList(phone));
@@ -353,6 +418,10 @@ const CheckContainer = () => {
         attendList={attendList}
         btnDisable={btnDisable}
         exitBtnDisable={exitBtnDisable}
+        outgoBtnDisable={outgoBtnDisable}
+        outgoBtnDisable2={outgoBtnDisable2}
+        onPressOutgo={onPressOutgo}
+        onPressOutgo2={onPressOutgo2}
       />
     </>
   );

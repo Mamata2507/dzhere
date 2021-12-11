@@ -49,12 +49,14 @@ export const ButtonView = styled.View`
   ${centerAlign}
   background-color: #ffffff;
   flex-direction: row;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 15px;
 `;
 
 const Title = styled.Text`
   ${centerAlign}
-  font-size: 20px;
+  font-size: 17px;
   color: black;
 `;
 const ButtonContainer = styled.TouchableOpacity`
@@ -62,7 +64,7 @@ const ButtonContainer = styled.TouchableOpacity`
   flex: 1;
   background-color: #e4e2e1;
   border-radius: 15px;
-  margin: 10px 20px;
+  margin: 6px 6px;
   justify-content: center;
 `;
 //E4E2E1
