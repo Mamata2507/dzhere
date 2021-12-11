@@ -14,7 +14,7 @@ export const Contents = ({ loadingEmail, email, onPress, newEmail, onChangeNewEm
         <View style={styles.myInfo}>
           <IconButton type={images.email}/>
           <Text style={styles.myInfoText}>
-          {loadingEmail && '로딩 중..'}
+          {loadingEmail && '로딩중입니다.'}
           {!loadingEmail && email && `${email.u_email}`}
         </Text>
         </View>

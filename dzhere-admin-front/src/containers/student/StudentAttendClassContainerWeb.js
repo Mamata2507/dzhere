@@ -66,7 +66,8 @@ const StudentAttendClassContainerWeb = () => {
     checkid,
     updateResult,
     updateError,
-  } = useSelector(({ studentAttend }) => ({
+    clist,
+  } = useSelector(({ studentAttend, classes }) => ({
     agencyList: studentAttend.agencyList,
     lessonList: studentAttend.lessonList,
     searchList: studentAttend.searchList,
@@ -77,14 +78,19 @@ const StudentAttendClassContainerWeb = () => {
     lessonListError: studentAttend.lessonListError,
     searchListError: studentAttend.searchListError,
     updateError: studentAttend.updateError,
+    clist: classes.clist,
   }));
 
   // load
-  useEffect(() => {
+  useEffect(async() => {
     setModalDatePickerVisibility(false);
     dispatch(setCheck(false));
     dispatch(getAgencyList(phone));
     dispatch(getLessonList(phone));
+    console.log('------1--------');
+    setSelectLesson(clist[0].c_name);
+    console.log(clist[0].c_name);
+    console.log(selectLesson);
   }, []);
 
   useEffect(() => {
@@ -99,10 +105,10 @@ const StudentAttendClassContainerWeb = () => {
     console.log(uid);
   }, [uid]);
 
+  // console.log(clist[0]);
   useEffect(() => {
-    setSelectLesson(() => lessonList[0]);
+    setSelectLesson(() => clist[0].c_name);
     setSelectAgency(() => agencyList[0]);
-    console.log(selectAgency);
   }, [lessonList, agencyList]);
 
   // useEffect(() => {
@@ -280,6 +286,7 @@ const StudentAttendClassContainerWeb = () => {
 
   // 검색
   const searchHandler = () => {
+    console.log("admin search");
     dispatch(resetList);
     if (teacherName === "") {
       alert("수강생명을 입력 하세요");
@@ -325,6 +332,7 @@ const StudentAttendClassContainerWeb = () => {
   return (
     <>
       <StudentAttendClass
+        clist={clist}
         btnFlag={btnFlag}
         startSearchDate={startSearchDate}
         endSearchDate={endSearchDate}

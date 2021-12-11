@@ -1,13 +1,19 @@
 package com.ezo.dzhereback.controller.common;
 
+import com.ezo.dzhereback.domain.Member;
 import com.ezo.dzhereback.dto.Result;
+import com.ezo.dzhereback.service.common.EmailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +25,27 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin
 @Slf4j
 public class AuthCommonController {
+    private final EmailService emailService;
+
+    @Autowired
+    public AuthCommonController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    // 비밀번호 찾기
+    @PostMapping("/api/find-pw")
+    public ResponseEntity<?> findPw(@RequestBody Result<String> u_email){
+        log.info("email : " + u_email.getData());
+        try{
+            emailService.sendNewPasswordMail(u_email.getData());
+            return ResponseEntity.ok().body(new Result<String>("성공"));
+        }
+        catch (Exception e){
+            log.error("에러", e);
+            return ResponseEntity.status(444).body(new Result<String>("실패"));
+        }
+    }
+
     // 로그아웃
     @PostMapping("/api/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {

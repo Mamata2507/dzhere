@@ -3,7 +3,6 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, StatusBar } from 'reac
 import CustomTextInput from './CustomTextInput';
 import ErrorMessage from './ErrorMessage';
 import image from '../../../assets/logo.png'
-import client from '../../lib/api/client';
 
 const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
     console.log("AuthFormLogin");
@@ -53,18 +52,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
           <TouchableOpacity style={styles.loginBtn} onPress={onPress}>
             <Text style={styles.text}>로그인</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity
-            style={styles.signupBtn}
-            onPress={() => navigation.navigate("AdminRegisterPage")}
-          >
-            <Text style={styles.text}>회원가입</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.signupBtn}
-            onPress={() => client.get("api/user/test")}
-          >
-            <Text style={styles.text}>테스트</Text>
-          </TouchableOpacity> */}
+
         </View>
       </>
     );

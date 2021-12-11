@@ -331,7 +331,7 @@ const CustomSidebarMenu = (props) => {
                   client.defaults.headers.common["Authorization"] = "";
                   props.navigation.reset({
                     index: 0,
-                    routes: [{ name: "UserLoginPage" }],
+                    routes: [{ name: "AdminLoginPage" }],
                   });
                 } catch (e) {
                   console.log("Storage is not working : ", e);

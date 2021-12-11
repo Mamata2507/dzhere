@@ -47,7 +47,7 @@ const Item = ({ label, attendState, source }) => (
         style={
           Platform.OS === "android"
             ? [{ flexDirection: "row", height: 50 }, styles.centerAlign]
-            : [{ flexDirection: "row", height: 100 }, styles.centerAlign]
+            : [{ flexDirection: "row", height: 60 }, styles.centerAlign]
         }
       >
         {Platform.OS === "web" && (
@@ -55,8 +55,11 @@ const Item = ({ label, attendState, source }) => (
         )}
         <Image
           source={
-            attendState == "외출" ? outgo_icon: 
-            attendState == "외출종료" ? outgo2_icon: check_icon
+            attendState == "외출"
+              ? outgo_icon
+              : attendState == "외출종료"
+              ? outgo2_icon
+              : check_icon
           }
         />
         <Image
@@ -269,7 +272,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? "7%" : "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: "80%",
+    height: Platform.OS === "android" ? "80%" : 200,
     // marginBottom:100,
   },
   footer: {

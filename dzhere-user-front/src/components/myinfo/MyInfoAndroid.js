@@ -6,12 +6,12 @@ import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native';
 
 
-export const MyInfoAndroid = ({ phone, onPress, onNotify, notifyStatus }) => {
+export const MyInfoAndroid = ({ phone, onNotify, notifyStatus }) => {
 
   const navigation = useNavigation();
 
   return(
-    <View style={[styles.container, {height: 500, backgroundColor: '#CEEDFF', marginTop: 50}]}>
+    <View style={[styles.container, {height: 430, backgroundColor: '#CEEDFF', marginTop: 20}]}>
       <View style={styles.myInfo}>
         <IconButton type={images.phone}/>
         <Text style={styles.myInfoText}>휴대폰번호</Text>
@@ -49,14 +49,6 @@ export const MyInfoAndroid = ({ phone, onPress, onNotify, notifyStatus }) => {
       </View>
       <View style={styles.myInfo}>
         <Text style={styles.myInfoText, {marginLeft: 14, fontSize: 18}}>개인정보 처리방침</Text>
-      </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={onPress}
-          >
-          <Text style={[{ fontSize: 22 }, styles.text]}>로그아웃</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

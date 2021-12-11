@@ -11,7 +11,7 @@ import styles from "./Styles";
 
 const StudentAttendHeader = (props) => {
   const agList = props.agencyList;
-  const lessonList = props.lessonList;
+  const lessonList = props.clist;
 
   return (
     <>
@@ -28,7 +28,7 @@ const StudentAttendHeader = (props) => {
           <View style={styles.picker}>
             <Text style={[styles.text, { marginLeft: 15 }]}>강의</Text>
             <Picker style={[styles.pickerText]} onValueChange={props.handleSelectLesson}>
-              {lessonList.map((v,i) => (
+              {lessonList && lessonList.map((v,i) => (
                 <Picker.Item label={v.c_name} value={i} />
               ))}
             </Picker>
