@@ -16,7 +16,7 @@ const StudentAttend = (props) => {
             handleSearchBtn={props.handleSearchBtn}
             handleSelectLesson={props.handleSelectLesson}
           />
-          <StudentAttendContent 
+          <StudentAttendContent
             stuCount = {props.stuCount}
           />
         </>

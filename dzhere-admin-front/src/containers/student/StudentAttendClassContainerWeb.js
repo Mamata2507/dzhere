@@ -102,6 +102,7 @@ const StudentAttendClassContainerWeb = () => {
   useEffect(() => {
     setSelectLesson(() => lessonList[0]);
     setSelectAgency(() => agencyList[0]);
+    console.log(selectAgency);
   }, [lessonList, agencyList]);
 
   // useEffect(() => {

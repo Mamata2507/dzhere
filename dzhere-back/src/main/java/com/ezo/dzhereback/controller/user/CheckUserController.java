@@ -5,6 +5,7 @@ import com.ezo.dzhereback.domain.LoadAttendCnt;
 import com.ezo.dzhereback.domain.TodayAttendList;
 import com.ezo.dzhereback.domain.WifiInfo;
 import com.ezo.dzhereback.dto.CheckInsertDto;
+import com.ezo.dzhereback.dto.PhoneDto;
 import com.ezo.dzhereback.dto.WifiInfoDto;
 import com.ezo.dzhereback.service.user.CheckUserService;
 import com.ezo.dzhereback.service.user.LessonUserService;
@@ -76,6 +77,30 @@ public class CheckUserController {
 
         int result = checkUserService.insertCheckLeave(attendExitDate, attendExitTime, u_idx);
         System.out.println(result);
+        return result;
+    }
+
+    @PostMapping("/api/user/check/outgo")
+    public int insertOutgo(@RequestBody PhoneDto phoneDto){
+        System.out.println("/api/user/check/outgo");
+        int u_idx = checkUserService.getUidx(phoneDto.getU_phone());
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format2 = new SimpleDateFormat("yyyy-MM-dd");
+        attendExitTime = format.format(Calendar.getInstance().getTime());
+        attendExitDate = format2.format(Calendar.getInstance().getTime());
+        int result = checkUserService.insertOutgo(attendExitDate, attendExitTime, u_idx);
+        return result;
+    }
+
+    @PostMapping("/api/user/check/outgoend")
+    public int insertOutgoEnd(@RequestBody PhoneDto phoneDto){
+        System.out.println("/api/user/check/outgoend");
+        int u_idx = checkUserService.getUidx(phoneDto.getU_phone());
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format2 = new SimpleDateFormat("yyyy-MM-dd");
+        attendExitTime = format.format(Calendar.getInstance().getTime());
+        attendExitDate = format2.format(Calendar.getInstance().getTime());
+        int result = checkUserService.insertOutgoEnd(attendExitDate, attendExitTime, u_idx);
         return result;
     }
 

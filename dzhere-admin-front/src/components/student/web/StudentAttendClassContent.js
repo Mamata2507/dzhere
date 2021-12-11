@@ -7,13 +7,13 @@ import AttendClassModal from "./AttendClassModal";
 
 const dataHeader = [
   "선택",
-  "날짜",
   "수강생명",
+  "날짜",
   "출석",
   "퇴실",
-  "결석",
-  "지각",
   "조퇴",
+  "지각",
+  "결석",
   "미퇴실",
 ];
 
@@ -37,15 +37,15 @@ export default function ContentWeb(props) {
                     <DataTable.Cell>
                       <CheckBoxIcon item={v} style={styles.checkbox} />
                     </DataTable.Cell>
+                    <DataTable.Cell>{v.u_name}</DataTable.Cell>
                     <DataTable.Cell>
                       {v.a_today_date && v.a_today_date}
                     </DataTable.Cell>
-                    <DataTable.Cell>{v.u_name}</DataTable.Cell>
                     <DataTable.Cell>
-                      {v.a_attend_time && v.a_attend_time}
+                      {v.a_attend_time && v.a_attend_time.slice(11, 18)}
                     </DataTable.Cell>
                     <DataTable.Cell>
-                      {v.a_exit_time && v.a_exit_time}
+                      {v.a_exit_time && v.a_exit_time.slice(11, 18)}
                     </DataTable.Cell>
                     <DataTable.Cell>
                       {v.a_leave == 1 ? "ㅇ" : ""}

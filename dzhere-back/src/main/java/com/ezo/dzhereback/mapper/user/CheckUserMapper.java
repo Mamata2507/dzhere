@@ -29,11 +29,19 @@ public interface CheckUserMapper {
     @Update("update Attend \n" +
             "set a_leave = 1, a_exit_time = #{attendTime}, a_result_time = timediff(DATE_FORMAT(now(),'%H:%i:%S'), DATE_FORMAT(a_attend_time,'%H:%i:%S')) \n" +
             "where a_today_date = #{attendDate} and u_idx = #{u_idx}")
-    int insertCheckLeave(String attendDate,String attendTime, int u_idx);
+    int insertCheckLeave(String attendDate, String attendTime, int u_idx);
 
     @Update("update Attend set a_exit_time = #{attendTime}, a_result_time = timediff(DATE_FORMAT(now(),'%H:%i:%S'), DATE_FORMAT(a_attend_time,'%H:%i:%S'))\n" +
             "where a_today_date = #{attendDate} and u_idx = #{u_idx}")
-    int insertCheckExit(String attendDate,String attendTime, int u_idx);
+    int insertCheckExit(String attendDate, String attendTime, int u_idx);
+
+    // 외출 , 외출종료
+    @Update("update Attend set a_start_outgo = #{attendTime}, a_outgo_status=1 where a_today_date = #{attendDate} and u_idx = #{u_idx}")
+    int insertOutgo(String attendDate, String attendTime, int u_idx);
+
+    @Update("update Attend set a_end_outgo = #{attendTime}, a_outgo_end_status=1 where a_today_date = #{attendDate} and u_idx = #{u_idx}")
+    int insertOutgoEnd(String attendDate, String attendTime, int u_idx);
+
 
     @Select("select count(*) as 'a_total_cnt', sum(a_leave) as 'a_leave_cnt', sum(a_late_status) as 'a_late_status_cnt', \n" +
             "       sum(a_absent) as 'a_absent_cnt', sum(a_not_exit) as 'a_not_exit_cnt', count(*) as 'a_real_date_cnt' \n" +
@@ -61,6 +69,6 @@ public interface CheckUserMapper {
     @Select("select count(*) from External where u_idx = #{u_idx} and c_idx = #{c_idx} and e_accept = #{e_accept} and e_bssid IN(#{bssid})")
     int checkExternalWifiInfo(String bssid, int u_idx, int c_idx, int e_accept);
 
-    @Select("select a_absent, a_attend_time, a_exit_time from Attend where a_today_date = #{today} and u_idx = #{u_idx} order by a_idx desc limit 1")
+    @Select("select a_leave, a_attend_time, a_exit_time, a_outgo_status, a_outgo_end_status, a_start_outgo, a_end_outgo from Attend where a_today_date = #{today} and u_idx = #{u_idx} order by a_idx desc limit 1")
     TodayAttendList getLoadTodayAttendList(int u_idx, String today);
 }
