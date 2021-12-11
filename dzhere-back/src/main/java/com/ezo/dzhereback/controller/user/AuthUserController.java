@@ -65,10 +65,13 @@ public class AuthUserController {
                     .build();
             return ResponseEntity.ok().body(responseMemberDto);
         } catch (Exception e) {
+            log.info(e.getMessage());
             if (e.getMessage().equals("가입 불가 : 이미 가입한 회원,409"))
                 return ResponseEntity.status(409).body(new Result<String>("가입 불가 : 이미 가입한 회원"));
             else if (e.getMessage().equals("가입 불가 : 관리자가 등록하지 않은 사용자,410"))
                 return ResponseEntity.status(410).body(new Result<String>("가입 불가 : 관리자가 등록하지 않은 사용자"));
+            else if (e.getMessage().equals("가입 불가 : 이미 가입된 계정의 이메일,411"))
+                return ResponseEntity.status(411).body(new Result<String>("가입 불가 : 이미 가입된 계정의 이메일"));
             else return ResponseEntity.status(500).body(new Result<String>(e.getMessage()));
         }
     }

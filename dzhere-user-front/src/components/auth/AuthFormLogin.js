@@ -3,7 +3,6 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, StatusBar } from 'reac
 import CustomTextInput from './CustomTextInput';
 import ErrorMessage from './ErrorMessage';
 import image from '../../../assets/logo.png'
-import client from '../../lib/api/client';
 
 const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) => {
     // console.log("AuthFormLogin");

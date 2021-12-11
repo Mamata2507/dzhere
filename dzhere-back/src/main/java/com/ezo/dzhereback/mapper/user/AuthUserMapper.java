@@ -26,6 +26,9 @@ public interface AuthUserMapper {
     @Select("select u_idx, u_phone, u_email from User where u_phone=#{u_phone}")
     Member findRegisteredMemberByPhone(@Param("u_phone") String u_phone);
 
+    @Select("select count(*) from User where u_email=#{u_email};")
+    int existsByEmail(@Param("u_email") String u_email);
+
     @Select("select * from User where u_phone=#{u_phone} and u_pw=#{u_pw}")
     Member findByPhoneAndPassword(@Param("u_phone") String u_phone, @Param("u_pw") String u_pw);
 }
