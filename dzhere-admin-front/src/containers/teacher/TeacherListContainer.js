@@ -12,7 +12,7 @@ import {
   setTeacherCheck, 
   updateUser, 
 } from '../../modules/user/list'
-import { countUser, getStudentInfo } from '../../lib/api/user/list'
+import { countUser, getStudentInfo, getTeacher } from '../../lib/api/user/list'
 
 let selectedAccept = 2;
 
@@ -73,9 +73,12 @@ const TeacherListContainer = () => {
     dispatch(setTeacherCheck(false))
     dispatch(setTeacherValue(0))
     selectedAccept = e;
-    let teacherList_ = teacherList;
-    let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
-    dispatch(setFilterList(tempArr))      
+    async function getTeacher_() {
+      let teacherList_ = await getTeacher({ag_idx, selectedClass});
+      let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
+      dispatch(setFilterList(tempArr))      
+    }
+    getTeacher_();
   });
 
   // 헤더 - 검색 버튼 클릭 시

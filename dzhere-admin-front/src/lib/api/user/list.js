@@ -18,6 +18,28 @@ export const deleteUser = (uid) =>
 export const insertUser = ({ag_idx, selectedClassAdd, uName, uPhone, uAuth}) => 
     client.post(`/insertUser`, {ag_idx: ag_idx, c_idx: selectedClassAdd, u_name: uName, u_phone: uPhone, u_auth: uAuth})
 
+export const getStudent = ({ag_idx, selectedClass}) => {
+    return client
+    .post(`/getStudentList`, {ag_idx: ag_idx, c_idx: selectedClass})
+    .then(function (response){
+        return response.data.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
+
+export const getTeacher = ({ag_idx, selectedClass}) => {
+    return client
+    .post(`/getTeacherList`, {ag_idx: ag_idx, c_idx: selectedClass})
+    .then(function (response){
+        return response.data.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+};
+
 export const countUser = phone => {
     return client
     .get(`/countUser/${phone}`)
