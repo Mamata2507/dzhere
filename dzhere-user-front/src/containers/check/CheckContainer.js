@@ -126,6 +126,7 @@ const CheckContainer = () => {
   // 외출 버튼 이벤트
   const onPressOutgo = () => {
     const ID = Date.now();
+    const u_phone = temp_uphone;
     const nowTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
     const newCheckObject4 = {
@@ -133,16 +134,22 @@ const CheckContainer = () => {
       time: nowTime,
       attendState: "외출",
     };
-    setAttendList((list) => list.concat(newCheckObject4));
-    dispatch(outgoInsert(phone));
-    setOutgoBtnDisable(false);
-    setOutgoBtnDisable2(true);
-    setExitBtnDisable(true);
+
+    if (Platform.OS === "android") {
+      setAttendList((list) => list.concat(newCheckObject4));
+      dispatch(outgoInsert({ u_phone, nowTime }));
+      setOutgoBtnDisable(false);
+      setOutgoBtnDisable2(true);
+      setExitBtnDisable(true);
+    } else {
+      alert("Web 환경에서는 외출/외출종료 가 불가능 합니다.");
+    }
   };
 
   // 외출 종료 버튼 이벤트
   const onPressOutgo2 = () => {
     const ID = Date.now();
+    const u_phone = temp_uphone;
     const nowTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
     const newCheckObject5 = {
@@ -150,11 +157,16 @@ const CheckContainer = () => {
       time: nowTime,
       attendState: "외출종료",
     };
-    setAttendList((list) => list.concat(newCheckObject5));
-    dispatch(outgoEndInsert(phone));
-    setOutgoBtnDisable(false);
-    setOutgoBtnDisable2(false);
-    setExitBtnDisable(false);
+
+    if (Platform.OS === "android") {
+      setAttendList((list) => list.concat(newCheckObject5));
+      dispatch(outgoEndInsert({ u_phone, nowTime }));
+      setOutgoBtnDisable(false);
+      setOutgoBtnDisable2(false);
+      setExitBtnDisable(false);
+    } else {
+      alert("Web 환경에서는 외출/외출종료 가 불가능 합니다.");
+    }
   };
 
   // 조퇴 버튼 이벤트
@@ -206,7 +218,7 @@ const CheckContainer = () => {
     if (btnState === 1) {
       // 출석
       if (attendStartTime && moment().format("HH:mm:ss") > attend_starttime) {
-        dispatch(checkInsert(u_phone));
+        dispatch(checkInsert({ u_phone, nowTime }));
         console.log("asdlkfjsal;kdfjlasdjf");
         setAttendStartTime(nowTime);
         setAttendList(attendList.concat(newCheckObject));
@@ -224,13 +236,13 @@ const CheckContainer = () => {
         setAttendEndTime(nowTime);
         if (btnState === 2) {
           // 조퇴
-          dispatch(checkLeaveInsert(u_phone));
+          dispatch(checkLeaveInsert({ u_phone, nowTime }));
           setAttendList(attendList.concat(newCheckObject2));
           setOutgoBtnDisable(false);
           setOutgoBtnDisable2(false);
         } else {
           // 퇴실
-          dispatch(checkExitInsert(u_phone));
+          dispatch(checkExitInsert({ u_phone, nowTime }));
           setAttendList(attendList.concat(newCheckObject3));
         }
 
@@ -291,11 +303,6 @@ const CheckContainer = () => {
         setOutgoBtnDisable(true);
         setExitBtnDisable(false); // 퇴실
         setAttendList((list) => list.concat(newCheckObject));
-        // if (todayAttendList.a_exit_time) {
-        //   todayAttendList.a_absent == 1 &&
-        //     setAttendList((list) => list.concat(newCheckObject2));
-        //   setExitBtnDisable(true);
-        // }
 
         if (todayAttendList.a_start_outgo) {
           // 외출
@@ -303,11 +310,13 @@ const CheckContainer = () => {
             setAttendList((list) => list.concat(newCheckObject4));
             setOutgoBtnDisable(false);
             setOutgoBtnDisable2(true);
+            setExitBtnDisable(true);
           }
           if (todayAttendList.a_outgo_end_status == 1) {
             setAttendList((list) => list.concat(newCheckObject5));
             setOutgoBtnDisable(false);
             setOutgoBtnDisable2(false);
+            setExitBtnDisable(false);
           }
         }
 

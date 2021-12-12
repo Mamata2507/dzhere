@@ -248,6 +248,11 @@ const RegisterForm = ({ navigation, route }) => {
                 setError5('가입 실패: 담당자가 등록하지 않은 사용자(410)\n강사 혹은 담당자에게 문의해주세요!!');
                 return;
             }
+            else if (authErrorDetail === '411'){
+                console.log('가입 실패: 이미 가입된 계정의 이메일(411)');
+                setError5('가입 실패: 이미 가입된 계정의 이메일(411)');
+                return;
+            }
             else if(authErrorDetail === '500'){
                 // 기타 이유
                 console.log('가입 실패: 기타(500)');

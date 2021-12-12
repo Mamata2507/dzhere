@@ -88,7 +88,7 @@ export const Footer = ({attendList}) => {
                                     <DataTable.Cell numeric>{(v.a_today_date).slice(2,10)}</DataTable.Cell>
                                     <DataTable.Cell numeric>{v.a_attend_time}</DataTable.Cell>
                                     <DataTable.Cell numeric>{v.a_exit_time}</DataTable.Cell>
-                                    <DataTable.Cell numeric>{v.a_result_time}</DataTable.Cell>
+                                    <DataTable.Cell numeric>{v.a_result_time.slice(0,5)}</DataTable.Cell>
                                     <DataTable.Cell numeric><Text style={(v.a_attend_state==="결석")&&{color:'red'}}>{v.a_attend_state}</Text></DataTable.Cell>
                                 </DataTable.Row>
                             ))

@@ -12,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class PhoneDto {
     private String u_phone;
+    private String insert_time;
     @Builder
-    public PhoneDto(String u_phone) {
+    public PhoneDto(String u_phone, String insert_time) {
         this.u_phone = u_phone;
+        this.insert_time = insert_time;
     }
 }

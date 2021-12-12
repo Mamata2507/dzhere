@@ -21,11 +21,15 @@ public class AuthUserService {
 
     public int join(final Member member) {
         final String u_phone = member.getU_phone();
+        final String u_email = member.getU_email();
 
         if (!authMapper.existsByPhone(u_phone))
             throw new RuntimeException("가입 불가 : 관리자가 등록하지 않은 사용자,410");
         else if (authMapper.findAcceptByPhone(u_phone) == 1) {
             throw new RuntimeException("가입 불가 : 이미 가입한 회원,409");
+        }
+        else if (authMapper.existsByEmail(u_email) >= 1){
+            throw new RuntimeException("가입 불가 : 이미 가입된 계정의 이메일,411");
         }
         else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -56,24 +56,27 @@ public class CheckUserController {
         u_idx = checkUserService.getUidx(u_phone);   // 유저 index
         c_idx = lessonUserService.getCidx(u_phone);  // 수업 index
         System.out.println("c_idx----->"+c_idx);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(checkInsertDto.getInsert_time());
         // Calendar형식에서 날짜를 가져온다. 특이점은 Calendar가 singleton 형식이다.
         // Date 값을 가져와서 String으로 변환한다.
-        String attendTime = format.format(Calendar.getInstance().getTime());
-
-        System.out.println(attendTime);
-        return checkUserService.insertCheck(attendTime, u_idx, c_idx);
+//        String attendTime = format.format(Calendar.getInstance().getTime());
+//        System.out.println(attendTime);
+        return checkUserService.insertCheck(checkInsertDto.getInsert_time(), u_idx, c_idx);
     }
 
     @PostMapping("/api/user/attend/reaveinsert")
     public int insertLeaveAttend(@RequestBody CheckInsertDto checkInsertDto){
+        System.out.println(checkInsertDto);
         u_phone = checkInsertDto.getU_phone();
         int u_idx = checkUserService.getUidx(u_phone);
 
         format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         format2 = new SimpleDateFormat("yyyy-MM-dd");
-        attendExitTime = format.format(Calendar.getInstance().getTime());
-        attendExitDate = format2.format(Calendar.getInstance().getTime());
+        System.out.println(checkInsertDto.getInsert_time());
+        System.out.println(checkInsertDto.getInsert_time().substring(0,10));
+        attendExitTime = checkInsertDto.getInsert_time();
+        attendExitDate = checkInsertDto.getInsert_time().substring(0,10);
 
         int result = checkUserService.insertCheckLeave(attendExitDate, attendExitTime, u_idx);
         System.out.println(result);
@@ -83,11 +86,12 @@ public class CheckUserController {
     @PostMapping("/api/user/check/outgo")
     public int insertOutgo(@RequestBody PhoneDto phoneDto){
         System.out.println("/api/user/check/outgo");
+//        System.out.println(phoneDto.getInsert_time());
         int u_idx = checkUserService.getUidx(phoneDto.getU_phone());
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        format2 = new SimpleDateFormat("yyyy-MM-dd");
-        attendExitTime = format.format(Calendar.getInstance().getTime());
-        attendExitDate = format2.format(Calendar.getInstance().getTime());
+//        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        format2 = new SimpleDateFormat("yyyy-MM-dd");
+        attendExitTime = phoneDto.getInsert_time();
+        attendExitDate = phoneDto.getInsert_time().substring(0,10);
         int result = checkUserService.insertOutgo(attendExitDate, attendExitTime, u_idx);
         return result;
     }
@@ -96,10 +100,10 @@ public class CheckUserController {
     public int insertOutgoEnd(@RequestBody PhoneDto phoneDto){
         System.out.println("/api/user/check/outgoend");
         int u_idx = checkUserService.getUidx(phoneDto.getU_phone());
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        format2 = new SimpleDateFormat("yyyy-MM-dd");
-        attendExitTime = format.format(Calendar.getInstance().getTime());
-        attendExitDate = format2.format(Calendar.getInstance().getTime());
+//        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        format2 = new SimpleDateFormat("yyyy-MM-dd");
+        attendExitTime = phoneDto.getInsert_time();
+        attendExitDate = phoneDto.getInsert_time().substring(0,10);
         int result = checkUserService.insertOutgoEnd(attendExitDate, attendExitTime, u_idx);
         return result;
     }
@@ -112,8 +116,10 @@ public class CheckUserController {
 
         format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         format2 = new SimpleDateFormat("yyyy-MM-dd");
-        attendExitTime = format.format(Calendar.getInstance().getTime());
-        attendExitDate = format2.format(Calendar.getInstance().getTime());
+        System.out.println(checkInsertDto.getInsert_time());
+        System.out.println(checkInsertDto.getInsert_time().substring(0,10));
+        attendExitTime = checkInsertDto.getInsert_time();
+        attendExitDate = checkInsertDto.getInsert_time().substring(0,10);
 
         int result = checkUserService.insertCheckExit(attendExitDate, attendExitTime, u_idx);
         System.out.println(result);

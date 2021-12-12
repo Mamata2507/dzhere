@@ -23,21 +23,26 @@ export const loadClassTime = async (u_phone) => {
   return await checkAxios.get(`/class/time?${queryString}`);
 };
 
-export const insertCheck = (u_phone) => {
+export const insertCheck = ({ u_phone, nowTime }) => {
+  // console.log("---------------");
+  // console.log(nowTime);
   return checkAxios.post(`/attend/insert`, {
     u_phone: u_phone,
+    insert_time: nowTime,
   });
 };
 
-export const insertCheckExit = (u_phone) => {
+export const insertCheckExit = ({ u_phone, nowTime }) => {
   return checkAxios.post(`/attend/exitinsert`, {
     u_phone: u_phone,
+    insert_time: nowTime,
   });
 };
 
-export const insertCheckReave = (u_phone) => {
+export const insertCheckReave = ({ u_phone, nowTime }) => {
   return checkAxios.post(`/attend/reaveinsert`, {
     u_phone: u_phone,
+    insert_time: nowTime,
   });
 };
 
@@ -66,14 +71,17 @@ export const loadTodayAttendList = ({ u_phone, today }) => {
   return checkAxios.get(`/attend/todayload?${queryString}`);
 };
 
-export const insertOutgo = (u_phone) => {
+export const insertOutgo = ({ u_phone, nowTime }) => {
+  console.log(u_phone);
   return checkAxios.post(`/check/outgo`, {
     u_phone: u_phone,
+    insert_time: nowTime,
   });
 };
 
-export const insertOutgoEnd = (u_phone) => {
+export const insertOutgoEnd = ({ u_phone, nowTime }) => {
   return checkAxios.post(`/check/outgoend`, {
     u_phone: u_phone,
+    insert_time: nowTime,
   });
 };

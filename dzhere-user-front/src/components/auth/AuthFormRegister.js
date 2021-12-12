@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, Platfor
 import CustomTextInput from "./CustomTextInput";
 import CustomCheckbox from "./CustomCheckbox";
 import ErrorMessage from "./ErrorMessage";
-import CustomPicker from "./CustomPicker";
 
 const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route, validErrors }) => {
   return (
@@ -20,29 +19,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                 alignItems: "center",
               }}
             >
-              <View
-                style={{
-                  height: 40,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginLeft: 5,
-                }}
-              >
-                <CustomPicker
-                  name="userPhoneAgency"
-                  selectedValue={form.userPhoneAgency}
-                  onChangeText={onChangeText}
-                  style={{
-                    width: 107,
-                    height: 42,
-                    borderRadius: 15,
-                    paddingHorizontal: 10,
-                    borderColor: "#5d7bba",
-                    borderWidth: 2,
-                  }}
-                />
-              </View>
+              
               <CustomTextInput
                 name="userPhone"
                 autoCompleteType="tel"
@@ -57,7 +34,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                   borderColor: "#5d7bba",
                   borderWidth: 2,
                   borderRadius: 15,
-                  width: 210,
+                  width: 325,
                   paddingHorizontal: 15,
                   height: 40,
                 }}
@@ -72,31 +49,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                 alignItems: "center",
               }}
             >
-              <View
-                style={{
-                  borderColor: "#5d7bba",
-                  borderWidth: 2,
-                  height: 40,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginLeft: 15,
-                  borderRadius: 15,
-                }}
-              >
-                <CustomPicker
-                  name="userPhoneAgency"
-                  selectedValue={form.userPhoneAgency}
-                  onChangeText={onChangeText}
-                  style={{
-                    width: 107,
-                    height: 42,
-                    borderRadius: 15,
-                    borderColor: "#5d7bba",
-                    borderWidth: 2,
-                  }}
-                />
-              </View>
+              
               <CustomTextInput
                 name="userPhone"
                 autoCompleteType="tel"
@@ -110,7 +63,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                   margin: 5,
                   borderColor: "#5d7bba",
                   borderWidth: 2,
-                  width: 210,
+                  width: 325,
                   paddingHorizontal: 15,
                   height: 40,
                   borderRadius: 15,
@@ -119,49 +72,6 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
               />
             </View>
           )}
-
-          {/* <View style={{ flexDirection: "row" }}>
-            {validErrors.error1 && <ErrorMessage>{validErrors.error1}</ErrorMessage>}
-          </View> */}
-
-          {/* <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                margin: 10,
-                borderColor: "#5d7bba",
-                borderWidth: 2,
-              }}
-            >
-              <Text>인증 요청</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <CustomTextInput
-              name="authNum"
-              value={form.authNum}
-              onChangeText={onChangeText}
-              placeholder={"📞 인증번호"}
-              placeholderTextColor="#5d7bba"
-              maxLength={12}
-              keyboardType="numeric"
-              style={{
-                margin: 10,
-                borderColor: "#5d7bba",
-                borderWidth: 2,
-              }}
-            />
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                borderColor: "#5d7bba",
-                borderWidth: 2,
-              }}
-            >
-              <Text>확인</Text>
-            </TouchableOpacity>
-          </View> */}
 
           <View style={{ flexDirection: "row" }}>
             <CustomTextInput

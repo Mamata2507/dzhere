@@ -16,9 +16,10 @@ public class User {
     private int u_auth;
     private int c_idx;
     private int ag_idx;
+    private String insert_time;
 
     @Builder
-    public User(int u_idx, String u_phone, String u_pw, String u_email, int u_alarm, String u_name, int u_accept, int u_auth, int c_idx, int ag_idx) {
+    public User(int u_idx, String u_phone, String u_pw, String u_email, int u_alarm, String u_name, int u_accept, int u_auth, int c_idx, int ag_idx, String insert_time) {
         this.u_idx = u_idx;
         this.u_phone = u_phone;
         this.u_pw = u_pw;
@@ -29,5 +30,6 @@ public class User {
         this.u_auth = u_auth;
         this.c_idx = c_idx;
         this.ag_idx = ag_idx;
+        this.insert_time = insert_time;
     }
 }

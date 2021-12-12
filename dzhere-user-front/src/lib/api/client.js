@@ -2,7 +2,7 @@ import axios from "axios";
 
 const client = axios.create();
 
-client.defaults.baseURL = "http://192.168.0.5:8080/api/user/";
+client.defaults.baseURL = "http://192.168.0.4:8080/api/user/";
 // client.defaults.baseURL = "http://ec2-3-133-198-159.us-east-2.compute.amazonaws.com:8080/api/user/";
 client.defaults.timeout = 7000;
 
