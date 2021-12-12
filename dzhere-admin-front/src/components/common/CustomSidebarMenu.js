@@ -86,9 +86,9 @@ const CustomSidebarMenu = (props) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#CEEDFF" }}>
       {/*Top Large Image */}
       <Image source={image} style={styles.headerImage} />
-        <Text style={styles.headName}>
-          🌸 {agencyInfo?.u_name}님 환영합니다 🌸
-        </Text>
+      <Text style={styles.headName}>
+        🌸 {agencyInfo?.u_name}님 환영합니다 🌸
+      </Text>
       <DrawerContentScrollView
         {...props}
         style={{
@@ -216,8 +216,8 @@ const CustomSidebarMenu = (props) => {
             <DrawerItem
               label={
                 labels === "StudentAttend"
-                  ? ">  수강생별 출결 현황"
-                  : "수강생별 출결 현황"
+                  ? ">  수강생 인원 확인"
+                  : "수강생 인원 확인"
               }
               labelStyle={{
                 color: labels === "StudentAttend" ? "black" : colors,
