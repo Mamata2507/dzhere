@@ -18,8 +18,11 @@ const GET_TEACHER_LIST_FAILURE = 'list/GET_TEACHER_LIST_FAILURE'
 
 const SET_FILTER_LIST = 'list/SET_FILTER_LIST'
 
-const SET_CHECK = 'list/SET_CHECK'
-const SET_VALUE = 'list/SET_VALUE'
+const SET_STUDENT_VALUE = 'list/SET_STUDENT_VALUE'
+const SET_STUDENT_CHECK = 'list/SET_STUDENT_CHECK'
+
+const SET_TEACHER_VALUE = 'list/SET_TEACHER_VALUE'
+const SET_TEACHER_CHECK = 'list/SET_TEACHER_CHECK'
 
 const DELETE_USER = 'list/DELETE_USER'
 const DELETE_USER_SUCCESS = 'list/DELETE_USER_SUCCESS'
@@ -40,8 +43,10 @@ export const getAgName = createRequestThunk(GET_AG_NAME, api.getAgName);
 export const getStudentList = createRequestThunk(GET_STUDENT_LIST, api.getStudentList);
 export const getTeacherList = createRequestThunk(GET_TEACHER_LIST, api.getTeacherList);
 export const setFilterList = createAction(SET_FILTER_LIST, filterList => filterList);
-export const setCheck = createAction(SET_CHECK, checkid => checkid);
-export const setValue = createAction(SET_VALUE, uid => uid);
+export const setStudentCheck = createAction(SET_STUDENT_CHECK, checkSid => checkSid);
+export const setStudentValue = createAction(SET_STUDENT_VALUE, uSid => uSid);
+export const setTeacherCheck = createAction(SET_TEACHER_CHECK, checkTid => checkTid);
+export const setTeacherValue = createAction(SET_TEACHER_VALUE, uTid => uTid);
 export const deleteUser = createRequestThunk(DELETE_USER, api.deleteUser);
 export const insertUser = createRequestThunk(INSERT_USER, api.insertUser);
 export const updateUser = createRequestThunk(UPDATE_USER, api.updateUser);
@@ -54,8 +59,10 @@ const initialState = {
   studentList: [],
   teacherList: [],
   filterList: [],
-  uid: 0,
-  checkid: false,
+  uSid: 0,
+  uTid: 0,
+  checkSid: false,
+  checkTid: false,
   resultError: null
 };
 
@@ -93,14 +100,24 @@ const list = handleActions(
       filterList,
       resultError: null
     }),
-    [SET_CHECK]: (state, { payload: checkid }) => ({
+    [SET_STUDENT_CHECK]: (state, { payload: checkSid }) => ({
       ...state,
-      checkid,
+      checkSid,
       resultError: null
     }),
-    [SET_VALUE]: (state, { payload: uid }) => ({
+    [SET_STUDENT_VALUE]: (state, { payload: uSid }) => ({
       ...state,
-      uid,
+      uSid,
+      resultError: null
+    }),
+    [SET_TEACHER_CHECK]: (state, { payload: checkTid }) => ({
+      ...state,
+      checkTid,
+      resultError: null
+    }),
+    [SET_TEACHER_VALUE]: (state, { payload: uTid }) => ({
+      ...state,
+      uTid,
       resultError: null
     }),
     [DELETE_USER_SUCCESS]: (state, action) => ({
