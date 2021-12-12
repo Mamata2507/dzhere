@@ -161,14 +161,17 @@ export const Contents = ({
           </Text>
           <Text style={styles.test2}>
             점심 시간:{" "}
-            {classTime[0].ct_break_start
+            {classTime[0].ct_break_start && classTime[0].ct_break_start
               ? classTime[0].ct_break_start.slice(0, 5)
               : ""}{" "}
-            ~ {classTime[0].ct_break_end.slice(0, 5)}
+            ~{" "}
+            {classTime[0].ct_break_end && classTime[0].ct_break_end.slice(0, 5)}
           </Text>
           <Text style={styles.test2}>
-            출석 인정 시간: {classTime[0].ct_attend_starttime.slice(0, 5)} ~{" "}
-            {classTime[0].ct_attend_endtime.slice(0, 5)}
+            출석 인정 시간:{" "}
+            {classTime[0].ct_attend_starttime &&
+              classTime[0].ct_attend_starttime.slice(0, 5)}{" "}
+            ~ {classTime[0].ct_attend_endtime.slice(0, 5)}
           </Text>
           <Text style={styles.test2}>
             퇴실 인정 시간: {classTime[0].ct_end_time.slice(0, 5)} ~{" "}
@@ -272,7 +275,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? "7%" : "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: Platform.OS === "android" ? "80%" : '60%',
+    height: Platform.OS === "android" ? "80%" : "60%",
     // marginBottom:100,
   },
   footer: {
