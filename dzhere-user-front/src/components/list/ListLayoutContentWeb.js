@@ -13,7 +13,7 @@ const ListLayoutContentWeb = ({classTime,tableHead,days,onPressSearch,onMonthCha
             </View>
             <View>
                 <Text style={styles.text}>강의 시간: {(classTime[0].ct_start_time).slice(0,5)} ~ {(classTime[0].ct_end_time).slice(0,5)}</Text>
-                <Text style={styles.text}>점심 시간: {(classTime[0].ct_break_start).slice(0,5)} ~ {(classTime[0].ct_break_end).slice(0,5)}</Text>
+                <Text style={styles.text}>점심 시간: {(classTime[0].ct_break_start)&&(classTime[0].ct_break_start).slice(0,5)} ~ {(classTime[0].ct_break_end)&&(classTime[0].ct_break_end).slice(0,5)}</Text>
                 <Text style={styles.text}>출석 인정 시간: {(classTime[0].ct_attend_starttime).slice(0,5)} ~ {(classTime[0].ct_attend_endtime).slice(0,5)}</Text>
                 <Text style={styles.text}>퇴실 인정 시간: {(classTime[0].ct_end_time).slice(0,5)} ~ {'23:50'}</Text>
             </View>
