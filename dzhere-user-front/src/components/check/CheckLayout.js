@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? "7%" : "10%",
     justifyContent: "center",
     alignItems: "center",
-    height: Platform.OS === "android" ? "80%" : 200,
+    height: Platform.OS === "android" ? "80%" : '60%',
     // marginBottom:100,
   },
   footer: {

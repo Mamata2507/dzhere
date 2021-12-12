@@ -288,6 +288,7 @@ const CheckContainer = () => {
       if (todayAttendList.a_attend_time) {
         setAttendEndTime(nowTime);
         setBtnDisable(true); // 출석
+        setOutgoBtnDisable(true);
         setExitBtnDisable(false); // 퇴실
         setAttendList((list) => list.concat(newCheckObject));
         // if (todayAttendList.a_exit_time) {
