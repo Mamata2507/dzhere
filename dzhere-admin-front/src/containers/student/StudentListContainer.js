@@ -12,7 +12,7 @@ import {
   setStudentCheck, 
   updateUser, 
 } from '../../modules/user/list'
-import { countUser, getStudentInfo } from '../../lib/api/user/list';
+import { countUser, getStudentInfo, getStudent } from '../../lib/api/user/list';
 
 let selectedAccept = 2;
 
@@ -63,16 +63,17 @@ const StudentListContainer = () => {
     }
   }, []);
 
-
-
   // 승인 상태 변경 시
   const handleSetAccept = useCallback((e) => {
     dispatch(setStudentCheck(false))
     dispatch(setStudentValue(0))
     selectedAccept = e;
-    let studentList_ = studentList;
-    let tempArr = studentList_.filter(item => {return item.u_accept == selectedAccept});
-    dispatch(setFilterList(tempArr))      
+    async function getStudent_() {
+      let studentList_ = await getStudent({ag_idx, selectedClass});
+      let tempArr = studentList_.filter(item => {return item.u_accept == selectedAccept});
+      dispatch(setFilterList(tempArr))      
+    }
+    getStudent_();
   });
 
   // 헤더 - 검색 버튼 클릭 시
