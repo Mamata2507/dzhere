@@ -8,8 +8,8 @@ import {
   setFilterList, 
   deleteUser, 
   insertUser, 
-  setValue, 
-  setCheck, 
+  setTeacherValue, 
+  setTeacherCheck, 
   updateUser, 
 } from '../../modules/user/list'
 import { countUser, getStudentInfo } from '../../lib/api/user/list'
@@ -33,12 +33,12 @@ const TeacherListContainer = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
   const { agName, teacherList, clist,
-          loadingTeacherList, filterList, uid, resultError, userInfo, ag_idx }
+          loadingTeacherList, filterList, uTid, resultError, userInfo, ag_idx }
          = useSelector(({ list, loading, auth, classes }) => ({
     teacherList: list.teacherList,
     loadingTeacherList: loading['list/GET_TEACHER_LIST'],
     filterList: list.filterList,
-    uid: list.uid, 
+    uTid: list.uTid, 
     userInfo: auth.userInfo,
     resultError: list.resultError,
     ag_idx: classes.agency.ag_idx,
@@ -70,8 +70,8 @@ const TeacherListContainer = () => {
 
   // 승인 상태 변경 시
   const handleSetAccept = useCallback((e) => {
-    dispatch(setCheck(false))
-    dispatch(setValue(0))
+    dispatch(setTeacherCheck(false))
+    dispatch(setTeacherValue(0))
     selectedAccept = e;
     let teacherList_ = teacherList;
     let tempArr = teacherList_.filter(item => {return item.u_accept == selectedAccept});
@@ -108,18 +108,22 @@ const TeacherListContainer = () => {
     onChangeUname('')
     onChangeUphone('')
     setPhoneCheck(true)
+    if(uTid > 0){
+      dispatch(setTeacherCheck(false))
+      dispatch(setTeacherValue(0))
+    }
   }
 
   // 수정 모달 클릭 시
   async function showModalUpdate () {
-    if(uid === 0){
+    if(uTid === 0){
       if(Platform.OS === 'web'){
         alert('수강생을 선택해주세요');
       } else {
         Alert.alert('수강생을 선택해주세요');
       }
     } else {
-      let info = await(getStudentInfo(uid));
+      let info = await(getStudentInfo(uTid));
       onChangeUphone(info.u_phone);
       onChangeUname(info.u_name);
       setVisibleUpdate(true);
@@ -237,7 +241,7 @@ const TeacherListContainer = () => {
         Alert.alert('전화번호 확인 버튼을 클릭하세요');
       }
     } else {
-      dispatch(updateUser({selectedClassUpdate, uName, uPhone, uid}))
+      dispatch(updateUser({selectedClassUpdate, uName, uPhone, uTid}))
       if(resultError){
         console.log(resultError);
         if(Platform.OS === 'web'){
@@ -253,8 +257,8 @@ const TeacherListContainer = () => {
           Alert.alert('수정 완료');
         }
         hideModalUpdate()
-        dispatch(setCheck(false))
-        dispatch(setValue(0))
+        dispatch(setTeacherCheck(false))
+        dispatch(setTeacherValue(0))
         dispatch(getTeacherList({ag_idx, selectedClass}))
         if(selectedAccept < 2){
           let teacherList_ = teacherList;
@@ -268,14 +272,14 @@ const TeacherListContainer = () => {
 
   // 유저 삭제 -> 체크박스 이용
   const onDelete = () => {
-    if(uid === 0){
+    if(uTid === 0){
       if(Platform.OS === 'web'){
         alert('수강생을 선택해주세요');
       } else {
         Alert.alert('수강생을 선택해주세요');
       }
     } else {
-      dispatch(deleteUser(uid))
+      dispatch(deleteUser(uTid))
       if(resultError){
         console.log(resultError);
         if(Platform.OS === 'web'){
@@ -290,8 +294,8 @@ const TeacherListContainer = () => {
         } else {
           Alert.alert('삭제 완료');
         }
-        dispatch(setCheck(false))
-        dispatch(setValue(0))
+        dispatch(setTeacherCheck(false))
+        dispatch(setTeacherValue(0))
         dispatch(getTeacherList({ag_idx, selectedClass}))
         if(selectedAccept < 2){
           let teacherList_ = teacherList;
