@@ -504,6 +504,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: Platform.OS === "android" ? 15 : "20%",
     justifyContent: "center",
+    backgroundColor: 'white',
     flex: 1,
   },
   content: {

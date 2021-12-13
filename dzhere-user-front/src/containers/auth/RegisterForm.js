@@ -265,7 +265,7 @@ const RegisterForm = ({ navigation, route }) => {
                 return;
             }
         }
-        if (String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
+        if (userInfo['password'] == null && userInfo['token'] == null && String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
             console.log('회원가입 성공');
             console.log("회원가입 유저 정보 : ", userInfo, typeof userInfo);
 

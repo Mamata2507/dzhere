@@ -12,7 +12,7 @@ const AuthFormLogin = ({form, onChangeText, onPress, error, navigation, route}) 
         <StatusBar style="light" />
         <View style={styles.container}>
           <Image source={image} style={styles.logo} />
-          <Text style={styles.logoTitle}>DZ Here(관리자)</Text>
+          <Text style={styles.logoTitle}>더조은Here(관리자)</Text>
 
           <View style={{ flexDirection: "row" }}>
             {error && <ErrorMessage>{error}</ErrorMessage>}

@@ -197,18 +197,18 @@ const TeacherAttendClassContainerWeb = () => {
     // 기존 데이터 값들
     setEditTodayDate(teacherAttendList[a_idx]["a_today_date"]);
     setEditAttendTime(
-      teacherAttendList[a_idx]["a_attend_time"] !== "" ||
-        teacherAttendList[a_idx]["a_attend_time"] !== "0000-00-00 00:00:00" ||
-        teacherAttendList[a_idx]["a_attend_time"] !== "00:00:00"
-        ? teacherAttendList[a_idx]["a_attend_time"].slice(-8)
-        : ""
+      teacherAttendList[a_idx]["a_attend_time"] === null ||
+      teacherAttendList[a_idx]["a_attend_time"] === "" ||
+      teacherAttendList[a_idx]["a_attend_time"] === "0000-00-00 00:00:00" ||
+      teacherAttendList[a_idx]["a_attend_time"] === "00:00:00"
+      ? "" : teacherAttendList[a_idx]["a_attend_time"].slice(-8)
     );
     setEditExitTime(
-      teacherAttendList[a_idx]["a_exit_time"] !== "" ||
-        teacherAttendList[a_idx]["a_exit_time"] !== "0000-00-00 00:00:00" ||
-        teacherAttendList[a_idx]["a_exit_time"] !== "00:00:00"
-        ? teacherAttendList[a_idx]["a_exit_time"].slice(-8)
-        : ""
+      teacherAttendList[a_idx]["a_exit_time"] === null ||
+      teacherAttendList[a_idx]["a_exit_time"] === "" ||
+      teacherAttendList[a_idx]["a_exit_time"] === "0000-00-00 00:00:00" ||
+      teacherAttendList[a_idx]["a_exit_time"] === "00:00:00"
+      ? "" : teacherAttendList[a_idx]["a_exit_time"].slice(-8)
     );
     setEditLateStatus(teacherAttendList[a_idx]["a_late_status"]);
     setEditLeave(teacherAttendList[a_idx]["a_leave"]);
@@ -251,15 +251,20 @@ const TeacherAttendClassContainerWeb = () => {
       setCheckedList(checkedList_);
       console.log(checkedList);
     }
-    if(e.target.id !== '-999' && !checkedList.includes(e.target.id) && e.target.checked){
-      let checkedList_ = [...checkedList, e.target.id];
-      setCheckedList(checkedList_);
-      console.log(checkedList);
-    }
+    // if(e.target.id !== '-999' && !checkedList.includes(e.target.id) && e.target.checked){
+    //   let checkedList_ = [...checkedList, e.target.id];
+    //   setCheckedList(checkedList_);
+    //   console.log(checkedList);
+    // }
     if(e.target.id !== '-999' && checkedList.includes(e.target.id) && e.target.checked == false){
       let checkedList_ = [...checkedList];
       let checkedList__ = checkedList_.filter(item => item !==e.target.id)
       setCheckedList(checkedList__);
+      console.log(checkedList);
+    }
+    if(e.target.id !== '-999' && !checkedList.includes(e.target.id) && e.target.checked){
+      let checkedList_ = [e.target.id];
+      setCheckedList(checkedList_);
       console.log(checkedList);
     }
   }

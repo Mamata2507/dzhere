@@ -361,7 +361,7 @@ const CustomSidebarMenu = (props) => {
           marginBottom: Platform.OS === "android" ? 40 : 30,
         }}
       >
-        더존HERE
+        더조은HERE
       </Text>
     </SafeAreaView>
   );

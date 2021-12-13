@@ -247,7 +247,7 @@ export const TeacherAttendClassWeb = ({
             <TouchableOpacity
               style={[
                 styles.btn,
-                { marginTop: 15, alignSelf: "center", width: "10%" },
+                { marginTop: 15, alignSelf: "center", },
               ]}
               onPress={() =>
                 onUpdate({

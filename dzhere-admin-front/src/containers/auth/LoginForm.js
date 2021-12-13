@@ -130,7 +130,7 @@ const LoginForm = ({ navigation, route }) => {
       }
 
       // userInfo(유저 정보) state 값이 null이 아니면 로그인 처리 및 ClientDrawer-출석 페이지로 자동 이동
-      if (String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
+      if (userInfo['token'] !== null && String(userInfo).trim() !== "" && String(userInfo).trim() !== "null" && userInfo !== undefined && userInfo !== null) {
         console.log("로그인 성공");
         console.log("로그인 유저 정보 : ", userInfo, typeof(userInfo));
 

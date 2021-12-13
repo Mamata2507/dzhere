@@ -768,6 +768,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "20%",
     justifyContent: "center",
     flex: 1,
+    backgroundColor: 'white',
   },
   content: {
     marginTop: 5,

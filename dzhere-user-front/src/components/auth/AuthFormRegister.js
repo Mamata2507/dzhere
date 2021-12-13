@@ -184,7 +184,7 @@ const AuthFormRegister = ({form, onChangeText, onPress, error, navigation, route
                 style={{ marginRight: 10, marginLeft: 10 }}
               />
               <Text style={{ marginRight: 10, marginLeft: 10, flexShrink: 1 }}>
-                DZHere 서비스 이용 약관에 동의합니다.
+                더조은Here 서비스 이용 약관에 동의합니다.
               </Text>
             </View>
             <View style={{ flexDirection: "row", margin: 10 }}>
