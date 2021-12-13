@@ -22,7 +22,7 @@ react native 구조 상 프로젝트 내에서 일반적으로 두 개의 App.js
 
 
 ## 화면 설계
-![image](https://user-images.githubusercontent.com/46439700/145741190-14a1db61-1051-4879-bca4-05ec582bb109.png)
+![image](https://user-images.githubusercontent.com/46439700/145741486-a4fcda42-3a27-4d56-8387-860121c41dd4.png)
 
 ## 스택
 |Skill|Version|Content|
