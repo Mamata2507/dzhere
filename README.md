@@ -32,3 +32,11 @@ react native 구조 상 프로젝트 내에서 일반적으로 두 개의 App.js
 |spring-security | jdk 11| 회원관리를 위한 auth 인증 체계 구축 (jwt)|
 |aws rds | mysql| DB 접근을 위한 DB 서버 구축|
 |aws s3 & aws cloudfront & aws ec2 | storage| static web 을 위한 호스팅|
+
+## 역할
+|  이름  | 역할                 | github                                                       |
+| :----: | :-------------------: | :-----------------------------------------------------------: |
+| 김령은 | Developer | [@RyeongeunKim](https://github.com/RyeongeunKim)            |
+| 김상연 | Developer | [@cafe9210](https://github.com/cafe9210)                    |
+| 박정민 | Developer | [@qwa310](https://github.com/qwa310)                        |
+| 최예준(Lead) | Developer | [@linger0310](https://github.com/linger0310)          |
