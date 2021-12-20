@@ -35,8 +35,8 @@ react native 구조 상 프로젝트 내에서 일반적으로 두 개의 App.js
 |mysql | 8.0.x| DB|
 |mybatis | 3.x.x| java 코드 annotation 방식|
 |expo cli | 43.0.2| develope tool|
-|spring-boot | jdk 11| client-server 간의 데이터 전달을 위한 API 쿼리 작성|
-|spring-security | jdk 11| 회원관리를 위한 auth 인증 체계 구축 (jwt)|
+|spring-boot | 2.5.6| client-server 간의 데이터 전달을 위한 API 쿼리 작성|
+|spring-security | 5.5.3| 회원관리를 위한 auth 인증 체계 구축 (jwt)|
 |aws rds | mysql| DB 접근을 위한 DB 서버 구축|
 |aws s3 & aws cloudfront & aws ec2 | storage| static web 을 위한 호스팅|
 
